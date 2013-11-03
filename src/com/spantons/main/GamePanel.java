@@ -1,8 +1,8 @@
 package com.spantons.main;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -25,16 +25,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	/**
 	 * Ancho de la ventana de la aplicacion
 	 */
-	public static final int WIDTH = 320;
+	public static int RESOLUTION_WIDTH = (int) Toolkit
+			.getDefaultToolkit().getScreenSize().getWidth();
 	/**
 	 * Alto de la ventana de la aplicacion
 	 */
-	public static final int HEIGHT = 240;
-	/**
-	 * Escala de la ventana de la aplicacion
-	 */
-	public static final int SCALE = 3;
-
+	public static int RESOLUTION_HEIGHT = (int) Toolkit
+			.getDefaultToolkit().getScreenSize().getHeight();
+	
 	/**
 	 * Thread del juego
 	 */
@@ -74,8 +72,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 */
 	public GamePanel() {
 		super();
-		setPreferredSize(new Dimension(WIDTH * SCALE,
-				HEIGHT * SCALE));
+		setPreferredSize(new Dimension(RESOLUTION_WIDTH, RESOLUTION_HEIGHT));
 		setFocusable(true);
 		requestFocus();
 	}
@@ -99,20 +96,20 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	@Override
 	public void run() {
 		// variables para calcular los tiempos de espera
-		long inicio;
+		long timeStart;
 		long transcurrido;
 		long espera;
 
 		init();
 		// loop del juego
 		while (running) {
-			inicio = System.nanoTime();
+			timeStart = System.nanoTime();
 			update();
 			draw();
 			drawToScreen();
 
 			// tiempos
-			transcurrido = System.nanoTime() - inicio;
+			transcurrido = System.nanoTime() - timeStart;
 			espera = targetTime - transcurrido / 1000000;
 
 			if (espera < 0)
@@ -130,8 +127,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 * (Graphics2D), running (boolean) y gsm (GameStateManager)
 	 */
 	private void init() {
-		image = new BufferedImage(WIDTH, HEIGHT,
-				BufferedImage.TYPE_INT_RGB);
+		image = new BufferedImage(RESOLUTION_WIDTH, RESOLUTION_HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.createGraphics();
 		running = true;
 		gsm = new GameStagesManager();
@@ -156,9 +152,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 * Metodo encargado de dibujar en pantalla
 	 */
 	private void drawToScreen() {
-		Graphics g2 = getGraphics();
-		g2.drawImage(image, 0, 0, WIDTH * SCALE,
-				HEIGHT * SCALE, null);
+		Graphics2D g2 = (Graphics2D) getGraphics();
+		g2.drawImage(image, 0, 0, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, null);
 		g2.dispose();
 	}
 

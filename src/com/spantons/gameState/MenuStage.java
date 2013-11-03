@@ -26,7 +26,7 @@ public class MenuStage extends Stage {
 		this.gsm = gsm;
 		
 		try {
-			bg = new Background("/Backgrounds/menubg.gif", 1);
+			bg = new Background("/Backgrounds/menubg.gif", 0);
 			bg.setVector(-0.1, 0);
 			
 			titleColor = new Color(128, 0, 0);
