@@ -60,9 +60,8 @@ public class Background {
 			int ih = image.getHeight(null);
 			if (iw > 0 && ih > 0) {
 				for (int x = 0; x < GamePanel.RESOLUTION_WIDTH; x += iw) {
-					for (int y = 0; y < GamePanel.RESOLUTION_HEIGHT; y += ih) {
+					for (int y = 0; y < GamePanel.RESOLUTION_HEIGHT; y += ih) 
 						g.drawImage(image, x, y, iw, ih, null);
-					}
 				}
 			}
 		} else {
@@ -73,7 +72,6 @@ public class Background {
 						(int) x + GamePanel.RESOLUTION_WIDTH,
 						(int) y, null);
 			else if (x > 0)
-
 				g.drawImage(image,
 						(int) x - GamePanel.RESOLUTION_WIDTH,
 						(int) y, null);
