@@ -28,7 +28,7 @@ public class MenuStage extends Stage {
 		this.gsm = gsm;
 
 		try {
-			bg = new Background("/Backgrounds/menubg.gif", 0, true);
+			bg = new Background("/backgrounds/menubg.gif", 0, true);
 			bg.setVector(-0.1, 0);
 
 			titleColor = new Color(128, 0, 0);
@@ -69,8 +69,8 @@ public class MenuStage extends Stage {
 
 		// dibujar menu de opciones
 		y = y + 70;
-		r = fm.getStringBounds(choices[1], g);
-		x = (GamePanel.RESOLUTION_WIDTH - (int) r.getWidth()) / 2 + 28;
+		r = fm.getStringBounds(choices[0], g);
+		x = (GamePanel.RESOLUTION_WIDTH - (int) r.getWidth()) / 2 + fm.getDescent();
 		
 		g.setFont(choicesFont);
 		for (int i = 0; i < choices.length; i++) {

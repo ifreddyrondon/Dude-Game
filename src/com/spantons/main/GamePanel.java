@@ -96,26 +96,26 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	@Override
 	public void run() {
 		// variables para calcular los tiempos de espera
-		long timeStart;
-		long transcurrido;
-		long espera;
+		long startTime;
+		long elapsedTime;
+		long waitTime;
 
 		init();
 		// loop del juego
 		while (running) {
-			timeStart = System.nanoTime();
+			startTime = System.nanoTime();
 			update();
 			draw();
 			drawToScreen();
 
 			// tiempos
-			transcurrido = System.nanoTime() - timeStart;
-			espera = targetTime - transcurrido / 1000000;
+			elapsedTime = System.nanoTime() - startTime;
+			waitTime = targetTime - elapsedTime / 1000000;
 
-			if (espera < 0)
-				espera = 1;
+			if (waitTime < 0)
+				waitTime = 1;
 			try {
-				Thread.sleep(espera);
+				Thread.sleep(waitTime);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
