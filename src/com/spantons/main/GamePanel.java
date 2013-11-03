@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	/**
 	 * Frames por segundo que corre el juego
 	 */
-	private int FPS = 60;
+	private int FPS = 50;
 	/**
 	 * Tiempo en millisegundos que tiene que esperar para correr a la cantidad
 	 * FPS
