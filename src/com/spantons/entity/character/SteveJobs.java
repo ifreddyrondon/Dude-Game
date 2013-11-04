@@ -1,6 +1,7 @@
 package com.spantons.entity.character;
 
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -21,7 +22,6 @@ public class SteveJobs extends Entity {
 
 	// Animacion
 	private ArrayList<BufferedImage[]> sprites;
-	private final int[] numFramesPerAction = { 3, 4, 1 };
 
 	// Acciones de la animacion
 	private static final int GIVING_BACK = 0;
@@ -30,13 +30,15 @@ public class SteveJobs extends Entity {
 
 	public SteveJobs(Background bg) {
 
-		// Tamano original de cada sprite 340x480, le sumo 2 a cada
-		// proporcion por el inner padding de 2 a cada lado de los sprites
+		scale = 0.5;
+
+		// Tamano original de cada sprite 320x460, le sumo 10 a cada
+		// proporcion por el inner padding de 10 a cada lado de los sprites
 		// en el sprite sheep
-		spriteWidth = 342;
-		spriteHeight = 482;
-		collisionBoxWidth = 290;
-		collisionBoxHeight = 400;
+		spriteWidth = (int) (330 * scale);
+		spriteHeight = (int) (470 * scale);
+		collisionBoxWidth = (int) (320 * scale);
+		collisionBoxHeight = (int) (460 * scale);
 
 		health = maxHealth = 5;
 		dead = false;
@@ -46,8 +48,20 @@ public class SteveJobs extends Entity {
 		// Cargar sprites
 		try {
 
-			BufferedImage spriteSheet = ImageIO.read(getClass()
+			BufferedImage spriteSheet2 = ImageIO.read(getClass()
 					.getResourceAsStream("/sprites/steve_jobs.png"));
+			
+			// Redimencionar SpriteSheet
+			int newWidth = new Double(spriteSheet2.getWidth() * scale).intValue();
+			int newHeight = new Double(spriteSheet2.getHeight() * scale).intValue();
+			
+			BufferedImage spriteSheet = new BufferedImage(newWidth,newHeight, spriteSheet2.getType());
+			Graphics2D g = spriteSheet.createGraphics();
+			g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+					RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			g.drawImage(spriteSheet2, 0, 0, newWidth, newHeight, 0, 0,
+					spriteSheet2.getWidth(), spriteSheet2.getHeight(), null);
+
 
 			sprites = new ArrayList<BufferedImage[]>();
 
