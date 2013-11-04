@@ -6,7 +6,10 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
+import com.spantons.entity.Entity;
+import com.spantons.entity.character.SteveJobs;
 import com.spantons.main.GamePanel;
 import com.spantons.tileMap.Background;
 
@@ -24,6 +27,9 @@ public class MenuStage extends Stage {
 	private FontMetrics fm;
 	private Rectangle2D r;
 
+	// Personajes
+	private ArrayList<Entity> characters;
+
 	public MenuStage(GameStagesManager gsm) {
 		this.gsm = gsm;
 
@@ -35,6 +41,12 @@ public class MenuStage extends Stage {
 			titleFont = new Font("Century Gothic", Font.PLAIN, 40);
 
 			choicesFont = new Font("Helvetica", 8, 22);
+
+			// Personajes
+			characters = new ArrayList<Entity>();
+			SteveJobs sj = new SteveJobs(bg);
+			sj.setPosition(200, 200);
+			characters.add(sj);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,34 +65,40 @@ public class MenuStage extends Stage {
 
 	@Override
 	public void draw(Graphics2D g) {
-		// dibujar background
+		// Dibujar background
 		bg.draw(g);
-		
-		// dibujar titulo
+
+		// Dibujar titulo
 		g.setColor(titleColor);
 		g.setFont(titleFont);
 		fm = g.getFontMetrics();
-		
-		String stringTime = "Dude City";	
+
+		String stringTime = "Dude City";
 		r = fm.getStringBounds(stringTime, g);
 		int x = (GamePanel.RESOLUTION_WIDTH - (int) r.getWidth()) / 2;
-		int y = (GamePanel.RESOLUTION_HEIGHT- (int) r.getHeight()) / 2 - 150;
+		int y = (GamePanel.RESOLUTION_HEIGHT - (int) r.getHeight()) / 2 - 150;
 		g.drawString(stringTime, x, y);
 
-		// dibujar menu de opciones
+		// Dibujar menu de opciones
 		y = y + 70;
 		r = fm.getStringBounds(choices[0], g);
-		x = (GamePanel.RESOLUTION_WIDTH - (int) r.getWidth()) / 2 + fm.getDescent();
-		
+		x = (GamePanel.RESOLUTION_WIDTH - (int) r.getWidth()) / 2
+				+ fm.getDescent();
+
 		g.setFont(choicesFont);
 		for (int i = 0; i < choices.length; i++) {
-			if (i == currentChoice) 
+			if (i == currentChoice)
 				g.setColor(Color.DARK_GRAY);
-			else 
+			else
 				g.setColor(Color.LIGHT_GRAY);
-			
+
 			g.drawString(choices[i], x, y + i * 26);
 		}
+
+		// Dibujar personajes
+		for (int i = 0; i < characters.size(); i++) 
+			characters.get(i).draw(g);
+		
 	}
 
 	private void select() {

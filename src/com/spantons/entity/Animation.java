@@ -49,7 +49,7 @@ public class Animation {
 		return currentFrame; 
 	}
 	
-	public BufferedImage getImageFrame() { 
+	public BufferedImage getCurrentImageFrame() { 
 		return frames[currentFrame]; 
 	}
 	
