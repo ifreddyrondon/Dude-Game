@@ -24,20 +24,23 @@ public class SteveJobs extends Entity {
 	private final int[] numFramesPerAction = { 3, 4, 1 };
 
 	// Acciones de la animacion
-	private static final int WALKING = 0;
+	private static final int GIVING_BACK = 0;
 	private static final int IDLE = 1;
-	private static final int GIVING_BACK = 2;
+	private static final int WALKING = 2;
 
 	public SteveJobs(Background bg) {
 
-		spriteWidth = 283;
-		spriteHeight = 400;
+		// Tamano original de cada sprite 340x480, le sumo 2 a cada
+		// proporcion por el inner padding de 2 a cada lado de los sprites
+		// en el sprite sheep
+		spriteWidth = 342;
+		spriteHeight = 482;
 		collisionBoxWidth = 290;
 		collisionBoxHeight = 400;
 
 		health = maxHealth = 5;
 		dead = false;
-		
+
 		facingRight = true;
 
 		// Cargar sprites
@@ -47,18 +50,31 @@ public class SteveJobs extends Entity {
 					.getResourceAsStream("/sprites/steve_jobs.png"));
 
 			sprites = new ArrayList<BufferedImage[]>();
-			for (int i = 0; i < 3; i++) {
 
-				BufferedImage[] bi = new BufferedImage[numFramesPerAction[i]];
+			BufferedImage[] bi = new BufferedImage[1];
+			bi[0] = spriteSheet.getSubimage(0, 0, spriteWidth,
+					spriteHeight);
+			sprites.add(bi);
 
-				for (int j = 0; j < numFramesPerAction[i]; j++) {
-					bi[j] = spriteSheet.getSubimage(j * spriteWidth,
-							i * spriteHeight, spriteWidth,
-							spriteHeight);
-				}
+			bi = new BufferedImage[4];
+			bi[0] = spriteSheet.getSubimage(spriteWidth, 0, spriteWidth,
+					spriteHeight);
+			bi[1] = spriteSheet.getSubimage(spriteWidth * 2, 0,
+					spriteWidth, spriteHeight);
+			bi[2] = spriteSheet.getSubimage(spriteWidth * 3, 0,
+					spriteWidth, spriteHeight);
+			bi[3] = spriteSheet.getSubimage(0, spriteHeight, spriteWidth,
+					spriteHeight);
+			sprites.add(bi);
 
-				sprites.add(bi);
-			}
+			bi = new BufferedImage[3];
+			bi[0] = spriteSheet.getSubimage(spriteWidth, spriteHeight,
+					spriteWidth, spriteHeight);
+			bi[1] = spriteSheet.getSubimage(spriteWidth * 2,
+					spriteHeight, spriteWidth, spriteHeight);
+			bi[2] = spriteSheet.getSubimage(spriteWidth * 3,
+					spriteHeight, spriteWidth, spriteHeight);
+			sprites.add(bi);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,15 +83,22 @@ public class SteveJobs extends Entity {
 		animation = new Animation();
 		currentAnimation = IDLE;
 		animation.setFrames(sprites.get(IDLE));
-		animation.setDelayTime(400);
+		animation.setDelayTime(1000);
 
 	}
-	
-	public void update(){
+
+	public void update() {
+
+		// direccion de la cara del jugador
+		if (movRight)
+			facingRight = true;
+		if (movLeft)
+			facingRight = false;
+
 		animation.update();
 	}
-	
-	public void draw(Graphics2D g){
+
+	public void draw(Graphics2D g) {
 		super.draw(g);
 	}
 

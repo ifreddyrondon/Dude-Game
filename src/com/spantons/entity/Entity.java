@@ -25,6 +25,7 @@ public class Entity {
 	// Dimensiones
 	protected int spriteWidth;
 	protected int spriteHeight;
+	protected double scale;
 
 	// Caja de colision
 	protected int collisionBoxWidth;
@@ -55,9 +56,11 @@ public class Entity {
 		Rectangle r2 = e.getRectangle();
 		return r1.intersects(r2);
 	}
+	
+	public void update(){};
 
 	public void draw(Graphics2D g) {
-
+		
 		if (facingRight) {
 			g.drawImage(animation.getCurrentImageFrame(),
 					(int) (x + xMap - spriteWidth / 2), (int) (y

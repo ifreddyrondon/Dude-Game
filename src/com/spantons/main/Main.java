@@ -10,15 +10,24 @@ public class Main {
 	public static void main(String[] args) {
 		// Contenedor del juego
 		JFrame window = new JFrame();
-		window.setUndecorated(true);
 		window.setContentPane(new GamePanel());
 		
+		/*
+		window.setUndecorated(true);
 		GraphicsEnvironment ge = GraphicsEnvironment
 				.getLocalGraphicsEnvironment();
 		GraphicsDevice gs = ge.getDefaultScreenDevice();
 		gs.setFullScreenWindow(window);
 		window.validate();
-
+		 */
+			
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setResizable(false);
+		window.pack();
+		window.setLocationRelativeTo(null);
+		window.setVisible(true);
+		
+		
 	}
 
 }

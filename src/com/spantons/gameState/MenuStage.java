@@ -29,6 +29,7 @@ public class MenuStage extends Stage {
 
 	// Personajes
 	private ArrayList<Entity> characters;
+	private int currentCharacter;
 
 	public MenuStage(GameStagesManager gsm) {
 		this.gsm = gsm;
@@ -45,7 +46,7 @@ public class MenuStage extends Stage {
 			// Personajes
 			characters = new ArrayList<Entity>();
 			SteveJobs sj = new SteveJobs(bg);
-			sj.setPosition(200, 200);
+			sj.setPosition(180, 250);
 			characters.add(sj);
 
 		} catch (Exception e) {
@@ -61,6 +62,10 @@ public class MenuStage extends Stage {
 	@Override
 	public void update() {
 		bg.update();
+
+		// Actualizar personajes
+		for (int i = 0; i < characters.size(); i++)
+			characters.get(i).update();
 	}
 
 	@Override
@@ -96,9 +101,9 @@ public class MenuStage extends Stage {
 		}
 
 		// Dibujar personajes
-		for (int i = 0; i < characters.size(); i++) 
+		for (int i = 0; i < characters.size(); i++)
 			characters.get(i).draw(g);
-		
+
 	}
 
 	private void select() {
@@ -113,6 +118,7 @@ public class MenuStage extends Stage {
 
 	@Override
 	public void keyPressed(int k) {
+		// Mover en el menu
 		if (k == KeyEvent.VK_ENTER) {
 			select();
 		} else if (k == KeyEvent.VK_UP) {
@@ -126,11 +132,32 @@ public class MenuStage extends Stage {
 				currentChoice = 0;
 			}
 		}
+		// Mover personajes
+		if (k == KeyEvent.VK_A)
+			characters.get(currentCharacter).setMovLeft(true);
+		if (k == KeyEvent.VK_D)
+			characters.get(currentCharacter).setMovRight(true);
+		if (k == KeyEvent.VK_W)
+			characters.get(currentCharacter).setMovUp(true);
+		if (k == KeyEvent.VK_S)
+			characters.get(currentCharacter).setMovDown(true);
+		if (k == KeyEvent.VK_SPACE)
+			characters.get(currentCharacter).setMovJumping(true);
 	}
 
 	@Override
 	public void keyReleased(int k) {
-		// TODO Auto-generated method stub
+		// Mover personajes
+		if (k == KeyEvent.VK_A)
+			characters.get(currentCharacter).setMovLeft(false);
+		if (k == KeyEvent.VK_D)
+			characters.get(currentCharacter).setMovRight(false);
+		if (k == KeyEvent.VK_W)
+			characters.get(currentCharacter).setMovUp(false);
+		if (k == KeyEvent.VK_S)
+			characters.get(currentCharacter).setMovDown(false);
+		if (k == KeyEvent.VK_SPACE)
+			characters.get(currentCharacter).setMovJumping(false);
 	}
 
 }
