@@ -27,6 +27,8 @@ public class SteveJobs extends Entity {
 	private static final int GIVING_BACK = 0;
 	private static final int IDLE = 1;
 	private static final int WALKING = 2;
+	private static final int FALLING = 0;
+	private static final int JUMPING = 0;
 
 	public SteveJobs(Background bg) {
 
@@ -43,6 +45,14 @@ public class SteveJobs extends Entity {
 		health = maxHealth = 5;
 		dead = false;
 
+		moveSpeed = 0.3;
+		maxMoveSpeed = 1.6;
+		recuderMoveSpeed = 0.4;
+		fallSpeed = 0.15;
+		maxFallSpeed = 4.0;
+		jumpStart = -4.8;
+		reducerJumpSpeed = 0.3;
+
 		facingRight = true;
 
 		// Cargar sprites
@@ -50,18 +60,21 @@ public class SteveJobs extends Entity {
 
 			BufferedImage spriteSheet2 = ImageIO.read(getClass()
 					.getResourceAsStream("/sprites/steve_jobs.png"));
-			
+
 			// Redimencionar SpriteSheet
-			int newWidth = new Double(spriteSheet2.getWidth() * scale).intValue();
-			int newHeight = new Double(spriteSheet2.getHeight() * scale).intValue();
-			
-			BufferedImage spriteSheet = new BufferedImage(newWidth,newHeight, spriteSheet2.getType());
+			int newWidth = new Double(spriteSheet2.getWidth() * scale)
+					.intValue();
+			int newHeight = new Double(spriteSheet2.getHeight() * scale)
+					.intValue();
+
+			BufferedImage spriteSheet = new BufferedImage(newWidth,
+					newHeight, spriteSheet2.getType());
 			Graphics2D g = spriteSheet.createGraphics();
 			g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
 					RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 			g.drawImage(spriteSheet2, 0, 0, newWidth, newHeight, 0, 0,
-					spriteSheet2.getWidth(), spriteSheet2.getHeight(), null);
-
+					spriteSheet2.getWidth(),
+					spriteSheet2.getHeight(), null);
 
 			sprites = new ArrayList<BufferedImage[]>();
 
@@ -101,8 +114,101 @@ public class SteveJobs extends Entity {
 
 	}
 
+	private void getNextPosition() {
+		// Saltar
+		if (movJumping && !movFalling) {
+			dy = jumpStart;
+			movFalling = true;
+		}
+		// Caer
+		else if (movFalling) {
+			// Mientras mas tiempo esta activo movSaltar mas aumenta la
+			// velodidad de caida (gravedad)
+			dy += fallSpeed;
+
+			// Si dy es positivo quiere decir que ya va cayendo
+			if (dy > 0)
+				movJumping = false;
+			// Si aun sigue subiendo pero ya no esta saltando entonces
+			// vamos frenando el salto
+			if (dy < 0 && !movJumping)
+				dy += reducerJumpSpeed;
+			// Si la velocidad de caida alcanza la velocidad maxima a la
+			// que puede caer entonces deja de crecer
+			if (dy > maxFallSpeed)
+				dy = maxFallSpeed;
+		}
+		// Izquierda
+		// Mientras mas tiempo esta activo movIzquiera o derecha mas aumenta
+		// la velocidad sin embargo esta limitado por la maxima velocidad de
+		// movimiento
+		if (movLeft) {
+			dx -= moveSpeed;
+			if (dx < -maxMoveSpeed)
+				dx = -maxMoveSpeed;
+			
+		// Derecha
+		} else if (movRight) {
+			dx += moveSpeed;
+			if (dx > maxMoveSpeed)
+				dx = maxMoveSpeed;
+			
+		// Si no esta oprimiendo ningun boton para alguna accion de
+		// movimiento hacia los lados
+		} else {
+			// Si iba hacia la derecha
+			if (dx > 0) {
+				// Frenamos
+				dx -= recuderMoveSpeed;
+				if (dx < 0)
+					dx = 0;
+				// Si iba hacia la izquierda
+			} else if (dx < 0) {
+				// Frenamos
+				dx += recuderMoveSpeed;
+				if (dx > 0) {
+					dx = 0;
+				}
+			}
+		}
+
+	}
+
 	public void update() {
 
+		getNextPosition();
+		
+		
+		if (dy > 0) {
+			if (currentAnimation != FALLING) {
+				currentAnimation = FALLING;
+				animation.setFrames(sprites.get(FALLING));
+				animation.setDelayTime(100);
+			}
+		} else if (dy < 0) {
+			if (currentAnimation != JUMPING) {
+				currentAnimation = JUMPING;
+				animation.setFrames(sprites.get(JUMPING));
+				animation.setDelayTime(40);
+			}
+		} else if (movLeft || movRight) {
+			if (currentAnimation != WALKING) {
+				currentAnimation = WALKING;
+				animation.setFrames(sprites.get(WALKING));
+				animation.setDelayTime(150);
+			}
+		} else {
+			if (currentAnimation != IDLE) {
+				currentAnimation = IDLE;
+				animation.setFrames(sprites.get(IDLE));
+				animation.setDelayTime(1000);
+			}
+		}
+
+		
+		
+		
+		
 		// direccion de la cara del jugador
 		if (movRight)
 			facingRight = true;

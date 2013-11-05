@@ -31,6 +31,18 @@ public class Entity {
 	protected int collisionBoxWidth;
 	protected int collisionBoxHeight;
 
+	// colisiones
+	protected int currentRow;
+	protected int currentCol;
+	protected double xDest;
+	protected double yDest;
+	protected double xTemp;
+	protected double yTemp;
+	protected boolean cornerTopLeft;
+	protected boolean cornerTopRight;
+	protected boolean cornerBottomLeft;
+	protected boolean cornerBottomRight;
+
 	// movimientos
 	protected boolean movLeft;
 	protected boolean movRight;
@@ -38,6 +50,17 @@ public class Entity {
 	protected boolean movDown;
 	protected boolean movJumping;
 	protected boolean movFalling;
+
+	// atributos de movimientos
+	protected double moveSpeed;
+	protected double maxMoveSpeed;
+	protected double recuderMoveSpeed;
+	protected double fallSpeed;
+	protected double maxFallSpeed;
+	protected double jumpStart;
+	protected double reducerJumpSpeed;
+	
+	
 
 	public Rectangle getRectangle() {
 		return new Rectangle((int) x - collisionBoxWidth, (int) y
@@ -56,11 +79,12 @@ public class Entity {
 		Rectangle r2 = e.getRectangle();
 		return r1.intersects(r2);
 	}
-	
-	public void update(){};
+
+	public void update() {
+	};
 
 	public void draw(Graphics2D g) {
-		
+
 		if (facingRight) {
 			g.drawImage(animation.getCurrentImageFrame(),
 					(int) (x + xMap - spriteWidth / 2), (int) (y
@@ -97,12 +121,12 @@ public class Entity {
 	public int getCollisionBoxHeight() {
 		return collisionBoxHeight;
 	}
-	
-	public double getScale(){
+
+	public double getScale() {
 		return scale;
 	}
-	
-	public void setScale(double scale){
+
+	public void setScale(double scale) {
 		this.scale = scale;
 	}
 
@@ -121,25 +145,24 @@ public class Entity {
 		// yMap = tileMapa.getY();
 	}
 
-	public void setMovLeft(boolean b) { 
-		movLeft = b; 
-	}
-	
-	public void setMovRight(boolean b) { 
-		movRight = b; 
-	}
-	
-	public void setMovUp(boolean b) { 
-		movUp = b; 
-	}
-	
-	public void setMovDown(boolean b) { 
-		movDown = b; 
-	}
-	
-	public void setMovJumping(boolean b) { 
-		movJumping = b; 
+	public void setMovLeft(boolean b) {
+		movLeft = b;
 	}
 
-	
+	public void setMovRight(boolean b) {
+		movRight = b;
+	}
+
+	public void setMovUp(boolean b) {
+		movUp = b;
+	}
+
+	public void setMovDown(boolean b) {
+		movDown = b;
+	}
+
+	public void setMovJumping(boolean b) {
+		movJumping = b;
+	}
+
 }
