@@ -204,10 +204,7 @@ public class SteveJobs extends Entity {
 				animation.setDelayTime(1000);
 			}
 		}
-
-		
-		
-		
+				
 		
 		// direccion de la cara del jugador
 		if (movRight)
