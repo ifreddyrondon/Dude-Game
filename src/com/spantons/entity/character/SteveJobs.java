@@ -37,7 +37,7 @@ public class SteveJobs extends Entity {
 		// Tamano original de cada sprite 320x460, le sumo 10 a cada
 		// proporcion por el inner padding de 10 a cada lado de los sprites
 		// en el sprite sheep
-		spriteWidth = (int) (330 * scale);
+		spriteWidth = (int) (336 * scale);
 		spriteHeight = (int) (470 * scale);
 		collisionBoxWidth = (int) (320 * scale);
 		collisionBoxHeight = (int) (460 * scale);

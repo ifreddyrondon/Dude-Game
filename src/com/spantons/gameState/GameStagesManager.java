@@ -20,6 +20,8 @@ public class GameStagesManager {
 	private void loadStage(int stage) {
 		if (stage == MENU_STAGE)
 			gameStages[MENU_STAGE] = new MenuStage(this);
+		if (stage == LEVEL_1_STAGE)
+			gameStages[LEVEL_1_STAGE] = new Level1Stage(this);
 	}
 
 	private void unloadStage(int stage) {
