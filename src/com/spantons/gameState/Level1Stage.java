@@ -15,8 +15,8 @@ public class Level1Stage extends Stage {
 
 	@Override
 	public void init() {
-		tileMap = new TileMap(30, 30);
-		tileMap.loadTiles("/tilesets/grasstileset.gif");
+		tileMap = new TileMap(64, 32);
+		tileMap.loadMap("/maps/map.txt");
 		tileMap.setPosition(0, 0);
 	}
 

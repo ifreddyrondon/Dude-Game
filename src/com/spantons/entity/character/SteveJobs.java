@@ -34,11 +34,11 @@ public class SteveJobs extends Entity {
 
 		scale = 0.5;
 
-		// Tamano original de cada sprite 320x460, le sumo 10 a cada
+		// Tamano original de cada sprite 320x460, le sumo 2 a cada
 		// proporcion por el inner padding de 10 a cada lado de los sprites
 		// en el sprite sheep
-		spriteWidth = (int) (336 * scale);
-		spriteHeight = (int) (470 * scale);
+		spriteWidth = (int) (322 * scale);
+		spriteHeight = (int) (462 * scale);
 		collisionBoxWidth = (int) (320 * scale);
 		collisionBoxHeight = (int) (460 * scale);
 
@@ -59,7 +59,7 @@ public class SteveJobs extends Entity {
 		try {
 
 			BufferedImage spriteSheet2 = ImageIO.read(getClass()
-					.getResourceAsStream("/sprites/steve_jobs.png"));
+					.getResourceAsStream("/sprites/SteveJobs.png"));
 
 			// Redimencionar SpriteSheet
 			int newWidth = new Double(spriteSheet2.getWidth() * scale)
