@@ -30,6 +30,8 @@ public class SteveJobs extends Entity {
 	private static final int FALLING = 0;
 	private static final int JUMPING = 0;
 
+	
+	
 	public SteveJobs(Background bg) {
 
 		scale = 0.5;
@@ -55,7 +57,16 @@ public class SteveJobs extends Entity {
 
 		facingRight = true;
 
-		// Cargar sprites
+		loadSprite();
+		
+		animation = new Animation();
+		currentAnimation = IDLE;
+		animation.setFrames(sprites.get(IDLE));
+		animation.setDelayTime(1000);
+
+	}
+
+	private void loadSprite() {
 		try {
 
 			BufferedImage spriteSheet2 = ImageIO.read(getClass()
@@ -106,12 +117,6 @@ public class SteveJobs extends Entity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		animation = new Animation();
-		currentAnimation = IDLE;
-		animation.setFrames(sprites.get(IDLE));
-		animation.setDelayTime(1000);
-
 	}
 
 	private void getNextPosition() {
@@ -146,15 +151,15 @@ public class SteveJobs extends Entity {
 			dx -= moveSpeed;
 			if (dx < -maxMoveSpeed)
 				dx = -maxMoveSpeed;
-			
-		// Derecha
+
+			// Derecha
 		} else if (movRight) {
 			dx += moveSpeed;
 			if (dx > maxMoveSpeed)
 				dx = maxMoveSpeed;
-			
-		// Si no esta oprimiendo ningun boton para alguna accion de
-		// movimiento hacia los lados
+
+			// Si no esta oprimiendo ningun boton para alguna accion de
+			// movimiento hacia los lados
 		} else {
 			// Si iba hacia la derecha
 			if (dx > 0) {
@@ -177,8 +182,7 @@ public class SteveJobs extends Entity {
 	public void update() {
 
 		getNextPosition();
-		
-		
+
 		if (dy > 0) {
 			if (currentAnimation != FALLING) {
 				currentAnimation = FALLING;
@@ -204,8 +208,7 @@ public class SteveJobs extends Entity {
 				animation.setDelayTime(1000);
 			}
 		}
-				
-		
+
 		// direccion de la cara del jugador
 		if (movRight)
 			facingRight = true;

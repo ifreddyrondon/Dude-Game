@@ -2,6 +2,7 @@ package com.spantons.gameState;
 
 import java.awt.Graphics2D;
 
+import com.spantons.entity.character.SteveJobs;
 import com.spantons.tileMap.TileMap;
 
 public class Level1Stage extends Stage {
@@ -18,6 +19,9 @@ public class Level1Stage extends Stage {
 		tileMap = new TileMap(64, 32);
 		tileMap.loadMap("/maps/map.txt");
 		tileMap.setPosition(0, 0);
+		
+		//SteveJobs sj = new SteveJobs(tileMap);
+		//sj.setPosition(180, 250);
 	}
 
 	@Override

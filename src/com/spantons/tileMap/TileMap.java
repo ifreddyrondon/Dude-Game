@@ -91,7 +91,65 @@ public class TileMap {
 		}
 	}
 
-	// Obtenedores
+	public void setPosition(double x, double y) {
+
+		// Probando efecto suavisado el seguimiento de la camara
+		//this.x += (x - this.x) * 0.1;
+		//this.y += (y - this.y) * 0.1;
+
+		this.x = x;
+		this.y = y;
+		
+		//fixBounds();
+
+		// donde comenzar a dibujar
+		colOffSet = (int) -this.x / tileWidthSize;
+		rowOffSet = (int) -this.y / tileHeightSize;
+	}
+
+	private void fixBounds() {
+		if (x < xMin)
+			x = xMin;
+		if (y < yMin)
+			y = yMin;
+		if (x > xMax)
+			x = xMax;
+		if (y > yMax)
+			y = yMax;
+	}
+
+	public void draw(Graphics2D g) {
+
+		g.setColor(Color.gray);
+		g.fillRect(0, 0, GamePanel.RESOLUTION_WIDTH,
+				GamePanel.RESOLUTION_HEIGHT);
+
+		Tile[] tiles = tileSet.getTiles();
+		int px, py, tileToDraw;
+		
+		
+		for (int row = 0; row < mapHeight; row++) {
+			// No dibujar mas de las filas que tiene el mapa
+			if (row >= numRowsMap)
+				break;
+
+			for (int col = 0; col < mapWidth; col++) {
+				// No dibujar mas de las columnas que tiene el mapa
+				if (col >= numColMap)
+				break;
+		
+				tileToDraw = map[row][col] -1;
+				px = (int) ((col - row) * (tileWidthSize / 2) - this.x);
+				py = (int) ((col + row) * (tileHeightSize / 2) - this.y);
+
+				g.drawImage(tiles[tileToDraw].getImage(), px, py, null);
+			}
+		}
+		
+		
+	}
+	
+	
 	public int getTileWidthSize() {
 		return tileWidthSize;
 	}
@@ -116,55 +174,5 @@ public class TileMap {
 		return mapHeight;
 	}
 
-	public void setPosition(double x, double y) {
-
-		// Probando efecto suavisado el seguimiento de la camara
-		this.x += (x - this.x) * 0.1;
-		this.y += (y - this.y) * 0.1;
-
-		fixBounds();
-
-		// donde comenzar a dibujar
-		colOffSet = (int) -this.x / tileWidthSize;
-		rowOffSet = (int) -this.y / tileWidthSize;
-	}
-
-	private void fixBounds() {
-		if (x < xMin)
-			x = xMin;
-		if (y < yMin)
-			y = yMin;
-		if (x > xMax)
-			x = xMax;
-		if (y > yMax)
-			y = yMax;
-	}
-
-	public void draw(Graphics2D g) {
-
-		g.setColor(Color.gray);
-		g.fillRect(0, 0, GamePanel.RESOLUTION_WIDTH,
-				GamePanel.RESOLUTION_HEIGHT);
-
-		Tile[] tiles = tileSet.getTiles();
-
-		for (int row = rowOffSet; row < rowOffSet + numRowDraw; row++) {
-			// No dibujar mas de las filas que tiene el mapa
-			if (row >= numRowsMap)
-				break;
-
-			for (int col = colOffSet; col < colOffSet + numColDraw; col++) {
-				// No dibujar mas de las columnas que tiene el mapa
-				if (col >= numColMap)
-					break;
-				
-				int px = (int) ((col - row) * (tileWidthSize / 2) - this.x);
-				int py = (int) ((col + row) * (tileHeightSize / 2) - this.y);
-
-				g.drawImage(tiles[map[row][col] -1].getImage(), px, py, null);
-			}
-		}
-
-	}
-
+	
 }
