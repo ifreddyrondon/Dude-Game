@@ -2,6 +2,7 @@ package com.spantons.tileMap;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -104,6 +105,21 @@ public class TileMap {
 			e.printStackTrace();
 		}
 	}
+	
+	public Point absoluteToMap(Point coorAbsolute){
+		int mapX = (coorAbsolute.x / (tileWidthSize / 2) + coorAbsolute.y / (tileHeightSize / 2)) / 2;
+		int mapY = (coorAbsolute.y / (tileHeightSize / 2) - (coorAbsolute.x / (tileWidthSize / 2))) / 2;
+		
+		return new Point(mapX, mapY); 
+	}
+	
+	public Point mapToAbsolute(Point coorMap){
+		int absoluteX = (int) ((coorMap.x - coorMap.y) * (tileWidthSize / 2));
+		int absoluteY = (int) ((coorMap.x + coorMap.y) * (tileHeightSize / 2));
+		
+		return new Point(absoluteX,absoluteY);
+	}
+	
 
 	public void setPosition(double x, double y) {
 
@@ -115,8 +131,93 @@ public class TileMap {
 		this.y = y;
 		
 		fixBounds();		
+		
+		/************************************************/
+		xTopLeft = (int) x; 
+		yTopLeft = (int) y;
+		
+		xTopRight = (int) (x + GamePanel.RESOLUTION_WIDTH);
+		yTopRight = yTopLeft;
+		
+		xBottomLeft = xTopLeft;
+		yBottomLeft = (int) (y + GamePanel.RESOLUTION_HEIGHT);
+	
+		xBottomRight = xTopRight;
+		yBottomRight = yBottomLeft;
+		
+		int screenX = 0;
+		int screenY = 0;
+		int mapX = 0;
+		int mapY = 0;
+		
+		/************************************************/
+		System.out.println("Esquina Superior IZQ");
+		screenX =(int) xTopLeft;
+		screenY =(int) yTopLeft;
+	
+		mapX = (screenX / (tileWidthSize / 2) + screenY / (tileHeightSize / 2)) / 2;
+		mapY = (screenY / (tileHeightSize / 2) - (screenX / (tileWidthSize / 2))) / 2;
+		
+		System.out.println(mapX);
+		System.out.println(mapY);
+		if (mapX >= 0 && mapY >= 0 && mapX < numColMap && mapY < numRowsMap) 
+			System.err.println(map[mapX][mapY]);
+		else
+			System.err.println("No dibujar");
+		
+		System.out.println();
+		/************************************************/
+		System.out.println("Esquina Superior DER");
+		screenX = xTopRight;
+		screenY = yTopRight;
+		
+		mapX = (screenX / (tileWidthSize / 2) + screenY / (tileHeightSize / 2)) / 2;
+		mapY = (screenY / (tileHeightSize / 2) - (screenX / (tileWidthSize / 2))) / 2;
+		
+		System.out.println(mapX);
+		System.out.println(mapY);
+		if (mapX >= 0 && mapY >= 0 && mapX < numColMap && mapY < numRowsMap) 
+			System.err.println(map[mapX][mapY]);
+		else
+			System.err.println("No dibujar");
+		System.out.println();
+		/************************************************/
+		System.out.println("Esquina INFERIOR IZQ");
+		screenX = xBottomLeft;
+		screenY = yBottomLeft;
+		
+		mapX = (screenX / (tileWidthSize / 2) + screenY / (tileHeightSize / 2)) / 2;
+		mapY = (screenY / (tileHeightSize / 2) - (screenX / (tileWidthSize / 2))) / 2;
+		
+		System.out.println(mapX);
+		System.out.println(mapY);
+		if (mapX >= 0 && mapY >= 0 && mapX < numColMap && mapY < numRowsMap) 
+			System.err.println(map[mapX][mapY]);
+		else
+			System.err.println("No dibujar");
+		System.out.println();
+		/************************************************/
+		System.out.println("Esquina INFERIOR DER");
+		screenX = xBottomRight;
+		screenY = yBottomRight;
+		
+		mapX = (screenX / (tileWidthSize / 2) + screenY / (tileHeightSize / 2)) / 2;
+		mapY = (screenY / (tileHeightSize / 2) - (screenX / (tileWidthSize / 2))) / 2;
+		
+		System.out.println(mapX);
+		System.out.println(mapY);
+		if (mapX >= 0 && mapY >= 0 && mapX < numColMap && mapY < numRowsMap) 
+			System.err.println(map[mapX][mapY]);
+		else
+			System.err.println("No dibujar");
+		
+		
+		
+		
+		
 			
 		// fila y columna absoluta 
+		/*
 		
 		xTopLeft = (int)(this.x / tileHeightSize); 
 		yTopLeft = (int) (this.y / tileHeightSize);
@@ -136,7 +237,7 @@ public class TileMap {
 		System.out.println(casilla.getX());
 		System.out.println(casilla.getY());
 		System.err.println(map[casilla.getX()][casilla.getY()]);
-
+*/
 		
 		/*
 		System.out.println("Esquina Superior IZQ");
@@ -194,9 +295,11 @@ public class TileMap {
 		
 				tileToDraw = map[row][col] -1;
 				
-				px = (int) ((col - row) * (tileWidthSize / 2) - this.x);
-				py = (int) ((col + row) * (tileHeightSize / 2) - this.y);
-
+				
+				Point coorToDraw = mapToAbsolute(new Point(col, row));
+				px = (int) (coorToDraw.x - this.x);
+				py = (int) (coorToDraw.y - this.y);
+						
 				g.drawImage(tiles[tileToDraw].getImage(), px, py, null);
 			}
 		}

@@ -19,8 +19,8 @@ public class Level1Stage extends Stage {
 		tileMap = new TileMap(64, 32);
 		tileMap.loadMap("/maps/map.txt");
 		//tileMap.setPosition(-GamePanel.RESOLUTION_WIDTH / 2 , 0);
-		tileMap.setPosition(-GamePanel.RESOLUTION_WIDTH / 2 - 150, 0);
-		//tileMap.setPosition(-GamePanel.RESOLUTION_WIDTH / 2, -100);
+		//tileMap.setPosition(-GamePanel.RESOLUTION_WIDTH / 2 - 150, 0);
+		tileMap.setPosition(-GamePanel.RESOLUTION_WIDTH / 2, -100);
 		//tileMap.setPosition(0, 0);
 
 		// SteveJobs sj = new SteveJobs(tileMap);
