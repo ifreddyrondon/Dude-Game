@@ -6,6 +6,9 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import utilities.Coordinate;
+
+import com.spantons.entity.Entity;
 import com.spantons.main.GamePanel;
 
 public class TileMap {
@@ -39,6 +42,17 @@ public class TileMap {
 	private int colOffSet;
 	private int numRowDraw;
 	private int numColDraw;
+	
+	// coordenadas de las esquinas
+	private int xTopLeft;
+	private int yTopLeft;
+	private int xTopRight;
+	private int yTopRight;
+	private int xBottomLeft;
+	private int yBottomLeft;
+	private int xBottomRight;
+	private int yBottomRight;
+	
 
 	// tileset
 	private TileSet tileSet;
@@ -100,11 +114,51 @@ public class TileMap {
 		this.x = x;
 		this.y = y;
 		
-		//fixBounds();
+		fixBounds();		
+			
+		// fila y columna absoluta 
+		
+		xTopLeft = (int)(this.x / tileHeightSize); 
+		yTopLeft = (int) (this.y / tileHeightSize);
+		
+		xTopRight = (int) (this.x + GamePanel.RESOLUTION_WIDTH) / tileWidthSize;
+		yTopRight = yTopLeft;
+		
+		xBottomLeft = xTopLeft;
+		yBottomLeft = (int) (this.y + GamePanel.RESOLUTION_HEIGHT) / tileHeightSize;
+	
+		xBottomRight = xTopRight;
+		yBottomRight = yBottomLeft;
+		
+		Coordinate casilla = Entity.tileWalk ("este", 0, xBottomRight);
+		casilla = Entity.tileWalk ("sur", casilla.getX(), yBottomRight);		
+		
+		System.out.println(casilla.getX());
+		System.out.println(casilla.getY());
+		System.err.println(map[casilla.getX()][casilla.getY()]);
 
-		// donde comenzar a dibujar
-		colOffSet = (int) -this.x / tileWidthSize;
-		rowOffSet = (int) -this.y / tileHeightSize;
+		
+		/*
+		System.out.println("Esquina Superior IZQ");
+		System.out.println(xTopLeft);
+		System.out.println(yTopLeft);
+		//System.err.println(map[xTopLeft][yTopLeft]);
+		System.out.println();
+		System.out.println("Esquina Superior DER");
+		System.out.println(xTopRight);
+		System.out.println(yTopRight);
+		//System.err.println(map[xTopRight][yTopRight]);
+		System.out.println();
+		System.out.println("Esquina INFERIOR IZQ");
+		System.out.println(xBottomLeft);
+		System.out.println(yBottomLeft);
+		//System.err.println(map[xBottomLeft][yBottomLeft]);
+		System.out.println();
+		System.out.println("Esquina INFERIOR DEr");
+		System.out.println(xBottomRight);
+		System.out.println(yBottomRight);
+		System.err.println(map[xBottomRight][yBottomRight]);
+		*/
 	}
 
 	private void fixBounds() {
@@ -128,17 +182,18 @@ public class TileMap {
 		int px, py, tileToDraw;
 		
 		
-		for (int row = 0; row < mapHeight; row++) {
+		for (int row = 0; row < numRowsMap; row++) {
 			// No dibujar mas de las filas que tiene el mapa
 			if (row >= numRowsMap)
 				break;
 
-			for (int col = 0; col < mapWidth; col++) {
+			for (int col = 0; col <  numColMap; col++) {
 				// No dibujar mas de las columnas que tiene el mapa
 				if (col >= numColMap)
 				break;
 		
 				tileToDraw = map[row][col] -1;
+				
 				px = (int) ((col - row) * (tileWidthSize / 2) - this.x);
 				py = (int) ((col + row) * (tileHeightSize / 2) - this.y);
 
@@ -146,6 +201,8 @@ public class TileMap {
 			}
 		}
 		
+		
+	
 		
 	}
 	

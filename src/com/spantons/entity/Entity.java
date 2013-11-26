@@ -3,6 +3,8 @@ package com.spantons.entity;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import utilities.Coordinate;
+
 public class Entity {
 
 	// Animacion
@@ -59,8 +61,7 @@ public class Entity {
 	protected double maxFallSpeed;
 	protected double jumpStart;
 	protected double reducerJumpSpeed;
-	
-	
+		
 
 	public Rectangle getRectangle() {
 		return new Rectangle((int) x - collisionBoxWidth, (int) y
@@ -80,6 +81,51 @@ public class Entity {
 		return r1.intersects(r2);
 	}
 
+	public static Coordinate tileWalk(String direction, int x, int y){
+		Coordinate coor = new Coordinate();
+		
+		if (direction.equals("ninguna")) {
+			coor.setX(x);
+			coor.setY(y);
+			return coor;
+		} else if (direction.equals("norte")) {
+			coor.setX(x -1);
+			coor.setY(y - 1);
+			return coor;
+		} else if (direction.equals("norte este")) {
+			coor.setX(x);
+			coor.setY(y - 1);
+			return coor;
+		} else if (direction.equals("este")) {
+			coor.setX(x + 1);
+			coor.setY(y - 1);
+			return coor;
+		} else if (direction.equals("sur este")) {
+			coor.setX(x + 1);
+			coor.setY(y);
+			return coor;
+		} else if (direction.equals("sur")) {
+			coor.setX(x + 1);
+			coor.setY(y + 1);
+			return coor;
+		} else if (direction.equals("sur oeste")) {
+			coor.setX(x);
+			coor.setY(y + 1);
+			return coor;
+		} else if (direction.equals("oeste")) {
+			coor.setX(x - 1);
+			coor.setY(y + 1);
+			return coor;
+		} else if (direction.equals("norte oeste")) {
+			coor.setX(x - 1);
+			coor.setY(y);
+			return coor;
+		}
+				
+		return null;
+	}
+	
+	
 	public void update() {
 	};
 
