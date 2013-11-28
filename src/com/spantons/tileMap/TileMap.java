@@ -3,6 +3,7 @@ package com.spantons.tileMap;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -48,6 +49,7 @@ public class TileMap {
 	// tileset
 	private TileSet tileSet;
 
+	/****************************************************************************************/
 	public TileMap(int tileWidthSize, int tileHeightSize) {
 
 		tileSet = new TileSet("/tilesets/isometric_grass_and_water.png",
@@ -61,6 +63,7 @@ public class TileMap {
 		numColDraw = (GamePanel.RESOLUTION_WIDTH / tileWidthSize) + 2;
 	}
 
+	/****************************************************************************************/
 	public void loadMap(String s) {
 
 		try {
@@ -76,10 +79,10 @@ public class TileMap {
 			mapWidth = numColMap * tileWidthSize;
 			mapHeight = numRowsMap * tileHeightSize;
 
-			xMin = GamePanel.RESOLUTION_WIDTH - mapWidth;
-			xMax = 0;
-			yMin = GamePanel.RESOLUTION_HEIGHT - mapHeight;
-			yMax = 0;
+			xMin = GamePanel.RESOLUTION_WIDTH - mapWidth + tileWidthSize / 2;
+			xMax = tileWidthSize / 2;
+			yMin = tileHeightSize / 2;
+			yMax = mapHeight - GamePanel.RESOLUTION_HEIGHT + tileHeightSize / 2;
 
 			// llenamos la matriz map
 			String delimsChar = "\\s+";
@@ -95,21 +98,29 @@ public class TileMap {
 			e.printStackTrace();
 		}
 	}
-
+	/****************************************************************************************/
 	public Point absoluteToMap(int x, int y) {
 		int mapX = (x / (tileWidthSize / 2) + y / (tileHeightSize / 2)) / 2;
 		int mapY = (y / (tileHeightSize / 2) - (x / (tileWidthSize / 2))) / 2;
 
 		return new Point(mapX, mapY);
 	}
-
+	/****************************************************************************************/
 	public Point mapToAbsolute(int x, int y) {
 		int absoluteX = (int) ((x - y) * (tileWidthSize / 2));
 		int absoluteY = (int) ((x + y) * (tileHeightSize / 2));
 
 		return new Point(absoluteX, absoluteY);
 	}
-
+	/****************************************************************************************/
+	private void fixBounds() {
+		if (x < xMin) x = xMin;
+		if (x > xMax) x = xMax;
+		if (y < yMin) y = yMin;
+		if (y > yMax) y = yMax;
+	}
+	/****************************************************************************************/
+	
 	public void setPosition(double x, double y) {
 
 		// Probando efecto suavisado el seguimiento de la camara
@@ -120,30 +131,23 @@ public class TileMap {
 		this.y = y;
 
 		fixBounds();
+		
+		int leftMost = (int) x - tileWidthSize * 2;
+		int rightMost = (int) x + tileWidthSize * 2 + GamePanel.RESOLUTION_WIDTH; 
+		int topMost = (int) y - tileHeightSize * 2;
+		int bottomMost = (int) y + tileHeightSize * 2 + GamePanel.RESOLUTION_HEIGHT;
 
-		/************************************************/
-		coorMapTopLeft = absoluteToMap((int) x - tileWidthSize, (int) y);
-		coorMapTopRight = absoluteToMap(
-				(int) (x + GamePanel.RESOLUTION_WIDTH), (int) y);
-		coorMapBottomLeft = absoluteToMap((int) x - tileWidthSize,
-				(int) (y + GamePanel.RESOLUTION_HEIGHT));
-		coorMapBottomRight = absoluteToMap(
-				(int) (x + GamePanel.RESOLUTION_WIDTH),
-				(int) (y + GamePanel.RESOLUTION_HEIGHT));
-
+		coorMapTopLeft = absoluteToMap(leftMost, topMost);
+		coorMapTopRight = absoluteToMap(rightMost, topMost);
+		coorMapBottomLeft = absoluteToMap(leftMost, bottomMost);
+		coorMapBottomRight = absoluteToMap(rightMost, bottomMost);
+		
 	}
-
-	private void fixBounds() {
-		if (x < xMin)
-			x = xMin;
-		if (y < yMin)
-			y = yMin;
-		if (x > xMax)
-			x = xMax;
-		if (y > yMax)
-			y = yMax;
+	/****************************************************************************************/
+	public void update(){
+		setPosition(x, y);
 	}
-
+	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 		// Pintamos el fondo de gris
 		g.setColor(Color.gray);
@@ -151,6 +155,28 @@ public class TileMap {
 				GamePanel.RESOLUTION_HEIGHT);
 
 		Tile[] tiles = tileSet.getTiles();
+		
+		/*
+		for (int row = 0; row < mapHeight; row++) {
+		//for (int row = 0; row < numRowsMap; row++) {
+			 // No dibujar mas de las filas que tiene el mapa
+			 if (row >= numRowsMap)
+			 	break;
+			 
+			for (int col = 0; col < mapWidth; col++) {
+			//for (int col = 0; col <  numColMap; col++) {
+				// No dibujar mas de las columnas que tiene el mapa
+			 	if (col >= numColMap)
+			 		break;
+			 		
+			 	int tileToDraw = map[row][col] -1;
+				int px = (int) ((col - row) * (tileWidthSize / 2) - this.x);
+				int py = (int) ((col + row) * (tileHeightSize / 2) - this.y);
+			 
+				g.drawImage(tiles[tileToDraw].getImage(), px, py, null);
+			 }
+		}
+		*/
 		
 		// banderas de dibujado
 		boolean completed, completedRow;
@@ -161,6 +187,7 @@ public class TileMap {
 		completed = false;
 		firstTileOfRowToDraw = coorMapTopLeft;
 		finalTileOfRowToDraw = coorMapTopRight;
+		
 
 		// Para cada fila
 		while (!completed) {
@@ -189,20 +216,19 @@ public class TileMap {
 						&& currentTile.y == finalTileOfRowToDraw.y)
 					completedRow = true;
 				else
-					currentTile = Entity.tileWalk("este", currentTile,
-							1);
+					currentTile = Entity.tileWalk("este", currentTile,1);
 
 			}
-
+			
 			// Comprobamos si la fila recorrida era la ultima
-			if (firstTileOfRowToDraw.x == coorMapBottomLeft.x
-					&& firstTileOfRowToDraw.y == coorMapBottomLeft.y
-					&& finalTileOfRowToDraw.x == coorMapBottomRight.x
-					&& finalTileOfRowToDraw.y == coorMapBottomRight.y)
+			if (	firstTileOfRowToDraw.x > coorMapBottomLeft.x 
+				&& firstTileOfRowToDraw.y > coorMapBottomLeft.y
+				&& finalTileOfRowToDraw.x > coorMapBottomRight.x 
+				&& finalTileOfRowToDraw.y > coorMapBottomRight.y){
 				completed = true;
-
+			
+			}	
 			else {
-
 				// Si no lo era, movemos las casillas de inicio y fin
 				// hacia abajo para comenzar con la siguiente
 
@@ -214,7 +240,6 @@ public class TileMap {
 
 				} else {
 					// Fila par
-
 					firstTileOfRowToDraw = Entity.tileWalk("sur este",
 							firstTileOfRowToDraw, 1);
 					finalTileOfRowToDraw = Entity
@@ -224,8 +249,9 @@ public class TileMap {
 				++contadorFilas;
 			}
 		}
+		
 	}
-
+	/****************************************************************************************/
 	public int getTileWidthSize() {
 		return tileWidthSize;
 	}
@@ -249,5 +275,22 @@ public class TileMap {
 	public int getMapHeight() {
 		return mapHeight;
 	}
+	/****************************************************************************************/
+	public void keyPressed(int k) {
+		if (k == KeyEvent.VK_UP)
+			y = y - tileHeightSize;
+		if (k == KeyEvent.VK_DOWN)
+			y = y + tileHeightSize;
+		if (k == KeyEvent.VK_LEFT)
+			x =  x - tileWidthSize;
+		if (k == KeyEvent.VK_RIGHT)
+			x =  x + tileWidthSize;
+	}
+
+	public void keyReleased(int k) {
+		// TODO Auto-generated method stub
+
+	}
+	
 
 }
