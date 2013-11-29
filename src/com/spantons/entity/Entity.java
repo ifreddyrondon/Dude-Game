@@ -140,11 +140,13 @@ public class Entity {
 					&& currentPosition.y < tileMap.getNumRowsMap()) {
 				
 				if (dx != 0 && dy == 0) {
-					if (dx < 0) currentPosition = tileWalk("oeste", currentPosition, 1);
-					if (dx > 0) currentPosition = tileWalk("este", currentPosition, 1);
+					if (dx < 0) currentPosition = tileWalk("norte oeste", currentPosition, 1);
+					if (dx > 0) currentPosition = tileWalk("sur este", currentPosition, 1);
 				} else if (dx == 0 && dy != 0) {
-					if (dy < 0) currentPosition = tileWalk("norte", currentPosition, 1);
-					if (dy > 0) currentPosition = tileWalk("sur", currentPosition, 1);
+					if (dy < 0) currentPosition = tileWalk("norte este", currentPosition, 1);
+					if (dy > 0) currentPosition = tileWalk("sur oeste", currentPosition, 1);
+				} else {
+					System.err.println("a");
 				}
 				
 				nextPosition = TileMap.mapToAbsolute(currentPosition.x, currentPosition.y);

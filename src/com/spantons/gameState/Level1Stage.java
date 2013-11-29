@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import com.spantons.entity.Entity;
 import com.spantons.entity.character.SteveJobs;
-import com.spantons.main.GamePanel;
 import com.spantons.tileMap.TileMap;
 
 public class Level1Stage extends Stage {
@@ -62,7 +61,7 @@ public class Level1Stage extends Stage {
 				GamePanel.RESOLUTION_HEIGHT / 2
 						- characters.get(currentCharacter).getY());
 		*/
-		//tileMap.update();
+		tileMap.update();
 	}
 	/****************************************************************************************/
 	@Override
