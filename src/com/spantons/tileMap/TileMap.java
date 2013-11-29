@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,13 +14,7 @@ import com.spantons.main.GamePanel;
 
 public class TileMap {
 
-	/**
-	 * Posicion X en el TileMap
-	 */
 	private double x;
-	/**
-	 * Posicion Y en el TileMap
-	 */
 	private double y;
 
 	// limites
@@ -30,8 +25,8 @@ public class TileMap {
 
 	// mapa
 	private int[][] map;
-	private int tileWidthSize;
-	private int tileHeightSize;
+	public static int tileWidthSize;
+	public static int tileHeightSize;
 	private int numRowsMap;
 	private int numColMap;
 	private int mapWidth;
@@ -43,24 +38,19 @@ public class TileMap {
 	private Point coorMapBottomLeft;
 	private Point coorMapBottomRight;
 
-	private int numRowDraw;
-	private int numColDraw;
-
 	// tileset
 	private TileSet tileSet;
+	private Tile[] tiles;
 
 	/****************************************************************************************/
-	public TileMap(int tileWidthSize, int tileHeightSize) {
+	public TileMap(int _tileWidthSize, int _tileHeightSize) {
 
 		tileSet = new TileSet("/tilesets/isometric_grass_and_water.png",
 				64, 64, 0, 0);
 
-		this.tileWidthSize = tileWidthSize;
-		this.tileHeightSize = tileHeightSize;
-		// Obtenemos el numero de filas y columnas a dibujar segun la
-		// resolucion, y sumamos 2 para mantener el Buffer un poco mas largo
-		numRowDraw = (GamePanel.RESOLUTION_HEIGHT / tileHeightSize) + 2;
-		numColDraw = (GamePanel.RESOLUTION_WIDTH / tileWidthSize) + 2;
+		tileWidthSize = _tileWidthSize;
+		tileHeightSize = _tileHeightSize;
+		 tiles = tileSet.getTiles();
 	}
 
 	/****************************************************************************************/
@@ -99,21 +89,21 @@ public class TileMap {
 		}
 	}
 	/****************************************************************************************/
-	public Point absoluteToMap(int x, int y) {
-		int mapX = (x / (tileWidthSize / 2) + y / (tileHeightSize / 2)) / 2;
-		int mapY = (y / (tileHeightSize / 2) - (x / (tileWidthSize / 2))) / 2;
+	public static Point absoluteToMap(double x, double y) {
+		int mapX = (int) ((x / (tileWidthSize / 2) + y / (tileHeightSize / 2)) / 2);
+		int mapY = (int) ((y / (tileHeightSize / 2) - (x / (tileWidthSize / 2))) / 2);
 
 		return new Point(mapX, mapY);
 	}
 	/****************************************************************************************/
-	public Point mapToAbsolute(int x, int y) {
-		int absoluteX = (int) ((x - y) * (tileWidthSize / 2));
-		int absoluteY = (int) ((x + y) * (tileHeightSize / 2));
+	public static Point2D.Double mapToAbsolute(double x, double y) {
+		double absoluteX = ((x - y) * (tileWidthSize / 2));
+		double absoluteY = ((x + y) * (tileHeightSize / 2));
 
-		return new Point(absoluteX, absoluteY);
+		return new Point2D.Double(absoluteX, absoluteY);
 	}
 	/****************************************************************************************/
-	private void fixBounds() {
+	public void fixBounds() {
 		if (x < xMin) x = xMin;
 		if (x > xMax) x = xMax;
 		if (y < yMin) y = yMin;
@@ -124,37 +114,106 @@ public class TileMap {
 	public void setPosition(double x, double y) {
 
 		// Probando efecto suavisado el seguimiento de la camara
-		// this.x += (x - this.x) * 0.1;
-		// this.y += (y - this.y) * 0.1;
+		this.x += (x - this.x) * 0.1;
+		this.y += (y - this.y) * 0.1;
 
-		this.x = x;
-		this.y = y;
-
-		fixBounds();
-		
-		int leftMost = (int) x - tileWidthSize * 2;
-		int rightMost = (int) x + tileWidthSize * 2 + GamePanel.RESOLUTION_WIDTH; 
-		int topMost = (int) y - tileHeightSize * 2;
-		int bottomMost = (int) y + tileHeightSize * 2 + GamePanel.RESOLUTION_HEIGHT;
-
-		coorMapTopLeft = absoluteToMap(leftMost, topMost);
-		coorMapTopRight = absoluteToMap(rightMost, topMost);
-		coorMapBottomLeft = absoluteToMap(leftMost, bottomMost);
-		coorMapBottomRight = absoluteToMap(rightMost, bottomMost);
-		
+		//fixBounds();				
 	}
 	/****************************************************************************************/
 	public void update(){
-		setPosition(x, y);
+		 setPosition(x, y);
 	}
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 		// Pintamos el fondo de gris
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, GamePanel.RESOLUTION_WIDTH,
-				GamePanel.RESOLUTION_HEIGHT);
+						GamePanel.RESOLUTION_HEIGHT);
 
-		Tile[] tiles = tileSet.getTiles();
+		coorMapTopLeft = absoluteToMap(x, y);
+		coorMapTopRight = absoluteToMap(x + GamePanel.RESOLUTION_WIDTH, y);
+		coorMapBottomLeft = absoluteToMap(x, y + GamePanel.RESOLUTION_HEIGHT);
+		coorMapBottomRight = absoluteToMap(x + GamePanel.RESOLUTION_WIDTH, y + GamePanel.RESOLUTION_HEIGHT);
+		
+		//Desplazamos cada esquina para alejarnos de la pantalla
+		coorMapTopLeft = Entity.tileWalk("norte oeste", coorMapTopLeft, 3);
+		coorMapTopRight = Entity.tileWalk ("norte este", coorMapTopRight, 3);
+		coorMapBottomLeft = Entity.tileWalk ("sur oeste", coorMapBottomLeft, 3);
+		coorMapBottomRight = Entity.tileWalk ("sur este", coorMapBottomRight, 3);
+
+		//Desplazamos las esquinas inferiores 2 pasos al sur para compensar por los objetos altos
+		coorMapBottomLeft = Entity.tileWalk ("sur", coorMapBottomLeft, 2);
+		coorMapBottomRight = Entity.tileWalk ("sur", coorMapBottomRight, 2);
+
+		// banderas de dibujado
+		boolean completed, completedRow;
+		Point firstTileOfRowToDraw, finalTileOfRowToDraw, currentTile;
+		Point2D.Double coorToDraw;
+		int rowCounter = 0;
+
+		completed = false;
+		firstTileOfRowToDraw = coorMapTopLeft;
+		finalTileOfRowToDraw = coorMapTopRight;		
+		
+		// Para cada fila
+		while (!completed) {
+			completedRow = false;
+			// Seleccionamos la primera casilla
+			currentTile = firstTileOfRowToDraw;
+			
+			// Para cada casilla
+			while (!completedRow) {
+				// Comprobamos que no sea transparente para pintarlo
+				if (currentTile.x >= 0 && currentTile.y >= 0
+						&& currentTile.x < numColMap
+						&& currentTile.y < numRowsMap) {
+					
+					coorToDraw = mapToAbsolute(currentTile.x,currentTile.y);
+					
+					g.drawImage(
+							tiles[map[currentTile.y][currentTile.x] - 1].getImage(), 
+							(int) (coorToDraw.x - this.x), 
+							(int) (coorToDraw.y - this.y),
+							null);
+				}
+				// Si llego al final de la fila nos salimos
+				if (currentTile.x == finalTileOfRowToDraw.x
+						&& currentTile.y == finalTileOfRowToDraw.y)
+					completedRow = true;
+				else 
+					currentTile = Entity.tileWalk("este", currentTile,1);
+						
+			}
+			
+			// Comprobamos si la fila recorrida era la ultima
+			if (	firstTileOfRowToDraw.x > coorMapBottomLeft.x && 
+				firstTileOfRowToDraw.y > coorMapBottomLeft.y &&
+				finalTileOfRowToDraw.x > coorMapBottomRight.x && 
+				finalTileOfRowToDraw.y > coorMapBottomRight.y)
+				completed = true;
+			
+			else {
+				// Si no lo era, movemos las casillas de inicio y fin
+				// hacia abajo para comenzar con la siguiente
+
+				if (rowCounter % 2 != 0) {
+					// Fila impar
+					firstTileOfRowToDraw = Entity.tileWalk("sur oeste",
+							firstTileOfRowToDraw, 1);
+					finalTileOfRowToDraw = Entity.tileWalk("sur este", finalTileOfRowToDraw, 1);
+
+				} else {
+					// Fila par
+					firstTileOfRowToDraw = Entity.tileWalk("sur este",
+							firstTileOfRowToDraw, 1);
+					finalTileOfRowToDraw = Entity
+							.tileWalk("sur oeste", finalTileOfRowToDraw, 1);
+
+				}
+				rowCounter++;
+			}
+		}
+		
 		
 		/*
 		for (int row = 0; row < mapHeight; row++) {
@@ -178,78 +237,6 @@ public class TileMap {
 		}
 		*/
 		
-		// banderas de dibujado
-		boolean completed, completedRow;
-		
-		Point firstTileOfRowToDraw, finalTileOfRowToDraw, currentTile;
-		int contadorFilas = 0;
-
-		completed = false;
-		firstTileOfRowToDraw = coorMapTopLeft;
-		finalTileOfRowToDraw = coorMapTopRight;
-		
-
-		// Para cada fila
-		while (!completed) {
-			completedRow = false;
-			// Seleccionamos la primera casilla
-			currentTile = firstTileOfRowToDraw;
-			
-			// Para cada casilla
-			while (!completedRow) {
-				// Comprobamos que no sea transparente para pintarlo
-				if (currentTile.x >= 0 && currentTile.y >= 0
-						&& currentTile.x < numColMap
-						&& currentTile.y < numRowsMap) {
-					
-					Point coorToDraw = mapToAbsolute(currentTile.x,
-							currentTile.y);
-					int px = (int) (coorToDraw.x - this.x);
-					int py = (int) (coorToDraw.y - this.y);
-
-					int tileToDraw = map[currentTile.y][currentTile.x] - 1;
-					g.drawImage(tiles[tileToDraw].getImage(), px, py,
-							null);
-				}
-				// Si llego al final de la fila nos salimos
-				if (currentTile.x == finalTileOfRowToDraw.x
-						&& currentTile.y == finalTileOfRowToDraw.y)
-					completedRow = true;
-				else
-					currentTile = Entity.tileWalk("este", currentTile,1);
-
-			}
-			
-			// Comprobamos si la fila recorrida era la ultima
-			if (	firstTileOfRowToDraw.x > coorMapBottomLeft.x 
-				&& firstTileOfRowToDraw.y > coorMapBottomLeft.y
-				&& finalTileOfRowToDraw.x > coorMapBottomRight.x 
-				&& finalTileOfRowToDraw.y > coorMapBottomRight.y){
-				completed = true;
-			
-			}	
-			else {
-				// Si no lo era, movemos las casillas de inicio y fin
-				// hacia abajo para comenzar con la siguiente
-
-				if (contadorFilas % 2 != 0) {
-					// Fila impar
-					firstTileOfRowToDraw = Entity.tileWalk("sur oeste",
-							firstTileOfRowToDraw, 1);
-					finalTileOfRowToDraw = Entity.tileWalk("sur este", finalTileOfRowToDraw, 1);
-
-				} else {
-					// Fila par
-					firstTileOfRowToDraw = Entity.tileWalk("sur este",
-							firstTileOfRowToDraw, 1);
-					finalTileOfRowToDraw = Entity
-							.tileWalk("sur oeste", finalTileOfRowToDraw, 1);
-
-				}
-				++contadorFilas;
-			}
-		}
-		
 	}
 	/****************************************************************************************/
 	public int getTileWidthSize() {
@@ -268,12 +255,24 @@ public class TileMap {
 		return y;
 	}
 
+	public int[][] getMap() {
+		return map;
+	}
+	
 	public int getMapWidth() {
 		return mapWidth;
 	}
 
 	public int getMapHeight() {
 		return mapHeight;
+	}
+	
+	public int getNumColMap() {
+		return numColMap;
+	}
+	
+	public int getNumRowsMap() {
+		return numRowsMap;
 	}
 	/****************************************************************************************/
 	public void keyPressed(int k) {

@@ -45,7 +45,7 @@ public class MenuStage extends Stage {
 
 			// Personajes
 			characters = new ArrayList<Entity>();
-			SteveJobs sj = new SteveJobs(bg);
+			SteveJobs sj = new SteveJobs(null , 0.5);
 			sj.setPosition(180, 250);
 			characters.add(sj);
 

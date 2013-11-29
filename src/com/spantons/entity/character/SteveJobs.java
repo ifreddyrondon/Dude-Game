@@ -9,32 +9,36 @@ import javax.imageio.ImageIO;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
-import com.spantons.tileMap.Background;
+import com.spantons.tileMap.TileMap;
 
 public class SteveJobs extends Entity {
 
 	// Personaje
+	/*
 	private int health;
 	private int maxHealth;
 	private boolean dead;
 	private boolean recovery;
 	private long recoveryTimer;
+	*/
 
 	// Animacion
 	private ArrayList<BufferedImage[]> sprites;
 
 	// Acciones de la animacion
-	private static final int GIVING_BACK = 0;
-	private static final int IDLE = 1;
-	private static final int WALKING = 2;
-	private static final int FALLING = 0;
-	private static final int JUMPING = 0;
+	private static final int WALKING_BACK = 0;
+	private static final int WALKING_FRONT = 1;
+	private static final int IDLE = 2;
+	private static final int WALKING = 3;
+	//private static final int FALLING = 1;
+	//private static final int JUMPING = 1;
 
-	
-	
-	public SteveJobs(Background bg) {
-
-		scale = 0.5;
+	/****************************************************************************************/
+	public SteveJobs(TileMap tm, double sc) {
+		
+		super(tm);
+		
+		scale = sc;
 
 		// Tamano original de cada sprite 320x460, le sumo 2 a cada
 		// proporcion por el inner padding de 10 a cada lado de los sprites
@@ -44,8 +48,8 @@ public class SteveJobs extends Entity {
 		collisionBoxWidth = (int) (320 * scale);
 		collisionBoxHeight = (int) (460 * scale);
 
-		health = maxHealth = 5;
-		dead = false;
+		//health = maxHealth = 5;
+		//dead = false;
 
 		moveSpeed = 0.3;
 		maxMoveSpeed = 1.6;
@@ -65,7 +69,7 @@ public class SteveJobs extends Entity {
 		animation.setDelayTime(1000);
 
 	}
-
+	/****************************************************************************************/
 	private void loadSprite() {
 		try {
 
@@ -89,11 +93,19 @@ public class SteveJobs extends Entity {
 
 			sprites = new ArrayList<BufferedImage[]>();
 
+			// WALKING_BACK
 			BufferedImage[] bi = new BufferedImage[1];
 			bi[0] = spriteSheet.getSubimage(0, 0, spriteWidth,
 					spriteHeight);
 			sprites.add(bi);
+			
+			// WALKING_FRONT
+			bi = new BufferedImage[1];
+			bi[0] = spriteSheet.getSubimage(spriteWidth, 0, spriteWidth,
+					spriteHeight);
+			sprites.add(bi);
 
+			// IDLE
 			bi = new BufferedImage[4];
 			bi[0] = spriteSheet.getSubimage(spriteWidth, 0, spriteWidth,
 					spriteHeight);
@@ -105,6 +117,7 @@ public class SteveJobs extends Entity {
 					spriteHeight);
 			sprites.add(bi);
 
+			// WALKING
 			bi = new BufferedImage[3];
 			bi[0] = spriteSheet.getSubimage(spriteWidth, spriteHeight,
 					spriteWidth, spriteHeight);
@@ -118,81 +131,68 @@ public class SteveJobs extends Entity {
 			e.printStackTrace();
 		}
 	}
-
+	/****************************************************************************************/
 	private void getNextPosition() {
-		// Saltar
-		if (movJumping && !movFalling) {
-			dy = jumpStart;
-			movFalling = true;
-		}
-		// Caer
-		else if (movFalling) {
-			// Mientras mas tiempo esta activo movSaltar mas aumenta la
-			// velodidad de caida (gravedad)
-			dy += fallSpeed;
-
-			// Si dy es positivo quiere decir que ya va cayendo
-			if (dy > 0)
-				movJumping = false;
-			// Si aun sigue subiendo pero ya no esta saltando entonces
-			// vamos frenando el salto
-			if (dy < 0 && !movJumping)
-				dy += reducerJumpSpeed;
-			// Si la velocidad de caida alcanza la velocidad maxima a la
-			// que puede caer entonces deja de crecer
-			if (dy > maxFallSpeed)
-				dy = maxFallSpeed;
-		}
+		
 		// Izquierda
 		// Mientras mas tiempo esta activo movIzquiera o derecha mas aumenta
 		// la velocidad sin embargo esta limitado por la maxima velocidad de
 		// movimiento
-		if (movLeft) {
+		if (movUp) {
+			dy -= moveSpeed;
+			if (dy < -maxMoveSpeed) dy = -maxMoveSpeed; 
+			
+		} else if (movDown) {
+			dy += moveSpeed;
+			if (dy > maxMoveSpeed) dy = maxMoveSpeed;
+			
+		} else if (movLeft) {
 			dx -= moveSpeed;
-			if (dx < -maxMoveSpeed)
-				dx = -maxMoveSpeed;
+			if (dx < -maxMoveSpeed) dx = -maxMoveSpeed;
 
-			// Derecha
 		} else if (movRight) {
 			dx += moveSpeed;
-			if (dx > maxMoveSpeed)
-				dx = maxMoveSpeed;
+			if (dx > maxMoveSpeed) dx = maxMoveSpeed;
 
-			// Si no esta oprimiendo ningun boton para alguna accion de
-			// movimiento hacia los lados
+		// Si no esta oprimiendo ningun boton para alguna accion de 
+		// movimiento frenamos
 		} else {
-			// Si iba hacia la derecha
-			if (dx > 0) {
-				// Frenamos
+			if (dy < 0) {
+				dy += recuderMoveSpeed;
+				if (dy > 0) dy = 0;
+				
+			} else if (dy > 0) {
+				dy -= recuderMoveSpeed;
+				if (dy < 0) dy = 0;
+			
+			} else if (dx > 0) {
 				dx -= recuderMoveSpeed;
-				if (dx < 0)
-					dx = 0;
-				// Si iba hacia la izquierda
+				if (dx < 0) dx = 0;
+
 			} else if (dx < 0) {
-				// Frenamos
 				dx += recuderMoveSpeed;
-				if (dx > 0) {
-					dx = 0;
-				}
+				if (dx > 0) dx = 0;
 			}
 		}
 
 	}
-
+	/****************************************************************************************/
 	public void update() {
 
 		getNextPosition();
+		checkTileMapCollisionAndUpdateCoord();
+		setPosition((int)xDest,(int) yDest);
 
 		if (dy > 0) {
-			if (currentAnimation != FALLING) {
-				currentAnimation = FALLING;
-				animation.setFrames(sprites.get(FALLING));
+			if (currentAnimation != WALKING_FRONT) {
+				currentAnimation = WALKING_FRONT;
+				animation.setFrames(sprites.get(WALKING_FRONT));
 				animation.setDelayTime(100);
 			}
 		} else if (dy < 0) {
-			if (currentAnimation != JUMPING) {
-				currentAnimation = JUMPING;
-				animation.setFrames(sprites.get(JUMPING));
+			if (currentAnimation != WALKING_BACK) {
+				currentAnimation = WALKING_BACK;
+				animation.setFrames(sprites.get(WALKING_BACK));
 				animation.setDelayTime(40);
 			}
 		} else if (movLeft || movRight) {
@@ -217,7 +217,7 @@ public class SteveJobs extends Entity {
 
 		animation.update();
 	}
-
+	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 		super.draw(g);
 	}

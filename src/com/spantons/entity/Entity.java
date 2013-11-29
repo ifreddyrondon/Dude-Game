@@ -3,6 +3,9 @@ package com.spantons.entity;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.Point2D;
+
+import com.spantons.tileMap.TileMap;
 
 public class Entity {
 
@@ -13,13 +16,13 @@ public class Entity {
 	protected boolean facingRight;
 
 	// Tile
-	protected int tileSize;
-	protected double xMap;
-	protected double yMap;
+	protected TileMap tileMap;
+	protected int xMap;
+	protected int yMap;
 
 	// Posicion y vector
-	protected double x;
-	protected double y;
+	protected int x;
+	protected int y;
 	protected double dx;
 	protected double dy;
 
@@ -60,14 +63,22 @@ public class Entity {
 	protected double maxFallSpeed;
 	protected double jumpStart;
 	protected double reducerJumpSpeed;
+	
+	protected boolean flinching;
+	protected long flinchingTime;
 		
-
+	/****************************************************************************************/
+	public Entity(TileMap tm) {
+		if (tm != null) 
+			tileMap = tm;
+	}
+	/****************************************************************************************/
 	public Rectangle getRectangle() {
 		return new Rectangle((int) x - collisionBoxWidth, (int) y
 				- collisionBoxHeight, collisionBoxWidth,
 				collisionBoxHeight);
 	}
-
+	/****************************************************************************************/
 	/**
 	 * Interseccion entre 2 rectangulos
 	 * 
@@ -79,7 +90,7 @@ public class Entity {
 		Rectangle r2 = e.getRectangle();
 		return r1.intersects(r2);
 	}
-
+	/****************************************************************************************/
 	public static Point tileWalk(String direction, Point coor, int steps){
 		
 		if (direction.equals("ninguna"))
@@ -111,10 +122,69 @@ public class Entity {
 				
 		return null;
 	}
+	/****************************************************************************************/
+	public void checkTileMapCollisionAndUpdateCoord(){
+		
+		if (flinching) {
+			long elapsedTime = (System.nanoTime() - flinchingTime) / 1000000;
+			// si tiempo transcurrido es mayor que un segundo
+			if (elapsedTime > 200) flinching = false;
+		}
+		else {
+			//System.out.println("x: " + x + " ; " + "y: " + y);
+			Point currentPosition = TileMap.absoluteToMap(x, y);
+			Point2D.Double nextPosition = null;
+			
+			if (currentPosition.x >= 0 && currentPosition.y >= 0
+					&& currentPosition.x < tileMap.getNumColMap()
+					&& currentPosition.y < tileMap.getNumRowsMap()) {
+				
+				if (dx != 0 && dy == 0) {
+					if (dx < 0) currentPosition = tileWalk("oeste", currentPosition, 1);
+					if (dx > 0) currentPosition = tileWalk("este", currentPosition, 1);
+				} else if (dx == 0 && dy != 0) {
+					if (dy < 0) currentPosition = tileWalk("norte", currentPosition, 1);
+					if (dy > 0) currentPosition = tileWalk("sur", currentPosition, 1);
+				}
+				
+				nextPosition = TileMap.mapToAbsolute(currentPosition.x, currentPosition.y);
+				xDest = nextPosition.x;
+				yDest = nextPosition.y;
+				
+				flinching = true;
+				flinchingTime = System.nanoTime();
+				
+					//System.out.println("mapX: " + currentPosition.x + "' ; " + "mapY: " + currentPosition.y);
+					//System.out.println("NextX: " + nextPosition.x + "' ; " + "NextY: " + nextPosition.y);
+			
+			}
+		}
+		
+		
+		/*
+		Point currentPosition = TileMap.absoluteToMap(x, y);
+		Point destination = null;
 	
+		
+		
+		
+		System.out.println("x: " + x + "' ; " + "y: " + y);
+		System.out.println("mapX: " + currentPosition.x + "' ; " + "mapY: " + currentPosition.y);
+		System.out.println("DestinationMapX: " + destination.x + "' ; " + "DestinationMapY: " + destination.y);
+		
+		//destination = TileMap.mapToAbsolute(destination.x, destination.y);
+		
+		System.out.println("newX: " + destination.x + "' ; " + "newY: " + destination.y);
+		System.out.println();
+		System.out.println();
+		
+		xDest = destination.x;
+		yDest = destination.y;
+		*/
 	
-	public void update() {
-	};
+	}
+	/****************************************************************************************/
+	public void update() {}
 
 	public void draw(Graphics2D g) {
 
@@ -129,7 +199,7 @@ public class Entity {
 					-spriteWidth, spriteHeight, null);
 		}
 	}
-
+	/****************************************************************************************/
 	// Setter and Getter
 	public int getX() {
 		return (int) x;
@@ -163,7 +233,7 @@ public class Entity {
 		this.scale = scale;
 	}
 
-	public void setPosition(double x, double y) {
+	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
