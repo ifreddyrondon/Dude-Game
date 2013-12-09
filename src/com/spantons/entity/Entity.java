@@ -1,7 +1,6 @@
 package com.spantons.entity;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 
@@ -79,111 +78,106 @@ public class Entity {
 				collisionBoxHeight);
 	}
 	/****************************************************************************************/
-	/**
-	 * Interseccion entre 2 rectangulos
-	 * 
-	 * @param e
-	 * @return
-	 */
 	public boolean intersection(Entity e) {
 		Rectangle r1 = getRectangle();
 		Rectangle r2 = e.getRectangle();
 		return r1.intersects(r2);
 	}
 	/****************************************************************************************/
-	public static Point tileWalk(String direction, Point coor, int steps){
+	public static Point2D.Double tileWalk(String direction, Point2D.Double coor, double steps){
 		
 		if (direction.equals("ninguna"))
-			return new Point(coor.x ,coor.y);
+			return new Point2D.Double(coor.x ,coor.y);
 		
 		else if (direction.equals("norte"))
-			return new Point(coor.x - steps,coor.y - steps);
+			return new Point2D.Double(coor.x - steps,coor.y - steps);
 		
 		else if (direction.equals("norte este")) 
-			return new Point(coor.x,coor.y - steps);
+			return new Point2D.Double(coor.x,coor.y - steps);
 			
 		else if (direction.equals("este")) 
-			return new Point(coor.x + steps,coor.y - steps);
+			return new Point2D.Double(coor.x + steps,coor.y - steps);
 		
 		else if (direction.equals("sur este"))
-			return new Point(coor.x + steps,coor.y);
+			return new Point2D.Double(coor.x + steps,coor.y);
 		
 		else if (direction.equals("sur"))
-			return new Point(coor.x + steps,coor.y + steps);
+			return new Point2D.Double(coor.x + steps,coor.y + steps);
 		
 		else if (direction.equals("sur oeste")) 
-			return new Point(coor.x,coor.y + steps);
+			return new Point2D.Double(coor.x,coor.y + steps);
 			
 		else if (direction.equals("oeste")) 
-			return new Point(coor.x - steps,coor.y + steps);
+			return new Point2D.Double(coor.x - steps,coor.y + steps);
 		
 		else if (direction.equals("norte oeste")) 
-			return new Point(coor.x - steps,coor.y);
+			return new Point2D.Double(coor.x - steps,coor.y);
 				
 		return null;
 	}
 	/****************************************************************************************/
-	public void checkTileMapCollisionAndUpdateCoord(){
+	public Point2D.Double updateCoord(double _x, double _y){
+		Point2D.Double currentCoord = tileMap.absoluteToMap(_x, _y);
+		
+		Point2D.Double nextPosition = null;
+		
+		if (dx != 0 && dy == 0) {
+			if (dx < 0)  
+				nextPosition = tileWalk("oeste", currentCoord, Math.abs(dx));
+			if (dx > 0) 
+				nextPosition = tileWalk("este", currentCoord, Math.abs(dx));
+		} else if (dx == 0 && dy != 0) {
+			if (dy < 0) 
+				nextPosition = tileWalk("norte", currentCoord, Math.abs(dy));
+			if (dy > 0) 
+				nextPosition = tileWalk("sur", currentCoord, Math.abs(dy));
+			
+		} else if (dx != 0 && dy != 0) {
+			if (dx < 0 && dy < 0) 
+				nextPosition = tileWalk("norte oeste", currentCoord, Math.abs(dx));
+			if (dx > 0 && dy < 0) 
+				nextPosition = tileWalk("norte este", currentCoord, Math.abs(dx));
+			if (dx < 0 && dy > 0) 
+				nextPosition = tileWalk("sur oeste", currentCoord, Math.abs(dx));
+			if (dx > 0 && dy > 0) 
+				nextPosition = tileWalk("sur este", currentCoord, Math.abs(dx));
+		}
+		return nextPosition;
+	}
+	/****************************************************************************************/
+	public void checkTileMapCollision(){
 		
 		if (flinching) {
 			long elapsedTime = (System.nanoTime() - flinchingTime) / 1000000;
 			// si tiempo transcurrido es mayor que un segundo
-			if (elapsedTime > 200) flinching = false;
-		}
-		else {
-			//System.out.println("x: " + x + " ; " + "y: " + y);
-			Point currentPosition = TileMap.absoluteToMap(x, y);
-			Point2D.Double nextPosition = null;
+			if (elapsedTime > 100) 
+				flinching = false;
+		
+		} else {
+		
+			double x = this.x + tileMap.getX();
+			double y = this.y + tileMap.getY();
 			
-			if (currentPosition.x >= 0 && currentPosition.y >= 0
-					&& currentPosition.x < tileMap.getNumColMap()
-					&& currentPosition.y < tileMap.getNumRowsMap()) {
+			Point2D.Double nextPosition = updateCoord(x, y);
+					
+			if (nextPosition.x >= 0 && nextPosition.y >= 0
+					&& nextPosition.x < tileMap.getNumColMap() + 1
+					&& nextPosition.y < tileMap.getNumRowsMap()) {
 				
-				if (dx != 0 && dy == 0) {
-					if (dx < 0) currentPosition = tileWalk("norte oeste", currentPosition, 1);
-					if (dx > 0) currentPosition = tileWalk("sur este", currentPosition, 1);
-				} else if (dx == 0 && dy != 0) {
-					if (dy < 0) currentPosition = tileWalk("norte este", currentPosition, 1);
-					if (dy > 0) currentPosition = tileWalk("sur oeste", currentPosition, 1);
-				} else {
-					System.err.println("a");
-				}
+				Point2D.Double nextAbsolutePosition = 
+						tileMap.mapToAbsolute(nextPosition.x, nextPosition.y);
 				
-				nextPosition = TileMap.mapToAbsolute(currentPosition.x, currentPosition.y);
-				xDest = nextPosition.x;
-				yDest = nextPosition.y;
-				
-				flinching = true;
-				flinchingTime = System.nanoTime();
-				
-					//System.out.println("mapX: " + currentPosition.x + "' ; " + "mapY: " + currentPosition.y);
-					//System.out.println("NextX: " + nextPosition.x + "' ; " + "NextY: " + nextPosition.y);
+				xDest = nextAbsolutePosition.x - tileMap.getX();
+				yDest = nextAbsolutePosition.y - tileMap.getY();
 			
+			} else {
+				xDest = this.x;
+				yDest = this.y;
 			}
+			
+			flinching = true;
+			flinchingTime = System.nanoTime();
 		}
-		
-		
-		/*
-		Point currentPosition = TileMap.absoluteToMap(x, y);
-		Point destination = null;
-	
-		
-		
-		
-		System.out.println("x: " + x + "' ; " + "y: " + y);
-		System.out.println("mapX: " + currentPosition.x + "' ; " + "mapY: " + currentPosition.y);
-		System.out.println("DestinationMapX: " + destination.x + "' ; " + "DestinationMapY: " + destination.y);
-		
-		//destination = TileMap.mapToAbsolute(destination.x, destination.y);
-		
-		System.out.println("newX: " + destination.x + "' ; " + "newY: " + destination.y);
-		System.out.println();
-		System.out.println();
-		
-		xDest = destination.x;
-		yDest = destination.y;
-		*/
-	
 	}
 	/****************************************************************************************/
 	public void update() {}
@@ -192,13 +186,64 @@ public class Entity {
 
 		if (facingRight) {
 			g.drawImage(animation.getCurrentImageFrame(),
-					(int) (x + xMap - spriteWidth / 2), (int) (y
-							+ yMap - spriteHeight / 2), null);
+					(int) (x + xMap - spriteWidth / 2), 
+					(int) (y + yMap - spriteHeight / 2), 
+					null);
 		} else {
-			g.drawImage(animation.getCurrentImageFrame(), (int) (x + xMap
-					- spriteWidth / 2 + spriteWidth),
+			g.drawImage(animation.getCurrentImageFrame(), 
+					(int) (x + xMap- spriteWidth / 2 + spriteWidth),
 					(int) (y + yMap - spriteHeight / 2),
-					-spriteWidth, spriteHeight, null);
+					-spriteWidth, 
+					spriteHeight, 
+					null);
+		}
+	}
+	/****************************************************************************************/
+	// Movimientos
+	public void movEntityLeft(){
+		dx -= moveSpeed;
+		if (dx < -maxMoveSpeed)	 
+			dx = -maxMoveSpeed;
+	}
+	
+	public void movEntityRight(){
+		dx += moveSpeed;
+		if (dx > maxMoveSpeed) 
+			dx = maxMoveSpeed;
+	}
+	
+	public void movEntityUp(){
+		dy -= moveSpeed;
+		if (dy < -maxMoveSpeed) 
+			dy = -maxMoveSpeed;
+	}
+	
+	public void movEntityDown(){
+		dy += moveSpeed;
+		if (dy > maxMoveSpeed) 
+			dy = maxMoveSpeed;
+	}
+	
+	public void movEntityStop(){
+		if (dy < 0) {
+			dy += recuderMoveSpeed;
+			if (dy > 0) 
+				dy = 0;
+
+		} else if (dy > 0) {
+			dy -= recuderMoveSpeed;
+			if (dy < 0) 
+				dy = 0;
+				
+		} else if (dx > 0) {
+			dx -= recuderMoveSpeed;
+			if (dx < 0)
+				dx = 0;
+
+		} else if (dx < 0) {
+			dx += recuderMoveSpeed;
+			if (dx > 0)
+				dx = 0;
 		}
 	}
 	/****************************************************************************************/
@@ -246,8 +291,8 @@ public class Entity {
 	}
 
 	public void setPositionInMap() {
-		// xMap = tileMapa.getX();
-		// yMap = tileMapa.getY();
+		xMap = tileMap.getX();
+		yMap = tileMap.getY();
 	}
 
 	public void setMovLeft(boolean b) {

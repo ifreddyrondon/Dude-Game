@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.spantons.entity.Entity;
 import com.spantons.entity.character.SteveJobs;
+import com.spantons.main.GamePanel;
 import com.spantons.tileMap.TileMap;
 
 public class Level1Stage extends Stage {
@@ -26,21 +27,16 @@ public class Level1Stage extends Stage {
 		tileMap = new TileMap(64, 32);
 		tileMap.loadMap("/maps/map.txt");
 		
-		//System.out.println(-tileMap.getMapHeight()/((Math.sqrt(2)/2)) / 2);
-		//tileMap.setPosition(	TileMap.mapToAbsolute(0, 0).x   , 0);
-		//tileMap.setPosition(	-tileMap.getMapHeight()/((Math.sqrt(2)/2))  , 0);
-		// tileMap.setPosition(-GamePanel.RESOLUTION_WIDTH / 2 - 150, 0);
-		// tileMap.setPosition(-GamePanel.RESOLUTION_WIDTH / 2, -100);
-		// tileMap.setPosition(-GamePanel.RESOLUTION_WIDTH / 2, 0);
-		// tileMap.setPosition(-672, 276);
-		// tileMap.setPosition(64, 16);
-		//tileMap.setPosition(-4850, 2700);
+		tileMap.setPosition(
+				-GamePanel.RESOLUTION_WIDTH / 2, 
+				(GamePanel.RESOLUTION_HEIGHT - 
+						tileMap.getMapHeight()) / 2);
 		
-		 
 		// Personajes
 		characters = new ArrayList<Entity>();
-		SteveJobs sj = new SteveJobs(tileMap, 0.2);
-		sj.setPosition(170, 360);
+		SteveJobs sj = new SteveJobs(tileMap, 0.15);
+		sj.setPosition(GamePanel.RESOLUTION_WIDTH / 2, 
+				GamePanel.RESOLUTION_HEIGHT / 2);
 		characters.add(sj);
 		// Personaje actual
 		currentCharacter = 0;
@@ -53,15 +49,9 @@ public class Level1Stage extends Stage {
 		// Actualizar personajes
 		for (int i = 0; i < characters.size(); i++)
 			characters.get(i).update();
-
-		// actualizar mapa
-		/*tileMap.setPosition(
-				GamePanel.RESOLUTION_WIDTH / 2
-						- characters.get(currentCharacter).getX(),
-				GamePanel.RESOLUTION_HEIGHT / 2
-						- characters.get(currentCharacter).getY());
-		*/
-		tileMap.update();
+		
+		//tileMap.update();
+		
 	}
 	/****************************************************************************************/
 	@Override
@@ -75,7 +65,6 @@ public class Level1Stage extends Stage {
 	/****************************************************************************************/
 	@Override
 	public void keyPressed(int k) {
-		//tileMap.keyPressed(k);
 		// Mover personajes
 		if (k == KeyEvent.VK_LEFT)
 			characters.get(currentCharacter).setMovLeft(true);
@@ -91,7 +80,7 @@ public class Level1Stage extends Stage {
 	/****************************************************************************************/
 	@Override
 	public void keyReleased(int k) {
-		//tileMap.keyReleased(k);
+		
 		// Mover personajes
 		if (k == KeyEvent.VK_LEFT)
 			characters.get(currentCharacter).setMovLeft(false);

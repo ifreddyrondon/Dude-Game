@@ -51,9 +51,11 @@ public class SteveJobs extends Entity {
 		//health = maxHealth = 5;
 		//dead = false;
 
-		moveSpeed = 0.3;
-		maxMoveSpeed = 1.6;
-		recuderMoveSpeed = 0.4;
+		moveSpeed = 1;
+		maxMoveSpeed = 1;
+		recuderMoveSpeed = 1;
+		
+		
 		fallSpeed = 0.15;
 		maxFallSpeed = 4.0;
 		jumpStart = -4.8;
@@ -134,53 +136,44 @@ public class SteveJobs extends Entity {
 	/****************************************************************************************/
 	private void getNextPosition() {
 		
-		// Izquierda
-		// Mientras mas tiempo esta activo movIzquiera o derecha mas aumenta
-		// la velocidad sin embargo esta limitado por la maxima velocidad de
-		// movimiento
-		if (movUp) {
-			dy -= moveSpeed;
-			if (dy < -maxMoveSpeed) dy = -maxMoveSpeed; 
+		if (movUp && movLeft) {
+			movEntityUp();
+			movEntityLeft();
 			
-		} else if (movDown) {
-			dy += moveSpeed;
-			if (dy > maxMoveSpeed) dy = maxMoveSpeed;
+		} else if (movUp && movRight) {
+			movEntityUp();
+			movEntityRight();
 			
-		} else if (movLeft) {
-			dx -= moveSpeed;
-			if (dx < -maxMoveSpeed) dx = -maxMoveSpeed;
-
-		} else if (movRight) {
-			dx += moveSpeed;
-			if (dx > maxMoveSpeed) dx = maxMoveSpeed;
-
-		// Si no esta oprimiendo ningun boton para alguna accion de 
-		// movimiento frenamos
-		} else {
-			if (dy < 0) {
-				dy += recuderMoveSpeed;
-				if (dy > 0) dy = 0;
-				
-			} else if (dy > 0) {
-				dy -= recuderMoveSpeed;
-				if (dy < 0) dy = 0;
+		} else if (movDown && movLeft) {
+			movEntityDown();
+			movEntityLeft();	
 			
-			} else if (dx > 0) {
-				dx -= recuderMoveSpeed;
-				if (dx < 0) dx = 0;
-
-			} else if (dx < 0) {
-				dx += recuderMoveSpeed;
-				if (dx > 0) dx = 0;
-			}
+		} else if (movDown && movRight) {
+			movEntityDown();
+			movEntityRight();
 		}
-
+		else if (movUp) 
+			movEntityUp(); 
+			
+		else if (movDown) 
+			movEntityDown();
+			
+		else if (movLeft) 
+			movEntityLeft();
+				
+		else if (movRight)
+			movEntityRight();
+		
+		 
+		if (!movUp && !movDown && !movLeft && !movRight) 
+			movEntityStop();
+		
 	}
 	/****************************************************************************************/
 	public void update() {
 
 		getNextPosition();
-		checkTileMapCollisionAndUpdateCoord();
+		checkTileMapCollision();
 		setPosition((int)xDest,(int) yDest);
 
 		if (dy > 0) {
