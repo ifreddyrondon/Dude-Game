@@ -1,8 +1,8 @@
 package com.spantons.entity;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.geom.Point2D;
 
 import com.spantons.tileMap.TileMap;
 
@@ -84,63 +84,81 @@ public class Entity {
 		return r1.intersects(r2);
 	}
 	/****************************************************************************************/
-	public static Point2D.Double tileWalk(String direction, Point2D.Double coor, double steps){
+	public Point getMapPosition(){
+		double x = this.x + tileMap.getX();
+		double y = this.y + tileMap.getY();
+		
+		return tileMap.absoluteToMap(x, y);
+	}
+	/****************************************************************************************/
+	public void setMapPosition(double _x, double _y){
+		
+		Point nextAbsolutePosition = 
+				tileMap.mapToAbsolute(_x, _y);
+		
+		xDest = nextAbsolutePosition.x - tileMap.getX();
+		yDest = nextAbsolutePosition.y - tileMap.getY();
+		
+		setPosition((int)_x, (int)_y);
+	}
+	/****************************************************************************************/
+	public static Point tileWalk(String direction, Point coor, int steps){
 		
 		if (direction.equals("ninguna"))
-			return new Point2D.Double(coor.x ,coor.y);
+			return new Point(coor.x ,coor.y);
 		
 		else if (direction.equals("norte"))
-			return new Point2D.Double(coor.x - steps,coor.y - steps);
+			return new Point(coor.x - steps,coor.y - steps);
 		
 		else if (direction.equals("norte este")) 
-			return new Point2D.Double(coor.x,coor.y - steps);
+			return new Point(coor.x,coor.y - steps);
 			
 		else if (direction.equals("este")) 
-			return new Point2D.Double(coor.x + steps,coor.y - steps);
+			return new Point(coor.x + steps,coor.y - steps);
 		
 		else if (direction.equals("sur este"))
-			return new Point2D.Double(coor.x + steps,coor.y);
+			return new Point(coor.x + steps,coor.y);
 		
 		else if (direction.equals("sur"))
-			return new Point2D.Double(coor.x + steps,coor.y + steps);
+			return new Point(coor.x + steps,coor.y + steps);
 		
 		else if (direction.equals("sur oeste")) 
-			return new Point2D.Double(coor.x,coor.y + steps);
+			return new Point(coor.x,coor.y + steps);
 			
 		else if (direction.equals("oeste")) 
-			return new Point2D.Double(coor.x - steps,coor.y + steps);
+			return new Point(coor.x - steps,coor.y + steps);
 		
 		else if (direction.equals("norte oeste")) 
-			return new Point2D.Double(coor.x - steps,coor.y);
+			return new Point(coor.x - steps,coor.y);
 				
 		return null;
 	}
 	/****************************************************************************************/
-	public Point2D.Double updateCoord(double _x, double _y){
-		Point2D.Double currentCoord = tileMap.absoluteToMap(_x, _y);
+	public Point updateCoord(int _x, int _y){
+		Point currentCoord = new Point(_x,_y);
 		
-		Point2D.Double nextPosition = null;
+		Point nextPosition = null;
 		
 		if (dx != 0 && dy == 0) {
 			if (dx < 0)  
-				nextPosition = tileWalk("oeste", currentCoord, Math.abs(dx));
+				nextPosition = tileWalk("oeste", currentCoord,(int) Math.abs(dx));
 			if (dx > 0) 
-				nextPosition = tileWalk("este", currentCoord, Math.abs(dx));
+				nextPosition = tileWalk("este", currentCoord,(int) Math.abs(dx));
 		} else if (dx == 0 && dy != 0) {
 			if (dy < 0) 
-				nextPosition = tileWalk("norte", currentCoord, Math.abs(dy));
+				nextPosition = tileWalk("norte", currentCoord,(int) Math.abs(dy));
 			if (dy > 0) 
-				nextPosition = tileWalk("sur", currentCoord, Math.abs(dy));
+				nextPosition = tileWalk("sur", currentCoord,(int) Math.abs(dy));
 			
 		} else if (dx != 0 && dy != 0) {
 			if (dx < 0 && dy < 0) 
-				nextPosition = tileWalk("norte oeste", currentCoord, Math.abs(dx));
+				nextPosition = tileWalk("norte oeste", currentCoord,(int) Math.abs(dx));
 			if (dx > 0 && dy < 0) 
-				nextPosition = tileWalk("norte este", currentCoord, Math.abs(dx));
+				nextPosition = tileWalk("norte este", currentCoord,(int) Math.abs(dx));
 			if (dx < 0 && dy > 0) 
-				nextPosition = tileWalk("sur oeste", currentCoord, Math.abs(dx));
+				nextPosition = tileWalk("sur oeste", currentCoord,(int) Math.abs(dx));
 			if (dx > 0 && dy > 0) 
-				nextPosition = tileWalk("sur este", currentCoord, Math.abs(dx));
+				nextPosition = tileWalk("sur este", currentCoord,(int) Math.abs(dx));
 		}
 		return nextPosition;
 	}
@@ -155,20 +173,14 @@ public class Entity {
 		
 		} else {
 		
-			double x = this.x + tileMap.getX();
-			double y = this.y + tileMap.getY();
-			
-			Point2D.Double nextPosition = updateCoord(x, y);
+			Point currentPosition = getMapPosition();
+			Point nextPosition = updateCoord(currentPosition.x, currentPosition.y);
 					
 			if (nextPosition.x >= 0 && nextPosition.y >= 0
 					&& nextPosition.x < tileMap.getNumColMap() + 1
 					&& nextPosition.y < tileMap.getNumRowsMap()) {
 				
-				Point2D.Double nextAbsolutePosition = 
-						tileMap.mapToAbsolute(nextPosition.x, nextPosition.y);
-				
-				xDest = nextAbsolutePosition.x - tileMap.getX();
-				yDest = nextAbsolutePosition.y - tileMap.getY();
+				setMapPosition(nextPosition.x, nextPosition.y);
 			
 			} else {
 				xDest = this.x;
@@ -180,8 +192,10 @@ public class Entity {
 		}
 	}
 	/****************************************************************************************/
-	public void update() {}
-
+	public void update() {
+		
+	}
+	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 
 		if (facingRight) {

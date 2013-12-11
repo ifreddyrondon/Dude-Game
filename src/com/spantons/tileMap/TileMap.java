@@ -3,7 +3,6 @@ package com.spantons.tileMap;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -32,10 +31,10 @@ public class TileMap {
 	private int mapHeight;
 
 	// dibujado
-	private Point2D.Double coorMapTopLeft;
-	private Point2D.Double coorMapTopRight;
-	private Point2D.Double coorMapBottomLeft;
-	private Point2D.Double coorMapBottomRight;
+	private Point coorMapTopLeft;
+	private Point coorMapTopRight;
+	private Point coorMapBottomLeft;
+	private Point coorMapBottomRight;
 
 	// tileset
 	private TileSet tileSet;
@@ -111,19 +110,19 @@ public class TileMap {
 		}
 	}
 	/****************************************************************************************/
-	public Point2D.Double absoluteToMap(double x, double y) {
+	public Point absoluteToMap(double x, double y) {
 		int mapX = (int) ((x / (tileWidthSize / 2) + y / (tileHeightSize / 2)) / 2);
 		int mapY = (int) ((y / (tileHeightSize / 2) - (x / (tileWidthSize / 2))) / 2);
 
-		return new Point2D.Double(mapX, mapY);
+		return new Point(mapX, mapY);
 	}
 	/****************************************************************************************/
-	public Point2D.Double mapToAbsolute(double x, double y) {
+	public Point mapToAbsolute(double x, double y) {
 		
 		int absoluteX = (int) ((x - y) * (tileWidthSize / 2));
 		int absoluteY = (int) ((x + y) * (tileHeightSize / 2));
 
-		return new Point2D.Double(absoluteX, absoluteY);
+		return new Point(absoluteX, absoluteY);
 	}
 	/****************************************************************************************/
 	public void fixBounds() {
@@ -184,8 +183,8 @@ public class TileMap {
 
 		// banderas de dibujado
 		boolean completed, completedRow;
-		Point2D.Double firstTileOfRowToDraw, finalTileOfRowToDraw, currentTile;
-		Point2D.Double coorAbsolute;
+		Point firstTileOfRowToDraw, finalTileOfRowToDraw, currentTile;
+		Point coorAbsolute;
 		int rowCounter = 0;
 
 		completed = false;

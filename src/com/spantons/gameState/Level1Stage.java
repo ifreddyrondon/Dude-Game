@@ -50,8 +50,12 @@ public class Level1Stage extends Stage {
 		for (int i = 0; i < characters.size(); i++)
 			characters.get(i).update();
 		
-		//tileMap.update();
-		
+		if (	characters.get(currentCharacter).getX() < tileMap.tileWidthSize * 2 ||
+			characters.get(currentCharacter).getX() > GamePanel.RESOLUTION_WIDTH - tileMap.tileWidthSize * 2) {
+			
+			
+		}
+
 	}
 	/****************************************************************************************/
 	@Override
