@@ -8,6 +8,7 @@ import com.spantons.entity.Entity;
 import com.spantons.entity.character.SteveJobs;
 import com.spantons.main.GamePanel;
 import com.spantons.tileMap.TileMap;
+import com.spantons.tileMap.TileSet;
 
 public class Level1Stage extends Stage {
 
@@ -24,13 +25,14 @@ public class Level1Stage extends Stage {
 	/****************************************************************************************/
 	@Override
 	public void init() {
-		tileMap = new TileMap(64, 32);
+		TileSet tileSet = new 
+				TileSet("/tilesets/isometric_grass_and_water.png",64, 64, 0, 0); 
+		tileMap = new TileMap(64, 32, tileSet);
 		tileMap.loadMap("/maps/map.txt");
 		
 		tileMap.setPosition(
 				-GamePanel.RESOLUTION_WIDTH / 2, 
-				(GamePanel.RESOLUTION_HEIGHT - 
-						tileMap.getMapHeight()) / 2);
+				GamePanel.RESOLUTION_HEIGHT / 2);
 		
 		// Personajes
 		characters = new ArrayList<Entity>();
@@ -49,12 +51,6 @@ public class Level1Stage extends Stage {
 		// Actualizar personajes
 		for (int i = 0; i < characters.size(); i++)
 			characters.get(i).update();
-		
-		if (	characters.get(currentCharacter).getX() < tileMap.tileWidthSize * 2 ||
-			characters.get(currentCharacter).getX() > GamePanel.RESOLUTION_WIDTH - tileMap.tileWidthSize * 2) {
-			
-			
-		}
 
 	}
 	/****************************************************************************************/

@@ -52,9 +52,6 @@ public class SteveJobs extends Entity {
 		//dead = false;
 
 		moveSpeed = 1;
-		maxMoveSpeed = 1;
-		recuderMoveSpeed = 1;
-		
 		
 		fallSpeed = 0.15;
 		maxFallSpeed = 4.0;
@@ -133,56 +130,19 @@ public class SteveJobs extends Entity {
 			e.printStackTrace();
 		}
 	}
-	/****************************************************************************************/
-	private void getNextPosition() {
-		
-		if (movUp && movLeft) {
-			movEntityUp();
-			movEntityLeft();
-			
-		} else if (movUp && movRight) {
-			movEntityUp();
-			movEntityRight();
-			
-		} else if (movDown && movLeft) {
-			movEntityDown();
-			movEntityLeft();	
-			
-		} else if (movDown && movRight) {
-			movEntityDown();
-			movEntityRight();
-		}
-		else if (movUp) 
-			movEntityUp(); 
-			
-		else if (movDown) 
-			movEntityDown();
-			
-		else if (movLeft) 
-			movEntityLeft();
-				
-		else if (movRight)
-			movEntityRight();
-		
-		 
-		if (!movUp && !movDown && !movLeft && !movRight) 
-			movEntityStop();
-		
-	}
+	
 	/****************************************************************************************/
 	public void update() {
 
-		getNextPosition();
-		checkTileMapCollision();
-		setPosition((int)xDest,(int) yDest);
-
-		if (dy > 0) {
+		super.update();
+		
+		if (movDown) {
 			if (currentAnimation != WALKING_FRONT) {
 				currentAnimation = WALKING_FRONT;
 				animation.setFrames(sprites.get(WALKING_FRONT));
 				animation.setDelayTime(100);
 			}
-		} else if (dy < 0) {
+		} else if (movUp) {
 			if (currentAnimation != WALKING_BACK) {
 				currentAnimation = WALKING_BACK;
 				animation.setFrames(sprites.get(WALKING_BACK));

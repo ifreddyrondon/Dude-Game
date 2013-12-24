@@ -1,9 +1,12 @@
 package com.spantons.entity;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.Point2D;
 
+import utilities.TileWalk;
+
+import com.spantons.main.GamePanel;
 import com.spantons.tileMap.TileMap;
 
 public class Entity {
@@ -19,12 +22,18 @@ public class Entity {
 	protected int xMap;
 	protected int yMap;
 
-	// Posicion y vector
+	// Posicion
 	protected int x;
 	protected int y;
-	protected double dx;
-	protected double dy;
-
+	
+	// Posicion Actual y Proxima en el mapa
+	protected Point2D.Double currentPositionMap;
+	protected Point2D.Double nextPositionMap;
+	
+	// Reposicion
+	protected boolean flinching;
+	protected long flinchingTime;
+	
 	// Dimensiones
 	protected int spriteWidth;
 	protected int spriteHeight;
@@ -56,210 +65,132 @@ public class Entity {
 
 	// atributos de movimientos
 	protected double moveSpeed;
-	protected double maxMoveSpeed;
-	protected double recuderMoveSpeed;
 	protected double fallSpeed;
 	protected double maxFallSpeed;
 	protected double jumpStart;
 	protected double reducerJumpSpeed;
-	
-	protected boolean flinching;
-	protected long flinchingTime;
-		
+
 	/****************************************************************************************/
 	public Entity(TileMap tm) {
-		if (tm != null) 
+		if (tm != null)
 			tileMap = tm;
 	}
+
 	/****************************************************************************************/
 	public Rectangle getRectangle() {
 		return new Rectangle((int) x - collisionBoxWidth, (int) y
 				- collisionBoxHeight, collisionBoxWidth,
 				collisionBoxHeight);
 	}
+
 	/****************************************************************************************/
 	public boolean intersection(Entity e) {
 		Rectangle r1 = getRectangle();
 		Rectangle r2 = e.getRectangle();
 		return r1.intersects(r2);
 	}
+
 	/****************************************************************************************/
-	public Point getMapPosition(){
+	public Point2D.Double getMapPosition() {
 		double x = this.x + tileMap.getX();
 		double y = this.y + tileMap.getY();
-		
+
 		return tileMap.absoluteToMap(x, y);
 	}
+
 	/****************************************************************************************/
-	public void setMapPosition(double _x, double _y){
-		
-		Point nextAbsolutePosition = 
-				tileMap.mapToAbsolute(_x, _y);
-		
-		xDest = nextAbsolutePosition.x - tileMap.getX();
-		yDest = nextAbsolutePosition.y - tileMap.getY();
-		
-		setPosition((int)_x, (int)_y);
+	public void setMapPosition(double _x, double _y) {
+
+		Point2D.Double absolutePosition = tileMap.mapToAbsolute(_x, _y);
+
+		xDest = absolutePosition.x - tileMap.getX();
+		yDest = absolutePosition.y - tileMap.getY();
+
 	}
 	/****************************************************************************************/
-	public static Point tileWalk(String direction, Point coor, int steps){
+	protected void getNextPosition() {
 		
-		if (direction.equals("ninguna"))
-			return new Point(coor.x ,coor.y);
+		currentPositionMap = getMapPosition();
 		
-		else if (direction.equals("norte"))
-			return new Point(coor.x - steps,coor.y - steps);
-		
-		else if (direction.equals("norte este")) 
-			return new Point(coor.x,coor.y - steps);
+		if (movUp && movLeft)
+			nextPositionMap = TileWalk.walkTo("SW", currentPositionMap,moveSpeed);
 			
-		else if (direction.equals("este")) 
-			return new Point(coor.x + steps,coor.y - steps);
+		if (movUp && movRight)
+			nextPositionMap = TileWalk.walkTo("NE", currentPositionMap,moveSpeed);
 		
-		else if (direction.equals("sur este"))
-			return new Point(coor.x + steps,coor.y);
+		if (movDown && movLeft)
+			nextPositionMap = TileWalk.walkTo("SW", currentPositionMap,moveSpeed);
 		
-		else if (direction.equals("sur"))
-			return new Point(coor.x + steps,coor.y + steps);
+		if (movDown && movRight) 
+			nextPositionMap = TileWalk.walkTo("SE", currentPositionMap,moveSpeed);
 		
-		else if (direction.equals("sur oeste")) 
-			return new Point(coor.x,coor.y + steps);
+		if (movUp) 
+			nextPositionMap = TileWalk.walkTo("N", currentPositionMap,moveSpeed); 
 			
-		else if (direction.equals("oeste")) 
-			return new Point(coor.x - steps,coor.y + steps);
-		
-		else if (direction.equals("norte oeste")) 
-			return new Point(coor.x - steps,coor.y);
+		if (movDown) 
+			nextPositionMap = TileWalk.walkTo("S", currentPositionMap,moveSpeed);
+			
+		if (movLeft) 
+			nextPositionMap = TileWalk.walkTo("W", currentPositionMap,moveSpeed);
 				
-		return null;
-	}
+		if (movRight)
+			nextPositionMap = TileWalk.walkTo("E", currentPositionMap,moveSpeed);
+		
+		if (!movUp && !movDown && !movLeft && !movRight) 
+			nextPositionMap = TileWalk.walkTo("non", currentPositionMap,moveSpeed);
+		
+	}	
 	/****************************************************************************************/
-	public Point updateCoord(int _x, int _y){
-		Point currentCoord = new Point(_x,_y);
+	public void checkTileMapCollision() {
+
+		if (nextPositionMap.x >= 0 && nextPositionMap.y >= 0
+				&& nextPositionMap.x < tileMap.getNumColMap()
+				&& nextPositionMap.y < tileMap.getNumRowsMap()) {
 		
-		Point nextPosition = null;
-		
-		if (dx != 0 && dy == 0) {
-			if (dx < 0)  
-				nextPosition = tileWalk("oeste", currentCoord,(int) Math.abs(dx));
-			if (dx > 0) 
-				nextPosition = tileWalk("este", currentCoord,(int) Math.abs(dx));
-		} else if (dx == 0 && dy != 0) {
-			if (dy < 0) 
-				nextPosition = tileWalk("norte", currentCoord,(int) Math.abs(dy));
-			if (dy > 0) 
-				nextPosition = tileWalk("sur", currentCoord,(int) Math.abs(dy));
-			
-		} else if (dx != 0 && dy != 0) {
-			if (dx < 0 && dy < 0) 
-				nextPosition = tileWalk("norte oeste", currentCoord,(int) Math.abs(dx));
-			if (dx > 0 && dy < 0) 
-				nextPosition = tileWalk("norte este", currentCoord,(int) Math.abs(dx));
-			if (dx < 0 && dy > 0) 
-				nextPosition = tileWalk("sur oeste", currentCoord,(int) Math.abs(dx));
-			if (dx > 0 && dy > 0) 
-				nextPosition = tileWalk("sur este", currentCoord,(int) Math.abs(dx));
+			setMapPosition(nextPositionMap.x, nextPositionMap.y);
 		}
-		return nextPosition;
+		else {
+			xDest = this.x;
+			yDest = this.y;
+		}
+		
 	}
 	/****************************************************************************************/
-	public void checkTileMapCollision(){
+	public void update() {
 		
 		if (flinching) {
 			long elapsedTime = (System.nanoTime() - flinchingTime) / 1000000;
-			// si tiempo transcurrido es mayor que un segundo
-			if (elapsedTime > 100) 
+			if (elapsedTime > 50) 
 				flinching = false;
 		
 		} else {
-		
-			Point currentPosition = getMapPosition();
-			Point nextPosition = updateCoord(currentPosition.x, currentPosition.y);
-					
-			if (nextPosition.x >= 0 && nextPosition.y >= 0
-					&& nextPosition.x < tileMap.getNumColMap() + 1
-					&& nextPosition.y < tileMap.getNumRowsMap()) {
-				
-				setMapPosition(nextPosition.x, nextPosition.y);
-			
-			} else {
-				xDest = this.x;
-				yDest = this.y;
-			}
+			getNextPosition();
+			checkTileMapCollision();		
+			int a = (int) (tileMap.getX() + (xDest - GamePanel.RESOLUTION_WIDTH /2));
+			int b = (int) (tileMap.getY() + (yDest - GamePanel.RESOLUTION_HEIGHT /2));
+
+			tileMap.setPosition(a,b);
 			
 			flinching = true;
 			flinchingTime = System.nanoTime();
 		}
 	}
-	/****************************************************************************************/
-	public void update() {
-		
-	}
+
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 
 		if (facingRight) {
 			g.drawImage(animation.getCurrentImageFrame(),
-					(int) (x + xMap - spriteWidth / 2), 
-					(int) (y + yMap - spriteHeight / 2), 
-					null);
+					(int) (x + xMap - spriteWidth / 2), (int) (y
+							+ yMap - spriteHeight / 2), null);
 		} else {
-			g.drawImage(animation.getCurrentImageFrame(), 
-					(int) (x + xMap- spriteWidth / 2 + spriteWidth),
+			g.drawImage(animation.getCurrentImageFrame(), (int) (x + xMap
+					- spriteWidth / 2 + spriteWidth),
 					(int) (y + yMap - spriteHeight / 2),
-					-spriteWidth, 
-					spriteHeight, 
-					null);
+					-spriteWidth, spriteHeight, null);
 		}
 	}
-	/****************************************************************************************/
-	// Movimientos
-	public void movEntityLeft(){
-		dx -= moveSpeed;
-		if (dx < -maxMoveSpeed)	 
-			dx = -maxMoveSpeed;
-	}
-	
-	public void movEntityRight(){
-		dx += moveSpeed;
-		if (dx > maxMoveSpeed) 
-			dx = maxMoveSpeed;
-	}
-	
-	public void movEntityUp(){
-		dy -= moveSpeed;
-		if (dy < -maxMoveSpeed) 
-			dy = -maxMoveSpeed;
-	}
-	
-	public void movEntityDown(){
-		dy += moveSpeed;
-		if (dy > maxMoveSpeed) 
-			dy = maxMoveSpeed;
-	}
-	
-	public void movEntityStop(){
-		if (dy < 0) {
-			dy += recuderMoveSpeed;
-			if (dy > 0) 
-				dy = 0;
 
-		} else if (dy > 0) {
-			dy -= recuderMoveSpeed;
-			if (dy < 0) 
-				dy = 0;
-				
-		} else if (dx > 0) {
-			dx -= recuderMoveSpeed;
-			if (dx < 0)
-				dx = 0;
-
-		} else if (dx < 0) {
-			dx += recuderMoveSpeed;
-			if (dx > 0)
-				dx = 0;
-		}
-	}
 	/****************************************************************************************/
 	// Setter and Getter
 	public int getX() {
@@ -297,11 +228,6 @@ public class Entity {
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
-	}
-
-	public void setVector(double dx, double dy) {
-		this.dx = dx;
-		this.dy = dy;
 	}
 
 	public void setPositionInMap() {

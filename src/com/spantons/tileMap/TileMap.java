@@ -2,12 +2,14 @@ package com.spantons.tileMap;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import com.spantons.entity.Entity;
+import utilities.Multiple;
+import utilities.TileWalk;
+
 import com.spantons.main.GamePanel;
 
 public class TileMap {
@@ -31,41 +33,22 @@ public class TileMap {
 	private int mapHeight;
 
 	// dibujado
-	private Point coorMapTopLeft;
-	private Point coorMapTopRight;
-	private Point coorMapBottomLeft;
-	private Point coorMapBottomRight;
+	private Point2D.Double coorMapTopLeft;
+	private Point2D.Double coorMapTopRight;
+	private Point2D.Double coorMapBottomLeft;
+	private Point2D.Double coorMapBottomRight;
 
 	// tileset
 	private TileSet tileSet;
 	private Tile[] tiles;
 
 	/****************************************************************************************/
-	public TileMap(int _tileWidthSize, int _tileHeightSize) {
+	public TileMap(int _tileWidthSize, int _tileHeightSize, TileSet _tileSet) {
 
-		tileSet = new TileSet("/tilesets/isometric_grass_and_water.png",
-				64, 64, 0, 0);
-
+		tileSet = _tileSet;
 		tileWidthSize = _tileWidthSize;
 		tileHeightSize = _tileHeightSize;
 		 tiles = tileSet.getTiles();
-	}
-	/****************************************************************************************/
-	public Point getMultipleOfTileWidthAndHeight(int _x, int _y){
-		
-		int x, y;
-		
-		if (_x % tileWidthSize == 0) 
-			x = _x;
-		else 
-			x = ((int) (_x / tileWidthSize)) * tileWidthSize;
-		
-		if (_y % tileHeightSize == 0) 
-			y = _y;
-		else 
-			y = ((int) (_y / tileHeightSize)) * tileHeightSize;
-
-		return new Point(x,y);
 	}
 	/****************************************************************************************/
 	public void loadMap(String s) {
@@ -83,20 +66,20 @@ public class TileMap {
 			mapWidth = numColMap * tileWidthSize;
 			mapHeight = numRowsMap * tileHeightSize;
 
-			xMin = GamePanel.RESOLUTION_WIDTH - mapWidth;
+			xMin = - mapWidth / 2;					
 			yMin = tileHeightSize / 2;
-			Point fix = getMultipleOfTileWidthAndHeight(xMin, yMin);
-			xMin = fix.x;
-			yMin = fix.y;
+			Point2D.Double fix =  Multiple.findPointCloserTo(new Point2D.Double(xMin,yMin), new Point2D.Double(tileWidthSize,tileHeightSize));
+			xMin = (int) fix.x;
+			yMin = (int) fix.y;
 			
-			xMax = tileWidthSize / 2;
-			yMax = mapHeight - GamePanel.RESOLUTION_HEIGHT + tileHeightSize / 2;
-			fix = getMultipleOfTileWidthAndHeight(xMax, yMax);
-			xMax = fix.x;
-			yMax = fix.y;
+			xMax = -tileWidthSize * 3;
+			yMax = tileHeightSize * 2 ;
+			fix = Multiple.findPointCloserTo(new Point2D.Double(xMax,yMax), new Point2D.Double(tileWidthSize,tileHeightSize));
+			xMax = (int) fix.x;
+			yMax = (int) fix.y;
 
 			// llenamos la matriz map
-			String delimsChar = "\\s+";
+			String delimsChar = ",";
 			for (int row = 0; row < numRowsMap; row++) {
 				String line = br.readLine();
 				String[] tokens = line.split(delimsChar);
@@ -110,36 +93,28 @@ public class TileMap {
 		}
 	}
 	/****************************************************************************************/
-	public Point absoluteToMap(double x, double y) {
+	public Point2D.Double absoluteToMap(double x, double y) {
 		int mapX = (int) ((x / (tileWidthSize / 2) + y / (tileHeightSize / 2)) / 2);
 		int mapY = (int) ((y / (tileHeightSize / 2) - (x / (tileWidthSize / 2))) / 2);
 
-		return new Point(mapX, mapY);
+		return new Point2D.Double(mapX, mapY);
 	}
 	/****************************************************************************************/
-	public Point mapToAbsolute(double x, double y) {
+	public Point2D.Double mapToAbsolute(double x, double y) {
 		
 		int absoluteX = (int) ((x - y) * (tileWidthSize / 2));
 		int absoluteY = (int) ((x + y) * (tileHeightSize / 2));
 
-		return new Point(absoluteX, absoluteY);
+		return new Point2D.Double(absoluteX, absoluteY);
 	}
 	/****************************************************************************************/
 	public void fixBounds() {
-		if (x < xMin){
-			System.out.println(x);
-			System.out.println(xMin);
-			x = xMin;
-			
-		}
-			
-			
+		if (x < xMin) x = xMin;
 		if (x > xMax) x = xMax;
 		if (y < yMin) y = yMin;
 		if (y > yMax) y = yMax;
 	}
 	/****************************************************************************************/
-	
 	public void setPosition(int x, int y) {
 		// La nueva posicion debe ser multiplo del tileWidth en X y tileHeight en Y
 		if (x % tileWidthSize == 0 && y % tileHeightSize == 0) {
@@ -147,13 +122,14 @@ public class TileMap {
 			this.y = y;
 
 		} else {
-			Point multiple = getMultipleOfTileWidthAndHeight(x, y);
-			this.x = multiple.x;
-			this.y = multiple.y;
-			fixBounds();
-		}
-						
+			Point2D.Double multiple = Multiple.findPointCloserTo(new Point2D.Double(x,y), new Point2D.Double(tileWidthSize,tileHeightSize));
+			this.x = (int) multiple.x;
+			this.y = (int) multiple.y;
+		}	
+		
+		//fixBounds();
 	}
+	
 	/****************************************************************************************/
 	public void update(){
 		 setPosition(x, y);
@@ -172,19 +148,19 @@ public class TileMap {
 		coorMapBottomRight = absoluteToMap(x + GamePanel.RESOLUTION_WIDTH, y + GamePanel.RESOLUTION_HEIGHT);
 		
 		//Desplazamos cada esquina para tener el buffer con un poquito mas
-		coorMapTopLeft = Entity.tileWalk("norte oeste", coorMapTopLeft, 3);
-		coorMapTopRight = Entity.tileWalk ("norte este", coorMapTopRight, 3);
-		coorMapBottomLeft = Entity.tileWalk ("sur oeste", coorMapBottomLeft, 3);
-		coorMapBottomRight = Entity.tileWalk ("sur este", coorMapBottomRight, 3);
+		coorMapTopLeft = TileWalk.walkTo("NW", coorMapTopLeft, 3);
+		coorMapTopRight = TileWalk.walkTo("NE", coorMapTopRight, 3);
+		coorMapBottomLeft = TileWalk.walkTo("SW", coorMapBottomLeft, 3);
+		coorMapBottomRight = TileWalk.walkTo("SE", coorMapBottomRight, 3);
 
 		//Desplazamos las esquinas inferiores 2 pasos al sur para compensar por los objetos altos
-		coorMapBottomLeft = Entity.tileWalk ("sur", coorMapBottomLeft, 2);
-		coorMapBottomRight = Entity.tileWalk ("sur", coorMapBottomRight, 2);
+		coorMapBottomLeft = TileWalk.walkTo("S", coorMapBottomLeft, 2);
+		coorMapBottomRight = TileWalk.walkTo("S", coorMapBottomRight, 2);
 
 		// banderas de dibujado
 		boolean completed, completedRow;
-		Point firstTileOfRowToDraw, finalTileOfRowToDraw, currentTile;
-		Point coorAbsolute;
+		Point2D.Double firstTileOfRowToDraw, finalTileOfRowToDraw, currentTile;
+		Point2D.Double coorAbsolute;
 		int rowCounter = 0;
 
 		completed = false;
@@ -213,15 +189,16 @@ public class TileMap {
 						(int) (coorAbsolute.y - this.y),
 						null);
 				}
-								 
+				
 				// Si llego al final de la fila nos salimos
 				if (currentTile.x == finalTileOfRowToDraw.x
 						&& currentTile.y == finalTileOfRowToDraw.y)
 					completedRow = true;
 				else 
-					currentTile = Entity.tileWalk("este", currentTile,1);
-						
+					currentTile = TileWalk.walkTo("E", currentTile,1);
+			
 			}
+			
 			
 			// Comprobamos si la fila recorrida era la ultima
 			if (	firstTileOfRowToDraw.x > coorMapBottomLeft.x && 
@@ -236,45 +213,21 @@ public class TileMap {
 
 				if (rowCounter % 2 != 0) {
 					// Fila impar
-					firstTileOfRowToDraw = Entity.tileWalk("sur oeste",
+					firstTileOfRowToDraw = TileWalk.walkTo("SW",
 							firstTileOfRowToDraw, 1);
-					finalTileOfRowToDraw = Entity.tileWalk("sur este", finalTileOfRowToDraw, 1);
+					finalTileOfRowToDraw = TileWalk.walkTo("SE", finalTileOfRowToDraw, 1);
 
 				} else {
 					// Fila par
-					firstTileOfRowToDraw = Entity.tileWalk("sur este",
+					firstTileOfRowToDraw = TileWalk.walkTo("SE",
 							firstTileOfRowToDraw, 1);
-					finalTileOfRowToDraw = Entity
-							.tileWalk("sur oeste", finalTileOfRowToDraw, 1);
+					finalTileOfRowToDraw = TileWalk.walkTo("SW", finalTileOfRowToDraw, 1);
 
 				}
 				rowCounter++;
 			}
 		}
-		
-		
-		/*
-		for (int row = 0; row < mapHeight; row++) {
-		//for (int row = 0; row < numRowsMap; row++) {
-			 // No dibujar mas de las filas que tiene el mapa
-			 if (row >= numRowsMap)
-			 	break;
-			 
-			for (int col = 0; col < mapWidth; col++) {
-			//for (int col = 0; col <  numColMap; col++) {
-				// No dibujar mas de las columnas que tiene el mapa
-			 	if (col >= numColMap)
-			 		break;
-			 		
-			 	int tileToDraw = map[row][col] -1;
-				int px = (int) ((col - row) * (tileWidthSize / 2) - this.x);
-				int py = (int) ((col + row) * (tileHeightSize / 2) - this.y);
-			 
-				g.drawImage(tiles[tileToDraw].getImage(), px, py, null);
-			 }
-		}
-		*/
-		
+	
 	}
 	/****************************************************************************************/
 	public int getTileWidthSize() {
@@ -311,5 +264,21 @@ public class TileMap {
 	
 	public int getNumRowsMap() {
 		return numRowsMap;
+	}
+	
+	public int getXMin() {
+		return xMin;
+	}
+	
+	public int getYMin() {
+		return yMin;
+	}
+	
+	public int getXMax() {
+		return xMax;
+	}
+	
+	public int getYMax() {
+		return yMax;
 	}
 }
