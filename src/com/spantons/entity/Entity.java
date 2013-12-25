@@ -112,18 +112,6 @@ public class Entity {
 		
 		currentPositionMap = getMapPosition();
 		
-		if (movUp && movLeft)
-			nextPositionMap = TileWalk.walkTo("SW", currentPositionMap,moveSpeed);
-			
-		if (movUp && movRight)
-			nextPositionMap = TileWalk.walkTo("NE", currentPositionMap,moveSpeed);
-		
-		if (movDown && movLeft)
-			nextPositionMap = TileWalk.walkTo("SW", currentPositionMap,moveSpeed);
-		
-		if (movDown && movRight) 
-			nextPositionMap = TileWalk.walkTo("SE", currentPositionMap,moveSpeed);
-		
 		if (movUp) 
 			nextPositionMap = TileWalk.walkTo("N", currentPositionMap,moveSpeed); 
 			
@@ -135,6 +123,18 @@ public class Entity {
 				
 		if (movRight)
 			nextPositionMap = TileWalk.walkTo("E", currentPositionMap,moveSpeed);
+		
+		if (movUp && movLeft)
+			nextPositionMap = TileWalk.walkTo("NW", currentPositionMap,moveSpeed + 1);
+			
+		if (movUp && movRight)
+			nextPositionMap = TileWalk.walkTo("NE", currentPositionMap,moveSpeed + 1);
+		
+		if (movDown && movLeft)
+			nextPositionMap = TileWalk.walkTo("SW", currentPositionMap,moveSpeed + 1);
+	
+		if (movDown && movRight) 
+			nextPositionMap = TileWalk.walkTo("SE", currentPositionMap,moveSpeed + 1);
 		
 		if (!movUp && !movDown && !movLeft && !movRight) 
 			nextPositionMap = TileWalk.walkTo("non", currentPositionMap,moveSpeed);
@@ -160,16 +160,39 @@ public class Entity {
 		
 		if (flinching) {
 			long elapsedTime = (System.nanoTime() - flinchingTime) / 1000000;
-			if (elapsedTime > 50) 
+			if (elapsedTime > 70) 
 				flinching = false;
 		
 		} else {
 			getNextPosition();
 			checkTileMapCollision();		
+			
 			int a = (int) (tileMap.getX() + (xDest - GamePanel.RESOLUTION_WIDTH /2));
 			int b = (int) (tileMap.getY() + (yDest - GamePanel.RESOLUTION_HEIGHT /2));
-
-			tileMap.setPosition(a,b);
+			
+//			if (	tileMap.getX() == tileMap.getXMin() ||
+//				tileMap.getX() == tileMap.getXMax() ||
+//				tileMap.getY() == tileMap.getYMin() ||
+//				tileMap.getY() == tileMap.getYMax()	){
+//			
+//				if ( 	(tileMap.getX() == tileMap.getXMin() && x > GamePanel.RESOLUTION_WIDTH / 2) //||
+//					//(tileMap.getX() == tileMap.getXMax() && x < GamePanel.RESOLUTION_WIDTH / 2) //||
+//					//(tileMap.getY() == tileMap.getYMin() && x >= GamePanel.RESOLUTION_HEIGHT / 2) ||
+//					//(tileMap.getY() == tileMap.getYMax() && x <= GamePanel.RESOLUTION_HEIGHT / 2) 
+//					) {
+//					
+//					
+//					tileMap.setPosition(a,b);
+//				}
+//				else
+//					setPosition((int) xDest,(int) yDest);
+//
+//			}
+//			else {
+				
+				
+				tileMap.setPosition(a,b);
+//			}
 			
 			flinching = true;
 			flinchingTime = System.nanoTime();
@@ -228,11 +251,6 @@ public class Entity {
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
-	}
-
-	public void setPositionInMap() {
-		xMap = tileMap.getX();
-		yMap = tileMap.getY();
 	}
 
 	public void setMovLeft(boolean b) {

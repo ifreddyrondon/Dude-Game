@@ -30,10 +30,6 @@ public class Level1Stage extends Stage {
 		tileMap = new TileMap(64, 32, tileSet);
 		tileMap.loadMap("/maps/map.txt");
 		
-		tileMap.setPosition(
-				-GamePanel.RESOLUTION_WIDTH / 2, 
-				GamePanel.RESOLUTION_HEIGHT / 2);
-		
 		// Personajes
 		characters = new ArrayList<Entity>();
 		SteveJobs sj = new SteveJobs(tileMap, 0.15);
@@ -42,6 +38,10 @@ public class Level1Stage extends Stage {
 		characters.add(sj);
 		// Personaje actual
 		currentCharacter = 0;
+		
+		tileMap.setPosition(
+				-GamePanel.RESOLUTION_WIDTH / 2, 
+				GamePanel.RESOLUTION_HEIGHT / 2);
 		
 	}
 	/****************************************************************************************/

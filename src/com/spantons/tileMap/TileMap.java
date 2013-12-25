@@ -66,18 +66,6 @@ public class TileMap {
 			mapWidth = numColMap * tileWidthSize;
 			mapHeight = numRowsMap * tileHeightSize;
 
-			xMin = - mapWidth / 2;					
-			yMin = tileHeightSize / 2;
-			Point2D.Double fix =  Multiple.findPointCloserTo(new Point2D.Double(xMin,yMin), new Point2D.Double(tileWidthSize,tileHeightSize));
-			xMin = (int) fix.x;
-			yMin = (int) fix.y;
-			
-			xMax = -tileWidthSize * 3;
-			yMax = tileHeightSize * 2 ;
-			fix = Multiple.findPointCloserTo(new Point2D.Double(xMax,yMax), new Point2D.Double(tileWidthSize,tileHeightSize));
-			xMax = (int) fix.x;
-			yMax = (int) fix.y;
-
 			// llenamos la matriz map
 			String delimsChar = ",";
 			for (int row = 0; row < numRowsMap; row++) {
@@ -87,7 +75,21 @@ public class TileMap {
 					map[row][col] = Integer.parseInt(tokens[col]);
 				}
 			}
-
+			
+			xMin = (int) -mapToAbsolute(numRowsMap - 1, 0).x - tileWidthSize;
+			yMin = 0;
+			Point2D.Double fix =  Multiple.findPointCloserTo(new Point2D.Double(xMin,yMin), new Point2D.Double(tileWidthSize,tileHeightSize));
+			xMin = (int) fix.x;
+			yMin = (int) fix.y;
+			
+			xMax = GamePanel.RESOLUTION_WIDTH / 2 + tileWidthSize * 2;
+			yMax = GamePanel.RESOLUTION_HEIGHT + tileHeightSize * 3;
+			System.out.println(yMax);
+			
+			fix = Multiple.findPointCloserTo(new Point2D.Double(xMax,yMax), new Point2D.Double(tileWidthSize,tileHeightSize));
+			xMax = (int) fix.x;
+			yMax = (int) fix.y;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -110,8 +112,8 @@ public class TileMap {
 	/****************************************************************************************/
 	public void fixBounds() {
 		if (x < xMin) x = xMin;
-		if (x > xMax) x = xMax;
 		if (y < yMin) y = yMin;
+		if (x > xMax) x = xMax;
 		if (y > yMax) y = yMax;
 	}
 	/****************************************************************************************/
@@ -127,7 +129,7 @@ public class TileMap {
 			this.y = (int) multiple.y;
 		}	
 		
-		//fixBounds();
+		fixBounds();
 	}
 	
 	/****************************************************************************************/

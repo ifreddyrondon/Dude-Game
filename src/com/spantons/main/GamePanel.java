@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	
 //	public static int RESOLUTION_HEIGHT = (int) Toolkit
 //			.getDefaultToolkit().getScreenSize().getHeight();
-	
+
 	public static int RESOLUTION_HEIGHT = 768;
 	
 	/**
