@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 
-import utilities.Multiple;
 import utilities.TileWalk;
 
 import com.spantons.main.GamePanel;
@@ -176,15 +175,13 @@ public class Entity {
 				tileMap.getY() == tileMap.getYMin() ||
 				tileMap.getY() == tileMap.getYMax()	){
 			
-				
-				if ( 	(tileMap.getX() == tileMap.getXMin() && x > GamePanel.RESOLUTION_WIDTH / 2) ||
-					(tileMap.getX() == tileMap.getXMax() && x < GamePanel.RESOLUTION_WIDTH / 2) 
-//					||
-//					(tileMap.getY() == tileMap.getYMin() && x > GamePanel.RESOLUTION_HEIGHT / 2) ||
-//					(tileMap.getY() == tileMap.getYMax() && x < GamePanel.RESOLUTION_HEIGHT / 2) 
+				if ( 	(tileMap.getX() == tileMap.getXMin() && x > GamePanel.RESOLUTION_WIDTH / 2)
+					|| (tileMap.getX() == tileMap.getXMax() && x < GamePanel.RESOLUTION_WIDTH / 2) 
+					|| (tileMap.getY() == tileMap.getYMin() && y > GamePanel.RESOLUTION_HEIGHT / 2) 
+					|| (tileMap.getY() == tileMap.getYMax() && y < GamePanel.RESOLUTION_HEIGHT / 2) 
 					) {
-					
-					setPosition(GamePanel.RESOLUTION_WIDTH / 2, 
+					setPosition(
+							GamePanel.RESOLUTION_WIDTH / 2, 
 							GamePanel.RESOLUTION_HEIGHT / 2);
 					tileMap.setPosition(a,b);
 				}
