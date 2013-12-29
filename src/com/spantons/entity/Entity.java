@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 
+import utilities.Multiple;
 import utilities.TileWalk;
 
 import com.spantons.main.GamePanel;
@@ -170,29 +171,28 @@ public class Entity {
 			int a = (int) (tileMap.getX() + (xDest - GamePanel.RESOLUTION_WIDTH /2));
 			int b = (int) (tileMap.getY() + (yDest - GamePanel.RESOLUTION_HEIGHT /2));
 			
-//			if (	tileMap.getX() == tileMap.getXMin() ||
-//				tileMap.getX() == tileMap.getXMax() ||
-//				tileMap.getY() == tileMap.getYMin() ||
-//				tileMap.getY() == tileMap.getYMax()	){
-//			
-//				if ( 	(tileMap.getX() == tileMap.getXMin() && x > GamePanel.RESOLUTION_WIDTH / 2) //||
-//					//(tileMap.getX() == tileMap.getXMax() && x < GamePanel.RESOLUTION_WIDTH / 2) //||
-//					//(tileMap.getY() == tileMap.getYMin() && x >= GamePanel.RESOLUTION_HEIGHT / 2) ||
-//					//(tileMap.getY() == tileMap.getYMax() && x <= GamePanel.RESOLUTION_HEIGHT / 2) 
-//					) {
-//					
-//					
-//					tileMap.setPosition(a,b);
-//				}
-//				else
-//					setPosition((int) xDest,(int) yDest);
-//
-//			}
-//			else {
+			if (	tileMap.getX() == tileMap.getXMin() ||
+				tileMap.getX() == tileMap.getXMax() ||
+				tileMap.getY() == tileMap.getYMin() ||
+				tileMap.getY() == tileMap.getYMax()	){
+			
 				
-				
+				if ( 	(tileMap.getX() == tileMap.getXMin() && x > GamePanel.RESOLUTION_WIDTH / 2) ||
+					(tileMap.getX() == tileMap.getXMax() && x < GamePanel.RESOLUTION_WIDTH / 2) 
+//					||
+//					(tileMap.getY() == tileMap.getYMin() && x > GamePanel.RESOLUTION_HEIGHT / 2) ||
+//					(tileMap.getY() == tileMap.getYMax() && x < GamePanel.RESOLUTION_HEIGHT / 2) 
+					) {
+					
+					setPosition(GamePanel.RESOLUTION_WIDTH / 2, 
+							GamePanel.RESOLUTION_HEIGHT / 2);
+					tileMap.setPosition(a,b);
+				}
+				else
+					setPosition((int) xDest, (int) yDest);
+			}
+			else
 				tileMap.setPosition(a,b);
-//			}
 			
 			flinching = true;
 			flinchingTime = System.nanoTime();

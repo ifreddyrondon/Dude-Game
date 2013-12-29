@@ -84,7 +84,6 @@ public class TileMap {
 			
 			xMax = GamePanel.RESOLUTION_WIDTH / 2 + tileWidthSize * 2;
 			yMax = GamePanel.RESOLUTION_HEIGHT + tileHeightSize * 3;
-			System.out.println(yMax);
 			
 			fix = Multiple.findPointCloserTo(new Point2D.Double(xMax,yMax), new Point2D.Double(tileWidthSize,tileHeightSize));
 			xMax = (int) fix.x;
