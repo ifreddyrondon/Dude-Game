@@ -192,8 +192,7 @@ public class TileMap {
 				}
 				
 				// Si llego al final de la fila nos salimos
-				if (currentTile.x == finalTileOfRowToDraw.x
-						&& currentTile.y == finalTileOfRowToDraw.y)
+				if (currentTile.x == finalTileOfRowToDraw.x)
 					completedRow = true;
 				else 
 					currentTile = TileWalk.walkTo("E", currentTile,1);

@@ -185,8 +185,18 @@ public class Entity {
 							GamePanel.RESOLUTION_HEIGHT / 2);
 					tileMap.setPosition(a,b);
 				}
-				else
-					setPosition((int) xDest, (int) yDest);
+				else {
+					if (	x < tileMap.tileWidthSize 
+						|| x > GamePanel.RESOLUTION_WIDTH - tileMap.tileWidthSize){
+						
+						setPosition(GamePanel.RESOLUTION_WIDTH / 2, y);
+						tileMap.setPosition(a,b);
+					}
+						
+						
+					else
+						setPosition((int) xDest, (int) yDest);
+				}
 			}
 			else
 				tileMap.setPosition(a,b);
