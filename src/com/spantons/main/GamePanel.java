@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	
 //	public static int RESOLUTION_WIDTH = (int) Toolkit
 //			.getDefaultToolkit().getScreenSize().getWidth();
-	
+
 	public static int RESOLUTION_WIDTH = 1024;
 	/**
 	 * Alto de la ventana de la aplicacion

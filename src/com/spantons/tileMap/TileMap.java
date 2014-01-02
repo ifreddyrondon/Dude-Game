@@ -37,6 +37,10 @@ public class TileMap {
 	private Point2D.Double coorMapTopRight;
 	private Point2D.Double coorMapBottomLeft;
 	private Point2D.Double coorMapBottomRight;
+	
+	// resolucion arreglada para el tamano del tile
+	public int RESOLUTION_WIDTH_FIX;
+	public int RESOLUTION_HEIGHT_FIX;
 
 	// tileset
 	private TileSet tileSet;
@@ -48,7 +52,23 @@ public class TileMap {
 		tileSet = _tileSet;
 		tileWidthSize = _tileWidthSize;
 		tileHeightSize = _tileHeightSize;
-		 tiles = tileSet.getTiles();
+		tiles = tileSet.getTiles();
+		
+		if (	GamePanel.RESOLUTION_WIDTH % tileWidthSize == 0 
+			&& GamePanel.RESOLUTION_HEIGHT % tileHeightSize == 0) {
+			RESOLUTION_WIDTH_FIX = GamePanel.RESOLUTION_WIDTH;
+			RESOLUTION_HEIGHT_FIX = GamePanel.RESOLUTION_HEIGHT;
+
+		} else {
+			Point2D.Double fixResolution = 
+					Multiple.findPointCloserTo(
+							new Point2D.Double(GamePanel.RESOLUTION_WIDTH,GamePanel.RESOLUTION_HEIGHT), 
+							new Point2D.Double(tileWidthSize,tileHeightSize));
+			
+			RESOLUTION_WIDTH_FIX = (int) fixResolution.x;
+			RESOLUTION_HEIGHT_FIX = (int) fixResolution.y;
+		}	
+
 	}
 	/****************************************************************************************/
 	public void loadMap(String s) {
@@ -77,7 +97,7 @@ public class TileMap {
 			}
 			
 			xMin = (int) -mapToAbsolute(numRowsMap - 1, 0).x - tileWidthSize;
-			yMin = 0;
+			yMin = -tileHeightSize;
 			Point2D.Double fix =  Multiple.findPointCloserTo(new Point2D.Double(xMin,yMin), new Point2D.Double(tileWidthSize,tileHeightSize));
 			xMin = (int) fix.x;
 			yMin = (int) fix.y;
@@ -123,7 +143,10 @@ public class TileMap {
 			this.y = y;
 
 		} else {
-			Point2D.Double multiple = Multiple.findPointCloserTo(new Point2D.Double(x,y), new Point2D.Double(tileWidthSize,tileHeightSize));
+			Point2D.Double multiple = 
+					Multiple.findPointCloserTo(
+							new Point2D.Double(x,y), 
+							new Point2D.Double(tileWidthSize,tileHeightSize));
 			this.x = (int) multiple.x;
 			this.y = (int) multiple.y;
 		}	
@@ -141,12 +164,12 @@ public class TileMap {
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, GamePanel.RESOLUTION_WIDTH,
 						GamePanel.RESOLUTION_HEIGHT);
-		
 
 		coorMapTopLeft = absoluteToMap(x, y);
-		coorMapTopRight = absoluteToMap(x + GamePanel.RESOLUTION_WIDTH, y);
-		coorMapBottomLeft = absoluteToMap(x, y + GamePanel.RESOLUTION_HEIGHT);
-		coorMapBottomRight = absoluteToMap(x + GamePanel.RESOLUTION_WIDTH, y + GamePanel.RESOLUTION_HEIGHT);
+		coorMapTopRight = absoluteToMap(x + RESOLUTION_WIDTH_FIX, y);
+		coorMapBottomLeft = absoluteToMap(x, y + RESOLUTION_HEIGHT_FIX);
+		coorMapBottomRight = absoluteToMap(x + RESOLUTION_WIDTH_FIX, 
+				y + RESOLUTION_HEIGHT_FIX);
 		
 		//Desplazamos cada esquina para tener el buffer con un poquito mas
 		coorMapTopLeft = TileWalk.walkTo("NW", coorMapTopLeft, 3);
@@ -192,7 +215,8 @@ public class TileMap {
 				}
 				
 				// Si llego al final de la fila nos salimos
-				if (currentTile.x == finalTileOfRowToDraw.x)
+				if (	currentTile.x == finalTileOfRowToDraw.x
+					&& currentTile.y == finalTileOfRowToDraw.y)
 					completedRow = true;
 				else 
 					currentTile = TileWalk.walkTo("E", currentTile,1);
