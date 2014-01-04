@@ -127,31 +127,6 @@ public class Entity {
 		if (movRight)
 			nextPositionMap = TileWalk.walkTo("E", nextPositionMap,moveSpeed);
 		
-//		if (movUp && movLeft)
-//			nextPositionMap = TileWalk.walkTo("NW", nextPositionMap,moveSpeed + 1);
-//		
-//		else if (movUp && movRight)
-//			nextPositionMap = TileWalk.walkTo("NE", nextPositionMap,moveSpeed + 1);
-//		
-//		else if (movDown && movLeft)
-//			nextPositionMap = TileWalk.walkTo("SW", nextPositionMap,moveSpeed + 1);
-//		
-//		else if (movDown && movRight) 
-//			nextPositionMap = TileWalk.walkTo("SE", nextPositionMap,moveSpeed +1 );
-//		else {
-//			if (movUp) 
-//				nextPositionMap = TileWalk.walkTo("N", nextPositionMap,moveSpeed); 
-//				
-//			if (movDown) 
-//				nextPositionMap = TileWalk.walkTo("S", nextPositionMap,moveSpeed);
-//				
-//			if (movLeft) 
-//				nextPositionMap = TileWalk.walkTo("W", nextPositionMap,moveSpeed);
-//					
-//			if (movRight)
-//				nextPositionMap = TileWalk.walkTo("E", nextPositionMap,moveSpeed);
-//		}
-		
 	}	
 	/****************************************************************************************/
 	public void checkTileMapCollision() {

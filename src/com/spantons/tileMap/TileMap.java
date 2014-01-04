@@ -96,15 +96,16 @@ public class TileMap {
 				}
 			}
 			
-			xMin = (int) -mapToAbsolute(numRowsMap - 1, 0).x - tileWidthSize;
+			xMin = (int) -mapToAbsolute(numRowsMap - 1, 0).x - tileHeightSize;
 			yMin = -tileHeightSize;
-			Point2D.Double fix =  Multiple.findPointCloserTo(new Point2D.Double(xMin,yMin), new Point2D.Double(tileWidthSize,tileHeightSize));
+			Point2D.Double fix = Multiple.findPointCloserTo(new Point2D.Double(xMin,yMin), new Point2D.Double(tileWidthSize,tileHeightSize));
 			xMin = (int) fix.x;
 			yMin = (int) fix.y;
 			
-			xMax = GamePanel.RESOLUTION_WIDTH / 2 + tileWidthSize * 2;
-			yMax = GamePanel.RESOLUTION_HEIGHT + tileHeightSize * 3;
-			
+			xMax = (int) (-mapToAbsolute(0, numColMap -1).x - RESOLUTION_WIDTH_FIX) 
+					+ tileWidthSize * 2;
+			yMax = (int) (mapToAbsolute(numRowsMap - 1, numColMap -1).y - RESOLUTION_HEIGHT_FIX)
+					+ tileHeightSize * 2;
 			fix = Multiple.findPointCloserTo(new Point2D.Double(xMax,yMax), new Point2D.Double(tileWidthSize,tileHeightSize));
 			xMax = (int) fix.x;
 			yMax = (int) fix.y;
