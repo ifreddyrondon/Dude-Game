@@ -38,8 +38,8 @@ public class Level1Stage extends Stage {
 		// Personajes
 		characters = new ArrayList<Entity>();
 		SteveJobs sj = new SteveJobs(tileMap, 0.15);
-		sj.setPosition(GamePanel.RESOLUTION_WIDTH / 2, 
-				GamePanel.RESOLUTION_HEIGHT / 2);
+		sj.setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2, 
+				tileMap.RESOLUTION_HEIGHT_FIX / 2);
 		characters.add(sj);
 		// Personaje actual
 		currentCharacter = 0;
