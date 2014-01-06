@@ -18,6 +18,7 @@ public class Entity {
 
 	// Tile
 	protected TileMap tileMap;
+	int[][] map;
 	protected int xMap;
 	protected int yMap;
 
@@ -74,6 +75,7 @@ public class Entity {
 	public Entity(TileMap tm) {
 		if (tm != null){
 			tileMap = tm;
+			map = tileMap.getMap();
 			xDestMap = tileMap.getX();
 			yDestMap = tileMap.getY();
 		}
@@ -115,8 +117,11 @@ public class Entity {
 		
 		nextPositionMap = getMapPosition();
 		
-		if (movUp) 
-			nextPositionMap = TileWalk.walkTo("N", nextPositionMap,moveSpeed); 
+		if (movUp){
+			nextPositionMap = TileWalk.walkTo("N", nextPositionMap,moveSpeed);
+			
+		}
+			 
 			
 		if (movDown) 
 			nextPositionMap = TileWalk.walkTo("S", nextPositionMap,moveSpeed);
@@ -131,12 +136,14 @@ public class Entity {
 	/****************************************************************************************/
 	public void checkTileMapCollision() {
 
-		if (nextPositionMap.x >= 0 && nextPositionMap.y >= 0
+		if ((nextPositionMap.x >= 0 && nextPositionMap.y >= 0
 				&& nextPositionMap.x < tileMap.getNumColMap()
-				&& nextPositionMap.y < tileMap.getNumRowsMap()) {
-		
+				&& nextPositionMap.y < tileMap.getNumRowsMap())
+			&& tileMap.getUnlockedTiles().contains(map[(int)nextPositionMap.x][(int)nextPositionMap.y])
+			) 
+			
 			setMapPosition(nextPositionMap.x, nextPositionMap.y);
-		}
+		
 		else {
 			xDest = this.x;
 			yDest = this.y;

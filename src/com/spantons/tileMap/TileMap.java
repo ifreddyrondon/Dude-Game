@@ -6,6 +6,8 @@ import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.Set;
 
 import utilities.Multiple;
 import utilities.TileWalk;
@@ -25,13 +27,12 @@ public class TileMap {
 
 	// mapa
 	private int[][] map;
+	private Set<Integer> unlockedTiles;
 	public int tileWidthSize;
 	public int tileHeightSize;
 	private int numRowsMap;
 	private int numColMap;
-	private int mapWidth;
-	private int mapHeight;
-
+	
 	// dibujado
 	private Point2D.Double coorMapTopLeft;
 	private Point2D.Double coorMapTopRight;
@@ -83,36 +84,50 @@ public class TileMap {
 			numRowsMap = Integer.parseInt(br.readLine());
 			// Memoria a la matriz del mapa
 			map = new int[numRowsMap][numColMap];
-			mapWidth = numColMap * tileWidthSize;
-			mapHeight = numRowsMap * tileHeightSize;
+			// Numero de tiles bloqueados
+			int numBlockedTiles = Integer.parseInt(br.readLine());
+			// Memoria al Set de tiles bloqueados
+			unlockedTiles = new HashSet<Integer>();
 
-			// llenamos la matriz map
+			// Expresion regular para delimintar los  datos
 			String delimsChar = ",";
+			// Tiles bloqueados
+			String line = br.readLine();
+			String[] tokens = line.split(delimsChar);
+			// llenamos el set
+			for (int i = 0; i < numBlockedTiles; i++) 
+				unlockedTiles.add(Integer.parseInt(tokens[i]));
+			
+			// llenamos la matriz map
 			for (int row = 0; row < numRowsMap; row++) {
-				String line = br.readLine();
-				String[] tokens = line.split(delimsChar);
-				for (int col = 0; col < numColMap; col++) {
+				line = br.readLine();
+				tokens = line.split(delimsChar);
+				for (int col = 0; col < numColMap; col++) 
 					map[row][col] = Integer.parseInt(tokens[col]);
-				}
 			}
 			
-			xMin = (int) -mapToAbsolute(numRowsMap - 1, 0).x - tileHeightSize;
-			yMin = -tileHeightSize;
-			Point2D.Double fix = Multiple.findPointCloserTo(new Point2D.Double(xMin,yMin), new Point2D.Double(tileWidthSize,tileHeightSize));
-			xMin = (int) fix.x;
-			yMin = (int) fix.y;
-			
-			xMax = (int) (-mapToAbsolute(0, numColMap -1).x - RESOLUTION_WIDTH_FIX) 
-					+ tileWidthSize * 2;
-			yMax = (int) (mapToAbsolute(numRowsMap - 1, numColMap -1).y - RESOLUTION_HEIGHT_FIX)
-					+ tileHeightSize * 2;
-			fix = Multiple.findPointCloserTo(new Point2D.Double(xMax,yMax), new Point2D.Double(tileWidthSize,tileHeightSize));
-			xMax = (int) fix.x;
-			yMax = (int) fix.y;
+			getBounds();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	/****************************************************************************************/
+	private void getBounds(){
+		
+		xMin = (int) -mapToAbsolute(numRowsMap - 1, 0).x - tileHeightSize;
+		yMin = -tileHeightSize;
+		Point2D.Double fix = Multiple.findPointCloserTo(new Point2D.Double(xMin,yMin), new Point2D.Double(tileWidthSize,tileHeightSize));
+		xMin = (int) fix.x;
+		yMin = (int) fix.y;
+		
+		xMax = (int) (-mapToAbsolute(0, numColMap -1).x - RESOLUTION_WIDTH_FIX) 
+				+ tileWidthSize * 2;
+		yMax = (int) (mapToAbsolute(numRowsMap - 1, numColMap -1).y - RESOLUTION_HEIGHT_FIX)
+				+ tileHeightSize * 2;
+		fix = Multiple.findPointCloserTo(new Point2D.Double(xMax,yMax), new Point2D.Double(tileWidthSize,tileHeightSize));
+		xMax = (int) fix.x;
+		yMax = (int) fix.y;
 	}
 	/****************************************************************************************/
 	public Point2D.Double absoluteToMap(double x, double y) {
@@ -224,7 +239,6 @@ public class TileMap {
 			
 			}
 			
-			
 			// Comprobamos si la fila recorrida era la ultima
 			if (	firstTileOfRowToDraw.x > coorMapBottomLeft.x && 
 				firstTileOfRowToDraw.y > coorMapBottomLeft.y &&
@@ -255,14 +269,7 @@ public class TileMap {
 	
 	}
 	/****************************************************************************************/
-	public int getTileWidthSize() {
-		return tileWidthSize;
-	}
-
-	public int getTileHeightSize() {
-		return tileHeightSize;
-	}
-
+	
 	public int getX() {
 		return x;
 	}
@@ -271,18 +278,6 @@ public class TileMap {
 		return y;
 	}
 
-	public int[][] getMap() {
-		return map;
-	}
-	
-	public int getMapWidth() {
-		return mapWidth;
-	}
-
-	public int getMapHeight() {
-		return mapHeight;
-	}
-	
 	public int getNumColMap() {
 		return numColMap;
 	}
@@ -305,5 +300,13 @@ public class TileMap {
 	
 	public int getYMax() {
 		return yMax;
+	}
+	
+	public int[][] getMap(){
+		return map;
+	}
+	
+	public Set<Integer> getUnlockedTiles() {
+		return unlockedTiles;
 	}
 }
