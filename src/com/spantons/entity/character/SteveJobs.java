@@ -133,8 +133,10 @@ public class SteveJobs extends Entity {
 	
 	/****************************************************************************************/
 	public void update() {
-
 		super.update();
+	}
+	/****************************************************************************************/
+	public void updateAnimation(){
 		
 		if (movDown) {
 			if (currentAnimation != WALKING_FRONT) {
@@ -169,6 +171,7 @@ public class SteveJobs extends Entity {
 			facingRight = false;
 
 		animation.update();
+
 	}
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {

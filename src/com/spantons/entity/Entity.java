@@ -117,12 +117,9 @@ public class Entity {
 		
 		nextPositionMap = getMapPosition();
 		
-		if (movUp){
+		if (movUp)
 			nextPositionMap = TileWalk.walkTo("N", nextPositionMap,moveSpeed);
-			
-		}
-			 
-			
+		
 		if (movDown) 
 			nextPositionMap = TileWalk.walkTo("S", nextPositionMap,moveSpeed);
 			
@@ -139,7 +136,7 @@ public class Entity {
 		if ((nextPositionMap.x >= 0 && nextPositionMap.y >= 0
 				&& nextPositionMap.x < tileMap.getNumColMap()
 				&& nextPositionMap.y < tileMap.getNumRowsMap())
-			&& tileMap.getUnlockedTiles().contains(map[(int)nextPositionMap.x][(int)nextPositionMap.y])
+//			&& tileMap.getUnlockedTiles().contains(map[(int)nextPositionMap.x][(int)nextPositionMap.y])
 			) 
 			
 			setMapPosition(nextPositionMap.x, nextPositionMap.y);
@@ -209,6 +206,8 @@ public class Entity {
 		}
 	}
 
+	/****************************************************************************************/
+	public void updateAnimation() {}
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 

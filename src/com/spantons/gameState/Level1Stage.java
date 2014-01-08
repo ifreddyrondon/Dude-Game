@@ -41,19 +41,25 @@ public class Level1Stage extends Stage {
 		sj.setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2, 
 				tileMap.RESOLUTION_HEIGHT_FIX / 2);
 		characters.add(sj);
+		
+		SteveJobs sj2 = new SteveJobs(tileMap, 0.15);
+		sj2.setPosition(tileMap.RESOLUTION_WIDTH_FIX / 4, 
+				tileMap.RESOLUTION_HEIGHT_FIX / 4);
+		characters.add(sj2);
+		
 		// Personaje actual
 		currentCharacter = 0;
-		
 		
 	}
 	/****************************************************************************************/
 	@Override
 	public void update() {
 		
-		// Actualizar personajes
+		// Actualizar personajes actual
+		characters.get(currentCharacter).update();
+		
 		for (int i = 0; i < characters.size(); i++)
-			characters.get(i).update();
-
+			characters.get(i).updateAnimation();
 	}
 	/****************************************************************************************/
 	@Override
