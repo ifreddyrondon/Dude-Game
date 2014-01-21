@@ -19,8 +19,8 @@ public class Entity {
 	// Tile
 	protected TileMap tileMap;
 	int[][] map;
-	private int xMap;
-	private int yMap;
+	protected int xMap;
+	protected int yMap;
 
 	// Posicion
 	protected int x;
@@ -78,8 +78,6 @@ public class Entity {
 			map = tileMap.getMap();
 			xDestMap = tileMap.getX();
 			yDestMap = tileMap.getY();
-			xMap = (int) getMapPosition().x;
-			yMap = (int) getMapPosition().y;
 		}
 	}
 
@@ -147,13 +145,10 @@ public class Entity {
 			xDest = this.x;
 			yDest = this.y;
 		}
+		
 	}
 	/****************************************************************************************/
-	public void updateAnimation() {}
-	/****************************************************************************************/
 	public void update() {
-		
-		updateAnimation();
 		
 		if (flinching) {
 			long elapsedTime = (System.nanoTime() - flinchingTime) / 1000000;
@@ -163,82 +158,67 @@ public class Entity {
 		} else {
 			getNextPosition();
 			checkTileMapCollision();		
-			magicWalk();
 			
-			xMap = (int) getMapPosition().x;
-			yMap = (int) getMapPosition().y;
+			xDestMap = (int) (tileMap.getX() + 
+					(xDest - tileMap.RESOLUTION_WIDTH_FIX /2));
+			yDestMap = (int) (tileMap.getY() + 
+					(yDest - tileMap.RESOLUTION_HEIGHT_FIX /2));
+						
+			if (	tileMap.getX() == tileMap.getXMin() ||
+				tileMap.getX() == tileMap.getXMax() ||
+				tileMap.getY() == tileMap.getYMin() ||
+				tileMap.getY() == tileMap.getYMax()	){
+			
+				if ( 	(tileMap.getX() == tileMap.getXMin() && x > tileMap.RESOLUTION_WIDTH_FIX / 2)
+					|| (tileMap.getX() == tileMap.getXMax() && x < tileMap.RESOLUTION_WIDTH_FIX / 2) 
+					|| (tileMap.getY() == tileMap.getYMin() && y > tileMap.RESOLUTION_HEIGHT_FIX / 2) 
+					|| (tileMap.getY() == tileMap.getYMax() && y < tileMap.RESOLUTION_HEIGHT_FIX / 2) 
+					) {
+					setPosition(
+							(int) tileMap.RESOLUTION_WIDTH_FIX / 2, 
+							(int) tileMap.RESOLUTION_HEIGHT_FIX / 2);
+					tileMap.setPosition(xDestMap,yDestMap);
+				}
+				else {
+					if (	x < tileMap.tileWidthSize 
+						|| x > tileMap.RESOLUTION_WIDTH_FIX - tileMap.tileWidthSize){
+						
+						setPosition(
+								(int) tileMap.RESOLUTION_WIDTH_FIX / 2, 
+								y);
+						tileMap.setPosition(xDestMap,yDestMap);
+					}
+					else if(	y < tileMap.tileHeightSize
+							|| y > tileMap.RESOLUTION_HEIGHT_FIX - tileMap.tileHeightSize * 2){
+						
+						setPosition(x, (int) tileMap.RESOLUTION_HEIGHT_FIX / 2);
+						tileMap.setPosition(xDestMap,yDestMap);
+					}
+					else
+						setPosition((int) xDest, (int) yDest);
+				}
+			}
+			else 
+				tileMap.setPosition(xDestMap,yDestMap);
 			
 			flinching = true;
 			flinchingTime = System.nanoTime();
 		}
 	}
+
 	/****************************************************************************************/
-	public void updateOtherCharacters(){
-		
-		updateAnimation();
-		setMapPosition(xMap, yMap);
-		setPosition((int) xDest, (int) yDest);
-	}
-	/****************************************************************************************/
-	private void magicWalk() {
-		
-		xDestMap = (int) (tileMap.getX() + 
-				(xDest - tileMap.RESOLUTION_WIDTH_FIX /2));
-		yDestMap = (int) (tileMap.getY() + 
-				(yDest - tileMap.RESOLUTION_HEIGHT_FIX /2));
-					
-		if (	tileMap.getX() == tileMap.getXMin() ||
-			tileMap.getX() == tileMap.getXMax() ||
-			tileMap.getY() == tileMap.getYMin() ||
-			tileMap.getY() == tileMap.getYMax()	){
-		
-			if ( 	(tileMap.getX() == tileMap.getXMin() && x > tileMap.RESOLUTION_WIDTH_FIX / 2)
-				|| (tileMap.getX() == tileMap.getXMax() && x < tileMap.RESOLUTION_WIDTH_FIX / 2) 
-				|| (tileMap.getY() == tileMap.getYMin() && y > tileMap.RESOLUTION_HEIGHT_FIX / 2) 
-				|| (tileMap.getY() == tileMap.getYMax() && y < tileMap.RESOLUTION_HEIGHT_FIX / 2) 
-				) {
-				setPosition(
-						(int) tileMap.RESOLUTION_WIDTH_FIX / 2, 
-						(int) tileMap.RESOLUTION_HEIGHT_FIX / 2);
-				tileMap.setPosition(xDestMap,yDestMap);
-			}
-			else {
-				if (	x < tileMap.tileWidthSize 
-					|| x > tileMap.RESOLUTION_WIDTH_FIX - tileMap.tileWidthSize){
-					
-					setPosition(
-							(int) tileMap.RESOLUTION_WIDTH_FIX / 2, 
-							y);
-					tileMap.setPosition(xDestMap,yDestMap);
-				}
-				else if(	y < tileMap.tileHeightSize
-						|| y > tileMap.RESOLUTION_HEIGHT_FIX - tileMap.tileHeightSize * 2){
-					
-					setPosition(x, (int) tileMap.RESOLUTION_HEIGHT_FIX / 2);
-					tileMap.setPosition(xDestMap,yDestMap);
-				}
-				else
-					setPosition((int) xDest, (int) yDest);
-			}
-		}
-		else {
-			setPosition(
-					(int) tileMap.RESOLUTION_WIDTH_FIX / 2, 
-					(int) tileMap.RESOLUTION_HEIGHT_FIX / 2);
-			tileMap.setPosition(xDestMap,yDestMap);
-		}
-	}
+	public void updateAnimation() {}
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 
 		if (facingRight) {
 			g.drawImage(animation.getCurrentImageFrame(),
-					(int) (x - spriteWidth / 2), 
-					(int) (y - spriteHeight / 2), null);
+					(int) (x + xMap - spriteWidth / 2), (int) (y
+							+ yMap - spriteHeight / 2), null);
 		} else {
-			g.drawImage(animation.getCurrentImageFrame(), 
-					(int) (x - spriteWidth / 2 + spriteWidth),
-					(int) (y  - spriteHeight / 2),
+			g.drawImage(animation.getCurrentImageFrame(), (int) (x + xMap
+					- spriteWidth / 2 + spriteWidth),
+					(int) (y + yMap - spriteHeight / 2),
 					-spriteWidth, spriteHeight, null);
 		}
 	}
@@ -300,22 +280,6 @@ public class Entity {
 
 	public void setMovJumping(boolean b) {
 		movJumping = b;
-	}
-	
-	public int getXMap() {
-		return xMap;
-	}
-
-	public void setXMap(int xMap) {
-		this.xMap = xMap;
-	}
-
-	public int getYMap() {
-		return yMap;
-	}
-
-	public void setYMap(int yMap) {
-		this.yMap = yMap;
 	}
 
 }

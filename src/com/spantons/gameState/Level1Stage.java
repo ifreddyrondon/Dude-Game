@@ -58,10 +58,8 @@ public class Level1Stage extends Stage {
 		// Actualizar personajes actual
 		characters.get(currentCharacter).update();
 		
-		for (int i = 0; i < characters.size(); i++){
-			if (currentCharacter != i)
-				characters.get(i).updateOtherCharacters();
-		}
+		for (int i = 0; i < characters.size(); i++)
+			characters.get(i).updateAnimation();
 	}
 	/****************************************************************************************/
 	@Override
@@ -71,13 +69,6 @@ public class Level1Stage extends Stage {
 		// Dibujar personajes
 		for (int i = 0; i < characters.size(); i++)
 			characters.get(i).draw(g);
-	}
-	/****************************************************************************************/
-	public void selectNextCurrentCharacter(){
-		if (currentCharacter == characters.size() - 1) 
-			currentCharacter = 0;
-		else 
-			currentCharacter++;		
 	}
 	/****************************************************************************************/
 	@Override
@@ -93,8 +84,6 @@ public class Level1Stage extends Stage {
 			characters.get(currentCharacter).setMovDown(true);
 		if (k == KeyEvent.VK_SPACE)
 			characters.get(currentCharacter).setMovJumping(true);
-		if (k == KeyEvent.VK_TAB)
-			selectNextCurrentCharacter();
 	}
 	/****************************************************************************************/
 	@Override
