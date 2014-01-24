@@ -137,7 +137,7 @@ public class SteveJobs extends Entity {
 	}
 	/****************************************************************************************/
 	public void updateAnimation(){
-		
+
 		if (movDown) {
 			if (currentAnimation != WALKING_FRONT) {
 				currentAnimation = WALKING_FRONT;
