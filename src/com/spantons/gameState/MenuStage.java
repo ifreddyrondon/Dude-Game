@@ -13,6 +13,8 @@ import com.spantons.entity.character.SteveJobs;
 import com.spantons.main.GamePanel;
 import com.spantons.tileMap.Background;
 
+import com.spantons.audio.*;
+
 public class MenuStage extends Stage {
 
 	private Background bg;
@@ -30,6 +32,9 @@ public class MenuStage extends Stage {
 	// Personajes
 	private ArrayList<Entity> characters;
 	private int currentCharacter;
+	
+	//Sonido del juego
+	private AudioPlayer music;
 
 	public MenuStage(GameStagesManager gsm) {
 		this.gsm = gsm;
@@ -109,6 +114,11 @@ public class MenuStage extends Stage {
 	private void select() {
 		if (currentChoice == 0) {
 			gsm.setStage(GameStagesManager.LEVEL_1_STAGE);
+			
+			//sonido del juego
+			music = new AudioPlayer("/music/terror.wav");
+			music.loop();
+			
 		} else if (currentChoice == 1) {
 			// ayuda
 		} else if (currentChoice == 2) {
