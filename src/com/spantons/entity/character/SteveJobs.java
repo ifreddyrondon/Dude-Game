@@ -133,7 +133,7 @@ public class SteveJobs extends Entity {
 	
 	/****************************************************************************************/
 	public void update() {
-		super.update();
+		super.update(null,0);
 	}
 	/****************************************************************************************/
 	public void updateAnimation(){

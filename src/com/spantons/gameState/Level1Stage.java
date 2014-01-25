@@ -56,7 +56,7 @@ public class Level1Stage extends Stage {
 	public void update() {
 		
 		// Actualizar personajes actual
-		characters.get(currentCharacter).update();
+		characters.get(currentCharacter).update(characters,currentCharacter);
 		
 		for (int i = 0; i < characters.size(); i++){
 			if (currentCharacter != i)

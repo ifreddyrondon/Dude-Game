@@ -3,6 +3,7 @@ package com.spantons.entity;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 import utilities.TileWalk;
 
@@ -85,8 +86,10 @@ public class Entity {
 
 	/****************************************************************************************/
 	public Rectangle getRectangle() {
-		return new Rectangle((int) x - collisionBoxWidth, (int) y
-				- collisionBoxHeight, collisionBoxWidth,
+		return new Rectangle(
+				(int) x - collisionBoxWidth, 
+				(int) y - collisionBoxHeight, 
+				collisionBoxWidth,
 				collisionBoxHeight);
 	}
 
@@ -133,25 +136,34 @@ public class Entity {
 		
 	}	
 	/****************************************************************************************/
-	public void checkTileMapCollision() {
+	public boolean checkCharactersCollision(ArrayList<Entity> characters, int currentCharacter) {
+		
+		for (int i = 0; i < characters.size(); i++){
+			if (currentCharacter != i){
+				if (!characters.get(i).getMapPosition().equals(nextPositionMap)) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	/****************************************************************************************/
+	public boolean checkTileCollision() {
 
 		if ((nextPositionMap.x >= 0 && nextPositionMap.y >= 0
 				&& nextPositionMap.x < tileMap.getNumColMap()
 				&& nextPositionMap.y < tileMap.getNumRowsMap())
 //			&& tileMap.getUnlockedTiles().contains(map[(int)nextPositionMap.x][(int)nextPositionMap.y])
 			) 
-			
-			setMapPosition(nextPositionMap.x, nextPositionMap.y);
+			return true;
 		
-		else {
-			xDest = this.x;
-			yDest = this.y;
-		}
+		return false;	
 	}
 	/****************************************************************************************/
 	public void updateAnimation() {}
 	/****************************************************************************************/
-	public void update() {
+	public void update(ArrayList<Entity> characters, int currentCharacter) {
 		
 		updateAnimation();
 		
@@ -162,8 +174,13 @@ public class Entity {
 		
 		} else {
 			getNextPosition();
-			checkTileMapCollision();		
-			magicWalk();
+			
+			if (checkTileCollision()) {
+				if (checkCharactersCollision(characters, currentCharacter)) {
+					setMapPosition(nextPositionMap.x, nextPositionMap.y);
+					magicWalk();
+				}
+			}	
 			
 			xMap = (int) getMapPosition().x;
 			yMap = (int) getMapPosition().y;
