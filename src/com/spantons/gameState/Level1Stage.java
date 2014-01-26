@@ -17,16 +17,8 @@ public class Level1Stage extends Stage {
 	private TileMap tileMap;
 	private ArrayList<Entity> characters;
 	private int currentCharacter;
-<<<<<<< HEAD
 	private boolean secondaryMenu = false;
 	private AudioPlayer player;
-=======
-	
-	//boolean para abrir el menu secundario
-		private boolean quit = false;
-		//Audio del juego
-		private AudioPlayer music1;
->>>>>>> 88e447555dd79227f26fc4022409c65f6c639550
 
 	public Level1Stage(GameStagesManager gsm) {
 		this.gsm = gsm;
@@ -61,13 +53,8 @@ public class Level1Stage extends Stage {
 		currentCharacter = 0;
 		
 		//sonido del juego
-<<<<<<< HEAD
 		player = new AudioPlayer("/music/terror.wav");
 		player.loop();
-=======
-		music1 = new AudioPlayer("/music/terror.wav");
-		music1.loop();
->>>>>>> 88e447555dd79227f26fc4022409c65f6c639550
 		
 	}
 	/****************************************************************************************/
@@ -91,7 +78,6 @@ public class Level1Stage extends Stage {
 		for (int i = 0; i < characters.size(); i++)
 			characters.get(i).draw(g);
 		
-<<<<<<< HEAD
 		// Menu secundario
 		if(secondaryMenu == true){
 			g.setColor(Color.BLACK);
@@ -105,19 +91,6 @@ public class Level1Stage extends Stage {
 				tileMap.RESOLUTION_WIDTH_FIX / 2 , 
 				50 + tileMap.RESOLUTION_HEIGHT_FIX / 2);
 			}
-=======
-		//Implementacion de Menu Secundario
-				if(quit == true){
-					g.setColor(Color.BLACK);
-					g.drawString("Resume (R)", tileMap.RESOLUTION_WIDTH_FIX / 2, 
-							-50 + tileMap.RESOLUTION_HEIGHT_FIX / 2);
-					g.drawString("Main Menu (M)", tileMap.RESOLUTION_WIDTH_FIX / 2, 
-							tileMap.RESOLUTION_HEIGHT_FIX / 2);
-					g.drawString("Quit Game (Q)", tileMap.RESOLUTION_WIDTH_FIX / 2 , 
-							50 + tileMap.RESOLUTION_HEIGHT_FIX / 2);
-				}
-					
->>>>>>> 88e447555dd79227f26fc4022409c65f6c639550
 	}
 	/****************************************************************************************/
 	public void selectNextCurrentCharacter(){
@@ -143,7 +116,6 @@ public class Level1Stage extends Stage {
 		if (k == KeyEvent.VK_TAB)
 			selectNextCurrentCharacter();
 		if(k == KeyEvent.VK_ESCAPE)
-<<<<<<< HEAD
 			secondaryMenu = true;
 		if(k == KeyEvent.VK_R && secondaryMenu)
 			secondaryMenu = false;
@@ -152,16 +124,6 @@ public class Level1Stage extends Stage {
 		if(k == KeyEvent.VK_M && secondaryMenu){
 			player.close();
 			gsm.setStage(GameStagesManager.MENU_STAGE);
-=======
-			quit = true;
-		if(k == KeyEvent.VK_R)
-			quit = false;
-		if(k == KeyEvent.VK_Q)
-			System.exit(0);
-		if(k == KeyEvent.VK_M){
-			gsm.setStage(GameStagesManager.MENU_STAGE);
-			music1.close();
->>>>>>> 88e447555dd79227f26fc4022409c65f6c639550
 		}
 	}
 	/****************************************************************************************/

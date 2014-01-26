@@ -13,8 +13,6 @@ import com.spantons.entity.character.SteveJobs;
 import com.spantons.main.GamePanel;
 import com.spantons.tileMap.Background;
 
-import com.spantons.audio.*;
-
 public class MenuStage extends Stage {
 
 	private Background bg;
@@ -32,7 +30,6 @@ public class MenuStage extends Stage {
 	// Personajes
 	private ArrayList<Entity> characters;
 	private int currentCharacter;
-	
 
 	public MenuStage(GameStagesManager gsm) {
 		this.gsm = gsm;
@@ -112,17 +109,9 @@ public class MenuStage extends Stage {
 	private void select() {
 		if (currentChoice == 0) 
 			gsm.setStage(GameStagesManager.LEVEL_1_STAGE);
-<<<<<<< HEAD
 		else if (currentChoice == 1) 
 			System.out.println("MENU AYUDA");
 		else if (currentChoice == 2) 
-=======
-			
-			
-		} else if (currentChoice == 1) {
-			// ayuda
-		} else if (currentChoice == 2) {
->>>>>>> 88e447555dd79227f26fc4022409c65f6c639550
 			System.exit(0);
 	}
 
