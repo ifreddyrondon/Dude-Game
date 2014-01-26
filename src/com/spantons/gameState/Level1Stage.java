@@ -80,15 +80,15 @@ public class Level1Stage extends Stage {
 		
 		// Menu secundario
 		if(secondaryMenu == true){
-			g.setColor(Color.BLACK);
+			g.setColor(Color.WHITE);
 			g.drawString("Resume (R)", 
-				tileMap.RESOLUTION_WIDTH_FIX / 2, 
+				tileMap.RESOLUTION_WIDTH_FIX / 2 + 50, 
 				-50 + tileMap.RESOLUTION_HEIGHT_FIX / 2);
 			g.drawString("Main Menu (M)", 
-				tileMap.RESOLUTION_WIDTH_FIX / 2, 
+				tileMap.RESOLUTION_WIDTH_FIX / 2 + 50, 
 				tileMap.RESOLUTION_HEIGHT_FIX / 2);
 			g.drawString("Quit Game (Q)", 
-				tileMap.RESOLUTION_WIDTH_FIX / 2 , 
+				tileMap.RESOLUTION_WIDTH_FIX / 2 + 50, 
 				50 + tileMap.RESOLUTION_HEIGHT_FIX / 2);
 			}
 	}
@@ -119,9 +119,13 @@ public class Level1Stage extends Stage {
 			secondaryMenu = true;
 		if(k == KeyEvent.VK_R && secondaryMenu)
 			secondaryMenu = false;
-		if(k == KeyEvent.VK_Q && secondaryMenu)
+		if(k == KeyEvent.VK_Q && secondaryMenu){
+			player.stop();
+			player.close();
 			System.exit(0);
+		}
 		if(k == KeyEvent.VK_M && secondaryMenu){
+			player.stop();
 			player.close();
 			gsm.setStage(GameStagesManager.MENU_STAGE);
 		}
