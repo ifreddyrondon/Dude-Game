@@ -2,6 +2,7 @@ package com.spantons.main;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 

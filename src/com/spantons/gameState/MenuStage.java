@@ -33,8 +33,6 @@ public class MenuStage extends Stage {
 	private ArrayList<Entity> characters;
 	private int currentCharacter;
 	
-	//Sonido del juego
-	private AudioPlayer music;
 
 	public MenuStage(GameStagesManager gsm) {
 		this.gsm = gsm;
@@ -115,9 +113,6 @@ public class MenuStage extends Stage {
 		if (currentChoice == 0) {
 			gsm.setStage(GameStagesManager.LEVEL_1_STAGE);
 			
-			//sonido del juego
-			music = new AudioPlayer("/music/terror.wav");
-			music.loop();
 			
 		} else if (currentChoice == 1) {
 			// ayuda
