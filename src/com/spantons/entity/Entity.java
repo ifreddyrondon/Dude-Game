@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
+import utilities.Multiple;
 import utilities.TileWalk;
 
 import com.spantons.tileMap.TileMap;
@@ -203,7 +204,7 @@ public class Entity {
 				(xDest - tileMap.RESOLUTION_WIDTH_FIX /2));
 		yDestMap = (int) (tileMap.getY() + 
 				(yDest - tileMap.RESOLUTION_HEIGHT_FIX /2));
-					
+		
 		if (	tileMap.getX() == tileMap.getXMin() ||
 			tileMap.getX() == tileMap.getXMax() ||
 			tileMap.getY() == tileMap.getYMin() ||
@@ -295,8 +296,24 @@ public class Entity {
 	}
 
 	public void setPosition(int x, int y) {
-		this.x = x;
-		this.y = y;
+		
+		if (tileMap == null || x % tileMap.tileWidthSize == 0 
+			&& y % tileMap.tileHeightSize == 0) {
+			
+			this.x = x;
+			this.y = y;
+		
+		} else {
+			
+			Point2D.Double multiple = 
+					Multiple.findPointCloserTo(
+							new Point2D.Double(x,y), 
+							new Point2D.Double(
+									tileMap.tileWidthSize,
+									tileMap.tileHeightSize));
+			this.x = (int) multiple.x;
+			this.y = (int) multiple.y;
+		}
 	}
 
 	public void setMovLeft(boolean b) {

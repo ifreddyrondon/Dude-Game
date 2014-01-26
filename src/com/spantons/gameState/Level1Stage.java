@@ -1,9 +1,11 @@
 package com.spantons.gameState;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import com.spantons.audio.AudioPlayer;
 import com.spantons.entity.Entity;
 import com.spantons.entity.character.SteveJobs;
 import com.spantons.main.GamePanel;
@@ -13,10 +15,10 @@ import com.spantons.tileMap.TileSet;
 public class Level1Stage extends Stage {
 
 	private TileMap tileMap;
-
-	// Personajes
 	private ArrayList<Entity> characters;
 	private int currentCharacter;
+	private boolean secondaryMenu = false;
+	private AudioPlayer player;
 
 	public Level1Stage(GameStagesManager gsm) {
 		this.gsm = gsm;
@@ -50,6 +52,10 @@ public class Level1Stage extends Stage {
 		// Personaje actual
 		currentCharacter = 0;
 		
+		//sonido del juego
+		player = new AudioPlayer("/music/terror.wav");
+		player.loop();
+		
 	}
 	/****************************************************************************************/
 	@Override
@@ -71,6 +77,20 @@ public class Level1Stage extends Stage {
 		// Dibujar personajes
 		for (int i = 0; i < characters.size(); i++)
 			characters.get(i).draw(g);
+		
+		// Menu secundario
+		if(secondaryMenu == true){
+			g.setColor(Color.BLACK);
+			g.drawString("Resume (R)", 
+				tileMap.RESOLUTION_WIDTH_FIX / 2, 
+				-50 + tileMap.RESOLUTION_HEIGHT_FIX / 2);
+			g.drawString("Main Menu (M)", 
+				tileMap.RESOLUTION_WIDTH_FIX / 2, 
+				tileMap.RESOLUTION_HEIGHT_FIX / 2);
+			g.drawString("Quit Game (Q)", 
+				tileMap.RESOLUTION_WIDTH_FIX / 2 , 
+				50 + tileMap.RESOLUTION_HEIGHT_FIX / 2);
+			}
 	}
 	/****************************************************************************************/
 	public void selectNextCurrentCharacter(){
@@ -95,6 +115,16 @@ public class Level1Stage extends Stage {
 			characters.get(currentCharacter).setMovJumping(true);
 		if (k == KeyEvent.VK_TAB)
 			selectNextCurrentCharacter();
+		if(k == KeyEvent.VK_ESCAPE)
+			secondaryMenu = true;
+		if(k == KeyEvent.VK_R && secondaryMenu)
+			secondaryMenu = false;
+		if(k == KeyEvent.VK_Q && secondaryMenu)
+			System.exit(0);
+		if(k == KeyEvent.VK_M && secondaryMenu){
+			player.close();
+			gsm.setStage(GameStagesManager.MENU_STAGE);
+		}
 	}
 	/****************************************************************************************/
 	@Override

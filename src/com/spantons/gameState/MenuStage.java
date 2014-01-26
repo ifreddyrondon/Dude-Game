@@ -107,13 +107,12 @@ public class MenuStage extends Stage {
 	}
 
 	private void select() {
-		if (currentChoice == 0) {
+		if (currentChoice == 0) 
 			gsm.setStage(GameStagesManager.LEVEL_1_STAGE);
-		} else if (currentChoice == 1) {
-			// ayuda
-		} else if (currentChoice == 2) {
+		else if (currentChoice == 1) 
+			System.out.println("MENU AYUDA");
+		else if (currentChoice == 2) 
 			System.exit(0);
-		}
 	}
 
 	@Override
