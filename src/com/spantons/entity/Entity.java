@@ -110,13 +110,19 @@ public class Entity {
 	}
 
 	/****************************************************************************************/
-	public void setMapPosition(double _x, double _y) {
+	public void calculateMapPosition(double _x, double _y) {
 
 		Point2D.Double absolutePosition = tileMap.mapToAbsolute(_x, _y);
 
 		xDest = absolutePosition.x - tileMap.getX();
 		yDest = absolutePosition.y - tileMap.getY();
 
+	}
+	public void setMapPosition(double _x, double _y) {
+
+		Point2D.Double absolutePosition = tileMap.mapToAbsolute(_x, _y);
+		setPosition((int) absolutePosition.x - tileMap.getX(),
+					(int) absolutePosition.y - tileMap.getY());
 	}
 	/****************************************************************************************/
 	protected void getNextPosition() {
@@ -178,7 +184,7 @@ public class Entity {
 			
 			if (checkTileCollision()) {
 				if (checkCharactersCollision(characters, currentCharacter)) {
-					setMapPosition(nextPositionMap.x, nextPositionMap.y);
+					calculateMapPosition(nextPositionMap.x, nextPositionMap.y);
 					magicWalk();
 				}
 			}	
@@ -194,7 +200,7 @@ public class Entity {
 	public void updateOtherCharacters(){
 		
 		updateAnimation();
-		setMapPosition(xMap, yMap);
+		calculateMapPosition(xMap, yMap);
 		setPosition((int) xDest, (int) yDest);
 	}
 	/****************************************************************************************/
@@ -316,6 +322,13 @@ public class Entity {
 		}
 	}
 
+	public void setAllMov(boolean b){
+		movDown = b;
+		movLeft = b;
+		movRight = b;
+		movUp = b;
+	}
+	
 	public void setMovLeft(boolean b) {
 		movLeft = b;
 	}

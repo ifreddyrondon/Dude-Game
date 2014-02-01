@@ -7,7 +7,12 @@ import java.util.ArrayList;
 
 import com.spantons.audio.AudioPlayer;
 import com.spantons.entity.Entity;
-import com.spantons.entity.character.SteveJobs;
+import com.spantons.entity.character.DanaScullyXFiles;
+import com.spantons.entity.character.GordonFreeman;
+import com.spantons.entity.character.Jason;
+import com.spantons.entity.character.LeonTheProfessional‎;
+import com.spantons.entity.character.LizSherman;
+import com.spantons.entity.character.Preso;
 import com.spantons.main.GamePanel;
 import com.spantons.tileMap.TileMap;
 import com.spantons.tileMap.TileSet;
@@ -32,22 +37,41 @@ public class Level1Stage extends Stage {
 		tileMap = new TileMap(64, 32, tileSet);
 		tileMap.loadMap("/maps/map.txt");
 		
-		tileMap.setPosition(
-				-GamePanel.RESOLUTION_WIDTH / 2, 
-				GamePanel.RESOLUTION_HEIGHT / 2);
+//		tileMap.setPosition(
+//				-GamePanel.RESOLUTION_WIDTH / 2, 
+//				GamePanel.RESOLUTION_HEIGHT / 2);
 		
 		
 		// Personajes
 		characters = new ArrayList<Entity>();
-		SteveJobs sj = new SteveJobs(tileMap, 0.15);
-		sj.setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2, 
-				tileMap.RESOLUTION_HEIGHT_FIX / 2);
-		characters.add(sj);
 		
-		SteveJobs sj2 = new SteveJobs(tileMap, 0.15);
-		sj2.setPosition(tileMap.RESOLUTION_WIDTH_FIX / 4, 
-				tileMap.RESOLUTION_HEIGHT_FIX / 4);
-		characters.add(sj2);
+		Jason jason = new Jason(tileMap, 0.10);
+		jason.setMapPosition(0,0);
+		characters.add(jason);
+		
+		LeonTheProfessional‎ leon = new LeonTheProfessional‎(tileMap, 0.10);
+		leon.setMapPosition(0,2);
+		characters.add(leon);
+		
+//		Preso preso = new Preso(tileMap, 0.10);
+//		preso.setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2, 
+//				tileMap.RESOLUTION_HEIGHT_FIX / 4);
+//		characters.add(preso);
+//		
+//		GordonFreeman gf = new GordonFreeman(tileMap, 0.10);
+//		gf.setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2, 
+//				tileMap.RESOLUTION_HEIGHT_FIX / 4);
+//		characters.add(gf);
+//		
+//		LizSherman ls = new LizSherman(tileMap, 0.10);
+//		ls.setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2, 
+//				tileMap.RESOLUTION_HEIGHT_FIX / 4);
+//		characters.add(ls);
+//		
+//		DanaScullyXFiles dcxf = new DanaScullyXFiles(tileMap, 0.10);
+//		dcxf.setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2, 
+//				tileMap.RESOLUTION_HEIGHT_FIX / 4);
+//		characters.add(dcxf);
 		
 		// Personaje actual
 		currentCharacter = 0;
@@ -94,10 +118,13 @@ public class Level1Stage extends Stage {
 	}
 	/****************************************************************************************/
 	public void selectNextCurrentCharacter(){
+		characters.get(currentCharacter).setAllMov(false);
+		
 		if (currentCharacter == characters.size() - 1) 
 			currentCharacter = 0;
 		else 
 			currentCharacter++;		
+		
 	}
 	/****************************************************************************************/
 	@Override
