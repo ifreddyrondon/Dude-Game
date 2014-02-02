@@ -46,7 +46,7 @@ public class Level1Stage extends Stage {
 		characters = new ArrayList<Entity>();
 		
 		Jason jason = new Jason(tileMap, 0.10);
-		jason.setMapPosition(0,0);
+		jason.setMapPosition(15,10);
 		characters.add(jason);
 		
 		LeonTheProfessional‎ leon = new LeonTheProfessional‎(tileMap, 0.10);
@@ -147,12 +147,10 @@ public class Level1Stage extends Stage {
 		if(k == KeyEvent.VK_R && secondaryMenu)
 			secondaryMenu = false;
 		if(k == KeyEvent.VK_Q && secondaryMenu){
-			player.stop();
 			player.close();
 			System.exit(0);
 		}
 		if(k == KeyEvent.VK_M && secondaryMenu){
-			player.stop();
 			player.close();
 			gsm.setStage(GameStagesManager.MENU_STAGE);
 		}

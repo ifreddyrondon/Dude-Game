@@ -78,8 +78,6 @@ public class Entity {
 		if (tm != null){
 			tileMap = tm;
 			map = tileMap.getMap();
-			xDestMap = tileMap.getX();
-			yDestMap = tileMap.getY();
 			xMap = (int) getMapPosition().x;
 			yMap = (int) getMapPosition().y;
 		}
@@ -181,13 +179,16 @@ public class Entity {
 		
 		} else {
 			getNextPosition();
-			
-			if (checkTileCollision()) {
-				if (checkCharactersCollision(characters, currentCharacter)) {
-					calculateMapPosition(nextPositionMap.x, nextPositionMap.y);
-					magicWalk();
+//			if (nextPositionMap.x != xMap
+//				&& nextPositionMap.y != yMap) {
+				if (checkTileCollision()) {
+					if (checkCharactersCollision(characters, currentCharacter)) {
+						
+						calculateMapPosition(nextPositionMap.x, nextPositionMap.y);
+						magicWalk();
+					}
 				}
-			}	
+//			}
 			
 			xMap = (int) getMapPosition().x;
 			yMap = (int) getMapPosition().y;
@@ -200,8 +201,7 @@ public class Entity {
 	public void updateOtherCharacters(){
 		
 		updateAnimation();
-		calculateMapPosition(xMap, yMap);
-		setPosition((int) xDest, (int) yDest);
+		setMapPosition(xMap, yMap);
 	}
 	/****************************************************************************************/
 	private void magicWalk() {
@@ -277,22 +277,6 @@ public class Entity {
 		return (int) y;
 	}
 
-	public int getSpriteWidth() {
-		return spriteWidth;
-	}
-
-	public int getSpriteHeight() {
-		return spriteHeight;
-	}
-
-	public int getCollisionBoxWidth() {
-		return collisionBoxWidth;
-	}
-
-	public int getCollisionBoxHeight() {
-		return collisionBoxHeight;
-	}
-
 	public double getScale() {
 		return scale;
 	}
@@ -364,5 +348,4 @@ public class Entity {
 	public void setYMap(int yMap) {
 		this.yMap = yMap;
 	}
-
 }
