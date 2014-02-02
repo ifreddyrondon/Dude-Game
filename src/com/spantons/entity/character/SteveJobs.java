@@ -38,6 +38,8 @@ public class SteveJobs extends Entity {
 		
 		super(tm);
 		
+		description = "Steve Jobs";
+		
 		scale = sc;
 
 		// Tamano original de cada sprite 320x460, le sumo 2 a cada

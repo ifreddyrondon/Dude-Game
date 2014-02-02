@@ -118,8 +118,8 @@ public class Level1Stage extends Stage {
 		else 
 			aux++;		
 		
-//		tileMap.setPosition(characters.get(aux).getX() - tileMap.RESOLUTION_WIDTH_FIX / 2, 
-//				characters.get(aux).getY() - tileMap.RESOLUTION_HEIGHT_FIX / 2);
+		if (characters.get(aux).isInBounds()) 
+			tileMap.setPosition(tileMap.getXMax(), 0);
 		
 		currentCharacter = aux;
 	}

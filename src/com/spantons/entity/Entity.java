@@ -17,12 +17,16 @@ public class Entity {
 	protected int currentAnimation;
 	protected int lastAnimation;
 	protected boolean facingRight;
+	
+	// Descripcion
+	public String description;
 
-	// Tile
+	// TileMap
 	protected TileMap tileMap;
 	int[][] map;
 	private int xMap;
 	private int yMap;
+	private boolean inBounds;
 
 	// Posicion
 	protected int x;
@@ -207,6 +211,7 @@ public class Entity {
 	public void updateOtherCharacters(){
 		updateAnimation();
 		setMapPosition(xMap, yMap);
+		System.out.println(description + ": " + inBounds);
 	}	
 	/****************************************************************************************/
 	private void magicWalk() {
@@ -219,9 +224,11 @@ public class Entity {
 		if (	tileMap.getX() <= tileMap.getXMin() ||
 			tileMap.getX() >= tileMap.getXMax() ||
 			tileMap.getY() <= tileMap.getYMin() ||
-			tileMap.getY() >= tileMap.getYMax()	){
-		
-			if ( 	(tileMap.getX() == tileMap.getXMin() && x > tileMap.RESOLUTION_WIDTH_FIX / 2)
+			tileMap.getY() >= tileMap.getYMax()	){		
+			
+			inBounds = true;
+			
+			if ((tileMap.getX() == tileMap.getXMin() && x > tileMap.RESOLUTION_WIDTH_FIX / 2)
 				|| (tileMap.getX() == tileMap.getXMax() && x < tileMap.RESOLUTION_WIDTH_FIX / 2) 
 				|| (tileMap.getY() == tileMap.getYMin() && y > tileMap.RESOLUTION_HEIGHT_FIX / 2) 
 				|| (tileMap.getY() == tileMap.getYMax() && y < tileMap.RESOLUTION_HEIGHT_FIX / 2) 
@@ -251,6 +258,8 @@ public class Entity {
 			}
 		}
 		else {
+			
+			inBounds = false;
 			setPosition(
 					(int) tileMap.RESOLUTION_WIDTH_FIX / 2, 
 					(int) tileMap.RESOLUTION_HEIGHT_FIX / 2);
@@ -352,5 +361,8 @@ public class Entity {
 
 	public void setYMap(int yMap) {
 		this.yMap = yMap;
+	}
+	public boolean isInBounds() {
+		return inBounds;
 	}
 }

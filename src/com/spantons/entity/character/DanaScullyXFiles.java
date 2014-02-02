@@ -29,6 +29,8 @@ public class DanaScullyXFiles extends Entity {
 			
 			super(tm);
 			
+			description = "Dana Scully X-Files";
+			
 			scale = sc;
 			moveSpeed = 1;
 			facingRight = true;

@@ -29,6 +29,8 @@ public class GordonFreeman extends Entity {
 			
 			super(tm);
 			
+			description = "Gordon Freeman";
+			
 			scale = sc;
 			moveSpeed = 1;
 			facingRight = true;

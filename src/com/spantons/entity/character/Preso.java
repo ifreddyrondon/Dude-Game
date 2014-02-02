@@ -29,6 +29,8 @@ public class Preso extends Entity {
 			
 			super(tm);
 			
+			description = "Preso";
+			
 			scale = sc;
 			moveSpeed = 1;
 			facingRight = true;

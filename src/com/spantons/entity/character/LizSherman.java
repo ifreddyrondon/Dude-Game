@@ -29,6 +29,8 @@ public class LizSherman extends Entity {
 			
 			super(tm);
 			
+			description = "Liz Sherman";
+			
 			scale = sc;
 			moveSpeed = 1;
 			facingRight = true;

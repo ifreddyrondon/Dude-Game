@@ -29,6 +29,8 @@ public class Jason extends Entity {
 			
 			super(tm);
 			
+			description = "Jason";
+			
 			scale = sc;
 			moveSpeed = 1;
 			facingRight = true;

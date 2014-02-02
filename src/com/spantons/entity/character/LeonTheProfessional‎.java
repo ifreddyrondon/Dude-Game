@@ -29,6 +29,8 @@ public class LeonTheProfessional‎ extends Entity {
 			
 			super(tm);
 			
+			description = "Leon The Professional";
+			
 			scale = sc;
 			moveSpeed = 1;
 			facingRight = true;
