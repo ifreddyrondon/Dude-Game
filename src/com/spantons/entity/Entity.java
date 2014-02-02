@@ -76,7 +76,16 @@ public class Entity {
 			yMap = (int) getMapPosition().y;
 		}
 	}
-
+	/****************************************************************************************/
+	public void initChief(int _xMap, int _yMap){
+		calculateMapPositionInAbsolute(_xMap,_yMap);		
+		magicWalk();
+	}
+	/****************************************************************************************/
+	public void initOtherCharacters(int _xMap, int _yMap){
+		xMap = _xMap;
+		yMap = _yMap;
+	}
 	/****************************************************************************************/
 	public Rectangle getRectangle() {
 		return new Rectangle(
@@ -142,9 +151,8 @@ public class Entity {
 		
 		for (int i = 0; i < characters.size(); i++){
 			if (currentCharacter != i){
-				if (!characters.get(i).getMapPosition().equals(nextPositionMap)) {
+				if (!characters.get(i).getMapPosition().equals(nextPositionMap)) 
 					return true;
-				}
 			}
 		}
 		
@@ -197,23 +205,9 @@ public class Entity {
 	}
 	/****************************************************************************************/
 	public void updateOtherCharacters(){
-		
 		updateAnimation();
 		setMapPosition(xMap, yMap);
-	}
-	/****************************************************************************************/
-	public void inicializar(int xMap, int yMap){
-		calculateMapPositionInAbsolute(xMap,yMap);
-		
-		magicWalk();
-		
-		
-		
-	}
-	
-	
-	
-	
+	}	
 	/****************************************************************************************/
 	private void magicWalk() {
 		
@@ -222,10 +216,10 @@ public class Entity {
 		yDestMap = (int) (tileMap.getY() + 
 				(yDest - tileMap.RESOLUTION_HEIGHT_FIX /2));
 		
-		if (	tileMap.getX() == tileMap.getXMin() ||
-			tileMap.getX() == tileMap.getXMax() ||
-			tileMap.getY() == tileMap.getYMin() ||
-			tileMap.getY() == tileMap.getYMax()	){
+		if (	tileMap.getX() <= tileMap.getXMin() ||
+			tileMap.getX() >= tileMap.getXMax() ||
+			tileMap.getY() <= tileMap.getYMin() ||
+			tileMap.getY() >= tileMap.getYMax()	){
 		
 			if ( 	(tileMap.getX() == tileMap.getXMin() && x > tileMap.RESOLUTION_WIDTH_FIX / 2)
 				|| (tileMap.getX() == tileMap.getXMax() && x < tileMap.RESOLUTION_WIDTH_FIX / 2) 
@@ -298,8 +292,8 @@ public class Entity {
 
 	public void setPosition(int x, int y) {
 		
-		if (tileMap == null || x % tileMap.tileWidthSize == 0 
-			&& y % tileMap.tileHeightSize == 0) {
+		if (tileMap == null || (x % tileMap.tileWidthSize == 0 
+			&& y % tileMap.tileHeightSize == 0)) {
 			
 			this.x = x;
 			this.y = y;

@@ -13,7 +13,6 @@ import com.spantons.entity.character.Jason;
 import com.spantons.entity.character.LeonTheProfessional‎;
 import com.spantons.entity.character.LizSherman;
 import com.spantons.entity.character.Preso;
-import com.spantons.main.GamePanel;
 import com.spantons.tileMap.TileMap;
 import com.spantons.tileMap.TileSet;
 
@@ -43,36 +42,28 @@ public class Level1Stage extends Stage {
 		characters = new ArrayList<Entity>();
 		
 		Jason jason = new Jason(tileMap, 0.10);
-		jason.inicializar(3,3);
+		jason.initChief(25,25);
 		characters.add(jason);
 		
-//		LeonTheProfessional‎ leon = new LeonTheProfessional‎(tileMap, 0.10);
-//		leon.setMapPosition(25,15);
-//		characters.add(leon);
+		LeonTheProfessional‎ leon = new LeonTheProfessional‎(tileMap, 0.10);
+		leon.initOtherCharacters(15,15);
+		characters.add(leon);
 		
+		Preso preso = new Preso(tileMap, 0.10);
+		preso.initOtherCharacters(15,25);
+		characters.add(preso);
 		
+		GordonFreeman gf = new GordonFreeman(tileMap, 0.10);
+		gf.initOtherCharacters(4,30);
+		characters.add(gf);
 		
+		LizSherman ls = new LizSherman(tileMap, 0.10);
+		ls.initOtherCharacters(30,4);
+		characters.add(ls);
 		
-		
-//		Preso preso = new Preso(tileMap, 0.10);
-//		preso.setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2, 
-//				tileMap.RESOLUTION_HEIGHT_FIX / 4);
-//		characters.add(preso);
-//		
-//		GordonFreeman gf = new GordonFreeman(tileMap, 0.10);
-//		gf.setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2, 
-//				tileMap.RESOLUTION_HEIGHT_FIX / 4);
-//		characters.add(gf);
-//		
-//		LizSherman ls = new LizSherman(tileMap, 0.10);
-//		ls.setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2, 
-//				tileMap.RESOLUTION_HEIGHT_FIX / 4);
-//		characters.add(ls);
-//		
-//		DanaScullyXFiles dcxf = new DanaScullyXFiles(tileMap, 0.10);
-//		dcxf.setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2, 
-//				tileMap.RESOLUTION_HEIGHT_FIX / 4);
-//		characters.add(dcxf);
+		DanaScullyXFiles dcxf = new DanaScullyXFiles(tileMap, 0.10);
+		dcxf.initOtherCharacters(45,30);
+		characters.add(dcxf);
 		
 		// Personaje actual
 		currentCharacter = 0;
