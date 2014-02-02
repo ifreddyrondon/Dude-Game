@@ -151,12 +151,12 @@ public class Entity {
 		
 		for (int i = 0; i < characters.size(); i++){
 			if (currentCharacter != i){
-				if (!characters.get(i).getMapPosition().equals(nextPositionMap)) 
-					return true;
+				if (characters.get(i).getMapPosition().equals(nextPositionMap)) 
+					return false;
 			}
 		}
 		
-		return false;
+		return true;
 	}
 	/****************************************************************************************/
 	public boolean checkTileCollision() {
