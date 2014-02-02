@@ -36,22 +36,23 @@ public class Level1Stage extends Stage {
 				TileSet("/tilesets/isometric_grass_and_water.png",64, 64, 0, 0); 
 		tileMap = new TileMap(64, 32, tileSet);
 		tileMap.loadMap("/maps/map.txt");
-		
-//		tileMap.setPosition(
-//				-GamePanel.RESOLUTION_WIDTH / 2, 
-//				GamePanel.RESOLUTION_HEIGHT / 2);
+		tileMap.setPosition(0, 0);
 		
 		
 		// Personajes
 		characters = new ArrayList<Entity>();
 		
 		Jason jason = new Jason(tileMap, 0.10);
-		jason.setMapPosition(15,10);
+		jason.inicializar(3,3);
 		characters.add(jason);
 		
-		LeonTheProfessional‎ leon = new LeonTheProfessional‎(tileMap, 0.10);
-		leon.setMapPosition(0,2);
-		characters.add(leon);
+//		LeonTheProfessional‎ leon = new LeonTheProfessional‎(tileMap, 0.10);
+//		leon.setMapPosition(25,15);
+//		characters.add(leon);
+		
+		
+		
+		
 		
 //		Preso preso = new Preso(tileMap, 0.10);
 //		preso.setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2, 
@@ -119,12 +120,17 @@ public class Level1Stage extends Stage {
 	/****************************************************************************************/
 	public void selectNextCurrentCharacter(){
 		characters.get(currentCharacter).setAllMov(false);
+		int  aux = currentCharacter;
 		
 		if (currentCharacter == characters.size() - 1) 
-			currentCharacter = 0;
+			aux = 0;
 		else 
-			currentCharacter++;		
+			aux++;		
 		
+//		tileMap.setPosition(characters.get(aux).getX() - tileMap.RESOLUTION_WIDTH_FIX / 2, 
+//				characters.get(aux).getY() - tileMap.RESOLUTION_HEIGHT_FIX / 2);
+		
+		currentCharacter = aux;
 	}
 	/****************************************************************************************/
 	@Override

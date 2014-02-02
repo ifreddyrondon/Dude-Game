@@ -47,17 +47,11 @@ public class Entity {
 	protected int collisionBoxHeight;
 
 	// colisiones
-	protected int currentRow;
-	protected int currentCol;
 	protected double xDest;
 	protected double yDest;
 	protected double xTemp;
 	protected double yTemp;
-	protected boolean cornerTopLeft;
-	protected boolean cornerTopRight;
-	protected boolean cornerBottomLeft;
-	protected boolean cornerBottomRight;
-
+	
 	// movimientos
 	protected boolean movLeft;
 	protected boolean movRight;
@@ -108,7 +102,7 @@ public class Entity {
 	}
 
 	/****************************************************************************************/
-	public void calculateMapPosition(double _x, double _y) {
+	public void calculateMapPositionInAbsolute(double _x, double _y) {
 
 		Point2D.Double absolutePosition = tileMap.mapToAbsolute(_x, _y);
 
@@ -142,6 +136,9 @@ public class Entity {
 	}	
 	/****************************************************************************************/
 	public boolean checkCharactersCollision(ArrayList<Entity> characters, int currentCharacter) {
+		
+		if(characters.size() == 1)
+			return true;
 		
 		for (int i = 0; i < characters.size(); i++){
 			if (currentCharacter != i){
@@ -179,12 +176,13 @@ public class Entity {
 		
 		} else {
 			getNextPosition();
+			
 //			if (nextPositionMap.x != xMap
 //				&& nextPositionMap.y != yMap) {
 				if (checkTileCollision()) {
 					if (checkCharactersCollision(characters, currentCharacter)) {
 						
-						calculateMapPosition(nextPositionMap.x, nextPositionMap.y);
+						calculateMapPositionInAbsolute(nextPositionMap.x, nextPositionMap.y);
 						magicWalk();
 					}
 				}
@@ -203,6 +201,19 @@ public class Entity {
 		updateAnimation();
 		setMapPosition(xMap, yMap);
 	}
+	/****************************************************************************************/
+	public void inicializar(int xMap, int yMap){
+		calculateMapPositionInAbsolute(xMap,yMap);
+		
+		magicWalk();
+		
+		
+		
+	}
+	
+	
+	
+	
 	/****************************************************************************************/
 	private void magicWalk() {
 		
