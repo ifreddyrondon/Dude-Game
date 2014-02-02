@@ -13,6 +13,8 @@ import com.spantons.entity.character.SteveJobs;
 import com.spantons.main.GamePanel;
 import com.spantons.tileMap.Background;
 
+import com.spantons.audio.*;
+
 public class MenuStage extends Stage {
 
 	private Background bg;
@@ -30,6 +32,10 @@ public class MenuStage extends Stage {
 	// Personajes
 	private ArrayList<Entity> characters;
 	private int currentCharacter;
+	
+	//Sonido del menu principal
+	
+	private AudioPlayer player1;
 
 	public MenuStage(GameStagesManager gsm) {
 		this.gsm = gsm;
@@ -48,6 +54,9 @@ public class MenuStage extends Stage {
 			SteveJobs sj = new SteveJobs(null , 0.5);
 			sj.setPosition(180, 250);
 			characters.add(sj);
+			
+			player1 = new AudioPlayer("/music/ghosttown.wav");
+			player1.loop();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,6 +66,8 @@ public class MenuStage extends Stage {
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
+		
+	
 	}
 
 	@Override
@@ -107,8 +118,12 @@ public class MenuStage extends Stage {
 	}
 
 	private void select() {
-		if (currentChoice == 0) 
+		if (currentChoice == 0){ 
 			gsm.setStage(GameStagesManager.LEVEL_1_STAGE);
+			//cerrado de player1
+			player1.stop();
+			player1.close();
+		}
 		else if (currentChoice == 1) 
 			System.out.println("MENU AYUDA");
 		else if (currentChoice == 2) 
