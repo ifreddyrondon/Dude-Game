@@ -211,7 +211,6 @@ public class Entity {
 	public void updateOtherCharacters(){
 		updateAnimation();
 		setMapPosition(xMap, yMap);
-		System.out.println(description + ": " + inBounds);
 	}	
 	/****************************************************************************************/
 	private void magicWalk() {
@@ -362,7 +361,17 @@ public class Entity {
 	public void setYMap(int yMap) {
 		this.yMap = yMap;
 	}
+	
 	public boolean isInBounds() {
 		return inBounds;
 	}
+	
+	public int getSpriteWidth() {
+		return spriteWidth;
+	}
+	
+	public int getSpriteHeight() {
+		return spriteHeight;
+	}
+	
 }

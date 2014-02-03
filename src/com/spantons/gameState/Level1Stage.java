@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import com.spantons.audio.AudioPlayer;
+import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
 import com.spantons.entity.character.DanaScullyXFiles;
 import com.spantons.entity.character.GordonFreeman;
@@ -23,6 +24,7 @@ public class Level1Stage extends Stage {
 	private int currentCharacter;
 	private boolean secondaryMenu = false;
 	private AudioPlayer player;
+	private DialogueStage1 dialogues;
 
 	public Level1Stage(GameStagesManager gsm) {
 		this.gsm = gsm;
@@ -36,7 +38,6 @@ public class Level1Stage extends Stage {
 		tileMap = new TileMap(64, 32, tileSet);
 		tileMap.loadMap("/maps/map.txt");
 		tileMap.setPosition(0, 0);
-		
 		
 		// Personajes
 		characters = new ArrayList<Entity>();
@@ -68,9 +69,12 @@ public class Level1Stage extends Stage {
 		// Personaje actual
 		currentCharacter = 0;
 		
-		//sonido del juego
+		// Sonido del juego
 		player = new AudioPlayer("/music/terror.wav");
 		player.loop();
+		
+		// Dialogos
+		dialogues = new DialogueStage1(tileMap, characters);
 		
 	}
 	/****************************************************************************************/
@@ -88,11 +92,13 @@ public class Level1Stage extends Stage {
 	/****************************************************************************************/
 	@Override
 	public void draw(Graphics2D g) {
-		// Dibujar tilemap
+	
 		tileMap.draw(g);
-		// Dibujar personajes
+		
 		for (int i = 0; i < characters.size(); i++)
 			characters.get(i).draw(g);
+		
+		dialogues.draw(g);
 		
 		// Menu secundario
 		if(secondaryMenu == true){

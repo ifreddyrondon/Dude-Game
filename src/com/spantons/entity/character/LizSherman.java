@@ -49,8 +49,8 @@ public class LizSherman extends Entity {
 				BufferedImage spriteSheet2 = ImageIO.read(getClass()
 						.getResourceAsStream("/sprites/LizSherman.png"));
 				
-				spriteWidth = (int) (spriteSheet2.getWidth() / 3 * scale);
-				spriteHeight = (int) (spriteSheet2.getHeight() /2 * scale);
+				spriteWidth = ((int) (spriteSheet2.getWidth() / 3 * scale));
+				spriteHeight = ((int) (spriteSheet2.getHeight() /2 * scale));
 				collisionBoxWidth = (int) (432 * scale);
 				collisionBoxHeight = (int) (521 * scale);
 				
@@ -74,32 +74,32 @@ public class LizSherman extends Entity {
 
 				// WALKING_FRONT
 				BufferedImage[] bi = new BufferedImage[1];
-				bi[0] = spriteSheet.getSubimage(0, 0, spriteWidth,
-						spriteHeight);
+				bi[0] = spriteSheet.getSubimage(0, 0, getSpriteWidth(),
+						getSpriteHeight());
 				sprites.add(bi);
 				
 				// WALKING_BACK
 				bi = new BufferedImage[1];
-				bi[0] = spriteSheet.getSubimage(spriteWidth, 0, spriteWidth,
-						spriteHeight);
+				bi[0] = spriteSheet.getSubimage(getSpriteWidth(), 0, getSpriteWidth(),
+						getSpriteHeight());
 				sprites.add(bi);
 				
 				// WALKING_SIDE
 				bi = new BufferedImage[1];
-				bi[0] = spriteSheet.getSubimage(spriteWidth * 2, 0, spriteWidth,
-						spriteHeight);
+				bi[0] = spriteSheet.getSubimage(getSpriteWidth() * 2, 0, getSpriteWidth(),
+						getSpriteHeight());
 				sprites.add(bi);
 				
 				// WALKING_PERSPECTIVE_FRONT
 				bi = new BufferedImage[1];
-				bi[0] = spriteSheet.getSubimage(0, spriteHeight, spriteWidth,
-						spriteHeight);
+				bi[0] = spriteSheet.getSubimage(0, getSpriteHeight(), getSpriteWidth(),
+						getSpriteHeight());
 				sprites.add(bi);
 				
 				// WALKING_PERSPECTIVE_BACK
 				bi = new BufferedImage[1];
-				bi[0] = spriteSheet.getSubimage(spriteWidth, spriteHeight, spriteWidth,
-						spriteHeight);
+				bi[0] = spriteSheet.getSubimage(getSpriteWidth(), getSpriteHeight(), getSpriteWidth(),
+						getSpriteHeight());
 				sprites.add(bi);
 
 			} catch (Exception e) {
