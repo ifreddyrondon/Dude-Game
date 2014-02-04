@@ -29,7 +29,11 @@ public class Preso extends Entity {
 			
 			super(tm);
 			
-			description = "Preso";
+			setDescription("Preso");
+			setHealth(setMaxHealth(5));
+			setPerversity(0);
+			setMaxPerversity(100);
+			setDead(false);
 			
 			scale = sc;
 			moveSpeed = 1;
@@ -46,6 +50,9 @@ public class Preso extends Entity {
 		private void loadSprite() {
 			try {
 
+				face = ImageIO.read(getClass()
+						.getResourceAsStream("/hud/Preso.png"));
+				
 				BufferedImage spriteSheet2 = ImageIO.read(getClass()
 						.getResourceAsStream("/sprites/Preso.png"));
 				

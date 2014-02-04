@@ -3,7 +3,6 @@ package com.spantons.dialogue;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,9 +11,8 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 import com.spantons.entity.Entity;
-import com.spantons.tileMap.TileMap;
 
-public class DialogueStage1 {
+public class DialogueStage1 extends Thread {
 	
 	private static final int STORY = 0;
 	private static final int HELP = 1;
@@ -32,13 +30,10 @@ public class DialogueStage1 {
 	public Map<Integer, String[]> thoughts;
 	public Map<Integer, String[]> help;
 	public Map<Integer, String[]> story;
-
-	private TileMap tileMap;
 	
 	private ArrayList<Entity> characters;
 	
 	private ArrayList<BufferedImage[]> sprites;
-	private double scale;
 	
 	private Color fontColor;
 	private Font dialogueFont;
@@ -46,14 +41,11 @@ public class DialogueStage1 {
 	private boolean flinching;
 	private long flinchingTime;
 	
-	public DialogueStage1(TileMap _tm, ArrayList<Entity> _characters) {		
-		tileMap = _tm;
+	
+	public DialogueStage1(ArrayList<Entity> _characters) {		
 		characters = _characters;
-		scale = 0.01;
-		
 		fontColor = Color.BLACK;
 		dialogueFont = new Font("Century Gothic", Font.PLAIN, 16);
-
 		loadImages();
 		
 		
@@ -102,32 +94,16 @@ public class DialogueStage1 {
 		
 	}
 	
+	
+	
+	
+	
 	private void loadImages(){
 		try {
 			BufferedImage[] speechBallon = new BufferedImage[3];
 			
 			speechBallon[0] = ImageIO.read(getClass()
 					.getResourceAsStream("/dialog/speech_balloon_normal.png"));
-			
-			int newWidth = new Double(speechBallon[0].getWidth() * scale)
-			.intValue();
-int newHeight = new Double(speechBallon[0].getHeight() * scale)
-			.intValue();
-			
-			
-			BufferedImage aux = new BufferedImage(newWidth,
-					newHeight, speechBallon[0].getType());
-			
-			Graphics2D g = aux.createGraphics();
-			
-			g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-					RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-			
-			g.drawImage(speechBallon[0], 0, 0, newWidth, newHeight, 0, 0,
-					speechBallon[0].getWidth(),
-					speechBallon[0].getHeight(), null);
-			
-			
 			speechBallon[1] = ImageIO.read(getClass()
 					.getResourceAsStream("/dialog/speech_balloon_medium.png"));
 			speechBallon[2] = ImageIO.read(getClass()
@@ -135,24 +111,7 @@ int newHeight = new Double(speechBallon[0].getHeight() * scale)
 
 			sprites = new ArrayList<BufferedImage[]>();
 			sprites.add(speechBallon);
-			
-			/*
-			// Redimencionar SpriteSheet
-			int newWidth = new Double(speechBallon[0].getWidth() * scale)
-					.intValue();
-			int newHeight = new Double(speechBallon[0].getHeight() * scale)
-					.intValue();
-			
-			BufferedImage spriteSheet = new BufferedImage(newWidth,
-					newHeight, sprites[0].getType());
-			Graphics2D g = spriteSheet.createGraphics();
-			g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-					RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-			g.drawImage(sprites, 0, 0, newWidth, newHeight, 0, 0,
-					sprites.getWidth(),
-					sprites.getHeight(), null);
-			*/
-			
+						
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -163,34 +122,47 @@ int newHeight = new Double(speechBallon[0].getHeight() * scale)
 	
 	
 	public void draw(Graphics2D g) {
+		
 		BufferedImage[] aux = sprites.get(STORY);
 		String[] dialogs = thoughts.get(THOUGHTS_AWAKENING);
+		int characterHalfWidth = characters.get(0).getSpriteWidth() / 2;
+		int characterHalfHeight = characters.get(0).getSpriteHeight() / 2;
+		
+//		boolean flinching2 = true;
+//		double flinchingTime2;
 		
 		for (int i = 0; i < dialogs.length; i++) {
 			
 			if (flinching) {
 				long elapsedTime = (System.nanoTime() - flinchingTime) / 1000000;
-				if (elapsedTime > 70) 
+				if (elapsedTime > 2000) 
 					flinching = false;
 			
 			} else {
-				g.drawImage(aux[0],
-						characters.get(i).getX() - characters.get(i).getSpriteWidth() / 2, 
-						characters.get(i).getY() - aux[0].getHeight() - characters.get(i).getSpriteHeight() / 2, 
-						null);
+				
+//				while (flinching2) {
 					
+					g.drawImage(aux[0],
+							characters.get(i).getX() - characterHalfWidth, 
+							characters.get(i).getY() - aux[0].getHeight() - characterHalfHeight, 
+							null);
+							
 					g.setColor(fontColor);
 					g.setFont(dialogueFont);
-					
+							
 					int x = characters.get(i).getX();
 					int y = characters.get(i).getY() - aux[0].getHeight() ;
 					g.drawString(dialogs[i], x, y);
+					
+//				}
 				
+				
+					
 				flinching = true;
 				flinchingTime = System.nanoTime();
 			}
-
 		}
+				
 		
 	}
 	

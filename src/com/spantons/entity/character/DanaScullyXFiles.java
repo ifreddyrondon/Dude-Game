@@ -29,7 +29,11 @@ public class DanaScullyXFiles extends Entity {
 			
 			super(tm);
 			
-			description = "Dana Scully X-Files";
+			setDescription("Dana Scully X-Files");
+			setHealth(setMaxHealth(5));
+			setPerversity(0);
+			setMaxPerversity(100);
+			setDead(false);
 			
 			scale = sc;
 			moveSpeed = 1;
@@ -46,6 +50,9 @@ public class DanaScullyXFiles extends Entity {
 		private void loadSprite() {
 			try {
 
+				face = ImageIO.read(getClass()
+						.getResourceAsStream("/hud/DanaScullyXFiles.png"));
+				
 				BufferedImage spriteSheet2 = ImageIO.read(getClass()
 						.getResourceAsStream("/sprites/DanaScullyXFiles.png"));
 				

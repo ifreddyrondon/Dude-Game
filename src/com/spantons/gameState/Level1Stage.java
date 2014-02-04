@@ -2,12 +2,18 @@ package com.spantons.gameState;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.Timer; 
+
+import utilities.ToHours;
 
 import com.spantons.audio.AudioPlayer;
 import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
+import com.spantons.entity.Hud;
 import com.spantons.entity.character.DanaScullyXFiles;
 import com.spantons.entity.character.GordonFreeman;
 import com.spantons.entity.character.Jason;
@@ -20,11 +26,15 @@ import com.spantons.tileMap.TileSet;
 public class Level1Stage extends Stage {
 
 	private TileMap tileMap;
+	private Hud hud;
 	private ArrayList<Entity> characters;
 	private int currentCharacter;
 	private boolean secondaryMenu = false;
 	private AudioPlayer player;
 	private DialogueStage1 dialogues;
+	
+	private int countdown = 180; 
+	private Timer timer;
 
 	public Level1Stage(GameStagesManager gsm) {
 		this.gsm = gsm;
@@ -34,7 +44,8 @@ public class Level1Stage extends Stage {
 	@Override
 	public void init() {
 		TileSet tileSet = new 
-				TileSet("/tilesets/isometric_grass_and_water.png",64, 64, 0, 0); 
+				TileSet("/tilesets/isometric_grass_and_water.png",64, 64, 0, 0);
+		hud = new Hud();
 		tileMap = new TileMap(64, 32, tileSet);
 		tileMap.loadMap("/maps/map.txt");
 		tileMap.setPosition(0, 0);
@@ -74,8 +85,23 @@ public class Level1Stage extends Stage {
 		player.loop();
 		
 		// Dialogos
-		dialogues = new DialogueStage1(tileMap, characters);
-		
+		dialogues = new DialogueStage1(characters);
+		dialogues.start();
+
+		// Temporizador
+		timer = new Timer(1000, new ActionListener() { 
+			@Override 
+			public void actionPerformed(ActionEvent ae) { 
+				countdown--; 
+				if (countdown == 0) {
+					timer.stop();
+					System.out.println("Termino se vienen los JASON");
+				}
+					
+			} 
+		}); 
+		timer.start();
+
 	}
 	/****************************************************************************************/
 	@Override
@@ -98,7 +124,9 @@ public class Level1Stage extends Stage {
 		for (int i = 0; i < characters.size(); i++)
 			characters.get(i).draw(g);
 		
-		dialogues.draw(g);
+		//dialogues.draw(g);
+		
+		hud.Draw(g, characters.get(currentCharacter), ToHours.SecondsToHours(countdown));
 		
 		// Menu secundario
 		if(secondaryMenu == true){
@@ -123,9 +151,6 @@ public class Level1Stage extends Stage {
 			aux = 0;
 		else 
 			aux++;		
-		
-		if (characters.get(aux).isInBounds()) 
-			tileMap.setPosition(tileMap.getXMax(), 0);
 		
 		currentCharacter = aux;
 	}

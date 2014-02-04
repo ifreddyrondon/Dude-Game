@@ -15,9 +15,6 @@ public class SteveJobs extends Entity {
 
 	// Personaje
 	/*
-	private int health;
-	private int maxHealth;
-	private boolean dead;
 	private boolean recovery;
 	private long recoveryTimer;
 	*/
@@ -38,11 +35,13 @@ public class SteveJobs extends Entity {
 		
 		super(tm);
 		
-		description = "Steve Jobs";		
+		setDescription("Steve Jobs");		
 		scale = sc;
 
-		//health = maxHealth = 5;
-		//dead = false;
+		setHealth(setMaxHealth(5));
+		setPerversity(0);
+		setMaxPerversity(100);
+		setDead(false);
 
 		moveSpeed = 1;
 		
@@ -65,6 +64,8 @@ public class SteveJobs extends Entity {
 	private void loadSprite() {
 		try {
 
+			face = ImageIO.read(getClass().getResourceAsStream("/hud/SteveJobs.png"));
+			
 			BufferedImage spriteSheet2 = ImageIO.read(getClass()
 					.getResourceAsStream("/sprites/SteveJobs.png"));
 

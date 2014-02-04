@@ -3,6 +3,7 @@ package com.spantons.entity;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import utilities.Multiple;
@@ -18,9 +19,9 @@ public class Entity {
 	protected int lastAnimation;
 	protected boolean facingRight;
 	
-	// Descripcion
-	public String description;
-
+	// Hud
+	protected BufferedImage face;
+	
 	// TileMap
 	protected TileMap tileMap;
 	int[][] map;
@@ -31,6 +32,10 @@ public class Entity {
 	// Posicion
 	protected int x;
 	protected int y;
+	protected double xDest;
+	protected double yDest;
+	protected double xTemp;
+	protected double yTemp;
 	
 	// Proxima posicion en el mapa
 	protected Point2D.Double nextPositionMap;
@@ -49,13 +54,7 @@ public class Entity {
 	// Caja de colision
 	protected int collisionBoxWidth;
 	protected int collisionBoxHeight;
-
-	// colisiones
-	protected double xDest;
-	protected double yDest;
-	protected double xTemp;
-	protected double yTemp;
-	
+		
 	// movimientos
 	protected boolean movLeft;
 	protected boolean movRight;
@@ -70,6 +69,14 @@ public class Entity {
 	protected double maxFallSpeed;
 	protected double jumpStart;
 	protected double reducerJumpSpeed;
+	
+	// personaje
+	private int health;
+	private int maxHealth;
+	private int perversity;
+	private int maxPerversity;
+	private boolean dead;
+	private String description;
 
 	/****************************************************************************************/
 	public Entity(TileMap tm) {
@@ -372,6 +379,43 @@ public class Entity {
 	
 	public int getSpriteHeight() {
 		return spriteHeight;
+	}
+	public int getHealth() {
+		return health;
+	}
+	public void setHealth(int health) {
+		this.health = health;
+	}
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+	public int setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
+		return maxHealth;
+	}
+	public int getPerversity() {
+		return perversity;
+	}
+	public void setPerversity(int perversity) {
+		this.perversity = perversity;
+	}
+	public int getMaxPerversity() {
+		return maxPerversity;
+	}
+	public void setMaxPerversity(int maxPerversity) {
+		this.maxPerversity = maxPerversity;
+	}
+	public boolean isDead() {
+		return dead;
+	}
+	public void setDead(boolean dead) {
+		this.dead = dead;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 }

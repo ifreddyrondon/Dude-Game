@@ -29,7 +29,11 @@ public class LeonTheProfessional‎ extends Entity {
 			
 			super(tm);
 			
-			description = "Leon The Professional";
+			setDescription("Leon The Professional");
+			setHealth(setMaxHealth(5));
+			setPerversity(0);
+			setMaxPerversity(100);
+			setDead(false);
 			
 			scale = sc;
 			moveSpeed = 1;
@@ -46,6 +50,9 @@ public class LeonTheProfessional‎ extends Entity {
 		private void loadSprite() {
 			try {
 
+				face = ImageIO.read(getClass()
+						.getResourceAsStream("/hud/LeonTheProfessional‎.png"));
+				
 				BufferedImage spriteSheet2 = ImageIO.read(getClass()
 						.getResourceAsStream("/sprites/LeonTheProfessional‎.png"));
 				

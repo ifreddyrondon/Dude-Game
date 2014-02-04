@@ -29,7 +29,11 @@ public class GordonFreeman extends Entity {
 			
 			super(tm);
 			
-			description = "Gordon Freeman";
+			setDescription("Gordon Freeman");
+			setHealth(setMaxHealth(5));
+			setPerversity(0);
+			setMaxPerversity(100);
+			setDead(false);
 			
 			scale = sc;
 			moveSpeed = 1;
@@ -46,6 +50,9 @@ public class GordonFreeman extends Entity {
 		private void loadSprite() {
 			try {
 
+				face = ImageIO.read(getClass()
+						.getResourceAsStream("/hud/GordonFreeman.png"));
+				
 				BufferedImage spriteSheet2 = ImageIO.read(getClass()
 						.getResourceAsStream("/sprites/GordonFreeman.png"));
 				
