@@ -95,9 +95,8 @@ public class Level1Stage extends Stage {
 				countdown--; 
 				if (countdown == 0) {
 					timer.stop();
-					System.out.println("Termino se vienen los JASON");
+					deployJason();
 				}
-					
 			} 
 		}); 
 		timer.start();
@@ -153,6 +152,10 @@ public class Level1Stage extends Stage {
 			aux++;		
 		
 		currentCharacter = aux;
+	}
+	/****************************************************************************************/
+	private void deployJason(){
+		
 	}
 	/****************************************************************************************/
 	@Override

@@ -75,6 +75,12 @@ public class Entity {
 	private int maxHealth;
 	private int perversity;
 	private int maxPerversity;
+	private int flinchingIncreaseDeltaTimePerversity;
+	private long flinchingIncreaseTimePerversity;
+	private boolean flinchingIncreasePerversity;
+	private int flinchingDecreaseDeltaTimePerversity;
+	private long flinchingDecreaseTimePerversity;
+	private boolean flinchingDecreasePerversity;
 	private boolean dead;
 	private String description;
 
@@ -85,6 +91,7 @@ public class Entity {
 			map = tileMap.getMap();
 			xMap = (int) getMapPosition().x;
 			yMap = (int) getMapPosition().y;
+			flinchingIncreasePerversity = true;
 		}
 	}
 	/****************************************************************************************/
@@ -187,6 +194,7 @@ public class Entity {
 	public void update(ArrayList<Entity> characters, int currentCharacter) {
 		
 		updateAnimation();
+		decreasePerversity();
 		
 		if (flinching) {
 			long elapsedTime = (System.nanoTime() - flinchingTime) / 1000000;
@@ -218,7 +226,45 @@ public class Entity {
 	public void updateOtherCharacters(){
 		updateAnimation();
 		setMapPosition(xMap, yMap);
+		
+		increasePerversity();
 	}	
+	/****************************************************************************************/
+	private void increasePerversity(){
+		
+		if (flinchingIncreasePerversity) {
+			long elapsedTime = (System.nanoTime() - flinchingIncreaseTimePerversity) / 1000000;
+			if (elapsedTime > flinchingIncreaseDeltaTimePerversity) 
+				flinchingIncreasePerversity = false;
+		
+		} else {
+			if (perversity >= maxPerversity) 
+				perversity = maxPerversity;
+			else
+				perversity++;
+			
+			flinchingIncreasePerversity = true;
+			flinchingIncreaseTimePerversity = System.nanoTime();
+		}
+	}
+	/****************************************************************************************/
+	private void decreasePerversity(){
+		
+		if (flinchingDecreasePerversity) {
+			long elapsedTime = (System.nanoTime() - flinchingDecreaseTimePerversity) / 1000000;
+			if (elapsedTime > flinchingDecreaseDeltaTimePerversity) 
+				flinchingDecreasePerversity = false;
+		
+		} else {
+			if (perversity <= 0) 
+				perversity = 0;
+			else
+				perversity--;
+			
+			flinchingDecreasePerversity = true;
+			flinchingDecreaseTimePerversity = System.nanoTime();
+		}
+	}
 	/****************************************************************************************/
 	private void magicWalk() {
 		
@@ -292,19 +338,15 @@ public class Entity {
 	public int getX() {
 		return (int) x;
 	}
-
 	public int getY() {
 		return (int) y;
 	}
-
 	public double getScale() {
 		return scale;
 	}
-
 	public void setScale(double scale) {
 		this.scale = scale;
 	}
-
 	public void setPosition(int x, int y) {
 		
 		if (tileMap == null || (x % tileMap.tileWidthSize == 0 
@@ -336,47 +378,36 @@ public class Entity {
 	public void setMovLeft(boolean b) {
 		movLeft = b;
 	}
-
 	public void setMovRight(boolean b) {
 		movRight = b;
 	}
-
 	public void setMovUp(boolean b) {
 		movUp = b;
 	}
-
 	public void setMovDown(boolean b) {
 		movDown = b;
 	}
-
 	public void setMovJumping(boolean b) {
 		movJumping = b;
 	}
-	
 	public int getXMap() {
 		return xMap;
 	}
-
 	public void setXMap(int xMap) {
 		this.xMap = xMap;
 	}
-
 	public int getYMap() {
 		return yMap;
 	}
-
 	public void setYMap(int yMap) {
 		this.yMap = yMap;
 	}
-	
 	public boolean isInBounds() {
 		return inBounds;
 	}
-	
 	public int getSpriteWidth() {
 		return spriteWidth;
 	}
-	
 	public int getSpriteHeight() {
 		return spriteHeight;
 	}
@@ -416,6 +447,19 @@ public class Entity {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public long getFlinchingIncreaseDeltaTimePerversity() {
+		return flinchingIncreaseDeltaTimePerversity;
+	}
+	public void setFlinchingIncreaseDeltaTimePerversity(int flinchingTimePerversity) {
+		this.flinchingIncreaseDeltaTimePerversity = flinchingTimePerversity;
+	}
+	public int getFlinchingDecreaseDeltaTimePerversity() {
+		return flinchingDecreaseDeltaTimePerversity;
+	}
+	public void setFlinchingDecreaseDeltaTimePerversity(
+			int flinchingDecreaseDeltaTimePerversity) {
+		this.flinchingDecreaseDeltaTimePerversity = flinchingDecreaseDeltaTimePerversity;
 	}
 	
 }

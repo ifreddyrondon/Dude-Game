@@ -32,6 +32,8 @@ public class DanaScullyXFiles extends Entity {
 			setDescription("Dana Scully X-Files");
 			setHealth(setMaxHealth(5));
 			setPerversity(0);
+			setFlinchingIncreaseDeltaTimePerversity(1000);
+			setFlinchingDecreaseDeltaTimePerversity(1000);
 			setMaxPerversity(100);
 			setDead(false);
 			
