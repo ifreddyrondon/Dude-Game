@@ -1,11 +1,15 @@
 package com.spantons.main;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.MemoryImageSource;
 
 import javax.swing.JPanel;
 
@@ -76,14 +80,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 * Constructor por defecto y unico constructor, se encarga de ajustar las
 	 * dimensiones de la ventana
 	 */
+	/****************************************************************************************/
 	public GamePanel() {
 		super();
 		setPreferredSize(new Dimension(RESOLUTION_WIDTH, RESOLUTION_HEIGHT));
 		setFocusable(true);
 		requestFocus();
 		setFocusTraversalKeysEnabled(false);
+		hidePointer(0);
 	}
-
+	/****************************************************************************************/
 	/**
 	 * Espera a que Jpanel se adherido a JFrame o JApplet antes de comenzar,
 	 * inicializa el thread y asigna el encargado del KeyListener
@@ -96,7 +102,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			thread.start();
 		}
 	}
-
+	/****************************************************************************************/
 	/**
 	 * Metodo principal del thread del juego, encargador del Game Loop
 	 */
@@ -128,7 +134,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			}
 		}
 	}
-
+	/****************************************************************************************/
 	/**
 	 * Metodo encargado de inicializar las variables image (BufferedImage), g
 	 * (Graphics2D), running (boolean) y gsm (GameStateManager)
@@ -139,7 +145,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		running = true;
 		gsm = new GameStagesManager();
 	}
-
+	/****************************************************************************************/
 	/**
 	 * Metodo encargado de actualizar todos los objetos, sprites, map etc del
 	 * juego
@@ -147,14 +153,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private void update() {
 		gsm.update();
 	}
-
+	/****************************************************************************************/
 	/**
 	 * Metodo encargado dibujar
 	 */
 	private void draw() {
 		gsm.draw(g);
 	}
-
+	/****************************************************************************************/
 	/**
 	 * Metodo encargado de dibujar en pantalla
 	 */
@@ -163,19 +169,37 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		g2.drawImage(image, 0, 0, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, null);
 		g2.dispose();
 	}
-
+	/****************************************************************************************/
 	@Override
 	public void keyPressed(KeyEvent e) {
 		gsm.keyPressed(e.getKeyCode());
 	}
-
+	/****************************************************************************************/
 	@Override
 	public void keyReleased(KeyEvent e) {
 		gsm.keyReleased(e.getKeyCode());
 	}
-
+	/****************************************************************************************/
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 	}
+	/****************************************************************************************/
+	// Utilitarias
+	private void hidePointer(int n){
+		switch (n) {
+		case 0:
+			int[] pixeles = new int[16*16];
+			
+			Image img= Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(16, 16, pixeles, 0, 16));
+			Cursor transparentCursor = Toolkit.getDefaultToolkit().createCustomCursor(img, new Point(0, 0), "invisibleCursor");
+			this.setCursor(transparentCursor);
+			
+			break;
+		case 1:
+			this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			break;
+		}
+	}
+		
 }

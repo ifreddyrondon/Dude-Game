@@ -18,7 +18,7 @@ public class Main {
 //		GraphicsDevice gs = ge.getDefaultScreenDevice();
 //		gs.setFullScreenWindow(window);
 //		window.validate();
-			
+
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(false);
 		window.pack();
