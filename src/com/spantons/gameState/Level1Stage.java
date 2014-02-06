@@ -36,7 +36,7 @@ public class Level1Stage extends Stage {
 	private AudioPlayer player;
 	private DialogueStage1 dialogues;
 	
-	private int countdown = 180; 
+	private int countdown = 5; 
 	private Timer timer;
 
 	public Level1Stage(GameStagesManager gsm) {
@@ -183,7 +183,8 @@ public class Level1Stage extends Stage {
 	}
 	/****************************************************************************************/
 	private void deployJason(){
-		
+		for (int i = 0; i < characters.size(); i++) 
+			characters.get(i).setFlinchingIncreaseDeltaTimePerversity(250);
 	}
 	/****************************************************************************************/
 	@Override

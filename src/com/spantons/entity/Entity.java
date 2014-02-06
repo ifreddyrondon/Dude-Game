@@ -431,4 +431,7 @@ public class Entity extends EntityGameFuntions {
 	public void setNextPositionMap(Point2D.Double nextPositionMap) {
 		this.nextPositionMap = nextPositionMap;
 	}
+	public void setFlinchingIncreaseDeltaTimePerversity(int a){
+		flinchingIncreaseDeltaTimePerversity = a; 
+	}
 }
