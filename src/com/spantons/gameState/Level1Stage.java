@@ -2,9 +2,11 @@ package com.spantons.gameState;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import javax.swing.Timer; 
 
@@ -107,29 +109,35 @@ public class Level1Stage extends Stage {
 		// Actualizar personajes actual
 		characters.get(currentCharacter).update(characters,jasons,currentCharacter);
 		
-		for (int i = 0; i < characters.size(); i++){
-			if (currentCharacter != i){
-				if (characters.get(i).isJason()) {
+		if (characters.size() > 0) {
+			for (int i = 0; i < characters.size(); i++){
+				if (currentCharacter != i){
+					if (characters.get(i).isJason()) {
+						
+						Entity perverse = characters.get(i);
+						Jason a = new Jason(tileMap, 0.10);
 					
-					Entity perverse = characters.get(i);
-					characters.remove(i);
-					Jason a = new Jason(tileMap, 0.10);
-				
-					int x = perverse.getXMap();
-					int y = perverse.getYMap();
-					
-					a.initOtherCharacters(x,y);
-					jasons.add(a);					
+						int x = perverse.getXMap();
+						int y = perverse.getYMap();
+						a.setNextPositionMap(new Point2D.Double(x,y));
+						a.initOtherCharacters(x,y);
+						jasons.add(a);					
+						characters.remove(i);
+						
+						if (currentCharacter > 0) 
+							currentCharacter--;
+					}
+					else
+						characters.get(i).updateOtherCharacters();
 				}
-				else
-					characters.get(i).updateOtherCharacters();
 			}
-				
 		}
 		
-		for (int i = 0; i < jasons.size(); i++) 
-			jasons.get(i).updateJason();
-		
+		if (jasons.size() > 0) {
+			for (int i = 0; i < jasons.size(); i++) 
+				jasons.get(i).updateJason();
+		}
+
 	}
 	/****************************************************************************************/
 	@Override

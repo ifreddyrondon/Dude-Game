@@ -39,7 +39,7 @@ public class Jason extends Entity {
 			setDead(false);
 			
 			scale = sc;
-			moveSpeed = 2;
+			moveSpeed = 1;
 			facingRight = true;
 
 			loadSprite();

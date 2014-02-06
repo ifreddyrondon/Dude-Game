@@ -33,7 +33,7 @@ public class GordonFreeman extends Entity {
 			setHealth(setMaxHealth(5));
 			setPerversity(0);
 			setMaxPerversity(100);
-			flinchingIncreaseDeltaTimePerversity = 1000;
+			flinchingIncreaseDeltaTimePerversity = 2;
 			flinchingDecreaseDeltaTimePerversity = 1000;
 			setJason(false);
 			setDead(false);

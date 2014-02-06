@@ -24,7 +24,7 @@ public class Entity extends EntityGameFuntions {
 	
 	// TileMap
 	protected TileMap tileMap;
-	int[][] map;
+	protected int[][] map;
 	private int xMap;
 	private int yMap;
 	private boolean inBounds;
@@ -38,13 +38,15 @@ public class Entity extends EntityGameFuntions {
 	protected double yTemp;
 	
 	// Proxima posicion en el mapa
-	protected Point2D.Double nextPositionMap;
+	private Point2D.Double nextPositionMap;
 	protected int xDestMap;
 	protected int yDestMap;
 	
 	// Reposicion
 	protected boolean flinching;
 	protected long flinchingTime;
+	protected boolean flinchingRandom;
+	protected long flinchingTimeRandom;
 	
 	// Dimensiones
 	protected int spriteWidth;
@@ -225,7 +227,57 @@ public class Entity extends EntityGameFuntions {
 	/****************************************************************************************/
 	public void updateJason() {
 		updateAnimation();
-		setMapPosition(xMap, yMap);
+		
+//		if (flinchingRandom) {
+//			long elapsedTime = (System.nanoTime() - flinchingTimeRandom) / 1000000;
+//			if (elapsedTime > 50) 
+//				flinchingRandom = false;
+//		
+//		} else {
+//
+//			int random = (int) (Math.random()*8 + 1);
+//			
+//			switch (random) {
+//				case 1:
+//					nextPositionMap = TileWalk.walkTo("N", nextPositionMap,moveSpeed);
+//					break;
+//				case 2:
+//					 nextPositionMap = TileWalk.walkTo("S", nextPositionMap,moveSpeed);
+//					 break;
+//				case 3:	 
+//					nextPositionMap = TileWalk.walkTo("W", nextPositionMap,moveSpeed);
+//					break;		
+//				case 4:	
+//					nextPositionMap = TileWalk.walkTo("E", nextPositionMap,moveSpeed);
+//					break;
+//				case 5:	
+//					nextPositionMap = TileWalk.walkTo("N", nextPositionMap,moveSpeed);
+//					nextPositionMap = TileWalk.walkTo("W", nextPositionMap,moveSpeed);
+//					break;
+//				case 6:	
+//					nextPositionMap = TileWalk.walkTo("N", nextPositionMap,moveSpeed);
+//					nextPositionMap = TileWalk.walkTo("E", nextPositionMap,moveSpeed);
+//					break;
+//				case 7:	
+//					nextPositionMap = TileWalk.walkTo("S", nextPositionMap,moveSpeed);
+//					nextPositionMap = TileWalk.walkTo("W", nextPositionMap,moveSpeed);
+//					break;
+//				case 8:	
+//					nextPositionMap = TileWalk.walkTo("S", nextPositionMap,moveSpeed);
+//					nextPositionMap = TileWalk.walkTo("E", nextPositionMap,moveSpeed);
+//					break;
+//					
+//				default:
+//					nextPositionMap = TileWalk.walkTo("non", nextPositionMap,moveSpeed);
+//					break;
+//			}
+//			
+//			if (checkTileCollision()) 
+				setMapPosition(nextPositionMap.x, nextPositionMap.y);
+			
+//			flinchingRandom = true;
+//			flinchingTimeRandom = System.nanoTime();
+//		}
 	}
 	/****************************************************************************************/
 	private void magicWalk() {
@@ -372,5 +424,11 @@ public class Entity extends EntityGameFuntions {
 	}
 	public int getSpriteHeight() {
 		return spriteHeight;
+	}
+	public Point2D.Double getNextPositionMap() {
+		return nextPositionMap;
+	}
+	public void setNextPositionMap(Point2D.Double nextPositionMap) {
+		this.nextPositionMap = nextPositionMap;
 	}
 }
