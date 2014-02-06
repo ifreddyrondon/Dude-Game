@@ -2,13 +2,13 @@ package com.spantons.gameState;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import javax.swing.Timer; 
+
+import javax.swing.Timer;
 
 import utilities.ToHours;
 
@@ -85,7 +85,7 @@ public class Level1Stage extends Stage {
 		player.loop();
 		
 		// Dialogos
-		dialogues = new DialogueStage1(characters);
+		dialogues = new DialogueStage1();
 		dialogues.start();
 
 		// Temporizador
@@ -151,7 +151,7 @@ public class Level1Stage extends Stage {
 		for (int i = 0; i < jasons.size(); i++) 
 			jasons.get(i).draw(g);
 		
-		//dialogues.draw(g);
+		dialogues.draw(g, characters, currentCharacter);
 		
 		hud.Draw(g, characters.get(currentCharacter), ToHours.SecondsToHours(countdown));
 		

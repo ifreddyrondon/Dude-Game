@@ -31,21 +31,20 @@ public class DialogueStage1 extends Thread {
 	public Map<Integer, String[]> help;
 	public Map<Integer, String[]> story;
 	
-	private ArrayList<Entity> characters;
-	
 	private ArrayList<BufferedImage[]> sprites;
+	private BufferedImage[] exclamation;
 	
 	private Color fontColor;
 	private Font dialogueFont;
 	
-	private boolean flinching;
-	private long flinchingTime;
+	private boolean flinchingExclamation;
+	private long flinchingTimeExclamation;
 	
 	
-	public DialogueStage1(ArrayList<Entity> _characters) {		
-		characters = _characters;
+	public DialogueStage1() {		
 		fontColor = Color.BLACK;
 		dialogueFont = new Font("Century Gothic", Font.PLAIN, 16);
+		flinchingExclamation = false;
 		loadImages();
 		
 		
@@ -100,6 +99,14 @@ public class DialogueStage1 extends Thread {
 	
 	private void loadImages(){
 		try {
+			exclamation = new BufferedImage[2];
+			
+			exclamation[0] = ImageIO.read(getClass()
+					.getResourceAsStream("/dialog/exclamation.png"));
+			
+			exclamation[1] = ImageIO.read(getClass()
+					.getResourceAsStream("/dialog/exclamation_alert.png"));
+			
 			BufferedImage[] speechBallon = new BufferedImage[3];
 			
 			speechBallon[0] = ImageIO.read(getClass()
@@ -121,16 +128,32 @@ public class DialogueStage1 extends Thread {
 	
 	
 	
-	public void draw(Graphics2D g) {
+	public void draw(Graphics2D g, ArrayList<Entity> _characters, int _currentCharacter) {
 		
 		BufferedImage[] aux = sprites.get(STORY);
 		String[] dialogs = thoughts.get(THOUGHTS_AWAKENING);
-		int characterHalfWidth = characters.get(0).getSpriteWidth() / 2;
-		int characterHalfHeight = characters.get(0).getSpriteHeight() / 2;
 		
+		int characterHalfWidth = _characters.get(0).getSpriteWidth() / 2;
+		int characterHalfHeight = _characters.get(0).getSpriteHeight() / 2;
+		
+		if (flinchingExclamation) {
+			long elapsedTime = (System.nanoTime() - flinchingTimeExclamation) / 1000000;
+			if (elapsedTime > 300) 
+				flinchingExclamation = false;
+		} else {
+			g.drawImage(exclamation[0],
+					_characters.get(_currentCharacter).getX() - characterHalfWidth /2 , 
+					_characters.get(_currentCharacter).getY() - exclamation[0].getHeight() - characterHalfHeight - 10, 
+					null);
+		
+			flinchingExclamation = true;
+			flinchingTimeExclamation = System.nanoTime();
+		}
+		
+
 //		boolean flinching2 = true;
 //		double flinchingTime2;
-		
+		/*
 		for (int i = 0; i < dialogs.length; i++) {
 			
 			if (flinching) {
@@ -143,15 +166,15 @@ public class DialogueStage1 extends Thread {
 //				while (flinching2) {
 					
 					g.drawImage(aux[0],
-							characters.get(i).getX() - characterHalfWidth, 
-							characters.get(i).getY() - aux[0].getHeight() - characterHalfHeight, 
+							_characters.get(i).getX() - characterHalfWidth, 
+							_characters.get(i).getY() - aux[0].getHeight() - characterHalfHeight, 
 							null);
 							
 					g.setColor(fontColor);
 					g.setFont(dialogueFont);
 							
-					int x = characters.get(i).getX();
-					int y = characters.get(i).getY() - aux[0].getHeight() ;
+					int x = _characters.get(i).getX();
+					int y = _characters.get(i).getY() - aux[0].getHeight() ;
 					g.drawString(dialogs[i], x, y);
 					
 //				}
@@ -162,7 +185,7 @@ public class DialogueStage1 extends Thread {
 				flinchingTime = System.nanoTime();
 			}
 		}
-				
+			*/	
 		
 	}
 	
