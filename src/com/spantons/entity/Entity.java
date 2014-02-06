@@ -75,15 +75,17 @@ public class Entity {
 	private int maxHealth;
 	private int perversity;
 	private int maxPerversity;
-	private int flinchingIncreaseDeltaTimePerversity;
-	private long flinchingIncreaseTimePerversity;
-	private boolean flinchingIncreasePerversity;
-	private int flinchingDecreaseDeltaTimePerversity;
-	private long flinchingDecreaseTimePerversity;
-	private boolean flinchingDecreasePerversity;
+	private boolean jason;
 	private boolean dead;
 	private String description;
-
+	protected int flinchingIncreaseDeltaTimePerversity;
+	protected long flinchingIncreaseTimePerversity;
+	protected boolean flinchingIncreasePerversity;
+	protected int flinchingDecreaseDeltaTimePerversity;
+	protected long flinchingDecreaseTimePerversity;
+	protected boolean flinchingDecreasePerversity;
+	
+	
 	/****************************************************************************************/
 	public Entity(TileMap tm) {
 		if (tm != null){
@@ -162,7 +164,7 @@ public class Entity {
 		
 	}	
 	/****************************************************************************************/
-	public boolean checkCharactersCollision(ArrayList<Entity> characters, int currentCharacter) {
+	public boolean checkCharactersCollision(ArrayList<Entity> characters, ArrayList<Entity> jasons, int currentCharacter) {
 		
 		if(characters.size() == 1)
 			return true;
@@ -170,6 +172,12 @@ public class Entity {
 		for (int i = 0; i < characters.size(); i++){
 			if (currentCharacter != i){
 				if (characters.get(i).getMapPosition().equals(nextPositionMap)) 
+					return false;
+			}
+		}
+		for (int i = 0; i < jasons.size(); i++){
+			if (currentCharacter != i){
+				if (jasons.get(i).getMapPosition().equals(nextPositionMap)) 
 					return false;
 			}
 		}
@@ -191,7 +199,7 @@ public class Entity {
 	/****************************************************************************************/
 	public void updateAnimation() {}
 	/****************************************************************************************/
-	public void update(ArrayList<Entity> characters, int currentCharacter) {
+	public void update(ArrayList<Entity> characters, ArrayList<Entity> jasons, int currentCharacter) {
 		
 		updateAnimation();
 		decreasePerversity();
@@ -207,7 +215,7 @@ public class Entity {
 //			if (nextPositionMap.x != xMap
 //				&& nextPositionMap.y != yMap) {
 				if (checkTileCollision()) {
-					if (checkCharactersCollision(characters, currentCharacter)) {
+					if (checkCharactersCollision(characters, jasons, currentCharacter)) {
 						
 						calculateMapPositionInAbsolute(nextPositionMap.x, nextPositionMap.y);
 						magicWalk();
@@ -230,6 +238,12 @@ public class Entity {
 		increasePerversity();
 	}	
 	/****************************************************************************************/
+	public void updateJason() {
+		updateAnimation();
+		setMapPosition(xMap, yMap);
+		
+	}
+	/****************************************************************************************/
 	private void increasePerversity(){
 		
 		if (flinchingIncreasePerversity) {
@@ -238,14 +252,21 @@ public class Entity {
 				flinchingIncreasePerversity = false;
 		
 		} else {
-			if (perversity >= maxPerversity) 
+			if (perversity >= maxPerversity) {
 				perversity = maxPerversity;
+				jasonTransform();
+			}
 			else
 				perversity++;
 			
 			flinchingIncreasePerversity = true;
 			flinchingIncreaseTimePerversity = System.nanoTime();
 		}
+	}
+	/****************************************************************************************/
+	private void jasonTransform() {
+		jason = true;
+		
 	}
 	/****************************************************************************************/
 	private void decreasePerversity(){
@@ -448,18 +469,11 @@ public class Entity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public long getFlinchingIncreaseDeltaTimePerversity() {
-		return flinchingIncreaseDeltaTimePerversity;
+	public boolean isJason() {
+		return jason;
 	}
-	public void setFlinchingIncreaseDeltaTimePerversity(int flinchingTimePerversity) {
-		this.flinchingIncreaseDeltaTimePerversity = flinchingTimePerversity;
+	public void setJason(boolean a){
+		jason = a;
 	}
-	public int getFlinchingDecreaseDeltaTimePerversity() {
-		return flinchingDecreaseDeltaTimePerversity;
-	}
-	public void setFlinchingDecreaseDeltaTimePerversity(
-			int flinchingDecreaseDeltaTimePerversity) {
-		this.flinchingDecreaseDeltaTimePerversity = flinchingDecreaseDeltaTimePerversity;
-	}
-	
+
 }

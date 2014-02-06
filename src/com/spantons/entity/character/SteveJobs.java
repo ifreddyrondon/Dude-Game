@@ -41,8 +41,9 @@ public class SteveJobs extends Entity {
 		setHealth(setMaxHealth(5));
 		setPerversity(0);
 		setMaxPerversity(100);
-		setFlinchingIncreaseDeltaTimePerversity(1000);
-		setFlinchingDecreaseDeltaTimePerversity(1000);
+		flinchingIncreaseDeltaTimePerversity = 1000;
+		flinchingDecreaseDeltaTimePerversity = 1000;
+		setJason(false);
 		setDead(false);
 
 		moveSpeed = 1;
@@ -134,7 +135,7 @@ public class SteveJobs extends Entity {
 	
 	/****************************************************************************************/
 	public void update() {
-		super.update(null,0);
+		super.update(null,null,0);
 	}
 	/****************************************************************************************/
 	public void updateAnimation(){

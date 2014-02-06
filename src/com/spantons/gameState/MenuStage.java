@@ -71,7 +71,7 @@ public class MenuStage extends Stage {
 
 		// Actualizar personajes
 		for (int i = 0; i < characters.size(); i++)
-			characters.get(i).update(null,0);
+			characters.get(i).update(null,null,0);
 	}
 
 	@Override

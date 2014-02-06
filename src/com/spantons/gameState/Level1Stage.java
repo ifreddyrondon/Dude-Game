@@ -28,6 +28,7 @@ public class Level1Stage extends Stage {
 	private TileMap tileMap;
 	private Hud hud;
 	private ArrayList<Entity> characters;
+	private ArrayList<Entity> jasons;
 	private int currentCharacter;
 	private boolean secondaryMenu = false;
 	private AudioPlayer player;
@@ -52,13 +53,10 @@ public class Level1Stage extends Stage {
 		
 		// Personajes
 		characters = new ArrayList<Entity>();
-		
-		Jason jason = new Jason(tileMap, 0.10);
-		jason.initChief(25,25);
-		characters.add(jason);
+		jasons = new ArrayList<Entity>();
 		
 		LeonTheProfessional‎ leon = new LeonTheProfessional‎(tileMap, 0.10);
-		leon.initOtherCharacters(15,15);
+		leon.initChief(25,25);
 		characters.add(leon);
 		
 		Preso preso = new Preso(tileMap, 0.10);
@@ -107,12 +105,31 @@ public class Level1Stage extends Stage {
 	public void update() {
 		
 		// Actualizar personajes actual
-		characters.get(currentCharacter).update(characters,currentCharacter);
+		characters.get(currentCharacter).update(characters,jasons,currentCharacter);
 		
 		for (int i = 0; i < characters.size(); i++){
-			if (currentCharacter != i)
-				characters.get(i).updateOtherCharacters();
+			if (currentCharacter != i){
+				if (characters.get(i).isJason()) {
+					
+					Entity perverse = characters.get(i);
+					characters.remove(i);
+					Jason a = new Jason(tileMap, 0.10);
+				
+					int x = perverse.getXMap();
+					int y = perverse.getYMap();
+					
+					a.initOtherCharacters(x,y);
+					jasons.add(a);					
+				}
+				else
+					characters.get(i).updateOtherCharacters();
+			}
+				
 		}
+		
+		for (int i = 0; i < jasons.size(); i++) 
+			jasons.get(i).updateJason();
+		
 	}
 	/****************************************************************************************/
 	@Override
@@ -122,6 +139,9 @@ public class Level1Stage extends Stage {
 		
 		for (int i = 0; i < characters.size(); i++)
 			characters.get(i).draw(g);
+		
+		for (int i = 0; i < jasons.size(); i++) 
+			jasons.get(i).draw(g);
 		
 		//dialogues.draw(g);
 		
