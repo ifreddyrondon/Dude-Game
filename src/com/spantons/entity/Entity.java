@@ -166,19 +166,22 @@ public class Entity {
 	/****************************************************************************************/
 	public boolean checkCharactersCollision(ArrayList<Entity> characters, ArrayList<Entity> jasons, int currentCharacter) {
 		
-		if(characters.size() == 1)
+		if(characters.size() == 1 && jasons.size() == 0)
 			return true;
 		
-		for (int i = 0; i < characters.size(); i++){
-			if (currentCharacter != i){
-				if (characters.get(i).getMapPosition().equals(nextPositionMap)) 
-					return false;
+		if (characters.size() > 0) {
+			for (int i = 0; i < characters.size(); i++){
+				if (currentCharacter != i){
+					if (characters.get(i).getMapPosition().equals(nextPositionMap)) 
+						return false;
+				}
 			}
 		}
-		for (int i = 0; i < jasons.size(); i++){
-			if (currentCharacter != i){
-				if (jasons.get(i).getMapPosition().equals(nextPositionMap)) 
-					return false;
+		
+		if (jasons.size() > 0) {
+			for (int i = 0; i < jasons.size(); i++){
+					if (jasons.get(i).getMapPosition().equals(nextPositionMap)) 
+						return false;
 			}
 		}
 		
