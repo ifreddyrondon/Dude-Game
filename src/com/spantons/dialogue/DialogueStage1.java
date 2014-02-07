@@ -3,12 +3,15 @@ package com.spantons.dialogue;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
+import javax.swing.Timer;
 
 import com.spantons.entity.Entity;
 
@@ -32,21 +35,33 @@ public class DialogueStage1 extends Thread {
 	public Map<Integer, String[]> story;
 	
 	private ArrayList<BufferedImage[]> sprites;
-	private BufferedImage[] exclamation;
+	private BufferedImage[] exclamationImg;
+	private BufferedImage currentExclamationImg;
 	
 	private Color fontColor;
 	private Font dialogueFont;
 	
-	private boolean flinchingExclamation;
-	private long flinchingTimeExclamation;
+	private Timer timerExclamation;
+	private int countdownExclamation = 500; 
+	private boolean exclamation;
 	
-	
+
 	public DialogueStage1() {		
 		fontColor = Color.BLACK;
 		dialogueFont = new Font("Century Gothic", Font.PLAIN, 16);
-		flinchingExclamation = false;
+		
 		loadImages();
 		
+		timerExclamation = new Timer(countdownExclamation, new ActionListener() { 
+			@Override 
+			public void actionPerformed(ActionEvent ae) { 
+				if (exclamation) 
+					exclamation = false;
+				else 
+					exclamation = true;
+			} 
+		}); 
+
 		
 		// THOUGHTS ----------------------------------------------------------------------------------------
 		thoughts = new HashMap<Integer, String[]>();
@@ -99,12 +114,12 @@ public class DialogueStage1 extends Thread {
 	
 	private void loadImages(){
 		try {
-			exclamation = new BufferedImage[2];
+			exclamationImg = new BufferedImage[2];
 			
-			exclamation[0] = ImageIO.read(getClass()
+			exclamationImg[0] = ImageIO.read(getClass()
 					.getResourceAsStream("/dialog/exclamation.png"));
 			
-			exclamation[1] = ImageIO.read(getClass()
+			exclamationImg[1] = ImageIO.read(getClass()
 					.getResourceAsStream("/dialog/exclamation_alert.png"));
 			
 			BufferedImage[] speechBallon = new BufferedImage[3];
@@ -125,31 +140,32 @@ public class DialogueStage1 extends Thread {
 	}
 	
 	
+	public void characterClose(){
+		timerExclamation.start();
+	}
 	
-	
+	public void characterFar(){
+		timerExclamation.stop();
+		exclamation = false;
+	}
 	
 	public void draw(Graphics2D g, ArrayList<Entity> _characters, int _currentCharacter) {
-		
-		BufferedImage[] aux = sprites.get(STORY);
-		String[] dialogs = thoughts.get(THOUGHTS_AWAKENING);
-		
-		int characterHalfWidth = _characters.get(0).getSpriteWidth() / 2;
-		int characterHalfHeight = _characters.get(0).getSpriteHeight() / 2;
-		
-		if (flinchingExclamation) {
-			long elapsedTime = (System.nanoTime() - flinchingTimeExclamation) / 1000000;
-			if (elapsedTime > 300) 
-				flinchingExclamation = false;
-		} else {
-			g.drawImage(exclamation[0],
-					_characters.get(_currentCharacter).getX() - characterHalfWidth /2 , 
-					_characters.get(_currentCharacter).getY() - exclamation[0].getHeight() - characterHalfHeight - 10, 
-					null);
-		
-			flinchingExclamation = true;
-			flinchingTimeExclamation = System.nanoTime();
+
+		if (exclamation) {
+			if (_characters.get(_currentCharacter).whoIsClose().equals("jason")) 
+				currentExclamationImg = exclamationImg[1];
+			
+			else if (_characters.get(_currentCharacter).whoIsClose().equals("other"))
+				currentExclamationImg = exclamationImg[0];
+				
+			g.drawImage(currentExclamationImg,
+				_characters.get(_currentCharacter).getX() - _characters.get(0).getSpriteWidth() / 2 /2 , 
+				_characters.get(_currentCharacter).getY() - exclamationImg[0].getHeight() - _characters.get(0).getSpriteHeight() / 2 - 10, 
+			null);
 		}
-		
+				
+		//BufferedImage[] aux = sprites.get(STORY);
+				//String[] dialogs = thoughts.get(THOUGHTS_AWAKENING);
 
 //		boolean flinching2 = true;
 //		double flinchingTime2;

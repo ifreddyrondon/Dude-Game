@@ -36,7 +36,7 @@ public class Level1Stage extends Stage {
 	private AudioPlayer player;
 	private DialogueStage1 dialogues;
 	
-	private int countdown = 5; 
+	private int countdown = 180; 
 	private Timer timer;
 
 	public Level1Stage(GameStagesManager gsm) {
@@ -108,6 +108,11 @@ public class Level1Stage extends Stage {
 		
 		// Actualizar personajes actual
 		characters.get(currentCharacter).update(characters,jasons,currentCharacter);
+		
+		if (characters.get(currentCharacter).isCloseToAnotherCharacter()) 
+			dialogues.characterClose();
+		else 
+			dialogues.characterFar();
 		
 		if (characters.size() > 0) {
 			for (int i = 0; i < characters.size(); i++){

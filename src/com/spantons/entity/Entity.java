@@ -41,6 +41,7 @@ public class Entity extends EntityGameFuntions {
 	private Point2D.Double nextPositionMap;
 	protected int xDestMap;
 	protected int yDestMap;
+	private boolean closeToAnotherCharacter;
 	
 	// Reposicion
 	protected boolean flinching;
@@ -164,8 +165,8 @@ public class Entity extends EntityGameFuntions {
 		
 		if (jasons.size() > 0) {
 			for (int i = 0; i < jasons.size(); i++){
-					if (jasons.get(i).getMapPosition().equals(nextPositionMap)) 
-						return false;
+				if (jasons.get(i).getMapPosition().equals(nextPositionMap)) 
+					return false;
 			}
 		}
 		
@@ -186,10 +187,11 @@ public class Entity extends EntityGameFuntions {
 	/****************************************************************************************/
 	public void updateAnimation() {}
 	/****************************************************************************************/
-	public void update(ArrayList<Entity> characters, ArrayList<Entity> jasons, int currentCharacter) {
+	public void update(ArrayList<Entity> _characters, ArrayList<Entity> _jasons, int _currentCharacter) {
 		
 		updateAnimation();
 		decreasePerversity();
+		closeToAnotherCharacter = checkIsCloseToAnotherCharacter(_characters, _jasons, _currentCharacter);
 		
 		if (flinching) {
 			long elapsedTime = (System.nanoTime() - flinchingTime) / 1000000;
@@ -202,7 +204,7 @@ public class Entity extends EntityGameFuntions {
 //			if (nextPositionMap.x != xMap
 //				&& nextPositionMap.y != yMap) {
 				if (checkTileCollision()) {
-					if (checkCharactersCollision(characters, jasons, currentCharacter)) {
+					if (checkCharactersCollision(_characters, _jasons, _currentCharacter)) {
 						
 						calculateMapPositionInAbsolute(nextPositionMap.x, nextPositionMap.y);
 						magicWalk();
@@ -433,5 +435,8 @@ public class Entity extends EntityGameFuntions {
 	}
 	public void setFlinchingIncreaseDeltaTimePerversity(int a){
 		flinchingIncreaseDeltaTimePerversity = a; 
+	}
+	public boolean isCloseToAnotherCharacter() {
+		return closeToAnotherCharacter;
 	}
 }

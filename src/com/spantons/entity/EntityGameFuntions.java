@@ -1,5 +1,10 @@
 package com.spantons.entity;
 
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+
+import utilities.TileWalk;
+
 public class EntityGameFuntions {
 
 	private int health;
@@ -11,6 +16,9 @@ public class EntityGameFuntions {
 	private boolean jason;
 	private int perversity;
 	private int maxPerversity;
+	
+	protected boolean closeJason;
+	protected boolean closeOtherCharacter;
 	
 	protected int flinchingIncreaseDeltaTimePerversity;
 	protected long flinchingIncreaseTimePerversity;
@@ -63,8 +71,58 @@ public class EntityGameFuntions {
 		}
 	}
 	/****************************************************************************************/
-	
-	
+	protected boolean checkIsCloseToAnotherCharacter(ArrayList<Entity> _characters, ArrayList<Entity> _jasons, int _currentCharacter) {
+		
+		Point2D.Double north = TileWalk.walkTo("N", _characters.get(_currentCharacter).getMapPosition(),1);
+		Point2D.Double south = TileWalk.walkTo("S", _characters.get(_currentCharacter).getMapPosition(),1);
+		Point2D.Double west = TileWalk.walkTo("W", _characters.get(_currentCharacter).getMapPosition(),1);
+		Point2D.Double east = TileWalk.walkTo("E", _characters.get(_currentCharacter).getMapPosition(),1);
+				
+		if (_characters.size() > 0) {
+			for (int i = 0; i < _characters.size(); i++){
+				if (_currentCharacter != i){
+					if (
+						_characters.get(i).getMapPosition().equals(north)
+						|| _characters.get(i).getMapPosition().equals(south)
+						|| _characters.get(i).getMapPosition().equals(west)
+						|| _characters.get(i).getMapPosition().equals(east)
+							) {
+						closeOtherCharacter = true;
+						return true;
+					}
+				}
+			}
+		}
+		
+		if (_jasons.size() > 0) {
+			for (int i = 0; i < _jasons.size(); i++){
+				if (
+					_jasons.get(i).getMapPosition().equals(north)
+					|| _jasons.get(i).getMapPosition().equals(south)
+					|| _jasons.get(i).getMapPosition().equals(west)
+					|| _jasons.get(i).getMapPosition().equals(east)
+					) {
+					closeJason = true;
+					return true;
+				}
+					
+				}
+		}
+		
+		closeJason = false;
+		closeOtherCharacter = false;
+		return false;
+	}
+	/****************************************************************************************/
+	public String whoIsClose(){
+		if (closeJason) 
+			return "jason";
+		else if(closeOtherCharacter)
+			return "other";
+		
+		return null;
+	}
+	/****************************************************************************************/
 	public int getHealth() {
 		return health;
 	}
