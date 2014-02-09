@@ -33,6 +33,7 @@ public class Level1Stage extends Stage {
 	private ArrayList<Entity> jasons;
 	private int currentCharacter;
 	private boolean secondaryMenu = false;
+	private boolean characterMenu = false;
 	private AudioPlayer player;
 	private DialogueStage1 dialogues;
 	
@@ -111,8 +112,10 @@ public class Level1Stage extends Stage {
 		
 		if (characters.get(currentCharacter).isCloseToAnotherCharacter()) 
 			dialogues.characterClose();
-		else 
+		else {
 			dialogues.characterFar();
+			characterMenu = false;
+		}
 		
 		if (characters.size() > 0) {
 			for (int i = 0; i < characters.size(); i++){
@@ -161,7 +164,7 @@ public class Level1Stage extends Stage {
 		hud.Draw(g, characters.get(currentCharacter), ToHours.SecondsToHours(countdown));
 		
 		// Menu secundario
-		if(secondaryMenu == true){
+		if(secondaryMenu){
 			g.setColor(Color.WHITE);
 			g.drawString("Resume (R)", 
 				tileMap.RESOLUTION_WIDTH_FIX / 2 + 50, 
@@ -172,7 +175,7 @@ public class Level1Stage extends Stage {
 			g.drawString("Quit Game (Q)", 
 				tileMap.RESOLUTION_WIDTH_FIX / 2 + 50, 
 				50 + tileMap.RESOLUTION_HEIGHT_FIX / 2);
-			}
+		}
 	}
 	/****************************************************************************************/
 	public void selectNextCurrentCharacter(){
@@ -203,8 +206,8 @@ public class Level1Stage extends Stage {
 			characters.get(currentCharacter).setMovUp(true);
 		if (k == KeyEvent.VK_DOWN)
 			characters.get(currentCharacter).setMovDown(true);
-		if (k == KeyEvent.VK_SPACE)
-			characters.get(currentCharacter).setMovJumping(true);
+		if (k == KeyEvent.VK_ENTER && characters.get(currentCharacter).isCloseToAnotherCharacter())
+			characterMenu = true;
 		if (k == KeyEvent.VK_TAB)
 			selectNextCurrentCharacter();
 		if(k == KeyEvent.VK_ESCAPE)

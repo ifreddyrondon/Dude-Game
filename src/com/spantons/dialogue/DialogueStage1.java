@@ -61,7 +61,6 @@ public class DialogueStage1 extends Thread {
 					exclamation = true;
 			} 
 		}); 
-
 		
 		// THOUGHTS ----------------------------------------------------------------------------------------
 		thoughts = new HashMap<Integer, String[]>();
@@ -152,11 +151,14 @@ public class DialogueStage1 extends Thread {
 	public void draw(Graphics2D g, ArrayList<Entity> _characters, int _currentCharacter) {
 
 		if (exclamation) {
-			if (_characters.get(_currentCharacter).whoIsClose().equals("jason")) 
+			if (_characters.get(_currentCharacter).whoIsClose().equals("jason")) {
+				timerExclamation.setDelay(200);
 				currentExclamationImg = exclamationImg[1];
-			
-			else if (_characters.get(_currentCharacter).whoIsClose().equals("other"))
+			}
+			else if (_characters.get(_currentCharacter).whoIsClose().equals("other")){
+				timerExclamation.setDelay(500);
 				currentExclamationImg = exclamationImg[0];
+			}
 				
 			g.drawImage(currentExclamationImg,
 				_characters.get(_currentCharacter).getX() - _characters.get(0).getSpriteWidth() / 2 /2 , 
