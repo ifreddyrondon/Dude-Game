@@ -4,15 +4,33 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 import utilities.Multiple;
 import utilities.TileWalk;
 
+import com.spantons.entity.character.Jason;
+import com.spantons.gameState.Stage;
 import com.spantons.tileMap.TileMap;
 
-public class Entity extends EntityGameFuntions {
-
+public class Entity  {
+		
+	protected Stage stage;
+	private int health;
+	private int maxHealth;
+	private boolean dead;
+	private String description;
+	private int perversity;
+	private int maxPerversity;
+	
+	private Entity characterClose;
+	
+	protected int flinchingIncreaseDeltaTimePerversity;
+	protected long flinchingIncreaseTimePerversity;
+	protected boolean flinchingIncreasePerversity;
+	protected int flinchingDecreaseDeltaTimePerversity;
+	protected long flinchingDecreaseTimePerversity;
+	protected boolean flinchingDecreasePerversity;
+	
 	// Animacion
 	protected Animation animation;
 	protected int currentAnimation;
@@ -41,7 +59,6 @@ public class Entity extends EntityGameFuntions {
 	private Point2D.Double nextPositionMap;
 	protected int xDestMap;
 	protected int yDestMap;
-	private boolean closeToAnotherCharacter;
 	
 	// Reposicion
 	protected boolean flinching;
@@ -74,13 +91,14 @@ public class Entity extends EntityGameFuntions {
 	protected double reducerJumpSpeed;
 	
 	/****************************************************************************************/
-	public Entity(TileMap tm) {
-		if (tm != null){
-			tileMap = tm;
+	public Entity(TileMap _tm, Stage _stage) {
+		if (_tm != null){
+			tileMap = _tm;
 			map = tileMap.getMap();
 			xMap = (int) getMapPosition().x;
 			yMap = (int) getMapPosition().y;
 			flinchingIncreasePerversity = true;
+			stage = _stage;
 		}
 	}
 	/****************************************************************************************/
@@ -149,23 +167,23 @@ public class Entity extends EntityGameFuntions {
 		
 	}	
 	/****************************************************************************************/
-	public boolean checkCharactersCollision(ArrayList<Entity> characters, ArrayList<Entity> jasons, int currentCharacter) {
+	public boolean checkCharactersCollision() {
 		
-		if(characters.size() == 1 && jasons.size() == 0)
+		if(stage.getCharacters().size() == 1 && stage.getJasons().size() == 0)
 			return true;
 		
-		if (characters.size() > 0) {
-			for (int i = 0; i < characters.size(); i++){
-				if (currentCharacter != i){
-					if (characters.get(i).getMapPosition().equals(nextPositionMap)) 
+		if (stage.getCharacters().size() > 0) {
+			for (int i = 0; i < stage.getCharacters().size(); i++){
+				if (stage.getCurrentCharacter() != i){
+					if (stage.getCharacters().get(i).getMapPosition().equals(nextPositionMap)) 
 						return false;
 				}
 			}
 		}
 		
-		if (jasons.size() > 0) {
-			for (int i = 0; i < jasons.size(); i++){
-				if (jasons.get(i).getMapPosition().equals(nextPositionMap)) 
+		if (stage.getJasons().size() > 0) {
+			for (int i = 0; i < stage.getJasons().size(); i++){
+				if (stage.getJasons().get(i).getMapPosition().equals(nextPositionMap)) 
 					return false;
 			}
 		}
@@ -187,11 +205,11 @@ public class Entity extends EntityGameFuntions {
 	/****************************************************************************************/
 	public void updateAnimation() {}
 	/****************************************************************************************/
-	public void update(ArrayList<Entity> _characters, ArrayList<Entity> _jasons, int _currentCharacter) {
+	public void update() {
 		
 		updateAnimation();
 		decreasePerversity();
-		closeToAnotherCharacter = checkIsCloseToAnotherCharacter(_characters, _jasons, _currentCharacter);
+		characterClose = checkIsCloseToAnotherCharacter();
 		
 		if (flinching) {
 			long elapsedTime = (System.nanoTime() - flinchingTime) / 1000000;
@@ -201,16 +219,12 @@ public class Entity extends EntityGameFuntions {
 		} else {
 			getNextPosition();
 			
-//			if (nextPositionMap.x != xMap
-//				&& nextPositionMap.y != yMap) {
-				if (checkTileCollision()) {
-					if (checkCharactersCollision(_characters, _jasons, _currentCharacter)) {
-						
-						calculateMapPositionInAbsolute(nextPositionMap.x, nextPositionMap.y);
-						magicWalk();
-					}
+			if (checkTileCollision()) {
+				if (checkCharactersCollision()) {
+					calculateMapPositionInAbsolute(nextPositionMap.x, nextPositionMap.y);
+					magicWalk();
 				}
-//			}
+			}
 			
 			xMap = (int) getMapPosition().x;
 			yMap = (int) getMapPosition().y;
@@ -229,57 +243,7 @@ public class Entity extends EntityGameFuntions {
 	/****************************************************************************************/
 	public void updateJason() {
 		updateAnimation();
-		
-//		if (flinchingRandom) {
-//			long elapsedTime = (System.nanoTime() - flinchingTimeRandom) / 1000000;
-//			if (elapsedTime > 50) 
-//				flinchingRandom = false;
-//		
-//		} else {
-//
-//			int random = (int) (Math.random()*8 + 1);
-//			
-//			switch (random) {
-//				case 1:
-//					nextPositionMap = TileWalk.walkTo("N", nextPositionMap,moveSpeed);
-//					break;
-//				case 2:
-//					 nextPositionMap = TileWalk.walkTo("S", nextPositionMap,moveSpeed);
-//					 break;
-//				case 3:	 
-//					nextPositionMap = TileWalk.walkTo("W", nextPositionMap,moveSpeed);
-//					break;		
-//				case 4:	
-//					nextPositionMap = TileWalk.walkTo("E", nextPositionMap,moveSpeed);
-//					break;
-//				case 5:	
-//					nextPositionMap = TileWalk.walkTo("N", nextPositionMap,moveSpeed);
-//					nextPositionMap = TileWalk.walkTo("W", nextPositionMap,moveSpeed);
-//					break;
-//				case 6:	
-//					nextPositionMap = TileWalk.walkTo("N", nextPositionMap,moveSpeed);
-//					nextPositionMap = TileWalk.walkTo("E", nextPositionMap,moveSpeed);
-//					break;
-//				case 7:	
-//					nextPositionMap = TileWalk.walkTo("S", nextPositionMap,moveSpeed);
-//					nextPositionMap = TileWalk.walkTo("W", nextPositionMap,moveSpeed);
-//					break;
-//				case 8:	
-//					nextPositionMap = TileWalk.walkTo("S", nextPositionMap,moveSpeed);
-//					nextPositionMap = TileWalk.walkTo("E", nextPositionMap,moveSpeed);
-//					break;
-//					
-//				default:
-//					nextPositionMap = TileWalk.walkTo("non", nextPositionMap,moveSpeed);
-//					break;
-//			}
-//			
-//			if (checkTileCollision()) 
-				setMapPosition(nextPositionMap.x, nextPositionMap.y);
-			
-//			flinchingRandom = true;
-//			flinchingTimeRandom = System.nanoTime();
-//		}
+		setMapPosition(nextPositionMap.x, nextPositionMap.y);
 	}
 	/****************************************************************************************/
 	private void magicWalk() {
@@ -350,6 +314,97 @@ public class Entity extends EntityGameFuntions {
 	}
 
 	/****************************************************************************************/
+	/****************************************************************************************/
+	protected void increasePerversity(){
+		
+		if (flinchingIncreasePerversity) {
+			long elapsedTime = (System.nanoTime() - flinchingIncreaseTimePerversity) / 1000000;
+			if (elapsedTime > flinchingIncreaseDeltaTimePerversity) 
+				flinchingIncreasePerversity = false;
+		
+		} else {
+			if (getPerversity() >= getMaxPerversity()) {
+				setPerversity(getMaxPerversity());
+				jasonTransform();
+			}
+			else
+				setPerversity(getPerversity() + 1);
+			
+			flinchingIncreasePerversity = true;
+			flinchingIncreaseTimePerversity = System.nanoTime();
+		}
+	}
+	/****************************************************************************************/
+	protected void jasonTransform() {
+		
+		stage.getCharacters().remove(this);
+		if (stage.getCurrentCharacter() > 0) 
+			stage.setCurrentCharacter(stage.getCurrentCharacter() -1);
+		
+		Jason a = new Jason(tileMap, stage, 0.10);
+		a.setNextPositionMap(
+				new Point2D.Double(
+						this.getXMap(),
+						this.getYMap()));
+		
+		stage.getJasons().add(a);	
+	}
+	/****************************************************************************************/
+	protected void decreasePerversity(){
+		
+		if (flinchingDecreasePerversity) {
+			long elapsedTime = (System.nanoTime() - flinchingDecreaseTimePerversity) / 1000000;
+			if (elapsedTime > flinchingDecreaseDeltaTimePerversity) 
+				flinchingDecreasePerversity = false;
+		
+		} else {
+			if (getPerversity() <= 0) 
+				setPerversity(0);
+			else
+				setPerversity(getPerversity() - 1);
+			
+			flinchingDecreasePerversity = true;
+			flinchingDecreaseTimePerversity = System.nanoTime();
+		}
+	}
+	/****************************************************************************************/
+	protected Entity checkIsCloseToAnotherCharacter() {
+		
+		Point2D.Double north = TileWalk.walkTo("N", stage.getCharacters().get(stage.getCurrentCharacter()).getMapPosition(),1);
+		Point2D.Double south = TileWalk.walkTo("S", stage.getCharacters().get(stage.getCurrentCharacter()).getMapPosition(),1);
+		Point2D.Double west = TileWalk.walkTo("W", stage.getCharacters().get(stage.getCurrentCharacter()).getMapPosition(),1);
+		Point2D.Double east = TileWalk.walkTo("E", stage.getCharacters().get(stage.getCurrentCharacter()).getMapPosition(),1);
+				
+		if (stage.getCharacters().size() > 0) {
+			for (int i = 0; i < stage.getCharacters().size(); i++){
+				if (stage.getCurrentCharacter() != i){
+					if (
+						stage.getCharacters().get(i).getMapPosition().equals(north)
+						|| stage.getCharacters().get(i).getMapPosition().equals(south)
+						|| stage.getCharacters().get(i).getMapPosition().equals(west)
+						|| stage.getCharacters().get(i).getMapPosition().equals(east)
+							) 
+						return stage.getCharacters().get(i);
+				}
+			}
+		}
+		
+		if (stage.getJasons().size() > 0) {
+			for (int i = 0; i < stage.getJasons().size(); i++){
+				if (
+					stage.getJasons().get(i).getMapPosition().equals(north)
+					|| stage.getJasons().get(i).getMapPosition().equals(south)
+					|| stage.getJasons().get(i).getMapPosition().equals(west)
+					|| stage.getJasons().get(i).getMapPosition().equals(east)
+					) 
+					return stage.getJasons().get(i);
+			}
+		}
+		
+		return null;
+	}
+	/****************************************************************************************/
+
 	// Setter and Getter
 	public int getX() {
 		return (int) x;
@@ -433,10 +488,60 @@ public class Entity extends EntityGameFuntions {
 	public void setNextPositionMap(Point2D.Double nextPositionMap) {
 		this.nextPositionMap = nextPositionMap;
 	}
-	public void setFlinchingIncreaseDeltaTimePerversity(int a){
-		flinchingIncreaseDeltaTimePerversity = a; 
+	public int getHealth() {
+		return health;
 	}
-	public boolean isCloseToAnotherCharacter() {
-		return closeToAnotherCharacter;
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
+	}
+
+	public boolean isDead() {
+		return dead;
+	}
+
+	public void setDead(boolean dead) {
+		this.dead = dead;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getPerversity() {
+		return perversity;
+	}
+
+	public void setPerversity(int perversity) {
+		this.perversity = perversity;
+	}
+
+	public int getMaxPerversity() {
+		return maxPerversity;
+	}
+
+	public void setMaxPerversity(int maxPerversity) {
+		this.maxPerversity = maxPerversity;
+	}
+	public void setFlinchingIncreaseDeltaTimePerversity(int i) {
+		flinchingIncreaseDeltaTimePerversity = i;
+	}
+	public Entity getCharacterClose() {
+		return characterClose;
+	}
+	public void setCharacterClose(Entity characterClose) {
+		this.characterClose = characterClose;
 	}
 }

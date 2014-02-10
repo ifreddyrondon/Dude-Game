@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
+import com.spantons.gameState.Stage;
 import com.spantons.tileMap.TileMap;
 
 public class Preso extends Entity {
@@ -25,17 +26,17 @@ public class Preso extends Entity {
 		private static final int IDLE = 3;
 
 		/****************************************************************************************/
-		public Preso(TileMap tm, double sc) {
+		public Preso(TileMap _tm, Stage _stage, double sc) {
 			
-			super(tm);
+			super(_tm, _stage);
 			
 			setDescription("Preso");
-			setHealth(setMaxHealth(5));
+			setHealth(5);
+			setMaxHealth(5);
 			setPerversity(0);
 			setMaxPerversity(100);
 			flinchingIncreaseDeltaTimePerversity = 1;
 			flinchingDecreaseDeltaTimePerversity = 1000;
-			setJason(false);
 			setDead(false);
 			
 			scale = sc;
@@ -119,7 +120,7 @@ public class Preso extends Entity {
 		
 		/****************************************************************************************/
 		public void update() {
-			super.update(null,null,0);
+			super.update();
 		}
 		/****************************************************************************************/
 		public void updateAnimation(){

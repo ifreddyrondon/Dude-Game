@@ -14,6 +14,9 @@ import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
 import com.spantons.entity.Entity;
+import com.spantons.gameState.Level1Stage;
+import com.spantons.gameState.Stage;
+import com.spantons.main.GamePanel;
 
 public class DialogueStage1 extends Thread {
 	
@@ -34,9 +37,10 @@ public class DialogueStage1 extends Thread {
 	public Map<Integer, String[]> help;
 	public Map<Integer, String[]> story;
 	
+	private Stage stage;
+	
 	private ArrayList<BufferedImage[]> sprites;
 	private BufferedImage[] exclamationImg;
-	private BufferedImage currentExclamationImg;
 	
 	private Color fontColor;
 	private Font dialogueFont;
@@ -45,8 +49,9 @@ public class DialogueStage1 extends Thread {
 	private int countdownExclamation = 500; 
 	private boolean exclamation;
 	
-
-	public DialogueStage1() {		
+	/****************************************************************************************/
+	public DialogueStage1(Stage _stage) {
+		stage = _stage;
 		fontColor = Color.BLACK;
 		dialogueFont = new Font("Century Gothic", Font.PLAIN, 16);
 		
@@ -106,13 +111,9 @@ public class DialogueStage1 extends Thread {
 		story.put(STORY_MAIN_ROOM, aux6);
 		
 	}
-	
-	
-	
-	
-	
+	/****************************************************************************************/
 	private void loadImages(){
-		try {
+		try {			
 			exclamationImg = new BufferedImage[2];
 			
 			exclamationImg[0] = ImageIO.read(getClass()
@@ -137,34 +138,55 @@ public class DialogueStage1 extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
-	
+	/****************************************************************************************/
 	public void characterClose(){
 		timerExclamation.start();
 	}
-	
+	/****************************************************************************************/
 	public void characterFar(){
 		timerExclamation.stop();
 		exclamation = false;
 	}
-	
-	public void draw(Graphics2D g, ArrayList<Entity> _characters, int _currentCharacter) {
+	/****************************************************************************************/
+	public void update(){
+		if (stage.getCharacters().get(stage.getCurrentCharacter()).getCharacterClose() != null) 
+			characterClose();
+		else 
+			characterFar();
+	}
+	/****************************************************************************************/
+	public void draw(Graphics2D g) {
 
 		if (exclamation) {
-			if (_characters.get(_currentCharacter).whoIsClose().equals("jason")) {
+			if (stage.getCharacters().get(stage.getCurrentCharacter()).getCharacterClose().getDescription().equals("Jason")) {
 				timerExclamation.setDelay(200);
-				currentExclamationImg = exclamationImg[1];
+				g.drawImage(exclamationImg[1],
+					stage.getCharacters().get(stage.getCurrentCharacter()).getX() - stage.getCharacters().get(0).getSpriteWidth() / 2 /2 , 
+					stage.getCharacters().get(stage.getCurrentCharacter()).getY() - exclamationImg[0].getHeight() - stage.getCharacters().get(0).getSpriteHeight() / 2 - 10, 
+				null);
 			}
-			else if (_characters.get(_currentCharacter).whoIsClose().equals("other")){
+			else if (!stage.getCharacters().get(stage.getCurrentCharacter()).getCharacterClose().getDescription().equals("Jason")){
 				timerExclamation.setDelay(500);
-				currentExclamationImg = exclamationImg[0];
+				g.drawImage(exclamationImg[0],
+					stage.getCharacters().get(stage.getCurrentCharacter()).getX() - stage.getCharacters().get(0).getSpriteWidth() / 2 /2 , 
+					stage.getCharacters().get(stage.getCurrentCharacter()).getY() - exclamationImg[0].getHeight() - stage.getCharacters().get(0).getSpriteHeight() / 2 - 10, 
+				null);
 			}
-				
-			g.drawImage(currentExclamationImg,
-				_characters.get(_currentCharacter).getX() - _characters.get(0).getSpriteWidth() / 2 /2 , 
-				_characters.get(_currentCharacter).getY() - exclamationImg[0].getHeight() - _characters.get(0).getSpriteHeight() / 2 - 10, 
-			null);
 		}
+		
+		if(stage.isSecondaryMenu()){
+			g.setColor(Color.WHITE);
+			g.drawString("Resume (R)", 
+				GamePanel.RESOLUTION_WIDTH / 2 + 50, 
+				-50 + GamePanel.RESOLUTION_HEIGHT / 2);
+			g.drawString("Main Menu (M)", 
+				GamePanel.RESOLUTION_WIDTH / 2 + 50, 
+				GamePanel.RESOLUTION_HEIGHT / 2);
+			g.drawString("Quit Game (Q)", 
+				GamePanel.RESOLUTION_WIDTH / 2 + 50, 
+				50 + GamePanel.RESOLUTION_HEIGHT / 2);
+		}
+		
 				
 		//BufferedImage[] aux = sprites.get(STORY);
 				//String[] dialogs = thoughts.get(THOUGHTS_AWAKENING);

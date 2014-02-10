@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
+import com.spantons.gameState.Stage;
 import com.spantons.tileMap.TileMap;
 
 public class LeonTheProfessional‎ extends Entity {
@@ -25,17 +26,17 @@ public class LeonTheProfessional‎ extends Entity {
 		private static final int IDLE = 3;
 
 		/****************************************************************************************/
-		public LeonTheProfessional‎(TileMap tm, double sc) {
+		public LeonTheProfessional‎(TileMap _tm, Stage _stage, double sc) {
 			
-			super(tm);
+			super(_tm,_stage);
 			
 			setDescription("Leon The Professional");
-			setHealth(setMaxHealth(5));
+			setHealth(5);
+			setMaxHealth(5);
 			setPerversity(0);
 			setMaxPerversity(100);
 			flinchingIncreaseDeltaTimePerversity = 1000;
 			flinchingDecreaseDeltaTimePerversity = 1000;
-			setJason(false);
 			setDead(false);
 			
 			scale = sc;
@@ -119,7 +120,7 @@ public class LeonTheProfessional‎ extends Entity {
 		
 		/****************************************************************************************/
 		public void update() {
-			super.update(null,null,0);
+			super.update();
 		}
 		/****************************************************************************************/
 		public void updateAnimation(){

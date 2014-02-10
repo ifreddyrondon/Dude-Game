@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
+import com.spantons.gameState.Stage;
 import com.spantons.tileMap.TileMap;
 
 public class SteveJobs extends Entity {
@@ -31,19 +32,19 @@ public class SteveJobs extends Entity {
 	//private static final int JUMPING = 1;
 
 	/****************************************************************************************/
-	public SteveJobs(TileMap tm, double sc) {
+	public SteveJobs(TileMap _tm, Stage _stage, double sc) {
 		
-		super(tm);
+		super(_tm,_stage);
 		
 		setDescription("Steve Jobs");		
 		scale = sc;
 
-		setHealth(setMaxHealth(5));
+		setHealth(5);
+		setMaxHealth(5);
 		setPerversity(0);
 		setMaxPerversity(100);
 		flinchingIncreaseDeltaTimePerversity = 1000;
 		flinchingDecreaseDeltaTimePerversity = 1000;
-		setJason(false);
 		setDead(false);
 
 		moveSpeed = 1;
@@ -135,7 +136,7 @@ public class SteveJobs extends Entity {
 	
 	/****************************************************************************************/
 	public void update() {
-		super.update(null,null,0);
+		super.update();
 	}
 	/****************************************************************************************/
 	public void updateAnimation(){

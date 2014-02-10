@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
+import com.spantons.gameState.Stage;
 import com.spantons.tileMap.TileMap;
 
 public class DanaScullyXFiles extends Entity {
@@ -25,16 +26,16 @@ public class DanaScullyXFiles extends Entity {
 		private static final int IDLE = 3;
 
 		/****************************************************************************************/
-		public DanaScullyXFiles(TileMap tm, double sc) {
+		public DanaScullyXFiles(TileMap _tm, Stage _stage, double sc) {
 			
-			super(tm);
+			super(_tm,_stage);
 			
 			setDescription("Dana Scully X-Files");
-			setHealth(setMaxHealth(5));
+			setMaxHealth(5);
+			setHealth(5);
 			setPerversity(0);
 			flinchingIncreaseDeltaTimePerversity = 1000;
 			flinchingDecreaseDeltaTimePerversity = 1000;
-			setJason(false);
 			setMaxPerversity(100);
 			setDead(false);
 			
@@ -119,7 +120,7 @@ public class DanaScullyXFiles extends Entity {
 		
 		/****************************************************************************************/
 		public void update() {
-			super.update(null,null,0);
+			super.update();
 		}
 		/****************************************************************************************/
 		public void updateAnimation(){
