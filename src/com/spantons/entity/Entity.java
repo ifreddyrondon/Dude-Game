@@ -257,6 +257,9 @@ public class Entity  {
 		checkIsRecoveringFromAttack();
 		updateAnimation();
 		setMapPosition(nextPositionMap.x, nextPositionMap.y);
+		characterClose = checkIsCloseToAnotherCharacter();
+		System.out.println(characterClose.description);
+		attack();
 	}
 	/****************************************************************************************/
 	private void magicWalk() {
@@ -388,10 +391,10 @@ public class Entity  {
 	/****************************************************************************************/
 	protected Entity checkIsCloseToAnotherCharacter() {
 		
-		Point2D.Double north = TileWalk.walkTo("N", stage.getCurrentCharacter().getMapPosition(),1);
-		Point2D.Double south = TileWalk.walkTo("S", stage.getCurrentCharacter().getMapPosition(),1);
-		Point2D.Double west = TileWalk.walkTo("W", stage.getCurrentCharacter().getMapPosition(),1);
-		Point2D.Double east = TileWalk.walkTo("E", stage.getCurrentCharacter().getMapPosition(),1);
+		Point2D.Double north = TileWalk.walkTo("N", getMapPosition(),1);
+		Point2D.Double south = TileWalk.walkTo("S", getMapPosition(),1);
+		Point2D.Double west = TileWalk.walkTo("W", getMapPosition(),1);
+		Point2D.Double east = TileWalk.walkTo("E", getMapPosition(),1);
 				
 		if (stage.getCharacters().size() > 0) {
 			for (int i = 0; i < stage.getCharacters().size(); i++){
