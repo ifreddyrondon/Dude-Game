@@ -53,7 +53,7 @@ public class Level1Stage extends Stage {
 		
 		LeonTheProfessional‎ leon = new LeonTheProfessional‎(tileMap, this,0.10);
 		leon.initChief(25,25);
-		characters.add(leon);
+		currentCharacter = leon;
 		
 		Preso preso = new Preso(tileMap, this,0.10);
 		preso.initOtherCharacters(15,25);
@@ -71,16 +71,12 @@ public class Level1Stage extends Stage {
 		dcxf.initOtherCharacters(45,30);
 		characters.add(dcxf);
 		
-		// Personaje actual
-		currentCharacter = 0;
-		
 		// Sonido del juego
 		player = new AudioPlayer("/music/terror.wav");
 		player.loop();
 		
 		// Dialogos
 		dialogues = new DialogueStage1(this);
-		dialogues.start();
 
 		// Temporizador
 		timer = new Timer(1000, new ActionListener() { 
@@ -101,15 +97,13 @@ public class Level1Stage extends Stage {
 	public void update() {
 		
 		// Actualizar personajes actual
-		characters.get(currentCharacter).update();
+		currentCharacter.update();
 		
 		dialogues.update();
 		
 		if (characters.size() > 0) {
-			for (int i = 0; i < characters.size(); i++){
-				if (currentCharacter != i)
-					characters.get(i).updateOtherCharacters();
-			}
+			for (int i = 0; i < characters.size(); i++)
+				characters.get(i).updateOtherCharacters();
 		}
 		
 		if (jasons.size() > 0) {
@@ -123,6 +117,7 @@ public class Level1Stage extends Stage {
 	public void draw(Graphics2D g) {
 	
 		tileMap.draw(g);
+		currentCharacter.draw(g);
 		
 		for (int i = 0; i < characters.size(); i++)
 			characters.get(i).draw(g);
@@ -130,24 +125,22 @@ public class Level1Stage extends Stage {
 		for (int i = 0; i < jasons.size(); i++) 
 			jasons.get(i).draw(g);
 		
-		dialogues.draw(g);
-		
 		hud.Draw(g, ToHours.SecondsToHours(countdown));
+		
+		dialogues.draw(g);
 	}
 	/****************************************************************************************/
 	public void selectNextCurrentCharacter(){
-		characters.get(currentCharacter).setAllMov(false);
-		int  aux = currentCharacter;
-		
-		if (currentCharacter == characters.size() - 1) 
-			aux = 0;
-		else 
-			aux++;		
-		
-		currentCharacter = aux;
+		currentCharacter.setAllMov(false);
+		characters.add(currentCharacter);
+		currentCharacter = characters.get(0);
+		characters.remove(0);
+
 	}
 	/****************************************************************************************/
 	private void deployJason(){
+		currentCharacter.setFlinchingIncreaseDeltaTimePerversity(250);
+		
 		for (int i = 0; i < characters.size(); i++) 
 			characters.get(i).setFlinchingIncreaseDeltaTimePerversity(250);
 	}
@@ -156,13 +149,13 @@ public class Level1Stage extends Stage {
 	public void keyPressed(int k) {
 		// Mover personajes
 		if (k == KeyEvent.VK_LEFT)
-			characters.get(currentCharacter).setMovLeft(true);
+			currentCharacter.setMovLeft(true);
 		if (k == KeyEvent.VK_RIGHT)
-			characters.get(currentCharacter).setMovRight(true);
+			currentCharacter.setMovRight(true);
 		if (k == KeyEvent.VK_UP)
-			characters.get(currentCharacter).setMovUp(true);
+			currentCharacter.setMovUp(true);
 		if (k == KeyEvent.VK_DOWN)
-			characters.get(currentCharacter).setMovDown(true);
+			currentCharacter.setMovDown(true);
 		if (k == KeyEvent.VK_TAB)
 			selectNextCurrentCharacter();
 		if(k == KeyEvent.VK_ESCAPE)
@@ -184,14 +177,14 @@ public class Level1Stage extends Stage {
 		
 		// Mover personajes
 		if (k == KeyEvent.VK_LEFT)
-			characters.get(currentCharacter).setMovLeft(false);
+			currentCharacter.setMovLeft(false);
 		if (k == KeyEvent.VK_RIGHT)
-			characters.get(currentCharacter).setMovRight(false);
+			currentCharacter.setMovRight(false);
 		if (k == KeyEvent.VK_UP)
-			characters.get(currentCharacter).setMovUp(false);
+			currentCharacter.setMovUp(false);
 		if (k == KeyEvent.VK_DOWN)
-			characters.get(currentCharacter).setMovDown(false);
+			currentCharacter.setMovDown(false);
 		if (k == KeyEvent.VK_SPACE)
-			characters.get(currentCharacter).setMovJumping(false);
+			currentCharacter.setMovJumping(false);
 	}
 }

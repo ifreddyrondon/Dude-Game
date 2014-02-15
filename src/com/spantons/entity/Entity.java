@@ -174,10 +174,8 @@ public class Entity  {
 		
 		if (stage.getCharacters().size() > 0) {
 			for (int i = 0; i < stage.getCharacters().size(); i++){
-				if (stage.getCurrentCharacter() != i){
-					if (stage.getCharacters().get(i).getMapPosition().equals(nextPositionMap)) 
-						return false;
-				}
+				if (stage.getCharacters().get(i).getMapPosition().equals(nextPositionMap)) 
+					return false;
 			}
 		}
 		
@@ -338,8 +336,6 @@ public class Entity  {
 	protected void jasonTransform() {
 		
 		stage.getCharacters().remove(this);
-		if (stage.getCurrentCharacter() > 0) 
-			stage.setCurrentCharacter(stage.getCurrentCharacter() -1);
 		
 		Jason a = new Jason(tileMap, stage, 0.10);
 		a.setNextPositionMap(
@@ -347,7 +343,8 @@ public class Entity  {
 						this.getXMap(),
 						this.getYMap()));
 		
-		stage.getJasons().add(a);	
+		stage.getJasons().add(a);
+	
 	}
 	/****************************************************************************************/
 	protected void decreasePerversity(){
@@ -370,22 +367,20 @@ public class Entity  {
 	/****************************************************************************************/
 	protected Entity checkIsCloseToAnotherCharacter() {
 		
-		Point2D.Double north = TileWalk.walkTo("N", stage.getCharacters().get(stage.getCurrentCharacter()).getMapPosition(),1);
-		Point2D.Double south = TileWalk.walkTo("S", stage.getCharacters().get(stage.getCurrentCharacter()).getMapPosition(),1);
-		Point2D.Double west = TileWalk.walkTo("W", stage.getCharacters().get(stage.getCurrentCharacter()).getMapPosition(),1);
-		Point2D.Double east = TileWalk.walkTo("E", stage.getCharacters().get(stage.getCurrentCharacter()).getMapPosition(),1);
+		Point2D.Double north = TileWalk.walkTo("N", stage.getCurrentCharacter().getMapPosition(),1);
+		Point2D.Double south = TileWalk.walkTo("S", stage.getCurrentCharacter().getMapPosition(),1);
+		Point2D.Double west = TileWalk.walkTo("W", stage.getCurrentCharacter().getMapPosition(),1);
+		Point2D.Double east = TileWalk.walkTo("E", stage.getCurrentCharacter().getMapPosition(),1);
 				
 		if (stage.getCharacters().size() > 0) {
 			for (int i = 0; i < stage.getCharacters().size(); i++){
-				if (stage.getCurrentCharacter() != i){
-					if (
-						stage.getCharacters().get(i).getMapPosition().equals(north)
-						|| stage.getCharacters().get(i).getMapPosition().equals(south)
-						|| stage.getCharacters().get(i).getMapPosition().equals(west)
-						|| stage.getCharacters().get(i).getMapPosition().equals(east)
-							) 
-						return stage.getCharacters().get(i);
-				}
+				if (
+					stage.getCharacters().get(i).getMapPosition().equals(north)
+					|| stage.getCharacters().get(i).getMapPosition().equals(south)
+					|| stage.getCharacters().get(i).getMapPosition().equals(west)
+					|| stage.getCharacters().get(i).getMapPosition().equals(east)
+					) 
+					return stage.getCharacters().get(i);
 			}
 		}
 		

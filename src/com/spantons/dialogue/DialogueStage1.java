@@ -18,7 +18,7 @@ import com.spantons.gameState.Level1Stage;
 import com.spantons.gameState.Stage;
 import com.spantons.main.GamePanel;
 
-public class DialogueStage1 extends Thread {
+public class DialogueStage1 {
 	
 	private static final int STORY = 0;
 	private static final int HELP = 1;
@@ -49,11 +49,17 @@ public class DialogueStage1 extends Thread {
 	private int countdownExclamation = 500; 
 	private boolean exclamation;
 	
+	private int characterWidth;
+	private int characterHeight;
+	
 	/****************************************************************************************/
 	public DialogueStage1(Stage _stage) {
 		stage = _stage;
 		fontColor = Color.BLACK;
 		dialogueFont = new Font("Century Gothic", Font.PLAIN, 16);
+		
+		characterWidth = stage.getCurrentCharacter().getSpriteWidth();
+		characterHeight = stage.getCurrentCharacter().getSpriteHeight();
 		
 		loadImages();
 		
@@ -149,27 +155,28 @@ public class DialogueStage1 extends Thread {
 	}
 	/****************************************************************************************/
 	public void update(){
-		if (stage.getCharacters().get(stage.getCurrentCharacter()).getCharacterClose() != null) 
+		if (stage.getCurrentCharacter().getCharacterClose() != null) 
 			characterClose();
 		else 
 			characterFar();
 	}
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
-
+		
 		if (exclamation) {
-			if (stage.getCharacters().get(stage.getCurrentCharacter()).getCharacterClose().getDescription().equals("Jason")) {
+			
+			if (stage.getCurrentCharacter().getCharacterClose().getDescription().equals("Jason")) {
 				timerExclamation.setDelay(200);
 				g.drawImage(exclamationImg[1],
-					stage.getCharacters().get(stage.getCurrentCharacter()).getX() - stage.getCharacters().get(0).getSpriteWidth() / 2 /2 , 
-					stage.getCharacters().get(stage.getCurrentCharacter()).getY() - exclamationImg[0].getHeight() - stage.getCharacters().get(0).getSpriteHeight() / 2 - 10, 
+					stage.getCurrentCharacter().getX() - characterWidth / 2 /2 , 
+					stage.getCurrentCharacter().getY() - exclamationImg[0].getHeight() - characterHeight / 2 - 10, 
 				null);
 			}
-			else if (!stage.getCharacters().get(stage.getCurrentCharacter()).getCharacterClose().getDescription().equals("Jason")){
+			else if (!stage.getCurrentCharacter().getCharacterClose().getDescription().equals("Jason")){
 				timerExclamation.setDelay(500);
 				g.drawImage(exclamationImg[0],
-					stage.getCharacters().get(stage.getCurrentCharacter()).getX() - stage.getCharacters().get(0).getSpriteWidth() / 2 /2 , 
-					stage.getCharacters().get(stage.getCurrentCharacter()).getY() - exclamationImg[0].getHeight() - stage.getCharacters().get(0).getSpriteHeight() / 2 - 10, 
+					stage.getCurrentCharacter().getX() - characterWidth / 2 /2 , 
+					stage.getCurrentCharacter().getY() - exclamationImg[0].getHeight() - characterHeight / 2 - 10, 
 				null);
 			}
 		}

@@ -10,7 +10,7 @@ public abstract class Stage {
 	protected GameStagesManager gsm;
 	protected ArrayList<Entity> characters;
 	protected ArrayList<Entity> jasons;
-	protected int currentCharacter;
+	protected Entity currentCharacter;
 	protected boolean secondaryMenu;
 	
 	
@@ -21,10 +21,10 @@ public abstract class Stage {
 	public abstract void keyReleased(int k);
 	
 	/****************************************************************************************/
-	public int getCurrentCharacter() {
+	public Entity getCurrentCharacter() {
 		return currentCharacter;
 	}
-	public void setCurrentCharacter(int i) {
+	public void setCurrentCharacter(Entity i) {
 		currentCharacter = i;
 	}
 	public ArrayList<Entity> getCharacters() {

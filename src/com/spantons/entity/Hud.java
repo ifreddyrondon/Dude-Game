@@ -19,7 +19,7 @@ public class Hud {
 	private Font attributesFont;
 	private Font countdownFont;
 	private BufferedImage backgroundHud;
-	
+
 	public Hud(Stage _stage) {
 		try {
 			stage = _stage;
@@ -40,15 +40,15 @@ public class Hud {
 		
 		g.setColor(fontColor);
 		g.setFont(descriptionFont);
-		g.drawString(stage.getCharacters().get(stage.getCurrentCharacter()).getDescription(), 15, 48);
+		g.drawString(stage.getCurrentCharacter().getDescription(), 15, 48);
 		
-		g.drawImage(stage.getCharacters().get(stage.getCurrentCharacter()).face,18, 53, null);
+		g.drawImage(stage.getCurrentCharacter().face,18, 53, null);
 		
 		g.setFont(attributesFont);
-		g.drawString("Vida: "+ stage.getCharacters().get(stage.getCurrentCharacter()).getHealth() 
-				+ "/" + stage.getCharacters().get(stage.getCurrentCharacter()).getMaxHealth(), 80, 66);
-		g.drawString("Maldad: "+ stage.getCharacters().get(stage.getCurrentCharacter()).getPerversity() 
-				+ "/" + stage.getCharacters().get(stage.getCurrentCharacter()).getMaxPerversity(), 80, 85);
+		g.drawString("Vida: "+ stage.getCurrentCharacter().getHealth() 
+				+ "/" + stage.getCurrentCharacter().getMaxHealth(), 80, 66);
+		g.drawString("Maldad: "+ stage.getCurrentCharacter().getPerversity() 
+				+ "/" + stage.getCurrentCharacter().getMaxPerversity(), 80, 85);
 		
 		g.setFont(countdownFont);
 		g.drawString(countdown, GamePanel.RESOLUTION_WIDTH / 2 - 20, 55);
