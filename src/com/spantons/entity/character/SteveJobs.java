@@ -41,10 +41,12 @@ public class SteveJobs extends Entity {
 
 		setHealth(5);
 		setMaxHealth(5);
+		setDamage(1);
 		setPerversity(0);
 		setMaxPerversity(100);
 		flinchingIncreaseDeltaTimePerversity = 1000;
 		flinchingDecreaseDeltaTimePerversity = 1000;
+		deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;
 		setDead(false);
 
 		moveSpeed = 1;

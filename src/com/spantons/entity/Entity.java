@@ -15,8 +15,8 @@ import com.spantons.tileMap.TileMap;
 public class Entity  {
 		
 	protected Stage stage;
-	private int health;
-	private int maxHealth;
+	private float health;
+	private float maxHealth;
 	private boolean dead;
 	private String description;
 	private int perversity;
@@ -30,6 +30,7 @@ public class Entity  {
 	protected int flinchingDecreaseDeltaTimePerversity;
 	protected long flinchingDecreaseTimePerversity;
 	protected boolean flinchingDecreasePerversity;
+	protected int deltaForReduceFlinchingIncreaseDeltaTimePerversity;
 	
 	// Animacion
 	protected Animation animation;
@@ -82,6 +83,7 @@ public class Entity  {
 	protected boolean movDown;
 	protected boolean movJumping;
 	protected boolean movFalling;
+	protected boolean attack;
 
 	// atributos de movimientos
 	protected double moveSpeed;
@@ -89,6 +91,7 @@ public class Entity  {
 	protected double maxFallSpeed;
 	protected double jumpStart;
 	protected double reducerJumpSpeed;
+	private float damage;
 	
 	/****************************************************************************************/
 	public Entity(TileMap _tm, Stage _stage) {
@@ -209,6 +212,9 @@ public class Entity  {
 		decreasePerversity();
 		characterClose = checkIsCloseToAnotherCharacter();
 		
+		if (attack) 
+			attack();
+		
 		if (flinching) {
 			long elapsedTime = (System.nanoTime() - flinchingTime) / 1000000;
 			if (elapsedTime > 70) 
@@ -233,6 +239,7 @@ public class Entity  {
 	}
 	/****************************************************************************************/
 	public void updateOtherCharacters(){
+		checkOtherCharacterIsDead();
 		updateAnimation();
 		setMapPosition(xMap, yMap);
 		
@@ -240,6 +247,7 @@ public class Entity  {
 	}	
 	/****************************************************************************************/
 	public void updateJason() {
+		checkOtherCharacterIsDead();
 		updateAnimation();
 		setMapPosition(nextPositionMap.x, nextPositionMap.y);
 	}
@@ -399,6 +407,29 @@ public class Entity  {
 		return null;
 	}
 	/****************************************************************************************/
+	private void attack() {
+		if (characterClose != null){
+			characterClose.setHealth(characterClose.getHealth() - damage);
+			
+			if (this == stage.getCurrentCharacter()) 
+				flinchingIncreaseDeltaTimePerversity -= deltaForReduceFlinchingIncreaseDeltaTimePerversity;
+			
+			if (characterClose.getHealth() >= 0){
+				characterClose.setHealth(0);
+				characterClose.setDead(true);
+			}
+		}
+	}
+	/****************************************************************************************/
+	private void checkOtherCharacterIsDead() {
+		if (dead){
+			if (description == "Jason") 
+				stage.getJasons().remove(this);
+			else if (description != "Jason") 
+				stage.getCharacters().remove(this);
+		}
+	}
+	/****************************************************************************************/
 
 	// Setter and Getter
 	public int getX() {
@@ -483,50 +514,39 @@ public class Entity  {
 	public void setNextPositionMap(Point2D.Double nextPositionMap) {
 		this.nextPositionMap = nextPositionMap;
 	}
-	public int getHealth() {
+	public float getHealth() {
 		return health;
 	}
-
-	public void setHealth(int health) {
-		this.health = health;
+	public void setHealth(float d) {
+		this.health = d;
 	}
-
-	public int getMaxHealth() {
+	public float getMaxHealth() {
 		return maxHealth;
 	}
-
-	public void setMaxHealth(int maxHealth) {
+	public void setMaxHealth(float maxHealth) {
 		this.maxHealth = maxHealth;
 	}
-
 	public boolean isDead() {
 		return dead;
 	}
-
 	public void setDead(boolean dead) {
 		this.dead = dead;
 	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 	public int getPerversity() {
 		return perversity;
 	}
-
 	public void setPerversity(int perversity) {
 		this.perversity = perversity;
 	}
-
 	public int getMaxPerversity() {
 		return maxPerversity;
 	}
-
 	public void setMaxPerversity(int maxPerversity) {
 		this.maxPerversity = maxPerversity;
 	}
@@ -538,5 +558,14 @@ public class Entity  {
 	}
 	public void setCharacterClose(Entity characterClose) {
 		this.characterClose = characterClose;
+	}
+	public void setAttack(boolean b) {
+		attack = b;
+	}
+	public double getDamage() {
+		return damage;
+	}
+	public void setDamage(float damage) {
+		this.damage = damage;
 	}
 }

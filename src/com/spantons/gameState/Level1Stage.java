@@ -158,6 +158,8 @@ public class Level1Stage extends Stage {
 			currentCharacter.setMovDown(true);
 		if (k == KeyEvent.VK_TAB)
 			selectNextCurrentCharacter();
+		if (k == KeyEvent.VK_SPACE)
+			currentCharacter.setAttack(true);
 		if(k == KeyEvent.VK_ESCAPE)
 			secondaryMenu = !secondaryMenu;
 		if(k == KeyEvent.VK_R && secondaryMenu)
@@ -185,6 +187,6 @@ public class Level1Stage extends Stage {
 		if (k == KeyEvent.VK_DOWN)
 			currentCharacter.setMovDown(false);
 		if (k == KeyEvent.VK_SPACE)
-			currentCharacter.setMovJumping(false);
+			currentCharacter.setAttack(false);
 	}
 }

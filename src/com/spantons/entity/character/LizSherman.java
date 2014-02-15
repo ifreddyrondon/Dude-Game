@@ -34,10 +34,12 @@ public class LizSherman extends Entity {
 			setDescription("Liz Sherman");
 			setHealth(5);
 			setMaxHealth(5);
+			setDamage(0.8f);
 			setPerversity(0);
 			setMaxPerversity(100);
 			flinchingIncreaseDeltaTimePerversity = 1000;
 			flinchingDecreaseDeltaTimePerversity = 1000;
+			deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;
 			setDead(false);
 			
 			scale = sc;

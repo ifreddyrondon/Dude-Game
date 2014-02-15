@@ -33,10 +33,12 @@ public class Preso extends Entity {
 			setDescription("Preso");
 			setHealth(5);
 			setMaxHealth(5);
+			setDamage(1.1f);
 			setPerversity(0);
 			setMaxPerversity(100);
-			flinchingIncreaseDeltaTimePerversity = 1;
+			flinchingIncreaseDeltaTimePerversity = 2;
 			flinchingDecreaseDeltaTimePerversity = 1000;
+			deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;
 			setDead(false);
 			
 			scale = sc;

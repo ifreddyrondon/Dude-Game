@@ -33,10 +33,12 @@ public class Jason extends Entity {
 			setDescription("Jason");
 			setHealth(5);
 			setMaxHealth(5);
+			setDamage(1.5f);
 			setPerversity(0);
 			setMaxPerversity(100);
 			flinchingIncreaseDeltaTimePerversity = 1000;
 			flinchingDecreaseDeltaTimePerversity = 1000;
+			deltaForReduceFlinchingIncreaseDeltaTimePerversity = 0;
 			setDead(false);
 			
 			scale = sc;

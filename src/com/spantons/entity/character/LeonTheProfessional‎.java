@@ -33,10 +33,12 @@ public class LeonTheProfessional‎ extends Entity {
 			setDescription("Leon The Professional");
 			setHealth(5);
 			setMaxHealth(5);
+			setDamage(1.3f);
 			setPerversity(0);
 			setMaxPerversity(100);
 			flinchingIncreaseDeltaTimePerversity = 1000;
 			flinchingDecreaseDeltaTimePerversity = 1000;
+			deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;
 			setDead(false);
 			
 			scale = sc;
