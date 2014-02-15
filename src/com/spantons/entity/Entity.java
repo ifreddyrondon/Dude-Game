@@ -258,7 +258,6 @@ public class Entity  {
 		updateAnimation();
 		setMapPosition(nextPositionMap.x, nextPositionMap.y);
 		characterClose = checkIsCloseToAnotherCharacter();
-		System.out.println(characterClose.description);
 		attack();
 	}
 	/****************************************************************************************/
@@ -420,6 +419,15 @@ public class Entity  {
 			}
 		}
 		
+		if (!this.equals(stage.getCurrentCharacter())) {
+			if (	stage.getCurrentCharacter().getMapPosition().equals(north)
+				|| stage.getCurrentCharacter().getMapPosition().equals(south)
+				|| stage.getCurrentCharacter().getMapPosition().equals(west)
+				|| stage.getCurrentCharacter().getMapPosition().equals(east)) 
+				
+				return stage.getCurrentCharacter();
+		}
+
 		return null;
 	}
 	/****************************************************************************************/
