@@ -130,14 +130,6 @@ public class Level1Stage extends Stage {
 		dialogues.draw(g);
 	}
 	/****************************************************************************************/
-	public void selectNextCurrentCharacter(){
-		currentCharacter.setAllMov(false);
-		characters.add(currentCharacter);
-		currentCharacter = characters.get(0);
-		characters.remove(0);
-
-	}
-	/****************************************************************************************/
 	private void deployJason(){
 		currentCharacter.setFlinchingIncreaseDeltaTimePerversity(250);
 		

@@ -212,6 +212,9 @@ public class Entity  {
 	/****************************************************************************************/
 	public void update() {
 		
+		if (dead) 
+			stage.selectNextCurrentCharacter();
+		
 		updateAnimation();
 		decreasePerversity();
 		characterClose = checkIsCloseToAnotherCharacter();

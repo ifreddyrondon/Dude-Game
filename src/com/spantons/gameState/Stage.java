@@ -21,6 +21,16 @@ public abstract class Stage {
 	public abstract void keyReleased(int k);
 	
 	/****************************************************************************************/
+	public void selectNextCurrentCharacter(){
+		if (characters.isEmpty()) 
+			return;
+		
+		currentCharacter.setAllMov(false);
+		characters.add(currentCharacter);
+		currentCharacter = characters.get(0);
+		characters.remove(0);
+	}
+	/****************************************************************************************/
 	public Entity getCurrentCharacter() {
 		return currentCharacter;
 	}
