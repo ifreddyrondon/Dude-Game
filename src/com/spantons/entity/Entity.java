@@ -83,7 +83,11 @@ public class Entity  {
 	protected boolean movDown;
 	protected boolean movJumping;
 	protected boolean movFalling;
+	
+	// Ataque
 	protected boolean attack;
+	protected boolean recoveringFromAttack;
+	protected long flinchingTimeRecoveringFromAttack;
 
 	// atributos de movimientos
 	protected double moveSpeed;
@@ -211,6 +215,7 @@ public class Entity  {
 		updateAnimation();
 		decreasePerversity();
 		characterClose = checkIsCloseToAnotherCharacter();
+		checkIsRecoveringFromAttack();
 		
 		if (attack) 
 			attack();
@@ -240,6 +245,7 @@ public class Entity  {
 	/****************************************************************************************/
 	public void updateOtherCharacters(){
 		checkOtherCharacterIsDead();
+		checkIsRecoveringFromAttack();
 		updateAnimation();
 		setMapPosition(xMap, yMap);
 		
@@ -248,6 +254,7 @@ public class Entity  {
 	/****************************************************************************************/
 	public void updateJason() {
 		checkOtherCharacterIsDead();
+		checkIsRecoveringFromAttack();
 		updateAnimation();
 		setMapPosition(nextPositionMap.x, nextPositionMap.y);
 	}
@@ -307,6 +314,12 @@ public class Entity  {
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 
+		if (recoveringFromAttack) {
+			long elapsedTime = (System.nanoTime() - flinchingTimeRecoveringFromAttack) / 1000000;
+			if (elapsedTime / 100 % 2 == 0) 
+				return;
+		}
+		
 		if (facingRight) {
 			g.drawImage(animation.getCurrentImageFrame(),
 					(int) (x - spriteWidth / 2), 
@@ -408,16 +421,32 @@ public class Entity  {
 	}
 	/****************************************************************************************/
 	private void attack() {
+		
 		if (characterClose != null){
+			
+			if (characterClose.recoveringFromAttack)
+				return;
+			
 			characterClose.setHealth(characterClose.getHealth() - damage);
 			
 			if (this == stage.getCurrentCharacter()) 
 				flinchingIncreaseDeltaTimePerversity -= deltaForReduceFlinchingIncreaseDeltaTimePerversity;
 			
-			if (characterClose.getHealth() >= 0){
+			if (characterClose.getHealth() <= 0){
 				characterClose.setHealth(0);
 				characterClose.setDead(true);
 			}
+			
+			characterClose.recoveringFromAttack = true;
+			characterClose.flinchingTimeRecoveringFromAttack = System.nanoTime();
+		}
+	}
+	/****************************************************************************************/
+	private void checkIsRecoveringFromAttack(){
+		if (recoveringFromAttack) {
+			long elapsedTime = (System.nanoTime() - flinchingTimeRecoveringFromAttack) / 1000000;
+			if (elapsedTime > 1000) 
+				recoveringFromAttack = false;
 		}
 	}
 	/****************************************************************************************/
