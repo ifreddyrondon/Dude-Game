@@ -15,6 +15,7 @@ public abstract class Stage {
 	
 	
 	public abstract void init();
+	public abstract void endStage();
 	public abstract void update();
 	public abstract void draw(Graphics2D g);
 	public abstract void keyPressed(int k);
@@ -22,6 +23,9 @@ public abstract class Stage {
 	
 	/****************************************************************************************/
 	public void selectNextCurrentCharacter(){
+		if (characters.isEmpty() && currentCharacter.isDead())
+			endStage();
+		
 		if (characters.isEmpty()) 
 			return;
 		

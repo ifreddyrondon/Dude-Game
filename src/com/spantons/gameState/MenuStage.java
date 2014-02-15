@@ -33,9 +33,9 @@ public class MenuStage extends Stage {
 	private int currentCharacter;
 	
 	private AudioPlayer player;
-
-	public MenuStage(GameStagesManager gsm) {
-		this.gsm = gsm;
+	/****************************************************************************************/
+	public MenuStage(GameStagesManager _gsm) {
+		gsm = _gsm;
 
 		try {
 			bg = new Background("/backgrounds/menubg.gif", 0, true);
@@ -59,12 +59,18 @@ public class MenuStage extends Stage {
 			e.printStackTrace();
 		}
 	}
-
+	/****************************************************************************************/
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub	
 	}
-
+	/****************************************************************************************/
+	@Override
+	public void endStage() {
+//		player.close();
+		gsm.setStage(GameStagesManager.LEVEL_1_STAGE);
+	}
+	/****************************************************************************************/
 	@Override
 	public void update() {
 		bg.update();
@@ -73,7 +79,7 @@ public class MenuStage extends Stage {
 		for (int i = 0; i < characters.size(); i++)
 			characters.get(i).update();
 	}
-
+	/****************************************************************************************/
 	@Override
 	public void draw(Graphics2D g) {
 		// Dibujar background
@@ -111,19 +117,17 @@ public class MenuStage extends Stage {
 			characters.get(i).draw(g);
 
 	}
-
+	/****************************************************************************************/
 	private void select() {
-		if (currentChoice == 0){ 
-			gsm.setStage(GameStagesManager.LEVEL_1_STAGE);
-//			player.close();
-		}
+		if (currentChoice == 0) 
+			endStage();
 		else if (currentChoice == 1) 
 			System.out.println("MENU AYUDA");
 		else if (currentChoice == 2) 
 			System.exit(0);
 	}
 
-	@Override
+	/****************************************************************************************/@Override
 	public void keyPressed(int k) {
 		// Mover en el menu
 		if (k == KeyEvent.VK_ENTER) {
@@ -151,7 +155,7 @@ public class MenuStage extends Stage {
 		if (k == KeyEvent.VK_SPACE)
 			characters.get(currentCharacter).setMovJumping(true);
 	}
-
+	/****************************************************************************************/
 	@Override
 	public void keyReleased(int k) {
 		// Mover personajes

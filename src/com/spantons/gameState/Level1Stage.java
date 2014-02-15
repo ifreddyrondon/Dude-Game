@@ -32,8 +32,8 @@ public class Level1Stage extends Stage {
 	private int countdown = 10; 
 	private Timer timer;
 
-	public Level1Stage(GameStagesManager gsm) {
-		this.gsm = gsm;
+	public Level1Stage(GameStagesManager _gsm) {
+		gsm = _gsm;
 		init();
 	}
 	/****************************************************************************************/
@@ -90,7 +90,12 @@ public class Level1Stage extends Stage {
 			} 
 		}); 
 		timer.start();
-
+	}
+	/****************************************************************************************/
+	@Override
+	public void endStage() {
+		player.close();
+		gsm.setStage(GameStagesManager.GAME_OVER_STAGE);
 	}
 	/****************************************************************************************/
 	@Override
@@ -110,7 +115,6 @@ public class Level1Stage extends Stage {
 			for (int i = 0; i < jasons.size(); i++) 
 				jasons.get(i).updateJason();
 		}
-
 	}
 	/****************************************************************************************/
 	@Override

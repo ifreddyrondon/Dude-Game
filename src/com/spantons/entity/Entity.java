@@ -212,8 +212,10 @@ public class Entity  {
 	/****************************************************************************************/
 	public void update() {
 		
-		if (dead) 
+		if (dead) {
+			dead = true;
 			stage.selectNextCurrentCharacter();
+		}
 		
 		updateAnimation();
 		decreasePerversity();
