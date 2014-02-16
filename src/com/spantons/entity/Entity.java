@@ -88,14 +88,15 @@ public class Entity  {
 	protected boolean attack;
 	protected boolean recoveringFromAttack;
 	protected long flinchingTimeRecoveringFromAttack;
-
+	private float damage;
+	
 	// atributos de movimientos
 	protected double moveSpeed;
 	protected double fallSpeed;
 	protected double maxFallSpeed;
 	protected double jumpStart;
 	protected double reducerJumpSpeed;
-	private float damage;
+	
 	
 	/****************************************************************************************/
 	public Entity(TileMap _tm, Stage _stage) {

@@ -42,13 +42,24 @@ public class Hud {
 		g.setFont(descriptionFont);
 		g.drawString(stage.getCurrentCharacter().getDescription(), 15, 48);
 		
-		g.drawImage(stage.getCurrentCharacter().face,18, 53, null);
+		g.drawImage(stage.getCurrentCharacter().face,18, 63, null);
 		
 		g.setFont(attributesFont);
-		g.drawString("Vida: "+ stage.getCurrentCharacter().getHealth() 
-				+ "/" + stage.getCurrentCharacter().getMaxHealth(), 80, 66);
+		
+		if (stage.getCurrentCharacter().getHealth() > 3.5) 
+			g.setColor(Color.GREEN);
+		else if (stage.getCurrentCharacter().getHealth() <= 3.5 && stage.getCurrentCharacter().getHealth() > 2) 
+			g.setColor(Color.WHITE);
+		else if (stage.getCurrentCharacter().getHealth() <= 2) 
+			g.setColor(Color.RED);
+		
+		g.drawString("Vida: "+ String.format("%.1f", stage.getCurrentCharacter().getHealth()) 
+				+ "/" + String.format("%.1f", stage.getCurrentCharacter().getMaxHealth()), 80, 68);
+		
+		g.setColor(Color.WHITE);
 		g.drawString("Maldad: "+ stage.getCurrentCharacter().getPerversity() 
-				+ "/" + stage.getCurrentCharacter().getMaxPerversity(), 80, 85);
+				+ "/" + stage.getCurrentCharacter().getMaxPerversity(), 80, 87);
+		g.drawString("Da–o: "+ String.format("%.1f", stage.getCurrentCharacter().getDamage()), 80, 106);
 		
 		g.setFont(countdownFont);
 		g.drawString(countdown, GamePanel.RESOLUTION_WIDTH / 2 - 20, 55);
