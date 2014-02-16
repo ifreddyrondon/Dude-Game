@@ -7,14 +7,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
+import utilities.RandomItemArrayList;
+
 import com.spantons.entity.Entity;
-import com.spantons.gameState.Level1Stage;
 import com.spantons.gameState.Stage;
 import com.spantons.main.GamePanel;
 
@@ -37,20 +39,35 @@ public class DialogueStage1 {
 	public Map<Integer, String[]> help;
 	public Map<Integer, String[]> story;
 	
+	
+	
+	
+	
+	
 	private Stage stage;
 	
-	private ArrayList<BufferedImage[]> sprites;
+	private ArrayList<BufferedImage> speechBallon;
 	private BufferedImage[] exclamationImg;
 	
 	private Color fontColor;
 	private Font dialogueFont;
 	
+	private int characterWidth;
+	private int characterHeight;
+	
 	private Timer timerExclamation;
 	private int countdownExclamation = 500; 
 	private boolean exclamation;
 	
-	private int characterWidth;
-	private int characterHeight;
+	private Timer timerCharactersSpeaking;
+	private int countdownCharactersSpeaking = 2000;
+	private Entity characterSpeaking;
+	private String characterSpeakingDialog;
+	private BufferedImage dialogueImage;
+	private ArrayList<String> setOfDialogues;
+	
+	private Timer timerAwakeningDialogues;
+	private int countdownAwakeningDialogues = 2000;
 	
 	/****************************************************************************************/
 	public DialogueStage1(Stage _stage) {
@@ -62,16 +79,10 @@ public class DialogueStage1 {
 		characterHeight = stage.getCurrentCharacter().getSpriteHeight();
 		
 		loadImages();
+		startTimers(); 
 		
-		timerExclamation = new Timer(countdownExclamation, new ActionListener() { 
-			@Override 
-			public void actionPerformed(ActionEvent ae) { 
-				if (exclamation) 
-					exclamation = false;
-				else 
-					exclamation = true;
-			} 
-		}); 
+		
+		
 		
 		// THOUGHTS ----------------------------------------------------------------------------------------
 		thoughts = new HashMap<Integer, String[]>();
@@ -128,28 +139,66 @@ public class DialogueStage1 {
 			exclamationImg[1] = ImageIO.read(getClass()
 					.getResourceAsStream("/dialog/exclamation_alert.png"));
 			
-			BufferedImage[] speechBallon = new BufferedImage[3];
+			speechBallon = new ArrayList<BufferedImage>();
 			
-			speechBallon[0] = ImageIO.read(getClass()
-					.getResourceAsStream("/dialog/speech_balloon_normal.png"));
-			speechBallon[1] = ImageIO.read(getClass()
-					.getResourceAsStream("/dialog/speech_balloon_medium.png"));
-			speechBallon[2] = ImageIO.read(getClass()
-					.getResourceAsStream("/dialog/speech_balloon_high.png"));
-
-			sprites = new ArrayList<BufferedImage[]>();
-			sprites.add(speechBallon);
-						
+			speechBallon.add(ImageIO.read(getClass()
+					.getResourceAsStream("/dialog/speech_balloon_normal.png")));
+			speechBallon.add(ImageIO.read(getClass()
+					.getResourceAsStream("/dialog/speech_balloon_medium.png")));
+			speechBallon.add(ImageIO.read(getClass()
+					.getResourceAsStream("/dialog/speech_balloon_high.png")));
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	/****************************************************************************************/
-	public void characterClose(){
+	private void startTimers(){
+		timerExclamation = new Timer(countdownExclamation, new ActionListener() { 
+			@Override 
+			public void actionPerformed(ActionEvent ae) { 
+				if (exclamation) 
+					exclamation = false;
+				else 
+					exclamation = true;
+			} 
+		});
+		
+		timerCharactersSpeaking = new Timer(countdownCharactersSpeaking, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (setOfDialogues.size() == 0) {
+					characterSpeaking = null;
+					timerCharactersSpeaking.stop();
+					return;
+				}
+				@SuppressWarnings("unchecked")
+				ArrayList<Entity> aux = (ArrayList<Entity>) stage.getCharacters().clone();
+				aux.add(stage.getCurrentCharacter());
+				characterSpeaking = (Entity) RandomItemArrayList.getRandomItemFromArrayList(aux);
+				characterSpeakingDialog = setOfDialogues.get(0);
+				setOfDialogues.remove(0);
+			}
+		});
+		
+		timerAwakeningDialogues = new Timer(countdownAwakeningDialogues, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				setOfDialogues = new ArrayList<String>(Arrays.asList(thoughts.get(THOUGHTS_AWAKENING)));
+				dialogueImage = speechBallon.get(0);
+				timerCharactersSpeaking.start();
+				timerAwakeningDialogues.stop();
+			}
+		});
+		timerAwakeningDialogues.start();
+				
+	}
+	/****************************************************************************************/
+	private void characterClose(){
 		timerExclamation.start();
 	}
 	/****************************************************************************************/
-	public void characterFar(){
+	private void characterFar(){
 		timerExclamation.stop();
 		exclamation = false;
 	}
@@ -164,7 +213,6 @@ public class DialogueStage1 {
 	public void draw(Graphics2D g) {
 		
 		if (exclamation) {
-			
 			if (stage.getCurrentCharacter().getCharacterClose().getDescription().equals("Jason")) {
 				timerExclamation.setDelay(200);
 				g.drawImage(exclamationImg[1],
@@ -181,6 +229,7 @@ public class DialogueStage1 {
 			}
 		}
 		
+		
 		if(stage.isSecondaryMenu()){
 			g.setColor(Color.WHITE);
 			g.drawString("Resume (R)", 
@@ -194,45 +243,21 @@ public class DialogueStage1 {
 				50 + GamePanel.RESOLUTION_HEIGHT / 2);
 		}
 		
-				
-		//BufferedImage[] aux = sprites.get(STORY);
-				//String[] dialogs = thoughts.get(THOUGHTS_AWAKENING);
-
-//		boolean flinching2 = true;
-//		double flinchingTime2;
-		/*
-		for (int i = 0; i < dialogs.length; i++) {
-			
-			if (flinching) {
-				long elapsedTime = (System.nanoTime() - flinchingTime) / 1000000;
-				if (elapsedTime > 2000) 
-					flinching = false;
-			
-			} else {
-				
-//				while (flinching2) {
-					
-					g.drawImage(aux[0],
-							_characters.get(i).getX() - characterHalfWidth, 
-							_characters.get(i).getY() - aux[0].getHeight() - characterHalfHeight, 
-							null);
-							
-					g.setColor(fontColor);
-					g.setFont(dialogueFont);
-							
-					int x = _characters.get(i).getX();
-					int y = _characters.get(i).getY() - aux[0].getHeight() ;
-					g.drawString(dialogs[i], x, y);
-					
-//				}
-				
-				
-					
-				flinching = true;
-				flinchingTime = System.nanoTime();
-			}
-		}
-			*/	
+		
+		if (characterSpeaking != null) {
+		
+			g.drawImage(dialogueImage,
+				characterSpeaking.getX() - characterWidth, 
+				characterSpeaking.getY() - dialogueImage.getHeight() - characterHeight, 
+				null);
+						
+			g.setColor(fontColor);
+			g.setFont(dialogueFont);
+						
+			int x = characterSpeaking.getX();
+			int y = characterSpeaking.getY() - dialogueImage.getHeight() ;
+			g.drawString(characterSpeakingDialog, x, y);
+		}	
 		
 	}
 	
