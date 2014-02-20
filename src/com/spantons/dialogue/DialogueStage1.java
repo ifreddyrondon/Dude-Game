@@ -176,8 +176,12 @@ public class DialogueStage1 {
 				ArrayList<Entity> aux = (ArrayList<Entity>) stage.getCharacters().clone();
 				aux.add(stage.getCurrentCharacter());
 				characterSpeaking = (Entity) RandomItemArrayList.getRandomItemFromArrayList(aux);
-				characterSpeakingDialog = setOfDialogues.get(0);
-				setOfDialogues.remove(0);
+				if (!characterSpeaking.isVisible()) 
+					characterSpeaking = null;
+				else {
+					characterSpeakingDialog = setOfDialogues.get(0);
+					setOfDialogues.remove(0);
+				}
 			}
 		});
 		

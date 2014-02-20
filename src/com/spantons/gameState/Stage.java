@@ -13,7 +13,6 @@ public abstract class Stage {
 	protected Entity currentCharacter;
 	protected boolean secondaryMenu;
 	
-	
 	public abstract void init();
 	public abstract void endStage();
 	public abstract void update();
@@ -32,6 +31,7 @@ public abstract class Stage {
 		currentCharacter.setAllMov(false);
 		characters.add(currentCharacter);
 		currentCharacter = characters.get(0);
+		currentCharacter.setVisible(true);
 		characters.remove(0);
 	}
 	/****************************************************************************************/

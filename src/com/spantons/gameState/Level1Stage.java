@@ -29,7 +29,7 @@ public class Level1Stage extends Stage {
 	private AudioPlayer player;
 	private DialogueStage1 dialogues;
 	
-	private int countdown = 10; 
+	private int countdown = 180; 
 	private Timer timer;
 
 	public Level1Stage(GameStagesManager _gsm) {

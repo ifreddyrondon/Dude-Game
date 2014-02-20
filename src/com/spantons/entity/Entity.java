@@ -55,6 +55,7 @@ public class Entity  {
 	protected double yDest;
 	protected double xTemp;
 	protected double yTemp;
+	private boolean visible;
 	
 	// Proxima posicion en el mapa
 	private Point2D.Double nextPositionMap;
@@ -111,6 +112,7 @@ public class Entity  {
 	}
 	/****************************************************************************************/
 	public void initChief(int _xMap, int _yMap){
+		visible = true;
 		calculateMapPositionInAbsolute(_xMap,_yMap);		
 		magicWalk();
 	}
@@ -250,18 +252,23 @@ public class Entity  {
 	}
 	/****************************************************************************************/
 	public void updateOtherCharacters(){
-		checkOtherCharacterIsDead();
-		checkIsRecoveringFromAttack();
-		updateAnimation();
+		checkIsVisible();
+		if (visible) {
+			checkOtherCharacterIsDead();
+			checkIsRecoveringFromAttack();
+			updateAnimation();
+		}
 		setMapPosition(xMap, yMap);
-		
 		increasePerversity();
 	}	
 	/****************************************************************************************/
 	public void updateJason() {
-		checkOtherCharacterIsDead();
-		checkIsRecoveringFromAttack();
-		updateAnimation();
+		checkIsVisible();
+		if (visible) {
+			checkOtherCharacterIsDead();
+			checkIsRecoveringFromAttack();
+			updateAnimation();
+		}
 		setMapPosition(nextPositionMap.x, nextPositionMap.y);
 		characterClose = checkIsCloseToAnotherCharacter();
 		attack();
@@ -322,25 +329,37 @@ public class Entity  {
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 
-		if (recoveringFromAttack) {
-			long elapsedTime = (System.nanoTime() - flinchingTimeRecoveringFromAttack) / 1000000;
-			if (elapsedTime / 100 % 2 == 0) 
-				return;
-		}
-		
-		if (facingRight) {
-			g.drawImage(animation.getCurrentImageFrame(),
-					(int) (x - spriteWidth / 2), 
-					(int) (y - spriteHeight / 2), null);
-		} else {
-			g.drawImage(animation.getCurrentImageFrame(), 
-					(int) (x - spriteWidth / 2 + spriteWidth),
-					(int) (y  - spriteHeight / 2),
-					-spriteWidth, spriteHeight, null);
+		if (visible) {
+			if (recoveringFromAttack) {
+				long elapsedTime = (System.nanoTime() - flinchingTimeRecoveringFromAttack) / 1000000;
+				if (elapsedTime / 100 % 2 == 0) 
+					return;
+			}
+			
+			if (facingRight) {
+				g.drawImage(animation.getCurrentImageFrame(),
+						(int) (x - spriteWidth / 2), 
+						(int) (y - spriteHeight / 2), null);
+			} else {
+				g.drawImage(animation.getCurrentImageFrame(), 
+						(int) (x - spriteWidth / 2 + spriteWidth),
+						(int) (y  - spriteHeight / 2),
+						-spriteWidth, spriteHeight, null);
+			}
 		}
 	}
 
 	/****************************************************************************************/
+	/****************************************************************************************/
+	private void checkIsVisible(){
+		
+		if (	x >= 0 && x <= tileMap.RESOLUTION_WIDTH_FIX
+			&& y>= 0 && y<= tileMap.RESOLUTION_HEIGHT_FIX) 
+			
+			visible = true;
+		else
+			visible = false;
+	}
 	/****************************************************************************************/
 	protected void increasePerversity(){
 		
@@ -613,5 +632,11 @@ public class Entity  {
 	}
 	public void setDamage(float damage) {
 		this.damage = damage;
+	}
+	public boolean isVisible() {
+		return visible;
+	}
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 }
