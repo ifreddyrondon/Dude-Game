@@ -19,6 +19,8 @@ import com.spantons.entity.character.GordonFreeman;
 import com.spantons.entity.character.LeonTheProfessional‎;
 import com.spantons.entity.character.LizSherman;
 import com.spantons.entity.character.Preso;
+import com.spantons.object.Hammer;
+import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
 import com.spantons.tileMap.TileSet;
 
@@ -47,9 +49,9 @@ public class Level1Stage extends Stage {
 		tileMap.loadMap("/maps/map.txt");
 		tileMap.setPosition(0, 0);
 		
-		// Personajes
 		characters = new ArrayList<Entity>();
 		jasons = new ArrayList<Entity>();
+		objects = new ArrayList<Object>();
 		
 		currentCharacter = new LeonTheProfessional‎(tileMap, this, 25, 25, 0.10);
 		currentCharacter.initChief();
@@ -59,9 +61,11 @@ public class Level1Stage extends Stage {
 		characters.add(new LizSherman(tileMap, this, 30, 4, 0.10));
 		characters.add(new DanaScullyXFiles(tileMap, this, 45, 30, 0.10));
 		
+		objects.add(new Hammer(tileMap, 25, 28, 0.15));
+		
 		// Sonido del juego
 		player = new AudioPlayer("/music/terror.wav");
-		player.loop();
+		//player.loop();
 		
 		// Dialogos
 		dialogues = new DialogueStage1(this);
@@ -91,17 +95,21 @@ public class Level1Stage extends Stage {
 		
 		// Actualizar personajes actual
 		currentCharacter.update();
-		
 		dialogues.update();
 		
 		if (characters.size() > 0) {
-			for (int i = 0; i < characters.size(); i++)
-				characters.get(i).updateOtherCharacters();
+			for (Entity character : characters)
+				character.updateOtherCharacters();
 		}
 		
 		if (jasons.size() > 0) {
-			for (int i = 0; i < jasons.size(); i++) 
-				jasons.get(i).updateJason();
+			for (Entity jason : jasons) 
+				jason.updateJason();
+		}
+		
+		if (objects.size() > 0) {
+			for (Object object : objects) 
+				object.update();
 		}
 	}
 	/****************************************************************************************/
@@ -109,16 +117,24 @@ public class Level1Stage extends Stage {
 	public void draw(Graphics2D g) {
 	
 		tileMap.draw(g);
+		
+		if (objects.size() > 0) {
+			for (Object object : objects) 
+				object.draw(g);
+		}
+		
+		if (characters.size() > 0) {
+			for (Entity character : characters)
+				character.draw(g);
+		}
+		
+		if (jasons.size() > 0) {
+			for (Entity jason : jasons) 
+				jason.draw(g);
+		}
+		
 		currentCharacter.draw(g);
-		
-		for (int i = 0; i < characters.size(); i++)
-			characters.get(i).draw(g);
-		
-		for (int i = 0; i < jasons.size(); i++) 
-			jasons.get(i).draw(g);
-		
 		hud.Draw(g, ToHours.SecondsToHours(countdown));
-		
 		dialogues.draw(g);
 	}
 	/****************************************************************************************/

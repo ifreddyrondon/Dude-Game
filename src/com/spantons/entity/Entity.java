@@ -358,11 +358,11 @@ public class Entity  {
 		
 		} else {
 			if (getPerversity() >= getMaxPerversity()) {
-				setPerversity(getMaxPerversity());
+				perversity = maxPerversity;
 				jasonTransform();
 			}
 			else
-				setPerversity(getPerversity() + 1);
+				perversity = perversity + 1;
 			
 			flinchingIncreasePerversity = true;
 			flinchingIncreaseTimePerversity = System.nanoTime();
@@ -383,9 +383,9 @@ public class Entity  {
 		
 		} else {
 			if (getPerversity() <= 0) 
-				setPerversity(0);
+				perversity = 0;
 			else
-				setPerversity(getPerversity() - 1);
+				perversity = perversity - 1;
 			
 			flinchingDecreasePerversity = true;
 			flinchingDecreaseTimePerversity = System.nanoTime();
@@ -484,7 +484,8 @@ public class Entity  {
 	}
 	public void setPosition(int x, int y) {
 		
-		if (tileMap == null || (x % tileMap.tileWidthSize == 0 
+		if (tileMap == null 
+			|| (x % tileMap.tileWidthSize == 0 
 			&& y % tileMap.tileHeightSize == 0)) {
 			
 			this.x = x;
@@ -509,7 +510,6 @@ public class Entity  {
 		movRight = b;
 		movUp = b;
 	}
-	
 	public void setMovLeft(boolean b) {
 		movLeft = b;
 	}
@@ -551,9 +551,6 @@ public class Entity  {
 	}
 	public int getPerversity() {
 		return perversity;
-	}
-	public void setPerversity(int perversity) {
-		this.perversity = perversity;
 	}
 	public int getMaxPerversity() {
 		return maxPerversity;

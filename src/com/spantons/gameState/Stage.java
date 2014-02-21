@@ -4,12 +4,14 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.spantons.entity.Entity;
+import com.spantons.object.Object;
 
 public abstract class Stage {
 
 	protected GameStagesManager gsm;
 	protected ArrayList<Entity> characters;
 	protected ArrayList<Entity> jasons;
+	protected ArrayList<Object> objects;
 	protected Entity currentCharacter;
 	protected boolean secondaryMenu;
 	
@@ -46,6 +48,9 @@ public abstract class Stage {
 	}
 	public ArrayList<Entity> getJasons() {
 		return jasons;
+	}
+	public ArrayList<Object> getObjects() {
+		return objects;
 	}
 	public boolean isSecondaryMenu() {
 		return secondaryMenu;

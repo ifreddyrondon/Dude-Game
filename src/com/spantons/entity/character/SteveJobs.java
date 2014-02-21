@@ -32,12 +32,12 @@ public class SteveJobs extends Entity {
 	//private static final int JUMPING = 1;
 
 	/****************************************************************************************/
-	public SteveJobs(TileMap _tm, Stage _stage, int _xMap, int _yMap, double sc) {
+	public SteveJobs(TileMap _tm, Stage _stage, int _xMap, int _yMap, double _scale) {
 		
 		super(_tm,_stage);
 		xMap = _xMap;
 		yMap = _yMap;
-		scale = sc;
+		scale = _scale;
 		
 		visible = true;
 		description = "Steve Jobs";
@@ -71,7 +71,7 @@ public class SteveJobs extends Entity {
 			face = ImageIO.read(getClass().getResourceAsStream("/hud/SteveJobs.png"));
 			
 			BufferedImage spriteSheet2 = ImageIO.read(getClass()
-					.getResourceAsStream("/sprites/SteveJobs.png"));
+					.getResourceAsStream("/characteres_sprites/SteveJobs.png"));
 
 			spriteWidth = ((int) (spriteSheet2.getWidth() /4 * scale));
 			spriteHeight = ((int) (spriteSheet2.getHeight() /2 * scale));
@@ -79,10 +79,8 @@ public class SteveJobs extends Entity {
 			collisionBoxHeight = spriteHeight;
 			
 			// Redimencionar SpriteSheet
-			int newWidth = new Double(spriteSheet2.getWidth() * scale)
-					.intValue();
-			int newHeight = new Double(spriteSheet2.getHeight() * scale)
-					.intValue();
+			int newWidth = (int) (spriteSheet2.getWidth() * scale);
+			int newHeight = (int) (spriteSheet2.getHeight() * scale);
 
 			BufferedImage spriteSheet = new BufferedImage(newWidth,
 					newHeight, spriteSheet2.getType());
@@ -95,38 +93,34 @@ public class SteveJobs extends Entity {
 
 			sprites = new ArrayList<BufferedImage[]>();
 
-			// WALKING_BACK
+			// WALKING_FRONT
 			BufferedImage[] bi = new BufferedImage[1];
-			bi[0] = spriteSheet.getSubimage(0, 0, getSpriteWidth(),
-					getSpriteHeight());
+			bi[0] = spriteSheet.getSubimage(0, 0, spriteWidth,
+					spriteHeight);
 			sprites.add(bi);
 			
-			// WALKING_FRONT
+			// WALKING_BACK
 			bi = new BufferedImage[1];
-			bi[0] = spriteSheet.getSubimage(getSpriteWidth(), 0, getSpriteWidth(),
-					getSpriteHeight());
+			bi[0] = spriteSheet.getSubimage(spriteWidth, 0, spriteWidth,
+					spriteHeight);
 			sprites.add(bi);
-
-			// IDLE
-			bi = new BufferedImage[4];
-			bi[0] = spriteSheet.getSubimage(getSpriteWidth(), 0, getSpriteWidth(),
-					getSpriteHeight());
-			bi[1] = spriteSheet.getSubimage(getSpriteWidth() * 2, 0,
-					getSpriteWidth(), getSpriteHeight());
-			bi[2] = spriteSheet.getSubimage(getSpriteWidth() * 3, 0,
-					getSpriteWidth(), getSpriteHeight());
-			bi[3] = spriteSheet.getSubimage(0, getSpriteHeight(), getSpriteWidth(),
-					getSpriteHeight());
+			
+			// WALKING_SIDE
+			bi = new BufferedImage[1];
+			bi[0] = spriteSheet.getSubimage(spriteWidth * 2, 0, spriteWidth,
+					spriteHeight);
 			sprites.add(bi);
-
-			// WALKING
-			bi = new BufferedImage[3];
-			bi[0] = spriteSheet.getSubimage(getSpriteWidth(), getSpriteHeight(),
-					getSpriteWidth(), getSpriteHeight());
-			bi[1] = spriteSheet.getSubimage(getSpriteWidth() * 2,
-					getSpriteHeight(), getSpriteWidth(), getSpriteHeight());
-			bi[2] = spriteSheet.getSubimage(getSpriteWidth() * 3,
-					getSpriteHeight(), getSpriteWidth(), getSpriteHeight());
+			
+			// WALKING_PERSPECTIVE_FRONT
+			bi = new BufferedImage[1];
+			bi[0] = spriteSheet.getSubimage(0, spriteHeight, spriteWidth,
+					spriteHeight);
+			sprites.add(bi);
+			
+			// WALKING_PERSPECTIVE_BACK
+			bi = new BufferedImage[1];
+			bi[0] = spriteSheet.getSubimage(spriteWidth, spriteHeight, spriteWidth,
+					spriteHeight);
 			sprites.add(bi);
 
 		} catch (Exception e) {
