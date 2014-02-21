@@ -26,22 +26,24 @@ public class Jason extends Entity {
 		private static final int IDLE = 3;
 
 		/****************************************************************************************/
-		public Jason(TileMap _tm, Stage _stage, double sc) {
+		public Jason(TileMap _tm, Stage _stage, int _xMap, int _yMap, double sc) {
 			
 			super(_tm,_stage);
+			xMap = _xMap;
+			yMap = _yMap;
+			scale = sc;
 			
-			setDescription("Jason");
-			setHealth(5);
-			setMaxHealth(5);
-			setDamage(1.5f);
-			setPerversity(0);
-			setMaxPerversity(100);
+			visible = true;
+			description = "Jason";
+			health = 5;
+			maxHealth = 5;
+			perversity = 0;
+			maxPerversity = 100;
+			damage = 1.5f;
 			flinchingIncreaseDeltaTimePerversity = 1000;
 			flinchingDecreaseDeltaTimePerversity = 1000;
 			deltaForReduceFlinchingIncreaseDeltaTimePerversity = 0;
-			setDead(false);
-			
-			scale = sc;
+			dead = false;
 			moveSpeed = 1;
 			facingRight = true;
 

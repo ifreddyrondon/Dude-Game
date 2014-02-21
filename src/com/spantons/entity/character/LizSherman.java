@@ -27,22 +27,24 @@ public class LizSherman extends Entity {
 
 		/**
 		 * @param _stage **************************************************************************************/
-		public LizSherman(TileMap _tm, Stage _stage, double sc) {
+		public LizSherman(TileMap _tm, Stage _stage, int _xMap, int _yMap, double sc) {
 			
 			super(_tm,_stage);
+			xMap = _xMap;
+			yMap = _yMap;
+			scale = sc;
 			
-			setDescription("Liz Sherman");
-			setHealth(5);
-			setMaxHealth(5);
-			setDamage(0.8f);
-			setPerversity(0);
-			setMaxPerversity(100);
+			visible = true;
+			description = "Liz Sherman";
+			health = 5;
+			maxHealth = 5;
+			perversity = 0;
+			maxPerversity = 100;
+			damage = 0.8f;
 			flinchingIncreaseDeltaTimePerversity = 1000;
 			flinchingDecreaseDeltaTimePerversity = 1000;
 			deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;
-			setDead(false);
-			
-			scale = sc;
+			dead = false;
 			moveSpeed = 1;
 			facingRight = true;
 

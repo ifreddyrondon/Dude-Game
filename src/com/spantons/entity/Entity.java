@@ -15,12 +15,12 @@ import com.spantons.tileMap.TileMap;
 public class Entity  {
 		
 	protected Stage stage;
-	private float health;
-	private float maxHealth;
-	private boolean dead;
-	private String description;
-	private int perversity;
-	private int maxPerversity;
+	protected float health;
+	protected float maxHealth;
+	protected boolean dead;
+	protected String description;
+	protected int perversity;
+	protected int maxPerversity;
 	
 	private Entity characterClose;
 	
@@ -44,9 +44,8 @@ public class Entity  {
 	// TileMap
 	protected TileMap tileMap;
 	protected int[][] map;
-	private int xMap;
-	private int yMap;
-	private boolean inBounds;
+	protected int xMap;
+	protected int yMap;
 
 	// Posicion
 	protected int x;
@@ -55,7 +54,7 @@ public class Entity  {
 	protected double yDest;
 	protected double xTemp;
 	protected double yTemp;
-	private boolean visible;
+	protected boolean visible;
 	
 	// Proxima posicion en el mapa
 	private Point2D.Double nextPositionMap;
@@ -89,7 +88,7 @@ public class Entity  {
 	protected boolean attack;
 	protected boolean recoveringFromAttack;
 	protected long flinchingTimeRecoveringFromAttack;
-	private float damage;
+	protected float damage;
 	
 	// atributos de movimientos
 	protected double moveSpeed;
@@ -103,23 +102,15 @@ public class Entity  {
 	public Entity(TileMap _tm, Stage _stage) {
 		if (_tm != null){
 			tileMap = _tm;
-			map = tileMap.getMap();
-			xMap = (int) getMapPosition().x;
-			yMap = (int) getMapPosition().y;
-			flinchingIncreasePerversity = true;
 			stage = _stage;
+			map = tileMap.getMap();
+			flinchingIncreasePerversity = true;
 		}
 	}
 	/****************************************************************************************/
-	public void initChief(int _xMap, int _yMap){
-		visible = true;
-		calculateMapPositionInAbsolute(_xMap,_yMap);		
+	public void initChief(){
+		calculateMapPositionInAbsolute(xMap,yMap);		
 		magicWalk();
-	}
-	/****************************************************************************************/
-	public void initOtherCharacters(int _xMap, int _yMap){
-		xMap = _xMap;
-		yMap = _yMap;
 	}
 	/****************************************************************************************/
 	public Rectangle getRectangle() {
@@ -269,7 +260,7 @@ public class Entity  {
 			checkIsRecoveringFromAttack();
 			updateAnimation();
 		}
-		setMapPosition(nextPositionMap.x, nextPositionMap.y);
+		setMapPosition(xMap, yMap);
 		characterClose = checkIsCloseToAnotherCharacter();
 		attack();
 	}
@@ -285,8 +276,6 @@ public class Entity  {
 			tileMap.getX() >= tileMap.getXMax() ||
 			tileMap.getY() <= tileMap.getYMin() ||
 			tileMap.getY() >= tileMap.getYMax()	){		
-			
-			inBounds = true;
 			
 			if ((tileMap.getX() == tileMap.getXMin() && x > tileMap.RESOLUTION_WIDTH_FIX / 2)
 				|| (tileMap.getX() == tileMap.getXMax() && x < tileMap.RESOLUTION_WIDTH_FIX / 2) 
@@ -319,7 +308,6 @@ public class Entity  {
 		}
 		else {
 			
-			inBounds = false;
 			setPosition(
 					(int) tileMap.RESOLUTION_WIDTH_FIX / 2, 
 					(int) tileMap.RESOLUTION_HEIGHT_FIX / 2);
@@ -382,17 +370,8 @@ public class Entity  {
 	}
 	/****************************************************************************************/
 	protected void jasonTransform() {
-		
 		stage.getCharacters().remove(this);
-		
-		Jason a = new Jason(tileMap, stage, 0.10);
-		a.setNextPositionMap(
-				new Point2D.Double(
-						this.getXMap(),
-						this.getYMap()));
-		
-		stage.getJasons().add(a);
-	
+		stage.getJasons().add(new Jason(tileMap, stage, xMap, yMap, 0.10));
 	}
 	/****************************************************************************************/
 	protected void decreasePerversity(){
@@ -503,12 +482,6 @@ public class Entity  {
 	public int getY() {
 		return (int) y;
 	}
-	public double getScale() {
-		return scale;
-	}
-	public void setScale(double scale) {
-		this.scale = scale;
-	}
 	public void setPosition(int x, int y) {
 		
 		if (tileMap == null || (x % tileMap.tileWidthSize == 0 
@@ -552,32 +525,11 @@ public class Entity  {
 	public void setMovJumping(boolean b) {
 		movJumping = b;
 	}
-	public int getXMap() {
-		return xMap;
-	}
-	public void setXMap(int xMap) {
-		this.xMap = xMap;
-	}
-	public int getYMap() {
-		return yMap;
-	}
-	public void setYMap(int yMap) {
-		this.yMap = yMap;
-	}
-	public boolean isInBounds() {
-		return inBounds;
-	}
 	public int getSpriteWidth() {
 		return spriteWidth;
 	}
 	public int getSpriteHeight() {
 		return spriteHeight;
-	}
-	public Point2D.Double getNextPositionMap() {
-		return nextPositionMap;
-	}
-	public void setNextPositionMap(Point2D.Double nextPositionMap) {
-		this.nextPositionMap = nextPositionMap;
 	}
 	public float getHealth() {
 		return health;
@@ -588,9 +540,6 @@ public class Entity  {
 	public float getMaxHealth() {
 		return maxHealth;
 	}
-	public void setMaxHealth(float maxHealth) {
-		this.maxHealth = maxHealth;
-	}
 	public boolean isDead() {
 		return dead;
 	}
@@ -599,9 +548,6 @@ public class Entity  {
 	}
 	public String getDescription() {
 		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
 	}
 	public int getPerversity() {
 		return perversity;
@@ -612,26 +558,17 @@ public class Entity  {
 	public int getMaxPerversity() {
 		return maxPerversity;
 	}
-	public void setMaxPerversity(int maxPerversity) {
-		this.maxPerversity = maxPerversity;
-	}
 	public void setFlinchingIncreaseDeltaTimePerversity(int i) {
 		flinchingIncreaseDeltaTimePerversity = i;
 	}
 	public Entity getCharacterClose() {
 		return characterClose;
 	}
-	public void setCharacterClose(Entity characterClose) {
-		this.characterClose = characterClose;
-	}
 	public void setAttack(boolean b) {
 		attack = b;
 	}
 	public double getDamage() {
 		return damage;
-	}
-	public void setDamage(float damage) {
-		this.damage = damage;
 	}
 	public boolean isVisible() {
 		return visible;

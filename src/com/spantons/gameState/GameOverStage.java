@@ -8,8 +8,8 @@ public class GameOverStage extends Stage {
 	
 	private Background bg;
 
-	private int currentChoice = 0;
-	private String[] choices = { "Jugar de nuevo", "Salir" };
+	//private int currentChoice = 0;
+	//private String[] choices = { "Jugar de nuevo", "Salir" };
 	/****************************************************************************************/
 	public GameOverStage(GameStagesManager _gsm) {
 		gsm = _gsm;

@@ -26,22 +26,24 @@ public class DanaScullyXFiles extends Entity {
 		private static final int IDLE = 3;
 
 		/****************************************************************************************/
-		public DanaScullyXFiles(TileMap _tm, Stage _stage, double sc) {
+		public DanaScullyXFiles(TileMap _tm, Stage _stage, int _xMap, int _yMap, double sc) {
 			
 			super(_tm,_stage);
+			xMap = _xMap;
+			yMap = _yMap;
+			scale = sc;
 			
-			setDescription("Dana Scully X-Files");
-			setMaxHealth(5);
-			setHealth(5);
-			setDamage(0.5f);
-			setPerversity(0);
+			visible = true;
+			description = "Dana Scully X-Files";
+			health = 5;
+			maxHealth = 5;
+			perversity = 0;
+			maxPerversity = 100;
+			damage = 0.5f;
 			flinchingIncreaseDeltaTimePerversity = 1000;
 			flinchingDecreaseDeltaTimePerversity = 1000;
 			deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;
-			setMaxPerversity(100);
-			setDead(false);
-			
-			scale = sc;
+			dead = false;
 			moveSpeed = 1;
 			facingRight = true;
 

@@ -26,22 +26,24 @@ public class GordonFreeman extends Entity {
 		private static final int IDLE = 3;
 
 		/****************************************************************************************/
-		public GordonFreeman(TileMap _tm, Stage _stage, double sc) {
+		public GordonFreeman(TileMap _tm, Stage _stage, int _xMap, int _yMap, double sc) {
 			
 			super(_tm,_stage);
+			xMap = _xMap;
+			yMap = _yMap;
+			scale = sc;
 			
-			setDescription("Gordon Freeman");
-			setHealth(5);
-			setMaxHealth(5);
-			setDamage(1);
-			setPerversity(0);
-			setMaxPerversity(100);
+			visible = true;
+			description = "Gordon Freeman";
+			health = 5;
+			maxHealth = 5;
+			perversity = 0;
+			maxPerversity = 100;
+			damage = 1;
 			flinchingIncreaseDeltaTimePerversity = 1000;
 			flinchingDecreaseDeltaTimePerversity = 1000;
 			deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;
-			setDead(false);
-			
-			scale = sc;
+			dead = false;
 			moveSpeed = 1;
 			facingRight = true;
 

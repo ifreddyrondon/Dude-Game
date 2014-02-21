@@ -51,25 +51,13 @@ public class Level1Stage extends Stage {
 		characters = new ArrayList<Entity>();
 		jasons = new ArrayList<Entity>();
 		
-		LeonTheProfessional‎ leon = new LeonTheProfessional‎(tileMap, this,0.10);
-		leon.initChief(25,25);
-		currentCharacter = leon;
+		currentCharacter = new LeonTheProfessional‎(tileMap, this, 25, 25, 0.10);
+		currentCharacter.initChief();
 		
-		Preso preso = new Preso(tileMap, this,0.10);
-		preso.initOtherCharacters(15,25);
-		characters.add(preso);
-		
-		GordonFreeman gf = new GordonFreeman(tileMap, this,0.10);
-		gf.initOtherCharacters(4,30);
-		characters.add(gf);
-		
-		LizSherman ls = new LizSherman(tileMap, this,0.10);
-		ls.initOtherCharacters(30,4);
-		characters.add(ls);
-		
-		DanaScullyXFiles dcxf = new DanaScullyXFiles(tileMap, this,0.10);
-		dcxf.initOtherCharacters(45,30);
-		characters.add(dcxf);
+		characters.add(new Preso(tileMap, this, 15, 25, 0.10));
+		characters.add(new GordonFreeman(tileMap, this, 4, 30, 0.10));
+		characters.add(new LizSherman(tileMap, this, 30, 4, 0.10));
+		characters.add(new DanaScullyXFiles(tileMap, this, 45, 30, 0.10));
 		
 		// Sonido del juego
 		player = new AudioPlayer("/music/terror.wav");

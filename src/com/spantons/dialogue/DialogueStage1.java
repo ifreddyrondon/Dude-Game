@@ -176,6 +176,7 @@ public class DialogueStage1 {
 				ArrayList<Entity> aux = (ArrayList<Entity>) stage.getCharacters().clone();
 				aux.add(stage.getCurrentCharacter());
 				characterSpeaking = (Entity) RandomItemArrayList.getRandomItemFromArrayList(aux);
+				aux = null;
 				if (!characterSpeaking.isVisible()) 
 					characterSpeaking = null;
 				else {
@@ -233,7 +234,6 @@ public class DialogueStage1 {
 			}
 		}
 		
-		
 		if(stage.isSecondaryMenu()){
 			g.setColor(Color.WHITE);
 			g.drawString("Resume (R)", 
@@ -247,9 +247,7 @@ public class DialogueStage1 {
 				50 + GamePanel.RESOLUTION_HEIGHT / 2);
 		}
 		
-		
 		if (characterSpeaking != null) {
-		
 			g.drawImage(dialogueImage,
 				characterSpeaking.getX() - characterWidth, 
 				characterSpeaking.getY() - dialogueImage.getHeight() - characterHeight, 

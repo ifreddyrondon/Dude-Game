@@ -32,30 +32,29 @@ public class SteveJobs extends Entity {
 	//private static final int JUMPING = 1;
 
 	/****************************************************************************************/
-	public SteveJobs(TileMap _tm, Stage _stage, double sc) {
+	public SteveJobs(TileMap _tm, Stage _stage, int _xMap, int _yMap, double sc) {
 		
 		super(_tm,_stage);
-		
-		setDescription("Steve Jobs");		
+		xMap = _xMap;
+		yMap = _yMap;
 		scale = sc;
-
-		setHealth(5);
-		setMaxHealth(5);
-		setDamage(1);
-		setPerversity(0);
-		setMaxPerversity(100);
+		
+		visible = true;
+		description = "Steve Jobs";
+		health = 5;
+		maxHealth = 5;
+		perversity = 0;
+		maxPerversity = 100;
+		damage = 1;
 		flinchingIncreaseDeltaTimePerversity = 1000;
 		flinchingDecreaseDeltaTimePerversity = 1000;
 		deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;
-		setDead(false);
-
+		dead = false;
 		moveSpeed = 1;
-		
 		fallSpeed = 0.15;
 		maxFallSpeed = 4.0;
 		jumpStart = -4.8;
 		reducerJumpSpeed = 0.3;
-
 		facingRight = true;
 
 		loadSprite();
@@ -64,7 +63,6 @@ public class SteveJobs extends Entity {
 		currentAnimation = IDLE;
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelayTime(1000);
-
 	}
 	/****************************************************************************************/
 	private void loadSprite() {
