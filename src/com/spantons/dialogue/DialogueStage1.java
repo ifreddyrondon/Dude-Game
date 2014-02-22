@@ -221,15 +221,15 @@ public class DialogueStage1 {
 			if (stage.getCurrentCharacter().getCharacterClose().getDescription().equals("Jason")) {
 				timerExclamation.setDelay(200);
 				g.drawImage(exclamationImg[1],
-					stage.getCurrentCharacter().getX() - characterWidth / 2 /2 , 
-					stage.getCurrentCharacter().getY() - exclamationImg[0].getHeight() - characterHeight / 2 - 10, 
+					stage.getCurrentCharacter().getX() + characterWidth / 4, 
+					stage.getCurrentCharacter().getY() - exclamationImg[0].getHeight() - characterHeight, 
 				null);
 			}
 			else if (!stage.getCurrentCharacter().getCharacterClose().getDescription().equals("Jason")){
 				timerExclamation.setDelay(500);
 				g.drawImage(exclamationImg[0],
-					stage.getCurrentCharacter().getX() - characterWidth / 2 /2 , 
-					stage.getCurrentCharacter().getY() - exclamationImg[0].getHeight() - characterHeight / 2 - 10, 
+					stage.getCurrentCharacter().getX() + characterWidth / 4, 
+					stage.getCurrentCharacter().getY() - exclamationImg[0].getHeight() - characterHeight, 
 				null);
 			}
 		}
@@ -249,15 +249,15 @@ public class DialogueStage1 {
 		
 		if (characterSpeaking != null) {
 			g.drawImage(dialogueImage,
-				characterSpeaking.getX() - characterWidth, 
+				characterSpeaking.getX() - characterWidth / 2, 
 				characterSpeaking.getY() - dialogueImage.getHeight() - characterHeight, 
 				null);
 						
 			g.setColor(fontColor);
 			g.setFont(dialogueFont);
 						
-			int x = characterSpeaking.getX();
-			int y = characterSpeaking.getY() - dialogueImage.getHeight() ;
+			int x = characterSpeaking.getX() - 5;
+			int y = characterSpeaking.getY() - 180;
 			g.drawString(characterSpeakingDialog, x, y);
 		}	
 		

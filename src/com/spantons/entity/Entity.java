@@ -246,7 +246,6 @@ public class Entity  {
 			checkIsRecoveringFromAttack();
 			updateAnimation();
 		}
-		
 		setMapPosition(xMap, yMap);
 		increasePerversity();
 	}	
