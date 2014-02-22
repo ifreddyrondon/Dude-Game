@@ -24,6 +24,7 @@ public class Object {
 	protected int currentAnimation;
 	protected int spriteWidth;
 	protected int spriteHeight;
+	protected int offSetYLoading;
 	protected double scale;
 	
 	public static int WEAPON_TYPE = 0;
@@ -55,17 +56,17 @@ public class Object {
 			if (carrier.isFacingRight()) 
 				g.drawImage(animation.getCurrentImageFrame(),
 					x + carrier.getSpriteWidth() / 2, 
-					y + carrier.getSpriteHeight() / 3, null);
+					y - spriteHeight - offSetYLoading, null);
 			
 			else 
 				g.drawImage(animation.getCurrentImageFrame(), 
 					x + carrier.getSpriteWidth() / 2, 
-					y + carrier.getSpriteHeight() / 3, -spriteWidth, spriteHeight, null);
+					y - spriteHeight - offSetYLoading, -spriteWidth, spriteHeight, null);
 		}			
 		else
 			g.drawImage(animation.getCurrentImageFrame(),
 				x + spriteWidth / 2, 
-				y + spriteHeight, null);
+				y - spriteHeight, null);
 	}
 	/****************************************************************************************/
 	public int getxMap() {

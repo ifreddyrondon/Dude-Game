@@ -27,6 +27,7 @@ public class Hammer extends Object{
 		
 		description = "Martillo";
 		damage = 0.5f;
+		offSetYLoading = 12;
 		
 		loadSprite();
 		

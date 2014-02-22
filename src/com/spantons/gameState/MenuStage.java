@@ -13,8 +13,6 @@ import com.spantons.entity.character.SteveJobs;
 import com.spantons.main.GamePanel;
 import com.spantons.tileMap.Background;
 
-import com.spantons.audio.*;
-
 public class MenuStage extends Stage {
 
 	private Background bg;
@@ -32,7 +30,6 @@ public class MenuStage extends Stage {
 	private ArrayList<Entity> characters;
 	private int currentCharacter;
 	
-	private AudioPlayer player;
 	/****************************************************************************************/
 	public MenuStage(GameStagesManager _gsm) {
 		gsm = _gsm;
@@ -49,7 +46,7 @@ public class MenuStage extends Stage {
 			// Personajes
 			characters = new ArrayList<Entity>();
 			SteveJobs sj = new SteveJobs(null, null, 0, 0, 0.5);
-			sj.setPosition(180, 250);
+			sj.setPosition(180, 350);
 			characters.add(sj);
 			
 //			player = new AudioPlayer("/music/ghosttown.wav");

@@ -12,7 +12,6 @@ import java.util.Set;
 import utilities.Multiple;
 import utilities.TileWalk;
 
-import com.spantons.entity.Entity;
 import com.spantons.main.GamePanel;
 
 public class TileMap {
@@ -39,8 +38,6 @@ public class TileMap {
 	private Point coorMapTopRight;
 	private Point coorMapBottomLeft;
 	private Point coorMapBottomRight;
-	
-	private Set<Entity> characters;
 
 	// resolucion arreglada para el tamano del tile
 	public int RESOLUTION_WIDTH_FIX;
@@ -57,8 +54,6 @@ public class TileMap {
 		tileWidthSize = _tileWidthSize;
 		tileHeightSize = _tileHeightSize;
 		tiles = tileSet.getTiles();
-		
-		characters = new HashSet<Entity>();
 
 		if (GamePanel.RESOLUTION_WIDTH % tileWidthSize == 0
 				&& GamePanel.RESOLUTION_HEIGHT % tileHeightSize == 0) {
@@ -243,10 +238,10 @@ public class TileMap {
 					coorAbsolute = mapToAbsolute(currentTile.x,
 							currentTile.y);
 
-					g.drawImage(tiles[map[(int) currentTile.y][(int) currentTile.x] - 1]
-							.getImage(),
-							(int) (coorAbsolute.x - this.x),
-							(int) (coorAbsolute.y - this.y), null);
+					g.drawImage(tiles[map[currentTile.y][currentTile.x] - 1]
+							.getImage(), 
+							(coorAbsolute.x - this.x),
+							(coorAbsolute.y - this.y), null);
 					
 				}
 
@@ -326,7 +321,4 @@ public class TileMap {
 		return yMax;
 	}
 
-	public int[][] getMap() {
-		return map;
-	}
 }

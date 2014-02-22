@@ -28,7 +28,6 @@ public class Level1Stage extends Stage {
 
 	private TileMap tileMap;
 	private Hud hud;
-	private AudioPlayer player;
 	private DialogueStage1 dialogues;
 	
 	private int countdown = 180; 
@@ -51,6 +50,7 @@ public class Level1Stage extends Stage {
 		
 		characters = new ArrayList<Entity>();
 		jasons = new ArrayList<Entity>();
+		dead = new ArrayList<Entity>();
 		objects = new ArrayList<Object>();
 		
 		currentCharacter = new LeonTheProfessional‎(tileMap, this, 25, 25, 0.10);
@@ -112,12 +112,22 @@ public class Level1Stage extends Stage {
 			for (Object object : objects) 
 				object.update();
 		}
+		
+		if (dead.size() > 0) {
+			for (Entity _dead : dead)
+				_dead.updateDead();
+		}
 	}
 	/****************************************************************************************/
 	@Override
 	public void draw(Graphics2D g) {
 	
 		tileMap.draw(g);
+		
+		if (dead.size() > 0) {
+			for (Entity _dead : dead)
+				_dead.draw(g);
+		}
 		
 		if (objects.size() > 0) {
 			for (Object object : objects) 

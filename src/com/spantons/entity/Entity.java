@@ -45,7 +45,6 @@ public class Entity  {
 	
 	// TileMap
 	protected TileMap tileMap;
-	protected int[][] map;
 	protected int xMap;
 	protected int yMap;
 
@@ -105,7 +104,6 @@ public class Entity  {
 		if (_tm != null){
 			tileMap = _tm;
 			stage = _stage;
-			map = tileMap.getMap();
 			flinchingIncreasePerversity = true;
 			object = null;
 		}
@@ -191,9 +189,9 @@ public class Entity  {
 	/****************************************************************************************/
 	public boolean checkTileCollision() {
 
-		if ((nextPositionMap.x > -2 && nextPositionMap.y > -2
-				&& nextPositionMap.x < tileMap.getNumColMap() -1
-				&& nextPositionMap.y < tileMap.getNumRowsMap() -1)
+		if ((nextPositionMap.x > 0 && nextPositionMap.y > 0
+				&& nextPositionMap.x < tileMap.getNumColMap()
+				&& nextPositionMap.y < tileMap.getNumRowsMap())
 //			&& tileMap.getUnlockedTiles().contains(map[(int)nextPositionMap.x][(int)nextPositionMap.y])
 			) 
 			return true;
@@ -207,8 +205,6 @@ public class Entity  {
 		
 		if (dead) {
 			dead = true;
-			if (object != null) 
-				object.setCarrier(null);
 			stage.selectNextCurrentCharacter();
 		}
 		
@@ -235,10 +231,8 @@ public class Entity  {
 				}
 			}
 			
-			xMap = (int) getMapPosition().x;
-			yMap = (int) getMapPosition().y;
-			
-			
+			xMap = getMapPosition().x;
+			yMap = getMapPosition().y;
 			
 			flinching = true;
 			flinchingTime = System.nanoTime();
@@ -252,6 +246,7 @@ public class Entity  {
 			checkIsRecoveringFromAttack();
 			updateAnimation();
 		}
+		
 		setMapPosition(xMap, yMap);
 		increasePerversity();
 	}	
@@ -267,6 +262,10 @@ public class Entity  {
 		characterClose = checkIsCloseToAnotherCharacter();
 		attack();
 	}
+	/****************************************************************************************/
+	public void updateDead(){
+		setMapPosition(xMap, yMap);
+	}	
 	/****************************************************************************************/
 	private void magicWalk() {
 		
@@ -328,11 +327,13 @@ public class Entity  {
 			}
 			
 			if (facingRight) 
-				g.drawImage(animation.getCurrentImageFrame(),x, y, null);
+				g.drawImage(animation.getCurrentImageFrame(),
+						x, y - spriteHeight + 12, null);
 			
 			else 
 				g.drawImage(animation.getCurrentImageFrame(), 
-						x  + spriteWidth, y,-spriteWidth, spriteHeight, null);
+						x + spriteWidth, y - spriteHeight + 12,
+						-spriteWidth, spriteHeight, null);
 			
 			if (object != null) 
 				object.draw(g);
@@ -375,6 +376,7 @@ public class Entity  {
 		stage.getCharacters().remove(this);
 		if (object != null) 
 			object.setCarrier(null);
+		
 		stage.getJasons().add(new Jason(tileMap, stage, xMap, yMap, 0.10));
 	}
 	/****************************************************************************************/
@@ -500,6 +502,11 @@ public class Entity  {
 				stage.getJasons().remove(this);
 			else if (description != "Jason") 
 				stage.getCharacters().remove(this);
+			
+			if (object != null) 
+				object.setCarrier(null);
+			recoveringFromAttack = false;
+			stage.getDead().add(this);
 		}
 	}
 	/****************************************************************************************/

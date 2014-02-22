@@ -3,6 +3,7 @@ package com.spantons.gameState;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import com.spantons.audio.AudioPlayer;
 import com.spantons.entity.Entity;
 import com.spantons.object.Object;
 
@@ -11,9 +12,11 @@ public abstract class Stage {
 	protected GameStagesManager gsm;
 	protected ArrayList<Entity> characters;
 	protected ArrayList<Entity> jasons;
+	protected ArrayList<Entity> dead;
 	protected ArrayList<Object> objects;
 	protected Entity currentCharacter;
 	protected boolean secondaryMenu;
+	protected AudioPlayer player;
 	
 	public abstract void init();
 	public abstract void endStage();
@@ -48,6 +51,9 @@ public abstract class Stage {
 	}
 	public ArrayList<Entity> getJasons() {
 		return jasons;
+	}
+	public ArrayList<Entity> getDead() {
+		return dead;
 	}
 	public ArrayList<Object> getObjects() {
 		return objects;

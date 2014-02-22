@@ -24,6 +24,7 @@ public class GordonFreeman extends Entity {
 		private static final int WALKING_PERSPECTIVE_FRONT = 3;
 		private static final int WALKING_PERSPECTIVE_BACK = 4;
 		private static final int IDLE = 3;
+		private static final int DEAD = 5;
 
 		/****************************************************************************************/
 		public GordonFreeman(TileMap _tm, Stage _stage, int _xMap, int _yMap, double _scale) {
@@ -114,6 +115,12 @@ public class GordonFreeman extends Entity {
 				bi[0] = spriteSheet.getSubimage(spriteWidth, spriteHeight, spriteWidth,
 						spriteHeight);
 				sprites.add(bi);
+				
+				// DEAD
+				bi = new BufferedImage[1];
+				bi[0] = spriteSheet.getSubimage(spriteWidth * 2, spriteHeight, spriteWidth,
+						spriteHeight);
+				sprites.add(bi);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -127,52 +134,60 @@ public class GordonFreeman extends Entity {
 		/****************************************************************************************/
 		public void updateAnimation(){
 			
-			if((movLeft && movDown) || (movRight && movDown)){
-				if (currentAnimation != WALKING_PERSPECTIVE_FRONT) {
-					currentAnimation = WALKING_PERSPECTIVE_FRONT;
-					animation.setFrames(sprites.get(WALKING_PERSPECTIVE_FRONT));
+			if (dead) {
+				if (currentAnimation != DEAD) {
+					currentAnimation = DEAD;
+					animation.setFrames(sprites.get(DEAD));
 					animation.setDelayTime(150);
-				}
-			} else if((movLeft && movUp) || (movRight && movUp)){
-				if (currentAnimation != WALKING_PERSPECTIVE_BACK) {
-					currentAnimation = WALKING_PERSPECTIVE_BACK;
-					animation.setFrames(sprites.get(WALKING_PERSPECTIVE_BACK));
-					animation.setDelayTime(150);
-				}
-			} else if (movDown) {
-				if (currentAnimation != WALKING_FRONT) {
-					currentAnimation = WALKING_FRONT;
-					animation.setFrames(sprites.get(WALKING_FRONT));
-					animation.setDelayTime(100);
-				}
-			} else if (movUp) {
-				if (currentAnimation != WALKING_BACK) {
-					currentAnimation = WALKING_BACK;
-					animation.setFrames(sprites.get(WALKING_BACK));
-					animation.setDelayTime(40);
-				}
-			} else if (movLeft || movRight) {
-				if (currentAnimation != WALKING_SIDE) {
-					currentAnimation = WALKING_SIDE;
-					animation.setFrames(sprites.get(WALKING_SIDE));
-					animation.setDelayTime(150);
-				}	
-			} else {
-				if (currentAnimation != IDLE) {
-					currentAnimation = IDLE;
-					animation.setFrames(sprites.get(IDLE));
-					animation.setDelayTime(1000);
 				}
 			}
+			else {
+				if((movLeft && movDown) || (movRight && movDown)){
+					if (currentAnimation != WALKING_PERSPECTIVE_FRONT) {
+						currentAnimation = WALKING_PERSPECTIVE_FRONT;
+						animation.setFrames(sprites.get(WALKING_PERSPECTIVE_FRONT));
+						animation.setDelayTime(150);
+					}
+				} else if((movLeft && movUp) || (movRight && movUp)){
+					if (currentAnimation != WALKING_PERSPECTIVE_BACK) {
+						currentAnimation = WALKING_PERSPECTIVE_BACK;
+						animation.setFrames(sprites.get(WALKING_PERSPECTIVE_BACK));
+						animation.setDelayTime(150);
+					}
+				} else if (movDown) {
+					if (currentAnimation != WALKING_FRONT) {
+						currentAnimation = WALKING_FRONT;
+						animation.setFrames(sprites.get(WALKING_FRONT));
+						animation.setDelayTime(100);
+					}
+				} else if (movUp) {
+					if (currentAnimation != WALKING_BACK) {
+						currentAnimation = WALKING_BACK;
+						animation.setFrames(sprites.get(WALKING_BACK));
+						animation.setDelayTime(40);
+					}
+				} else if (movLeft || movRight) {
+					if (currentAnimation != WALKING_SIDE) {
+						currentAnimation = WALKING_SIDE;
+						animation.setFrames(sprites.get(WALKING_SIDE));
+						animation.setDelayTime(150);
+					}	
+				} else {
+					if (currentAnimation != IDLE) {
+						currentAnimation = IDLE;
+						animation.setFrames(sprites.get(IDLE));
+						animation.setDelayTime(1000);
+					}
+				}
 
-			// direccion de la cara del jugador
-			if (movRight)
-				facingRight = true;
-			if (movLeft)
-				facingRight = false;
+				// direccion de la cara del jugador
+				if (movRight)
+					facingRight = true;
+				if (movLeft)
+					facingRight = false;
 
-			animation.update();
-
+				animation.update();
+			}
 		}
 		/****************************************************************************************/
 		public void draw(Graphics2D g) {
