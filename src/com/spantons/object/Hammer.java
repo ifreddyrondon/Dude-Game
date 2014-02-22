@@ -86,6 +86,30 @@ public class Hammer extends Object{
 	}
 	/****************************************************************************************/
 	public void update() {
+		
+		if(carrier != null){
+			if (carrier.isAttack()) {
+				if (currentAnimation != ATTACKING) {
+					currentAnimation = ATTACKING;
+					animation.setFrames(sprites.get(ATTACKING));
+					animation.setDelayTime(100);
+				}
+			} else {
+				if (currentAnimation != LOADING) {
+					currentAnimation = LOADING;
+					animation.setFrames(sprites.get(LOADING));
+					animation.setDelayTime(1000);
+				}
+			}
+		}
+		else {
+			if (currentAnimation != IDLE) {
+				currentAnimation = IDLE;
+				animation.setFrames(sprites.get(IDLE));
+				animation.setDelayTime(1000);
+			}
+		}
+		
 		super.update();
 		animation.update();
 	}

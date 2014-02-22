@@ -220,7 +220,6 @@ public class Entity  {
 		decreasePerversity();
 		characterClose = checkIsCloseToAnotherCharacter();
 		checkIsRecoveringFromAttack();
-		object = checkIsOverObject();
 		
 		if (attack) 
 			attack();
@@ -340,6 +339,9 @@ public class Entity  {
 						(int) (y  - spriteHeight / 2),
 						-spriteWidth, spriteHeight, null);
 			}
+			
+			if (object != null) 
+				object.draw(g);
 		}
 	}
 
@@ -452,13 +454,17 @@ public class Entity  {
 	}
 	/****************************************************************************************/
 	public void takeOrLeaveObject(){
-		if (object != null && object.getCarrier() == null){
-			object.setCarrier(this);
-			damage = damage + object.getDamage();
-		}
-		else if (object != null && object.getCarrier() != null){
+		if (object != null){
 			object.setCarrier(null);
 			damage = damage - object.getDamage();
+			object = null;
+		}
+		else {
+			object = checkIsOverObject();
+			if (object != null){
+				object.setCarrier(this);
+				damage = damage + object.getDamage();	
+			}
 		}
 	}
 	/****************************************************************************************/
@@ -537,11 +543,20 @@ public class Entity  {
 		movRight = b;
 		movUp = b;
 	}
+	public boolean isMovLeft() {
+		return movLeft;
+	}
 	public void setMovLeft(boolean b) {
 		movLeft = b;
 	}
+	public boolean isMovRight() {
+		return movRight;
+	}
 	public void setMovRight(boolean b) {
 		movRight = b;
+	}
+	public boolean isMovUp(){
+		return movUp;
 	}
 	public void setMovUp(boolean b) {
 		movUp = b;
@@ -588,6 +603,9 @@ public class Entity  {
 	public Entity getCharacterClose() {
 		return characterClose;
 	}
+	public boolean isAttack(){
+		return attack;
+	}
 	public void setAttack(boolean b) {
 		attack = b;
 	}
@@ -599,5 +617,8 @@ public class Entity  {
 	}
 	public void setVisible(boolean visible) {
 		this.visible = visible;
+	}
+	public boolean isFacingRight() {
+		return facingRight;
 	}
 }

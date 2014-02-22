@@ -26,12 +26,10 @@ public class Object {
 	protected int spriteHeight;
 	protected double scale;
 	
-	protected boolean loadObject;
-	
 	public static int WEAPON_TYPE = 0;
 	/****************************************************************************************/
 	public Object() {
-		loadObject = false;
+		
 	}
 	/****************************************************************************************/
 	private void calculatePositionToDraw() {
@@ -45,12 +43,24 @@ public class Object {
 			Point2D.Double aux = carrier.getMapPosition();
 			xMap = (int) aux.x;
 			yMap = (int) aux.y;
-		}
+		}	
 		calculatePositionToDraw();
 	}
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
-		g.drawImage(animation.getCurrentImageFrame(),x, y, null);
+		if (carrier != null) {
+			if (carrier.isMovUp() && !carrier.isMovLeft() && !carrier.isMovRight()) 
+				return;
+			
+			if (carrier.isFacingRight()) 
+				g.drawImage(animation.getCurrentImageFrame(),x, y - 22, null);
+			
+			else 
+				g.drawImage(animation.getCurrentImageFrame(), 
+					x, y - 22,-spriteWidth, spriteHeight, null);
+		}			
+		else
+			g.drawImage(animation.getCurrentImageFrame(),x, y, null);
 	}
 	/****************************************************************************************/
 	public int getxMap() {
