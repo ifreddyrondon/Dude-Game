@@ -1,7 +1,7 @@
 package com.spantons.object;
 
 import java.awt.Graphics2D;
-import java.awt.geom.Point2D;
+import java.awt.Point;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
@@ -33,14 +33,14 @@ public class Object {
 	}
 	/****************************************************************************************/
 	private void calculatePositionToDraw() {
-		Point2D.Double absolutePosition = tileMap.mapToAbsolute(xMap, yMap);
+		Point absolutePosition = tileMap.mapToAbsolute(xMap, yMap);
 		x = (int) (absolutePosition.x - tileMap.getX());
 		y = (int) (absolutePosition.y - tileMap.getY());
 	}
 	/****************************************************************************************/
 	public void update() {
 		if (carrier != null) {
-			Point2D.Double aux = carrier.getMapPosition();
+			Point aux = carrier.getMapPosition();
 			xMap = (int) aux.x;
 			yMap = (int) aux.y;
 		}	

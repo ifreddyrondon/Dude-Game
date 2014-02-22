@@ -1,8 +1,8 @@
 package com.spantons.entity;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 import utilities.Multiple;
@@ -59,7 +59,7 @@ public class Entity  {
 	protected boolean visible;
 	
 	// Proxima posicion en el mapa
-	private Point2D.Double nextPositionMap;
+	private Point nextPositionMap;
 	protected int xDestMap;
 	protected int yDestMap;
 	
@@ -93,7 +93,7 @@ public class Entity  {
 	protected float damage;
 	
 	// atributos de movimientos
-	protected double moveSpeed;
+	protected int moveSpeed;
 	protected double fallSpeed;
 	protected double maxFallSpeed;
 	protected double jumpStart;
@@ -130,25 +130,21 @@ public class Entity  {
 		return r1.intersects(r2);
 	}
 	/****************************************************************************************/
-	public Point2D.Double getMapPosition() {
+	public Point getMapPosition() {
 		double x = this.x + tileMap.getX();
 		double y = this.y + tileMap.getY();
-
 		return tileMap.absoluteToMap(x, y);
 	}
 	/****************************************************************************************/
 	public void calculateMapPositionInAbsolute(double _x, double _y) {
-
-		Point2D.Double absolutePosition = tileMap.mapToAbsolute(_x, _y);
-
+		Point absolutePosition = tileMap.mapToAbsolute(_x, _y);
 		xDest = absolutePosition.x - tileMap.getX();
 		yDest = absolutePosition.y - tileMap.getY();
-
 	}
 	/****************************************************************************************/
 	public void setMapPosition(double _x, double _y) {
 
-		Point2D.Double absolutePosition = tileMap.mapToAbsolute(_x, _y);
+		Point absolutePosition = tileMap.mapToAbsolute(_x, _y);
 		setPosition((int) absolutePosition.x - tileMap.getX(),
 					(int) absolutePosition.y - tileMap.getY());
 	}
@@ -241,6 +237,8 @@ public class Entity  {
 			
 			xMap = (int) getMapPosition().x;
 			yMap = (int) getMapPosition().y;
+			
+			
 			
 			flinching = true;
 			flinchingTime = System.nanoTime();
@@ -375,6 +373,8 @@ public class Entity  {
 	/****************************************************************************************/
 	protected void jasonTransform() {
 		stage.getCharacters().remove(this);
+		if (object != null) 
+			object.setCarrier(null);
 		stage.getJasons().add(new Jason(tileMap, stage, xMap, yMap, 0.10));
 	}
 	/****************************************************************************************/
@@ -398,10 +398,10 @@ public class Entity  {
 	/****************************************************************************************/
 	protected Entity checkIsCloseToAnotherCharacter() {
 		
-		Point2D.Double north = TileWalk.walkTo("N", getMapPosition(),1);
-		Point2D.Double south = TileWalk.walkTo("S", getMapPosition(),1);
-		Point2D.Double west = TileWalk.walkTo("W", getMapPosition(),1);
-		Point2D.Double east = TileWalk.walkTo("E", getMapPosition(),1);
+		Point north = TileWalk.walkTo("N", getMapPosition(),1);
+		Point south = TileWalk.walkTo("S", getMapPosition(),1);
+		Point west = TileWalk.walkTo("W", getMapPosition(),1);
+		Point east = TileWalk.walkTo("E", getMapPosition(),1);
 				
 		if (stage.getCharacters().size() > 0) {
 			for (Entity character : stage.getCharacters()) {
@@ -522,10 +522,10 @@ public class Entity  {
 		
 		} else {
 			
-			Point2D.Double multiple = 
+			Point multiple = 
 					Multiple.findPointCloserTo(
-							new Point2D.Double(x,y), 
-							new Point2D.Double(
+							new Point(x,y), 
+							new Point(
 									tileMap.tileWidthSize,
 									tileMap.tileHeightSize));
 			this.x = (int) multiple.x;

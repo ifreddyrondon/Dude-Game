@@ -1,12 +1,12 @@
 package utilities;
 
-import java.awt.geom.Point2D;
+import java.awt.Point;
 
 public class TileWalk {
 
-	public static Point2D.Double walkTo(String direction, Point2D.Double coor, double steps) {
+	public static Point walkTo(String direction, Point coor, int steps) {
 		
-		Point2D.Double out = new Point2D.Double();
+		Point out = new Point();
 		
 		if (direction.equals("non") || steps == 0)
 			out.setLocation(coor.x, coor.y);
@@ -43,5 +43,5 @@ public class TileWalk {
 		
 		return out;		
 	}
-
+	
 }

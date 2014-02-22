@@ -2,7 +2,7 @@ package utilities;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.geom.Point2D;
+import java.awt.Point;
 
 import org.junit.Test;
 
@@ -42,19 +42,19 @@ public class MultipleTest {
 	
 	@Test
 	public void multiplo_del_punto_64_32_mas_cercano_al_punto_569_288() {
-		Point2D.Double point = Multiple.findPointCloserTo(new Point2D.Double(569,288), new Point2D.Double(64,32));
-		assertEquals(new Point2D.Double(512,288), point);
+		Point point = Multiple.findPointCloserTo(new Point(569,288), new Point(64,32));
+		assertEquals(new Point(512,288), point);
 	}
 	
 	@Test
 	public void multiplo_del_punto_64_32_mas_cercano_al_punto_569_menos_288() {
-		Point2D.Double point = Multiple.findPointCloserTo(new Point2D.Double(569,-288), new Point2D.Double(64,32));
-		assertEquals(new Point2D.Double(512,-288), point);
+		Point point = Multiple.findPointCloserTo(new Point(569,-288), new Point(64,32));
+		assertEquals(new Point(512,-288), point);
 	}
 	
 	@Test
 	public void multiplo_del_punto_0_0_mas_cercano_al_punto_569_menos_288() {
-		Point2D.Double point = Multiple.findPointCloserTo(new Point2D.Double(569,-288), new Point2D.Double(0,0));
-		assertEquals(new Point2D.Double(0,0), point);
+		Point point = Multiple.findPointCloserTo(new Point(569,-288), new Point(0,0));
+		assertEquals(new Point(0,0), point);
 	}
 }

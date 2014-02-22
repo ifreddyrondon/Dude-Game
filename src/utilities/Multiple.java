@@ -1,6 +1,6 @@
 package utilities;
 
-import java.awt.geom.Point2D;
+import java.awt.Point;
 
 public class Multiple {
 
@@ -15,12 +15,12 @@ public class Multiple {
 			return ((int) (number / multipleOf)) * multipleOf;		
 	}
 
-	public static Point2D.Double findPointCloserTo(Point2D.Double point, Point2D.Double pointMultiple) {
+	public static Point findPointCloserTo(Point point, Point pointMultiple) {
 
 		int x = findNumberCloserTo((int) point.x, (int) pointMultiple.x);
 		int y = findNumberCloserTo((int) point.y, (int) pointMultiple.y);
 		
-		return new Point2D.Double(x,y);
+		return new Point(x,y);
 	}
 
 }

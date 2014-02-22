@@ -2,17 +2,17 @@ package utilities;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.geom.Point2D;
+import java.awt.Point;
 
 import org.junit.Test;
 
 public class TileWalkTest {
 	
-	Point2D.Double sol;
+	Point sol;
 	
-	private void resolve(String direction, int xOrigin, int yOrigin, double steps,double xDest, double yDest){
-		sol = TileWalk.walkTo(direction,new Point2D.Double(xOrigin,yOrigin),steps);
-		assertEquals(new Point2D.Double(xDest, yDest), sol);
+	private void resolve(String direction, int xOrigin, int yOrigin, int steps,int xDest, int yDest){
+		sol = TileWalk.walkTo(direction,new Point(xOrigin,yOrigin),steps);
+		assertEquals(new Point(xDest, yDest), sol);
 	}
 	
 	@Test
@@ -33,11 +33,6 @@ public class TileWalkTest {
 	@Test
 	public void caminar_al_norte_oeste_un_paso() {
 		resolve("NW", 1, 1, 1, 0, 1);
-	}
-	
-	@Test
-	public void caminar_al_norte_oeste_0_punto_5_pasos() {
-		resolve("NW", 1, 1, 0.5, 0.5, 1);
 	}
 	
 	@Test
@@ -66,18 +61,8 @@ public class TileWalkTest {
 	}
 	
 	@Test
-	public void caminar_al_norte_0_punto_5_pasos() {
-		resolve("N", 1, 1, 0.5, 0.5, 0.5);
-	}
-	
-	@Test
 	public void caminar_al_este_un_paso() {
 		resolve("E", 1, 1, 1, 2, 0);
-	}
-	
-	@Test
-	public void caminar_al_este_0_punto_5_pasos() {
-		resolve("E", 1, 1, 0.5, 1.5, 0.5);
 	}
 	
 	@Test
@@ -88,16 +73,6 @@ public class TileWalkTest {
 	@Test
 	public void caminar_al_oeste_un_paso() {
 		resolve("W", 1, 1, 1, 0, 2);
-	}
-	
-	@Test
-	public void no_caminar_cuando_x_menor_0() {
-		resolve("NW", 1, 1, 2, 1, 1);
-	}
-	
-	@Test
-	public void no_caminar_cuando_y_menor_0() {
-		resolve("NE", 1, 1, 2, 1, 1);
 	}
 	
 }
