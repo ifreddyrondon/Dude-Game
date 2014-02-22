@@ -92,7 +92,7 @@ public class Hammer extends Object{
 				if (currentAnimation != ATTACKING) {
 					currentAnimation = ATTACKING;
 					animation.setFrames(sprites.get(ATTACKING));
-					animation.setDelayTime(100);
+					animation.setDelayTime(80);
 				}
 			} else {
 				if (currentAnimation != LOADING) {

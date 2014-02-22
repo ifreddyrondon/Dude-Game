@@ -53,14 +53,19 @@ public class Object {
 				return;
 			
 			if (carrier.isFacingRight()) 
-				g.drawImage(animation.getCurrentImageFrame(),x, y - 22, null);
+				g.drawImage(animation.getCurrentImageFrame(),
+					x + carrier.getSpriteWidth() / 2, 
+					y + carrier.getSpriteHeight() / 3, null);
 			
 			else 
 				g.drawImage(animation.getCurrentImageFrame(), 
-					x, y - 22,-spriteWidth, spriteHeight, null);
+					x + carrier.getSpriteWidth() / 2, 
+					y + carrier.getSpriteHeight() / 3, -spriteWidth, spriteHeight, null);
 		}			
 		else
-			g.drawImage(animation.getCurrentImageFrame(),x, y, null);
+			g.drawImage(animation.getCurrentImageFrame(),
+				x + spriteWidth / 2, 
+				y + spriteHeight, null);
 	}
 	/****************************************************************************************/
 	public int getxMap() {

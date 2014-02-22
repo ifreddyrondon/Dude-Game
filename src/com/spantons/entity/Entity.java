@@ -195,9 +195,9 @@ public class Entity  {
 	/****************************************************************************************/
 	public boolean checkTileCollision() {
 
-		if ((nextPositionMap.x >= 0 && nextPositionMap.y >= 0
-				&& nextPositionMap.x < tileMap.getNumColMap()
-				&& nextPositionMap.y < tileMap.getNumRowsMap())
+		if ((nextPositionMap.x > -2 && nextPositionMap.y > -2
+				&& nextPositionMap.x < tileMap.getNumColMap() -1
+				&& nextPositionMap.y < tileMap.getNumRowsMap() -1)
 //			&& tileMap.getUnlockedTiles().contains(map[(int)nextPositionMap.x][(int)nextPositionMap.y])
 			) 
 			return true;
@@ -329,16 +329,12 @@ public class Entity  {
 					return;
 			}
 			
-			if (facingRight) {
-				g.drawImage(animation.getCurrentImageFrame(),
-						(int) (x - spriteWidth / 2), 
-						(int) (y - spriteHeight / 2), null);
-			} else {
+			if (facingRight) 
+				g.drawImage(animation.getCurrentImageFrame(),x, y, null);
+			
+			else 
 				g.drawImage(animation.getCurrentImageFrame(), 
-						(int) (x - spriteWidth / 2 + spriteWidth),
-						(int) (y  - spriteHeight / 2),
-						-spriteWidth, spriteHeight, null);
-			}
+						x  + spriteWidth, y,-spriteWidth, spriteHeight, null);
 			
 			if (object != null) 
 				object.draw(g);
@@ -445,7 +441,7 @@ public class Entity  {
 		if (stage.getObjects().size() > 0) {
 			for (Object object : stage.getObjects()) {
 				if (	xMap == object.getxMap() 
-					&& yMap == object.getyMap()) 
+					&& yMap == object.getyMap())
 					return object;
 			}
 		}
