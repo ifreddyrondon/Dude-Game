@@ -10,6 +10,7 @@ import utilities.TileWalk;
 
 import com.spantons.entity.character.Jason;
 import com.spantons.gameState.Stage;
+import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
 
 public class Entity  {
@@ -23,6 +24,7 @@ public class Entity  {
 	protected int maxPerversity;
 	
 	private Entity characterClose;
+	private Object object;
 	
 	protected int flinchingIncreaseDeltaTimePerversity;
 	protected long flinchingIncreaseTimePerversity;
@@ -105,6 +107,7 @@ public class Entity  {
 			stage = _stage;
 			map = tileMap.getMap();
 			flinchingIncreasePerversity = true;
+			object = null;
 		}
 	}
 	/****************************************************************************************/
@@ -208,6 +211,8 @@ public class Entity  {
 		
 		if (dead) {
 			dead = true;
+			if (object != null) 
+				object.setCarrier(null);
 			stage.selectNextCurrentCharacter();
 		}
 		
@@ -215,6 +220,7 @@ public class Entity  {
 		decreasePerversity();
 		characterClose = checkIsCloseToAnotherCharacter();
 		checkIsRecoveringFromAttack();
+		object = checkIsOverObject();
 		
 		if (attack) 
 			attack();
@@ -400,26 +406,24 @@ public class Entity  {
 		Point2D.Double east = TileWalk.walkTo("E", getMapPosition(),1);
 				
 		if (stage.getCharacters().size() > 0) {
-			for (int i = 0; i < stage.getCharacters().size(); i++){
+			for (Entity character : stage.getCharacters()) {
 				if (
-					stage.getCharacters().get(i).getMapPosition().equals(north)
-					|| stage.getCharacters().get(i).getMapPosition().equals(south)
-					|| stage.getCharacters().get(i).getMapPosition().equals(west)
-					|| stage.getCharacters().get(i).getMapPosition().equals(east)
-					) 
-					return stage.getCharacters().get(i);
+					character.getMapPosition().equals(north)
+					|| character.getMapPosition().equals(south)
+					|| character.getMapPosition().equals(west)
+					|| character.getMapPosition().equals(east)) 
+					return character;
 			}
 		}
 		
 		if (stage.getJasons().size() > 0) {
-			for (int i = 0; i < stage.getJasons().size(); i++){
+			for (Entity jason : stage.getJasons()) {
 				if (
-					stage.getJasons().get(i).getMapPosition().equals(north)
-					|| stage.getJasons().get(i).getMapPosition().equals(south)
-					|| stage.getJasons().get(i).getMapPosition().equals(west)
-					|| stage.getJasons().get(i).getMapPosition().equals(east)
-					) 
-					return stage.getJasons().get(i);
+					jason.getMapPosition().equals(north)
+					|| jason.getMapPosition().equals(south)
+					|| jason.getMapPosition().equals(west)
+					|| jason.getMapPosition().equals(east)) 
+					return jason;
 			}
 		}
 		
@@ -433,6 +437,29 @@ public class Entity  {
 		}
 
 		return null;
+	}
+	/****************************************************************************************/
+	private Object checkIsOverObject() {
+		if (stage.getObjects().size() > 0) {
+			for (Object object : stage.getObjects()) {
+				if (	xMap == object.getxMap() 
+					&& yMap == object.getyMap()) 
+					return object;
+			}
+		}
+		
+		return null;
+	}
+	/****************************************************************************************/
+	public void takeOrLeaveObject(){
+		if (object != null && object.getCarrier() == null){
+			object.setCarrier(this);
+			damage = damage + object.getDamage();
+		}
+		else if (object != null && object.getCarrier() != null){
+			object.setCarrier(null);
+			damage = damage - object.getDamage();
+		}
 	}
 	/****************************************************************************************/
 	private void attack() {

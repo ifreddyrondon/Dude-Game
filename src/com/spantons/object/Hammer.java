@@ -17,13 +17,16 @@ public class Hammer extends Object{
 	private static final int ATTACKING = 2;
 	
 	private ArrayList<BufferedImage[]> sprites;
-	
+	/****************************************************************************************/
 	public Hammer(TileMap _tileMap, int _xMap, int _yMap, double _scale) {
 		super();
 		tileMap = _tileMap;
-		xMap = _xMap;
-		yMap = _yMap;
+		setxMap(_xMap);
+		setyMap(_yMap);
 		scale = _scale;
+		
+		description = "Martillo";
+		damage = 0.5f;
 		
 		loadSprite();
 		
@@ -32,7 +35,7 @@ public class Hammer extends Object{
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelayTime(1000);
 	}
-
+	/****************************************************************************************/
 	private void loadSprite() {
 		try {
 			BufferedImage spriteSheet = ImageIO.read(getClass()
@@ -81,12 +84,12 @@ public class Hammer extends Object{
 			e.printStackTrace();
 		}
 	}
-	
+	/****************************************************************************************/
 	public void update() {
 		super.update();
 		animation.update();
 	}
-	
+	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 		super.draw(g);
 	}

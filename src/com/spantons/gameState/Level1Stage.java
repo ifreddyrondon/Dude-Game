@@ -61,7 +61,8 @@ public class Level1Stage extends Stage {
 		characters.add(new LizSherman(tileMap, this, 30, 4, 0.10));
 		characters.add(new DanaScullyXFiles(tileMap, this, 45, 30, 0.10));
 		
-		objects.add(new Hammer(tileMap, 25, 28, 0.15));
+		objects.add(new Hammer(tileMap, 25, 27, 0.15));
+		objects.add(new Hammer(tileMap, 15, 17, 0.15));
 		
 		// Sonido del juego
 		player = new AudioPlayer("/music/terror.wav");
@@ -160,6 +161,8 @@ public class Level1Stage extends Stage {
 			selectNextCurrentCharacter();
 		if (k == KeyEvent.VK_SPACE)
 			currentCharacter.setAttack(true);
+		if (k == KeyEvent.VK_ENTER)
+			currentCharacter.takeOrLeaveObject();
 		if(k == KeyEvent.VK_ESCAPE)
 			secondaryMenu = !secondaryMenu;
 		if(k == KeyEvent.VK_R && secondaryMenu)
