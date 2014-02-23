@@ -73,8 +73,6 @@ public class SteveJobs extends Entity {
 
 			spriteWidth = ((int) (spriteSheet2.getWidth() /4 * scale));
 			spriteHeight = ((int) (spriteSheet2.getHeight() /2 * scale));
-			collisionBoxWidth = spriteWidth;
-			collisionBoxHeight = spriteHeight;
 			
 			// Redimencionar SpriteSheet
 			int newWidth = (int) (spriteSheet2.getWidth() * scale);

@@ -5,7 +5,6 @@ import java.awt.Point;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
-import com.spantons.tileMap.ElementsToDraw;
 import com.spantons.tileMap.TileMap;
 
 public class Object {
@@ -17,7 +16,7 @@ public class Object {
 	
 	protected TileMap tileMap;
 	protected Entity carrier;
-	private ElementsToDraw[][] elements;
+	private Object[][] objectsToDraw;
 	
 	protected String description;
 	protected float damage;
@@ -35,8 +34,8 @@ public class Object {
 		tileMap = _tileMap;
 		xMap = _xMap;
 		yMap = _yMap;
-		elements = tileMap.getElements();
-		elements[xMap][yMap] = new ElementsToDraw(null, this);
+		objectsToDraw = tileMap.getObjectsToDraw();
+		objectsToDraw[xMap][yMap] = this;
 	}
 	/****************************************************************************************/
 	private void calculatePositionToDraw() {

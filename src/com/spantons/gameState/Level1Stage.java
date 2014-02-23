@@ -121,9 +121,7 @@ public class Level1Stage extends Stage {
 	/****************************************************************************************/
 	@Override
 	public void draw(Graphics2D g) {
-	
 		tileMap.draw(g);
-		
 		hud.Draw(g, ToHours.SecondsToHours(countdown));
 		dialogues.draw(g);
 	}

@@ -2,7 +2,6 @@ package com.spantons.entity;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import utilities.Multiple;
@@ -11,7 +10,6 @@ import utilities.TileWalk;
 import com.spantons.entity.character.Jason;
 import com.spantons.gameState.Stage;
 import com.spantons.object.Object;
-import com.spantons.tileMap.ElementsToDraw;
 import com.spantons.tileMap.TileMap;
 
 public class Entity  {
@@ -48,7 +46,9 @@ public class Entity  {
 	protected TileMap tileMap;
 	protected int xMap;
 	protected int yMap;
-	private ElementsToDraw[][] elements;
+	private Entity[][] entitysToDraw;
+	private Entity[][] entitysDeadToDraw;
+	private Object[][] objectsToDraw;
 
 	// Posicion
 	protected int x;
@@ -74,10 +74,6 @@ public class Entity  {
 	protected int spriteWidth;
 	protected int spriteHeight;
 	protected double scale;
-
-	// Caja de colision
-	protected int collisionBoxWidth;
-	protected int collisionBoxHeight;
 		
 	// movimientos
 	protected boolean movLeft;
@@ -110,28 +106,16 @@ public class Entity  {
 			object = null;
 			xMap = _xMap;
 			yMap = _yMap;
-			elements = tileMap.getElements();
-			elements[xMap][yMap] = new ElementsToDraw(this, null);
+			entitysToDraw = tileMap.getEntitysToDraw();
+			entitysDeadToDraw = tileMap.getEntitysDeadToDraw();
+			objectsToDraw = tileMap.getObjectsToDraw();
+			entitysToDraw[xMap][yMap] = this;
 		}
 	}
 	/****************************************************************************************/
 	public void initChief(){
 		calculateMapPositionInAbsolute(xMap,yMap);		
 		magicWalk();
-	}
-	/****************************************************************************************/
-	public Rectangle getRectangle() {
-		return new Rectangle(
-				(int) x - collisionBoxWidth, 
-				(int) y - collisionBoxHeight, 
-				collisionBoxWidth,
-				collisionBoxHeight);
-	}
-	/****************************************************************************************/
-	public boolean intersection(Entity e) {
-		Rectangle r1 = getRectangle();
-		Rectangle r2 = e.getRectangle();
-		return r1.intersects(r2);
 	}
 	/****************************************************************************************/
 	public Point getMapPosition() {
@@ -234,11 +218,10 @@ public class Entity  {
 				}
 			}
 			
-			Object aux = elements[xMap][yMap].object;
-			elements[xMap][yMap] = null;
+			entitysToDraw[xMap][yMap] = null;
 			xMap = getMapPosition().x;
 			yMap = getMapPosition().y;
-			elements[xMap][yMap] = new ElementsToDraw(this, aux);
+			entitysToDraw[xMap][yMap] = this;
 			
 			flinching = true;
 			flinchingTime = System.nanoTime();
@@ -460,12 +443,14 @@ public class Entity  {
 		if (object != null){
 			object.setCarrier(null);
 			damage = damage - object.getDamage();
+			objectsToDraw[xMap][yMap] = object;
 			object = null;
 		}
 		else {
 			object = checkIsOverObject();
 			if (object != null){
 				object.setCarrier(this);
+				objectsToDraw[xMap][yMap] = null;
 				damage = damage + object.getDamage();	
 			}
 		}
@@ -510,6 +495,9 @@ public class Entity  {
 			
 			if (object != null) 
 				object.setCarrier(null);
+			
+			entitysToDraw[xMap][yMap] = null; 
+			entitysDeadToDraw[xMap][yMap] = this;
 			recoveringFromAttack = false;
 			stage.getDead().add(this);
 		}

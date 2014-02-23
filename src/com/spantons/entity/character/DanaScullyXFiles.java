@@ -65,8 +65,6 @@ public class DanaScullyXFiles extends Entity {
 				
 				spriteWidth = ((int) (spriteSheet2.getWidth() / 3 * scale));
 				spriteHeight = ((int) (spriteSheet2.getHeight() /2 * scale));
-				collisionBoxWidth = (int) (432 * scale);
-				collisionBoxHeight = (int) (521 * scale);
 				
 				// Redimencionar SpriteSheet
 				int newWidth = (int) (spriteSheet2.getWidth() * scale);

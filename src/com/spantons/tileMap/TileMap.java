@@ -12,7 +12,9 @@ import java.util.Set;
 import utilities.Multiple;
 import utilities.TileWalk;
 
+import com.spantons.entity.Entity;
 import com.spantons.main.GamePanel;
+import com.spantons.object.Object;
 
 public class TileMap {
 
@@ -46,7 +48,9 @@ public class TileMap {
 	// tileset
 	private TileSet tileSet;
 	private Tile[] tiles;
-	private ElementsToDraw[][] elements;
+	private Entity[][] entitysDeadToDraw;
+	private Entity[][] entitysToDraw;
+	private Object[][] objectsToDraw;
 
 	/****************************************************************************************/
 	public TileMap(int _tileWidthSize, int _tileHeightSize, TileSet _tileSet) {
@@ -85,7 +89,9 @@ public class TileMap {
 			numColMap = Integer.parseInt(br.readLine());
 			numRowsMap = Integer.parseInt(br.readLine());
 			map = new int[numRowsMap][numColMap];
-			elements = new ElementsToDraw[numRowsMap][numColMap];
+			entitysToDraw = new Entity[numRowsMap][numColMap];
+			entitysDeadToDraw = new Entity[numRowsMap][numColMap];
+			objectsToDraw = new Object[numRowsMap][numColMap];
 			
 			// Numero de tiles bloqueados
 			int numBlockedTiles = Integer.parseInt(br.readLine());
@@ -234,6 +240,10 @@ public class TileMap {
 						&& currentTile.x < numColMap
 						&& currentTile.y < numRowsMap) {
 
+					Object object = objectsToDraw[currentTile.x][currentTile.y];
+					Entity entity = entitysToDraw[currentTile.x][currentTile.y];
+					Entity entityDead = entitysDeadToDraw[currentTile.x][currentTile.y];
+					
 					coorAbsolute = mapToAbsolute(currentTile.x,
 							currentTile.y);
 
@@ -242,13 +252,12 @@ public class TileMap {
 							(coorAbsolute.x - this.x),
 							(coorAbsolute.y - this.y), null);
 					
-					ElementsToDraw aux = elements[currentTile.x][currentTile.y];
-					if (aux != null) {
-						if (aux.object != null)
-							aux.object.draw(g);
-						if (aux.character != null) 
-							aux.character.draw(g);
-					}
+					if (entityDead != null) 
+						entityDead.draw(g);
+					if (object != null) 
+						object.draw(g);
+					if (entity != null) 
+						entity.draw(g);
 				}
 
 				// Si llego al final de la fila nos salimos
@@ -327,8 +336,16 @@ public class TileMap {
 		return yMax;
 	}
 
-	public ElementsToDraw[][] getElements() {
-		return elements;
+	public Entity[][] getEntitysToDraw() {
+		return entitysToDraw;
+	}
+	
+	public Entity[][] getEntitysDeadToDraw() {
+		return entitysDeadToDraw;
+	}
+	
+	public Object[][] getObjectsToDraw() {
+		return objectsToDraw;
 	}
 	
 }
