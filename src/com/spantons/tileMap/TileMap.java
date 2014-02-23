@@ -46,6 +46,7 @@ public class TileMap {
 	// tileset
 	private TileSet tileSet;
 	private Tile[] tiles;
+	private ElementsToDraw[][] elements;
 
 	/****************************************************************************************/
 	public TileMap(int _tileWidthSize, int _tileHeightSize, TileSet _tileSet) {
@@ -54,7 +55,7 @@ public class TileMap {
 		tileWidthSize = _tileWidthSize;
 		tileHeightSize = _tileHeightSize;
 		tiles = tileSet.getTiles();
-
+		
 		if (GamePanel.RESOLUTION_WIDTH % tileWidthSize == 0
 				&& GamePanel.RESOLUTION_HEIGHT % tileHeightSize == 0) {
 			RESOLUTION_WIDTH_FIX = GamePanel.RESOLUTION_WIDTH;
@@ -81,22 +82,20 @@ public class TileMap {
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					in));
 
-			// Numero de filas y columnas del mapa
 			numColMap = Integer.parseInt(br.readLine());
 			numRowsMap = Integer.parseInt(br.readLine());
-			// Memoria a la matriz del mapa
 			map = new int[numRowsMap][numColMap];
+			elements = new ElementsToDraw[numRowsMap][numColMap];
+			
 			// Numero de tiles bloqueados
 			int numBlockedTiles = Integer.parseInt(br.readLine());
 			// Memoria al Set de tiles bloqueados
 			unlockedTiles = new HashSet<Integer>();
 
-			// Expresion regular para delimintar los datos
 			String delimsChar = ",";
 			// Tiles bloqueados
 			String line = br.readLine();
 			String[] tokens = line.split(delimsChar);
-			// llenamos el set
 			for (int i = 0; i < numBlockedTiles; i++)
 				unlockedTiles.add(Integer.parseInt(tokens[i]));
 
@@ -243,6 +242,13 @@ public class TileMap {
 							(coorAbsolute.x - this.x),
 							(coorAbsolute.y - this.y), null);
 					
+					ElementsToDraw aux = elements[currentTile.x][currentTile.y];
+					if (aux != null) {
+						if (aux.object != null)
+							aux.object.draw(g);
+						if (aux.character != null) 
+							aux.character.draw(g);
+					}
 				}
 
 				// Si llego al final de la fila nos salimos
@@ -321,4 +327,8 @@ public class TileMap {
 		return yMax;
 	}
 
+	public ElementsToDraw[][] getElements() {
+		return elements;
+	}
+	
 }

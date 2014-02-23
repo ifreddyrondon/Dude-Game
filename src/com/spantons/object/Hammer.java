@@ -19,10 +19,7 @@ public class Hammer extends Object{
 	private ArrayList<BufferedImage[]> sprites;
 	/****************************************************************************************/
 	public Hammer(TileMap _tileMap, int _xMap, int _yMap, double _scale) {
-		super();
-		tileMap = _tileMap;
-		setxMap(_xMap);
-		setyMap(_yMap);
+		super(_tileMap, _xMap, _yMap);
 		scale = _scale;
 		
 		description = "Martillo";

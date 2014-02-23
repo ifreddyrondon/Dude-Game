@@ -34,9 +34,7 @@ public class SteveJobs extends Entity {
 	/****************************************************************************************/
 	public SteveJobs(TileMap _tm, Stage _stage, int _xMap, int _yMap, double _scale) {
 		
-		super(_tm,_stage);
-		xMap = _xMap;
-		yMap = _yMap;
+		super(_tm,_stage,_xMap,_yMap);
 		scale = _scale;
 		
 		visible = true;

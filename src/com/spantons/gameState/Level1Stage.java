@@ -124,27 +124,6 @@ public class Level1Stage extends Stage {
 	
 		tileMap.draw(g);
 		
-		if (dead.size() > 0) {
-			for (Entity _dead : dead)
-				_dead.draw(g);
-		}
-		
-		if (objects.size() > 0) {
-			for (Object object : objects) 
-				object.draw(g);
-		}
-		
-		if (characters.size() > 0) {
-			for (Entity character : characters)
-				character.draw(g);
-		}
-		
-		if (jasons.size() > 0) {
-			for (Entity jason : jasons) 
-				jason.draw(g);
-		}
-		
-		currentCharacter.draw(g);
 		hud.Draw(g, ToHours.SecondsToHours(countdown));
 		dialogues.draw(g);
 	}

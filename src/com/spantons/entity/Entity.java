@@ -11,10 +11,11 @@ import utilities.TileWalk;
 import com.spantons.entity.character.Jason;
 import com.spantons.gameState.Stage;
 import com.spantons.object.Object;
+import com.spantons.tileMap.ElementsToDraw;
 import com.spantons.tileMap.TileMap;
 
 public class Entity  {
-		
+	
 	protected Stage stage;
 	protected float health;
 	protected float maxHealth;
@@ -47,6 +48,7 @@ public class Entity  {
 	protected TileMap tileMap;
 	protected int xMap;
 	protected int yMap;
+	private ElementsToDraw[][] elements;
 
 	// Posicion
 	protected int x;
@@ -100,12 +102,16 @@ public class Entity  {
 	
 	
 	/****************************************************************************************/
-	public Entity(TileMap _tm, Stage _stage) {
+	public Entity(TileMap _tm, Stage _stage, int _xMap, int _yMap) {
 		if (_tm != null){
 			tileMap = _tm;
 			stage = _stage;
 			flinchingIncreasePerversity = true;
 			object = null;
+			xMap = _xMap;
+			yMap = _yMap;
+			elements = tileMap.getElements();
+			elements[xMap][yMap] = new ElementsToDraw(this, null);
 		}
 	}
 	/****************************************************************************************/
@@ -166,9 +172,6 @@ public class Entity  {
 	}	
 	/****************************************************************************************/
 	public boolean checkCharactersCollision() {
-		
-		if(stage.getCharacters().size() == 1 && stage.getJasons().size() == 0)
-			return true;
 		
 		if (stage.getCharacters().size() > 0) {
 			for (int i = 0; i < stage.getCharacters().size(); i++){
@@ -231,8 +234,11 @@ public class Entity  {
 				}
 			}
 			
+			Object aux = elements[xMap][yMap].object;
+			elements[xMap][yMap] = null;
 			xMap = getMapPosition().x;
 			yMap = getMapPosition().y;
+			elements[xMap][yMap] = new ElementsToDraw(this, aux);
 			
 			flinching = true;
 			flinchingTime = System.nanoTime();
