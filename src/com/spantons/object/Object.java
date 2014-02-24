@@ -46,7 +46,7 @@ public class Object {
 	/****************************************************************************************/
 	public void update() {
 		if (carrier != null) {
-			Point aux = carrier.getMapPosition();
+			Point aux = carrier.getMapPositionOfCharacter();
 			xMap = (int) aux.x;
 			yMap = (int) aux.y;
 		}	

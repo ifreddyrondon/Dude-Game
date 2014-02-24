@@ -24,7 +24,7 @@ public class Hammer extends Object{
 		
 		description = "Martillo";
 		damage = 0.5f;
-		offSetYLoading = 12;
+		offSetYLoading = 1;
 		
 		loadSprite();
 		
@@ -90,7 +90,7 @@ public class Hammer extends Object{
 				if (currentAnimation != ATTACKING) {
 					currentAnimation = ATTACKING;
 					animation.setFrames(sprites.get(ATTACKING));
-					animation.setDelayTime(80);
+					animation.setDelayTime(50);
 				}
 			} else {
 				if (currentAnimation != LOADING) {

@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import com.spantons.audio.AudioPlayer;
 import com.spantons.entity.Entity;
 import com.spantons.object.Object;
+import com.spantons.tileMap.TileMap;
 
 public abstract class Stage {
 
+	protected TileMap tileMap;
 	protected GameStagesManager gsm;
 	protected ArrayList<Entity> characters;
 	protected ArrayList<Entity> jasons;

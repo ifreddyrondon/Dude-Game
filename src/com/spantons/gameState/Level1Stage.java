@@ -26,7 +26,6 @@ import com.spantons.tileMap.TileSet;
 
 public class Level1Stage extends Stage {
 
-	private TileMap tileMap;
 	private Hud hud;
 	private DialogueStage1 dialogues;
 	
@@ -53,8 +52,7 @@ public class Level1Stage extends Stage {
 		dead = new ArrayList<Entity>();
 		objects = new ArrayList<Object>();
 		
-		currentCharacter = new LeonTheProfessional‎(tileMap, this, 25, 25, 0.10);
-		currentCharacter.initChief();
+		currentCharacter = new LeonTheProfessional‎(tileMap, this, 25, 25, 0.10);	
 		
 		characters.add(new Preso(tileMap, this, 15, 25, 0.10));
 		characters.add(new GordonFreeman(tileMap, this, 4, 30, 0.10));

@@ -53,16 +53,10 @@ public class Entity  {
 	// Posicion
 	protected int x;
 	protected int y;
-	protected double xDest;
-	protected double yDest;
-	protected double xTemp;
-	protected double yTemp;
+	private Point nextPositionInMap;
+	private Point nextPositionInAbsolute;
+	private Point nextMapPosition;
 	protected boolean visible;
-	
-	// Proxima posicion en el mapa
-	private Point nextPositionMap;
-	protected int xDestMap;
-	protected int yDestMap;
 	
 	// Reposicion
 	protected boolean flinching;
@@ -102,71 +96,94 @@ public class Entity  {
 		if (_tm != null){
 			tileMap = _tm;
 			stage = _stage;
-			flinchingIncreasePerversity = true;
-			object = null;
 			xMap = _xMap;
 			yMap = _yMap;
+			setMapPosition(xMap, yMap);
+			getNextPosition();
 			entitysToDraw = tileMap.getEntitysToDraw();
 			entitysDeadToDraw = tileMap.getEntitysDeadToDraw();
 			objectsToDraw = tileMap.getObjectsToDraw();
 			entitysToDraw[xMap][yMap] = this;
+			flinchingIncreasePerversity = true;
+			object = null;
 		}
 	}
 	/****************************************************************************************/
-	public void initChief(){
-		calculateMapPositionInAbsolute(xMap,yMap);		
-		magicWalk();
+	public Point getMapPositionOfCharacter() {
+		int _x = x + tileMap.getX();
+		int _y = y + tileMap.getY();
+		return tileMap.absoluteToMap(_x, _y);
 	}
 	/****************************************************************************************/
-	public Point getMapPosition() {
-		double x = this.x + tileMap.getX();
-		double y = this.y + tileMap.getY();
-		return tileMap.absoluteToMap(x, y);
+	public Point getMapPosition(int _x, int _y) {
+		_x = _x + tileMap.getX();
+		_y = _y + tileMap.getY();
+		return tileMap.absoluteToMap(_x, _y);
 	}
 	/****************************************************************************************/
-	public void calculateMapPositionInAbsolute(double _x, double _y) {
+	public void setMapPosition(int _x, int _y) {
 		Point absolutePosition = tileMap.mapToAbsolute(_x, _y);
-		xDest = absolutePosition.x - tileMap.getX();
-		yDest = absolutePosition.y - tileMap.getY();
+		setPosition(absolutePosition.x - tileMap.getX(),
+					absolutePosition.y - tileMap.getY());
 	}
 	/****************************************************************************************/
-	public void setMapPosition(double _x, double _y) {
-
+	public Point getAbsolutePosition(int _x, int _y){
 		Point absolutePosition = tileMap.mapToAbsolute(_x, _y);
-		setPosition((int) absolutePosition.x - tileMap.getX(),
-					(int) absolutePosition.y - tileMap.getY());
+		absolutePosition.x = absolutePosition.x - tileMap.getX();
+		absolutePosition.y = absolutePosition.y - tileMap.getY();
+		return absolutePosition;
 	}
 	/****************************************************************************************/
 	protected void getNextPosition() {
-		
-		nextPositionMap = getMapPosition();
+		nextPositionInMap = getMapPositionOfCharacter();
 		
 		if (movUp)
-			nextPositionMap = TileWalk.walkTo("N", nextPositionMap,moveSpeed);
+			nextPositionInMap = TileWalk.walkTo("N", nextPositionInMap,moveSpeed);
 		
 		if (movDown) 
-			nextPositionMap = TileWalk.walkTo("S", nextPositionMap,moveSpeed);
+			nextPositionInMap = TileWalk.walkTo("S", nextPositionInMap,moveSpeed);
 			
 		if (movLeft) 
-			nextPositionMap = TileWalk.walkTo("W", nextPositionMap,moveSpeed);
+			nextPositionInMap = TileWalk.walkTo("W", nextPositionInMap,moveSpeed);
 				
 		if (movRight)
-			nextPositionMap = TileWalk.walkTo("E", nextPositionMap,moveSpeed);
+			nextPositionInMap = TileWalk.walkTo("E", nextPositionInMap,moveSpeed);
 		
+		nextPositionInAbsolute = getAbsolutePosition(nextPositionInMap.x, nextPositionInMap.y);
+		
+		nextMapPosition = 
+			new Point(tileMap.getX() + 
+				(nextPositionInAbsolute.x - tileMap.RESOLUTION_WIDTH_FIX / 2),
+				tileMap.getY() + 
+				(nextPositionInAbsolute.y - tileMap.RESOLUTION_HEIGHT_FIX / 2));
+		
+//		System.out.println(nextMapPosition);
+//		Point a = Multiple.findPointCloserTo(nextMapPosition, tileMap.tileSize);
+//		System.out.println(a);
+		
+//		if (	nextMapPosition.x % tileMap.tileSize.x != 0 
+//			|| nextMapPosition.y % tileMap.tileSize.y != 0) {
+//			
+//			nextMapPosition = Multiple.findPointCloserTo(
+//					nextMapPosition, tileMap.tileSize);
+//		}
+//		
+//		System.out.println(nextMapPosition);
+//		System.out.println();
 	}	
 	/****************************************************************************************/
 	public boolean checkCharactersCollision() {
 		
 		if (stage.getCharacters().size() > 0) {
 			for (int i = 0; i < stage.getCharacters().size(); i++){
-				if (stage.getCharacters().get(i).getMapPosition().equals(nextPositionMap)) 
+				if (stage.getCharacters().get(i).getMapPositionOfCharacter().equals(nextPositionInMap)) 
 					return false;
 			}
 		}
 		
 		if (stage.getJasons().size() > 0) {
 			for (int i = 0; i < stage.getJasons().size(); i++){
-				if (stage.getJasons().get(i).getMapPosition().equals(nextPositionMap)) 
+				if (stage.getJasons().get(i).getMapPositionOfCharacter().equals(nextPositionInMap)) 
 					return false;
 			}
 		}
@@ -176,10 +193,9 @@ public class Entity  {
 	/****************************************************************************************/
 	public boolean checkTileCollision() {
 
-		if ((nextPositionMap.x > 0 && nextPositionMap.y > 0
-				&& nextPositionMap.x < tileMap.getNumColMap()
-				&& nextPositionMap.y < tileMap.getNumRowsMap())
-//			&& tileMap.getUnlockedTiles().contains(map[(int)nextPositionMap.x][(int)nextPositionMap.y])
+		if ((nextPositionInMap.x > 0 && nextPositionInMap.y > 0
+				&& nextPositionInMap.x < tileMap.getNumColMap()
+				&& nextPositionInMap.y < tileMap.getNumRowsMap())
 			) 
 			return true;
 		
@@ -210,17 +226,15 @@ public class Entity  {
 		
 		} else {
 			getNextPosition();
-			
+
 			if (checkTileCollision()) {
-				if (checkCharactersCollision()) {
-					calculateMapPositionInAbsolute(nextPositionMap.x, nextPositionMap.y);
+				if (checkCharactersCollision()) 
 					magicWalk();
-				}
 			}
 			
 			entitysToDraw[xMap][yMap] = null;
-			xMap = getMapPosition().x;
-			yMap = getMapPosition().y;
+			xMap = getMapPositionOfCharacter().x;
+			yMap = getMapPositionOfCharacter().y;
 			entitysToDraw[xMap][yMap] = this;
 			
 			flinching = true;
@@ -255,13 +269,8 @@ public class Entity  {
 		setMapPosition(xMap, yMap);
 	}	
 	/****************************************************************************************/
-	private void magicWalk() {
-		
-		xDestMap = (int) (tileMap.getX() + 
-				(xDest - tileMap.RESOLUTION_WIDTH_FIX /2));
-		yDestMap = (int) (tileMap.getY() + 
-				(yDest - tileMap.RESOLUTION_HEIGHT_FIX /2));
-		
+	private void magicWalk() {		
+				
 		if (	tileMap.getX() <= tileMap.getXMin() ||
 			tileMap.getX() >= tileMap.getXMax() ||
 			tileMap.getY() <= tileMap.getYMin() ||
@@ -273,35 +282,32 @@ public class Entity  {
 				|| (tileMap.getY() == tileMap.getYMax() && y < tileMap.RESOLUTION_HEIGHT_FIX / 2) 
 				) {
 				setPosition(
-						(int) tileMap.RESOLUTION_WIDTH_FIX / 2, 
-						(int) tileMap.RESOLUTION_HEIGHT_FIX / 2);
-				tileMap.setPosition(xDestMap,yDestMap);
+						tileMap.RESOLUTION_WIDTH_FIX / 2, 
+						tileMap.RESOLUTION_HEIGHT_FIX / 2);
+				tileMap.setPosition(nextMapPosition.x,nextMapPosition.y);
 			}
 			else {
-				if (	x < tileMap.tileWidthSize 
-					|| x > tileMap.RESOLUTION_WIDTH_FIX - tileMap.tileWidthSize){
+				if (	x < tileMap.tileSize.x 
+					|| x > tileMap.RESOLUTION_WIDTH_FIX - tileMap.tileSize.x){
 					
-					setPosition(
-							(int) tileMap.RESOLUTION_WIDTH_FIX / 2, 
-							y);
-					tileMap.setPosition(xDestMap,yDestMap);
+					setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2,y);
+					tileMap.setPosition(nextMapPosition.x,nextMapPosition.y);
 				}
-				else if(	y < tileMap.tileHeightSize
-						|| y > tileMap.RESOLUTION_HEIGHT_FIX - tileMap.tileHeightSize * 2){
+				else if(	y < tileMap.tileSize.y
+						|| y > tileMap.RESOLUTION_HEIGHT_FIX - tileMap.tileSize.y * 2){
 					
-					setPosition(x, (int) tileMap.RESOLUTION_HEIGHT_FIX / 2);
-					tileMap.setPosition(xDestMap,yDestMap);
+					setPosition(x,tileMap.RESOLUTION_HEIGHT_FIX / 2);
+					tileMap.setPosition(nextMapPosition.x,nextMapPosition.y);
 				}
 				else
-					setPosition((int) xDest, (int) yDest);
+					setMapPosition(nextPositionInMap.x, nextPositionInMap.y);
 			}
 		}
 		else {
-			
 			setPosition(
-					(int) tileMap.RESOLUTION_WIDTH_FIX / 2, 
-					(int) tileMap.RESOLUTION_HEIGHT_FIX / 2);
-			tileMap.setPosition(xDestMap,yDestMap);
+					tileMap.RESOLUTION_WIDTH_FIX / 2, 
+					tileMap.RESOLUTION_HEIGHT_FIX / 2);
+			tileMap.setPosition(nextMapPosition.x,nextMapPosition.y);
 		}
 	}
 	/****************************************************************************************/
@@ -388,18 +394,18 @@ public class Entity  {
 	/****************************************************************************************/
 	protected Entity checkIsCloseToAnotherCharacter() {
 		
-		Point north = TileWalk.walkTo("N", getMapPosition(),1);
-		Point south = TileWalk.walkTo("S", getMapPosition(),1);
-		Point west = TileWalk.walkTo("W", getMapPosition(),1);
-		Point east = TileWalk.walkTo("E", getMapPosition(),1);
+		Point north = TileWalk.walkTo("N", getMapPositionOfCharacter(),1);
+		Point south = TileWalk.walkTo("S", getMapPositionOfCharacter(),1);
+		Point west = TileWalk.walkTo("W", getMapPositionOfCharacter(),1);
+		Point east = TileWalk.walkTo("E", getMapPositionOfCharacter(),1);
 				
 		if (stage.getCharacters().size() > 0) {
 			for (Entity character : stage.getCharacters()) {
 				if (
-					character.getMapPosition().equals(north)
-					|| character.getMapPosition().equals(south)
-					|| character.getMapPosition().equals(west)
-					|| character.getMapPosition().equals(east)) 
+					character.getMapPositionOfCharacter().equals(north)
+					|| character.getMapPositionOfCharacter().equals(south)
+					|| character.getMapPositionOfCharacter().equals(west)
+					|| character.getMapPositionOfCharacter().equals(east)) 
 					return character;
 			}
 		}
@@ -407,19 +413,19 @@ public class Entity  {
 		if (stage.getJasons().size() > 0) {
 			for (Entity jason : stage.getJasons()) {
 				if (
-					jason.getMapPosition().equals(north)
-					|| jason.getMapPosition().equals(south)
-					|| jason.getMapPosition().equals(west)
-					|| jason.getMapPosition().equals(east)) 
+					jason.getMapPositionOfCharacter().equals(north)
+					|| jason.getMapPositionOfCharacter().equals(south)
+					|| jason.getMapPositionOfCharacter().equals(west)
+					|| jason.getMapPositionOfCharacter().equals(east)) 
 					return jason;
 			}
 		}
 		
 		if (!this.equals(stage.getCurrentCharacter())) {
-			if (	stage.getCurrentCharacter().getMapPosition().equals(north)
-				|| stage.getCurrentCharacter().getMapPosition().equals(south)
-				|| stage.getCurrentCharacter().getMapPosition().equals(west)
-				|| stage.getCurrentCharacter().getMapPosition().equals(east)) 
+			if (	stage.getCurrentCharacter().getMapPositionOfCharacter().equals(north)
+				|| stage.getCurrentCharacter().getMapPositionOfCharacter().equals(south)
+				|| stage.getCurrentCharacter().getMapPositionOfCharacter().equals(west)
+				|| stage.getCurrentCharacter().getMapPositionOfCharacter().equals(east)) 
 				
 				return stage.getCurrentCharacter();
 		}
@@ -506,30 +512,26 @@ public class Entity  {
 
 	// Setter and Getter
 	public int getX() {
-		return (int) x;
+		return x;
 	}
 	public int getY() {
-		return (int) y;
+		return y;
 	}
-	public void setPosition(int x, int y) {
-		
+	public void setPosition(int _x, int _y) {
 		if (tileMap == null 
-			|| (x % tileMap.tileWidthSize == 0 
-			&& y % tileMap.tileHeightSize == 0)) {
+			|| (_x % tileMap.tileSize.x == 0 
+			&& _y % tileMap.tileSize.y == 0)) {
 			
-			this.x = x;
-			this.y = y;
+			x = _x;
+			y = _y;
 		
 		} else {
-			
 			Point multiple = 
-					Multiple.findPointCloserTo(
-							new Point(x,y), 
-							new Point(
-									tileMap.tileWidthSize,
-									tileMap.tileHeightSize));
-			this.x = (int) multiple.x;
-			this.y = (int) multiple.y;
+				Multiple.findPointCloserTo(
+					new Point(_x,_y), 
+					tileMap.tileSize);
+			x = multiple.x;
+			y = multiple.y;
 		}
 	}
 
@@ -616,5 +618,8 @@ public class Entity  {
 	}
 	public boolean isFacingRight() {
 		return facingRight;
+	}
+	public Point getNextMapPosition() {
+		return nextMapPosition;
 	}
 }

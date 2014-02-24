@@ -30,8 +30,7 @@ public class TileMap {
 	// mapa
 	private int[][] map;
 	private Set<Integer> unlockedTiles;
-	public int tileWidthSize;
-	public int tileHeightSize;
+	public Point tileSize;
 	private int numRowsMap;
 	private int numColMap;
 
@@ -56,12 +55,11 @@ public class TileMap {
 	public TileMap(int _tileWidthSize, int _tileHeightSize, TileSet _tileSet) {
 
 		tileSet = _tileSet;
-		tileWidthSize = _tileWidthSize;
-		tileHeightSize = _tileHeightSize;
+		tileSize = new Point(_tileWidthSize,_tileHeightSize);
 		tiles = tileSet.getTiles();
 		
-		if (GamePanel.RESOLUTION_WIDTH % tileWidthSize == 0
-				&& GamePanel.RESOLUTION_HEIGHT % tileHeightSize == 0) {
+		if (GamePanel.RESOLUTION_WIDTH % _tileWidthSize == 0
+				&& GamePanel.RESOLUTION_HEIGHT % _tileHeightSize == 0) {
 			RESOLUTION_WIDTH_FIX = GamePanel.RESOLUTION_WIDTH;
 			RESOLUTION_HEIGHT_FIX = GamePanel.RESOLUTION_HEIGHT;
 
@@ -69,11 +67,10 @@ public class TileMap {
 			Point fixResolution = Multiple
 					.findPointCloserTo(new Point(
 							GamePanel.RESOLUTION_WIDTH,
-							GamePanel.RESOLUTION_HEIGHT),
-							new Point(tileWidthSize,tileHeightSize));
+							GamePanel.RESOLUTION_HEIGHT),tileSize);
 
-			RESOLUTION_WIDTH_FIX = (int) fixResolution.x;
-			RESOLUTION_HEIGHT_FIX = (int) fixResolution.y;
+			RESOLUTION_WIDTH_FIX = fixResolution.x;
+			RESOLUTION_HEIGHT_FIX = fixResolution.y;
 		}
  
 	}
@@ -123,38 +120,37 @@ public class TileMap {
 	/****************************************************************************************/
 	private void getBounds() {
 
-		xMin = (int) -mapToAbsolute(numRowsMap - 1, 0).x - tileHeightSize;
-		yMin = -tileHeightSize;
+		xMin = -mapToAbsolute(numRowsMap - 1, 0).x - tileSize.y;
+		yMin = -tileSize.y;
 		Point fix = Multiple.findPointCloserTo(new Point(
-				xMin, yMin), new Point(tileWidthSize,
-				tileHeightSize));
-		xMin = (int) fix.x;
-		yMin = (int) fix.y;
+				xMin, yMin),tileSize);
+		xMin = fix.x;
+		yMin = fix.y;
 
-		xMax = (int) (-mapToAbsolute(0, numColMap - 1).x - RESOLUTION_WIDTH_FIX)
-				+ tileWidthSize * 2;
-		yMax = (int) (mapToAbsolute(numRowsMap - 1, numColMap - 1).y - RESOLUTION_HEIGHT_FIX)
-				+ tileHeightSize * 2;
-		fix = Multiple.findPointCloserTo(new Point(xMax, yMax),
-				new Point(tileWidthSize, tileHeightSize));
-		xMax = (int) fix.x;
-		yMax = (int) fix.y;
+		xMax = (-mapToAbsolute(0, numColMap - 1).x - RESOLUTION_WIDTH_FIX)
+				+ tileSize.x * 2;
+		yMax = (mapToAbsolute(numRowsMap - 1, numColMap - 1).y - RESOLUTION_HEIGHT_FIX)
+				+ tileSize.y * 2;
+		fix = Multiple.findPointCloserTo(new Point(xMax, yMax),tileSize);
+		xMax = fix.x;
+		yMax = fix.y;
+		
 	}
 
 	/****************************************************************************************/
-	public Point absoluteToMap(double x, double y) {
-		int mapX = (int) ((x / (tileWidthSize / 2) + y
-				/ (tileHeightSize / 2)) / 2);
-		int mapY = (int) ((y / (tileHeightSize / 2) - (x / (tileWidthSize / 2))) / 2);
+	public Point absoluteToMap(int x, int y) {
+		int mapX = ((x / (tileSize.x / 2) + y
+				/ (tileSize.y / 2)) / 2);
+		int mapY = ((y / (tileSize.y / 2) - (x / (tileSize.x / 2))) / 2);
 
 		return new Point(mapX, mapY);
 	}
 
 	/****************************************************************************************/
-	public Point mapToAbsolute(double x, double y) {
+	public Point mapToAbsolute(int x, int y) {
 
-		int absoluteX = (int) ((x - y) * (tileWidthSize / 2));
-		int absoluteY = (int) ((x + y) * (tileHeightSize / 2));
+		int absoluteX = ((x - y) * (tileSize.x / 2));
+		int absoluteY = ((x + y) * (tileSize.y / 2));
 
 		return new Point(absoluteX, absoluteY);
 	}
@@ -170,20 +166,16 @@ public class TileMap {
 			y = yMax;
 	}
 	/****************************************************************************************/
-	public void setPosition(int x, int y) {
-		// La nueva posicion debe ser multiplo del tileWidth en X y
-		// tileHeight en Y
-		if (x % tileWidthSize == 0 && y % tileHeightSize == 0) {
-			this.x = x;
-			this.y = y;
-
+	public void setPosition(int _x, int _y) {
+		if (_x % tileSize.x == 0 && _y % tileSize.y == 0) {
+			x = _x;
+			y = _y;
 		} else {
 			Point multiple = Multiple.findPointCloserTo(
-					new Point(x, y), new Point(tileWidthSize, tileHeightSize));
-			this.x = (int) multiple.x;
-			this.y = (int) multiple.y;
+					new Point(_x, _y), tileSize);
+			x = multiple.x;
+			y = multiple.y;
 		}
-
 		fixBounds();
 	}
 
@@ -299,9 +291,7 @@ public class TileMap {
 				rowCounter++;
 			}
 		}
-
 	}
-
 	/****************************************************************************************/
 
 	public int getX() {
