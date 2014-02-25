@@ -65,7 +65,7 @@ public class MenuStage extends Stage {
 	@Override
 	public void endStage() {
 //		player.close();
-		gsm.setStage(GameStagesManager.LEVEL_1_STAGE);
+		gsm.setStage(GameStagesManager.GAME_OVER_STAGE);
 	}
 	/****************************************************************************************/
 	@Override
