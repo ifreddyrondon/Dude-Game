@@ -1,11 +1,12 @@
 package com.spantons.entity.character;
 
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+
+import org.imgscalr.Scalr;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
@@ -60,24 +61,13 @@ public class DanaScullyXFiles extends Entity {
 				face = ImageIO.read(getClass()
 						.getResourceAsStream("/hud/DanaScullyXFiles.png"));
 				
-				BufferedImage spriteSheet2 = ImageIO.read(getClass()
+				BufferedImage spriteSheet = ImageIO.read(getClass()
 						.getResourceAsStream("/characteres_sprites/DanaScullyXFiles.png"));
 				
-				spriteWidth = ((int) (spriteSheet2.getWidth() / 3 * scale));
-				spriteHeight = ((int) (spriteSheet2.getHeight() /2 * scale));
+				spriteWidth = ((int) (spriteSheet.getWidth() / 3 * scale));
+				spriteHeight = ((int) (spriteSheet.getHeight() /2 * scale));
 				
-				// Redimencionar SpriteSheet
-				int newWidth = (int) (spriteSheet2.getWidth() * scale);
-				int newHeight = (int) (spriteSheet2.getHeight() * scale); 
-
-				BufferedImage spriteSheet = new BufferedImage(newWidth,
-						newHeight, spriteSheet2.getType());
-				Graphics2D g = spriteSheet.createGraphics();
-				g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-						RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-				g.drawImage(spriteSheet2, 0, 0, newWidth, newHeight, 0, 0,
-						spriteSheet2.getWidth(),
-						spriteSheet2.getHeight(), null);
+				spriteSheet = Scalr.resize(spriteSheet, (int)(spriteSheet.getWidth() * scale));
 
 				sprites = new ArrayList<BufferedImage[]>();
 

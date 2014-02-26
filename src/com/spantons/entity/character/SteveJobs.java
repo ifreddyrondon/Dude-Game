@@ -1,11 +1,12 @@
 package com.spantons.entity.character;
 
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+
+import org.imgscalr.Scalr;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
@@ -68,25 +69,14 @@ public class SteveJobs extends Entity {
 
 			face = ImageIO.read(getClass().getResourceAsStream("/hud/SteveJobs.png"));
 			
-			BufferedImage spriteSheet2 = ImageIO.read(getClass()
+			BufferedImage spriteSheet = ImageIO.read(getClass()
 					.getResourceAsStream("/characteres_sprites/SteveJobs.png"));
-
-			spriteWidth = ((int) (spriteSheet2.getWidth() /4 * scale));
-			spriteHeight = ((int) (spriteSheet2.getHeight() /2 * scale));
 			
-			// Redimencionar SpriteSheet
-			int newWidth = (int) (spriteSheet2.getWidth() * scale);
-			int newHeight = (int) (spriteSheet2.getHeight() * scale);
-
-			BufferedImage spriteSheet = new BufferedImage(newWidth,
-					newHeight, spriteSheet2.getType());
-			Graphics2D g = spriteSheet.createGraphics();
-			g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-					RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-			g.drawImage(spriteSheet2, 0, 0, newWidth, newHeight, 0, 0,
-					spriteSheet2.getWidth(),
-					spriteSheet2.getHeight(), null);
-
+			spriteWidth = ((int) (spriteSheet.getWidth() / 4 * scale));
+			spriteHeight = ((int) (spriteSheet.getHeight() /2 * scale));
+			
+			spriteSheet = Scalr.resize(spriteSheet, (int)(spriteSheet.getWidth() * scale),(int)(spriteSheet.getHeight() * scale));
+			
 			sprites = new ArrayList<BufferedImage[]>();
 
 			// WALKING_FRONT
