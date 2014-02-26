@@ -6,8 +6,6 @@ import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.Set;
 
 import utilities.Multiple;
 import utilities.TileWalk;
@@ -28,8 +26,11 @@ public class TileMap {
 	private int yMax;
 
 	// mapa
+	private String src;
+	private String delimsChar;
+	private String line;
+	private String[] tokens;
 	private int[][] map;
-	private Set<Integer> unlockedTiles;
 	public Point tileSize;
 	private int numRowsMap;
 	private int numColMap;
@@ -45,21 +46,18 @@ public class TileMap {
 	public int RESOLUTION_HEIGHT_FIX;
 
 	// tileset
-	private TileSet tileSet;
 	private Tile[] tiles;
 	private Entity[][] entitysDeadToDraw;
 	private Entity[][] entitysToDraw;
 	private Object[][] objectsToDraw;
 
 	/****************************************************************************************/
-	public TileMap(int _tileWidthSize, int _tileHeightSize, TileSet _tileSet) {
+	public TileMap(String _src) {
+		src = _src;
+		loadMap();
 
-		tileSet = _tileSet;
-		tileSize = new Point(_tileWidthSize,_tileHeightSize);
-		tiles = tileSet.getTiles();
-		
-		if (GamePanel.RESOLUTION_WIDTH % _tileWidthSize == 0
-				&& GamePanel.RESOLUTION_HEIGHT % _tileHeightSize == 0) {
+		if (GamePanel.RESOLUTION_WIDTH % tileSize.x == 0
+				&& GamePanel.RESOLUTION_HEIGHT % tileSize.y == 0) {
 			RESOLUTION_WIDTH_FIX = GamePanel.RESOLUTION_WIDTH;
 			RESOLUTION_HEIGHT_FIX = GamePanel.RESOLUTION_HEIGHT;
 
@@ -76,32 +74,50 @@ public class TileMap {
 	}
 
 	/****************************************************************************************/
-	public void loadMap(String s) {
+	private void loadMap() {
 
 		try {
-			InputStream in = getClass().getResourceAsStream(s);
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					in));
+			InputStream in = getClass().getResourceAsStream(src);
+			BufferedReader br = 
+				new BufferedReader(new InputStreamReader(in));
 
-			numColMap = Integer.parseInt(br.readLine());
-			numRowsMap = Integer.parseInt(br.readLine());
+			delimsChar = "=";
+			
+			br.readLine();
+			tokens = br.readLine().split(delimsChar);
+			numColMap = Integer.parseInt(tokens[1]);
+			tokens = br.readLine().split(delimsChar);
+			numRowsMap = Integer.parseInt(tokens[1]);
+			
+			tokens = br.readLine().split(delimsChar);
+			int tileWidth = Integer.parseInt(tokens[1]);
+			tokens = br.readLine().split(delimsChar);
+			int tileHeight = Integer.parseInt(tokens[1]);
+			tileSize = new Point(tileWidth,tileHeight);
+			
+			br.readLine();
+			br.readLine();
+			
+			tokens = br.readLine().split(delimsChar);
+			delimsChar = ",";
+			tokens = tokens[1].split(delimsChar);
+			String tileSetSrc = tokens[0];
+			int tileWidthSet = Integer.parseInt(tokens[1]);
+			int tileHeightSet = Integer.parseInt(tokens[2]);
+			int xDrawingOffSet = Integer.parseInt(tokens[3]);
+			int yDrawingOffSet = Integer.parseInt(tokens[4]);
+			tiles = TileSet.getTileSet(tileSetSrc, tileWidthSet, tileHeightSet, xDrawingOffSet, yDrawingOffSet);
+			
 			map = new int[numRowsMap][numColMap];
 			entitysToDraw = new Entity[numRowsMap][numColMap];
 			entitysDeadToDraw = new Entity[numRowsMap][numColMap];
 			objectsToDraw = new Object[numRowsMap][numColMap];
+
+			br.readLine();
+			br.readLine();
+			br.readLine();
+			br.readLine();
 			
-			// Numero de tiles bloqueados
-			int numBlockedTiles = Integer.parseInt(br.readLine());
-			// Memoria al Set de tiles bloqueados
-			unlockedTiles = new HashSet<Integer>();
-
-			String delimsChar = ",";
-			// Tiles bloqueados
-			String line = br.readLine();
-			String[] tokens = line.split(delimsChar);
-			for (int i = 0; i < numBlockedTiles; i++)
-				unlockedTiles.add(Integer.parseInt(tokens[i]));
-
 			// llenamos la matriz map
 			for (int row = 0; row < numRowsMap; row++) {
 				line = br.readLine();

@@ -6,36 +6,23 @@ import javax.imageio.ImageIO;
 
 public class TileSet {
 
-	private int tileWidthSize;
-	private int tileHeightSize;
-
-	private int xDrawingOffSet;
-	private int yDrawingOffSet;
-
-	private BufferedImage tileSet;
-	private int numRowsTileSet;
-	private int numColTileSet;
-	private Tile[] tiles;
-
-	public TileSet(String src, int _tileWidthSize, int _tileHeightSize, int _xDrawingOffSet, int _yDrawingOffSet) {
+	static Tile[] getTileSet(String src, int _tileWidthSize, int _tileHeightSize, int _xDrawingOffSet, int _yDrawingOffSet) {
 		try {
 			
-			tileWidthSize = _tileWidthSize;
-			tileHeightSize = _tileHeightSize;
-			xDrawingOffSet = _xDrawingOffSet;
-			yDrawingOffSet = _yDrawingOffSet;
+			int tileWidthSize = _tileWidthSize;
+			int tileHeightSize = _tileHeightSize;
+			int xDrawingOffSet = _xDrawingOffSet;
+			int yDrawingOffSet = _yDrawingOffSet;
 			
-			// Cargamos la imagen completa del tileset
-			tileSet = ImageIO.read(getClass().getResourceAsStream(src));
+			BufferedImage tileSet = ImageIO.read(TileSet.class.getResourceAsStream(src));
 
-			// Obtenemos el numero de tiles a lo largo y ancho del tileset
-			numRowsTileSet = tileSet.getHeight()
+			int numRowsTileSet = tileSet.getHeight()
 					/ tileHeightSize;
-			numColTileSet = tileSet.getWidth()
+			int numColTileSet = tileSet.getWidth()
 					/ tileWidthSize;
 			
-			// le damos memoria a la matriz que almacena los tiles
-			tiles = new Tile[numRowsTileSet * numColTileSet];
+			// le damos memoria al vector que almacena los tiles
+			Tile tiles[] = new Tile[numRowsTileSet * numColTileSet];
 
 			// llenamos la matriz con los tiles
 			BufferedImage subImage;
@@ -52,45 +39,12 @@ public class TileSet {
 					contador++;
 				}
 			}
+			
+			return tiles;
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
-
 	}
-	
-	public int getTypeOfTile(int numMatrixMap) {
-		return tiles[numMatrixMap -1].getType();
-	}
-	
-	
-	public int getTileWidthSize(){
-		return tileWidthSize;
-	}
-	
-	public int getTileHeightSize(){
-		return tileHeightSize;
-	}
-	
-	public int getXDrawingOffSet(){
-		return xDrawingOffSet;
-	}
-	
-	public int getYDrawingOffSet(){
-		return yDrawingOffSet;
-	}
-	
-	public Tile[] getTiles(){
-		return tiles;
-	}
-	
-	public int getNumRowsTileSet(){
-		return numRowsTileSet;
-	}
-	
-	public int getNumColTileSet(){
-		return numColTileSet;
-	}
-		
-
 }

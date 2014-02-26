@@ -22,7 +22,6 @@ import com.spantons.entity.character.Preso;
 import com.spantons.object.Hammer;
 import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
-import com.spantons.tileMap.TileSet;
 
 public class Level1Stage extends Stage {
 
@@ -39,12 +38,9 @@ public class Level1Stage extends Stage {
 	/****************************************************************************************/
 	@Override
 	public void init() {
-		TileSet tileSet = new 
-				TileSet("/tilesets/isometric_grass_and_water.png",64, 64, 0, 0);
 		hud = new Hud(this);
 		secondaryMenu = false;
-		tileMap = new TileMap(64, 32, tileSet);
-		tileMap.loadMap("/maps/map.txt");
+		tileMap = new TileMap("/maps/map.txt");
 		tileMap.setPosition(0, 0);
 		
 		characters = new ArrayList<Entity>();
