@@ -257,8 +257,8 @@ public class TileMap {
 
 					g.drawImage(tiles[map[currentTile.y][currentTile.x] - 1]
 							.getImage(), 
-							(coorAbsolute.x - this.x),
-							(coorAbsolute.y - this.y), null);
+							(coorAbsolute.x - this.x) - tileSize.x / 2,
+							(coorAbsolute.y - this.y) - tileSize.y, null);
 					
 					if (entityDead != null) 
 						entityDead.draw(g);

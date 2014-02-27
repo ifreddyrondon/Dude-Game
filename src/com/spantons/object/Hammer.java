@@ -24,8 +24,10 @@ public class Hammer extends Object{
 		scale = _scale;
 		
 		description = "Martillo";
+		type = NON_BLOCKED;
 		damage = 0.5f;
-		offSetYLoading = 1;
+		offSetXLoading = 12;
+		offSetYLoading = 12;
 		
 		loadSprite();
 		

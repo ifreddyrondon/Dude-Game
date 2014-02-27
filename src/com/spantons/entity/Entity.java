@@ -175,16 +175,26 @@ public class Entity  {
 	public boolean checkCharactersCollision() {
 		
 		if (stage.getCharacters().size() > 0) {
-			for (int i = 0; i < stage.getCharacters().size(); i++){
-				if (stage.getCharacters().get(i).getMapPositionOfCharacter().equals(nextPositionInMap)) 
+			for (Entity character : stage.getCharacters()) {
+				if (character.getMapPositionOfCharacter().equals(nextPositionInMap)) 
 					return false;
 			}
 		}
 		
 		if (stage.getJasons().size() > 0) {
-			for (int i = 0; i < stage.getJasons().size(); i++){
-				if (stage.getJasons().get(i).getMapPositionOfCharacter().equals(nextPositionInMap)) 
+			for (Entity jason : stage.getJasons()) {
+				if (jason.getMapPositionOfCharacter().equals(nextPositionInMap)) 
 					return false;
+			}
+		}
+		
+		if (stage.getObjects().size() > 0) {
+			for (Object object : stage.getObjects()) {
+				if (object.getType() == Object.BLOCKED) {
+					Point aux = new Point(object.getxMap(),object.getyMap());
+					if (aux.equals(nextPositionInMap)) 
+						return false;
+				}
 			}
 		}
 		
@@ -193,7 +203,7 @@ public class Entity  {
 	/****************************************************************************************/
 	public boolean checkTileCollision() {
 
-		if ((nextPositionInMap.x > 0 && nextPositionInMap.y > 0
+		if ((nextPositionInMap.x >= 0 && nextPositionInMap.y >= 0
 				&& nextPositionInMap.x < tileMap.getNumColMap()
 				&& nextPositionInMap.y < tileMap.getNumRowsMap())
 			) 
@@ -270,7 +280,7 @@ public class Entity  {
 	}	
 	/****************************************************************************************/
 	private void magicWalk() {		
-				
+		
 		if (	tileMap.getX() <= tileMap.getXMin() ||
 			tileMap.getX() >= tileMap.getXMax() ||
 			tileMap.getY() <= tileMap.getYMin() ||
@@ -322,11 +332,11 @@ public class Entity  {
 			
 			if (facingRight) 
 				g.drawImage(animation.getCurrentImageFrame(),
-						x, y - spriteHeight + 12, null);
+						x - spriteWidth / 2, y - spriteHeight, null);
 			
 			else 
 				g.drawImage(animation.getCurrentImageFrame(), 
-						x + spriteWidth, y - spriteHeight + 12,
+						x + spriteWidth - spriteWidth / 2, y - spriteHeight,
 						-spriteWidth, spriteHeight, null);
 			
 			if (object != null) 

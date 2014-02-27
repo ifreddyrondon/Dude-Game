@@ -25,10 +25,14 @@ public class Object {
 	protected int currentAnimation;
 	protected int spriteWidth;
 	protected int spriteHeight;
-	protected int offSetYLoading;
+	protected int offSetXLoading;
+	protected int offSetYLoading;	
 	protected double scale;
 	
-	public static int WEAPON_TYPE = 0;
+	protected int type;
+	public static int BLOCKED = 0;
+	public static int NON_BLOCKED = 1;
+	
 	/****************************************************************************************/
 	public Object(TileMap _tileMap, int _xMap, int _yMap) {
 		tileMap = _tileMap;
@@ -45,7 +49,7 @@ public class Object {
 	}
 	/****************************************************************************************/
 	public void update() {
-		if (carrier != null) {
+		if (carrier != null && type == NON_BLOCKED) {
 			Point aux = carrier.getMapPositionOfCharacter();
 			xMap = (int) aux.x;
 			yMap = (int) aux.y;
@@ -54,23 +58,23 @@ public class Object {
 	}
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
-		if (carrier != null) {
+		if (carrier != null && type == NON_BLOCKED) {
 			if (carrier.isMovUp() && !carrier.isMovLeft() && !carrier.isMovRight()) 
 				return;
 			
 			if (carrier.isFacingRight()) 
 				g.drawImage(animation.getCurrentImageFrame(),
-					x + carrier.getSpriteWidth() / 2, 
+					x + carrier.getSpriteWidth() / 2 - spriteWidth + offSetXLoading, 
 					y - spriteHeight - offSetYLoading, null);
 			
 			else 
 				g.drawImage(animation.getCurrentImageFrame(), 
-					x + carrier.getSpriteWidth() / 2, 
+					x + carrier.getSpriteWidth() / 2 - spriteWidth + offSetXLoading,
 					y - spriteHeight - offSetYLoading, -spriteWidth, spriteHeight, null);
 		}			
 		else
 			g.drawImage(animation.getCurrentImageFrame(),
-				x + spriteWidth / 2, 
+				x - spriteWidth / 2, 
 				y - spriteHeight, null);
 	}
 	/****************************************************************************************/
@@ -97,6 +101,9 @@ public class Object {
 	}
 	public float getDamage() {
 		return damage;
+	}
+	public int getType(){
+		return type;
 	}
 	
 }
