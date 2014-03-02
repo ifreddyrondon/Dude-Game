@@ -173,6 +173,6 @@ public class Level1Stage extends Stage {
 		if (k == KeyEvent.VK_DOWN)
 			currentCharacter.setMovDown(false);
 		if (k == KeyEvent.VK_SPACE)
-			currentCharacter.setAttack(false);
+			currentCharacter.setAttack(false);	
 	}
 }
