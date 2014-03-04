@@ -230,9 +230,13 @@ public class Entity {
 
 		if ((nextPositionInMap.x >= 0 && nextPositionInMap.y >= 0
 				&& nextPositionInMap.x < tileMap.getNumColMap() && nextPositionInMap.y < tileMap
-				.getNumRowsMap()))
-			return true;
-
+				.getNumRowsMap())){
+			
+				System.out.println(tileMap.getWallPosition(nextPositionInMap.x, nextPositionInMap.y));
+			
+				return true;
+		}
+		
 		return false;
 	}
 

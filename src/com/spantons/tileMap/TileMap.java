@@ -6,7 +6,9 @@ import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
+import utilities.ArraysUtil;
 import utilities.Multiple;
 import utilities.TileWalk;
 
@@ -31,6 +33,7 @@ public class TileMap {
 	private String line;
 	private String[] tokens;
 	private int[][] map;
+	private int[][] walls;
 	public Point tileSize;
 	private int numRowsMap;
 	private int numColMap;
@@ -72,7 +75,6 @@ public class TileMap {
 		}
  
 	}
-
 	/****************************************************************************************/
 	private void loadMap() {
 
@@ -98,22 +100,36 @@ public class TileMap {
 			br.readLine();
 			br.readLine();
 			
-			tokens = br.readLine().split(delimsChar);
-			delimsChar = ",";
-			tokens = tokens[1].split(delimsChar);
-			String tileSetSrc = tokens[0];
-			int tileWidthSet = Integer.parseInt(tokens[1]);
-			int tileHeightSet = Integer.parseInt(tokens[2]);
-			int xDrawingOffSet = Integer.parseInt(tokens[3]);
-			int yDrawingOffSet = Integer.parseInt(tokens[4]);
-			tiles = TileSet.getTileSet(tileSetSrc, tileWidthSet, tileHeightSet, xDrawingOffSet, yDrawingOffSet);
+			ArrayList<String> stringTileSet = new ArrayList<String>();
+			line = br.readLine();
 			
+			while (!line.equals("")) {
+				 stringTileSet.add(line);
+				line = br.readLine();
+			}
+			
+			for (int i = 0; i < stringTileSet.size(); i++) {
+				line = stringTileSet.get(i);
+				tokens = line.split("=");
+				delimsChar = ",";
+				tokens = tokens[1].split(delimsChar);
+				line = tokens[0];
+				int tileWidthSet = Integer.parseInt(tokens[1]);
+				int tileHeightSet = Integer.parseInt(tokens[2]);
+				int xDrawingOffSet = Integer.parseInt(tokens[3]);
+				int yDrawingOffSet = Integer.parseInt(tokens[4]);
+				if (tiles == null) 
+					tiles = TileSet.getTileSet(line, tileWidthSet, tileHeightSet, xDrawingOffSet, yDrawingOffSet);
+				else 
+					tiles = ArraysUtil.concat(tiles, TileSet.getTileSet(line, tileWidthSet, tileHeightSet, xDrawingOffSet, yDrawingOffSet));
+			}
+				
 			map = new int[numRowsMap][numColMap];
+			walls = new int[numRowsMap][numColMap];
 			entitysToDraw = new Entity[numRowsMap][numColMap];
 			entitysDeadToDraw = new Entity[numRowsMap][numColMap];
 			objectsToDraw = new Object[numRowsMap][numColMap];
 
-			br.readLine();
 			br.readLine();
 			br.readLine();
 			br.readLine();
@@ -125,7 +141,19 @@ public class TileMap {
 				for (int col = 0; col < numColMap; col++)
 					map[row][col] = Integer.parseInt(tokens[col]);
 			}
+			
+			br.readLine();
+			br.readLine();
+			br.readLine();
+			br.readLine();
 
+			for (int row = 0; row < numRowsMap; row++) {
+				line = br.readLine();
+				tokens = line.split(delimsChar);
+				for (int col = 0; col < numColMap; col++)
+					walls[col][row] = Integer.parseInt(tokens[col]);
+			}
+			
 			getBounds();
 
 		} catch (Exception e) {
@@ -260,6 +288,13 @@ public class TileMap {
 							(coorAbsolute.x - this.x) - tileSize.x / 2,
 							(coorAbsolute.y - this.y) - tileSize.y, null);
 					
+					if (walls[currentTile.x][currentTile.y] != 0) {
+						g.drawImage(tiles[walls[currentTile.x][currentTile.y] - 1]
+								.getImage(), 
+								(coorAbsolute.x - this.x) - tileSize.x / 2,
+								(coorAbsolute.y - this.y) - 192, null);
+					}
+					
 					if (entityDead != null) 
 						entityDead.draw(g);
 					if (object != null) 
@@ -275,7 +310,6 @@ public class TileMap {
 				else
 					currentTile = TileWalk
 							.walkTo("E", currentTile, 1);
-
 			}
 
 			// Comprobamos si la fila recorrida era la ultima
@@ -309,49 +343,41 @@ public class TileMap {
 		}
 	}
 	/****************************************************************************************/
-
 	public int getX() {
 		return x;
 	}
-
 	public int getY() {
 		return y;
 	}
-
 	public int getNumColMap() {
 		return numColMap;
 	}
-
 	public int getNumRowsMap() {
 		return numRowsMap;
 	}
-
 	public int getXMin() {
 		return xMin;
 	}
-
 	public int getYMin() {
 		return yMin;
 	}
-
 	public int getXMax() {
 		return xMax;
 	}
-
 	public int getYMax() {
 		return yMax;
 	}
-
 	public Entity[][] getEntitysToDraw() {
 		return entitysToDraw;
 	}
-	
 	public Entity[][] getEntitysDeadToDraw() {
 		return entitysDeadToDraw;
 	}
-	
 	public Object[][] getObjectsToDraw() {
 		return objectsToDraw;
+	}
+	public int getWallPosition(int a, int b) {
+		return walls[a][b];
 	}
 	
 }
