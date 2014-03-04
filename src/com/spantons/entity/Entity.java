@@ -228,12 +228,12 @@ public class Entity {
 	/****************************************************************************************/
 	public boolean checkTileCollision() {
 
-		if ((nextPositionInMap.x >= 0 && nextPositionInMap.y >= 0
-				&& nextPositionInMap.x < tileMap.getNumColMap() && nextPositionInMap.y < tileMap
-				.getNumRowsMap())){
+		if (	nextPositionInMap.x >= 0
+			&& nextPositionInMap.y >= 0
+			&& nextPositionInMap.x < tileMap.getNumColMap() 
+			&& nextPositionInMap.y < tileMap.getNumRowsMap()){
 			
-				System.out.println(tileMap.getWallPosition(nextPositionInMap.x, nextPositionInMap.y));
-			
+			if(tileMap.getWallPosition(nextPositionInMap.x, nextPositionInMap.y) == 0)
 				return true;
 		}
 		
