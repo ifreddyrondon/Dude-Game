@@ -34,6 +34,7 @@ public class TileMap {
 	private String[] tokens;
 	private int[][] map;
 	private int[][] walls;
+	private int[][] objects;
 	public Point tileSize;
 	private int numRowsMap;
 	private int numColMap;
@@ -126,6 +127,8 @@ public class TileMap {
 				
 			map = new int[numRowsMap][numColMap];
 			walls = new int[numRowsMap][numColMap];
+			objects = new int[numRowsMap][numColMap];
+			
 			entitysToDraw = new Entity[numRowsMap][numColMap];
 			entitysDeadToDraw = new Entity[numRowsMap][numColMap];
 			objectsToDraw = new Object[numRowsMap][numColMap];
@@ -153,6 +156,19 @@ public class TileMap {
 				for (int col = 0; col < numColMap; col++)
 					walls[col][row] = Integer.parseInt(tokens[col]);
 			}
+
+			br.readLine();
+			br.readLine();
+			br.readLine();
+			br.readLine();
+
+			for (int row = 0; row < numRowsMap; row++) {
+				line = br.readLine();
+				tokens = line.split(delimsChar);
+				for (int col = 0; col < numColMap; col++)
+					objects[col][row] = Integer.parseInt(tokens[col]);
+			}
+
 			
 			getBounds();
 
@@ -180,7 +196,6 @@ public class TileMap {
 		yMax = fix.y;
 		
 	}
-
 	/****************************************************************************************/
 	public Point absoluteToMap(int x, int y) {
 		int mapX = ((x / (tileSize.x / 2) + y
@@ -189,7 +204,6 @@ public class TileMap {
 
 		return new Point(mapX, mapY);
 	}
-
 	/****************************************************************************************/
 	public Point mapToAbsolute(int x, int y) {
 
@@ -222,12 +236,10 @@ public class TileMap {
 		}
 		fixBounds();
 	}
-
 	/****************************************************************************************/
 	public void update() {
 		setPosition(x, y);
 	}
-
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 		// Pintamos el fondo de gris
@@ -255,64 +267,28 @@ public class TileMap {
 		// banderas de dibujado
 		boolean completed, completedRow;
 		Point firstTileOfRowToDraw, finalTileOfRowToDraw, currentTile;
-		Point coorAbsolute;
 		int rowCounter = 0;
 
 		completed = false;
 		firstTileOfRowToDraw = coorMapTopLeft;
 		finalTileOfRowToDraw = coorMapTopRight;
 
-		// Para cada fila
 		while (!completed) {
 			completedRow = false;
-			// Seleccionamos la primera casilla
 			currentTile = firstTileOfRowToDraw;
 
-			// Para cada casilla
 			while (!completedRow) {
-
-				// Comprobamos que no sea transparente para pintarlo
-				if (currentTile.x >= 0 && currentTile.y >= 0
-						&& currentTile.x < numColMap
-						&& currentTile.y < numRowsMap) {
-
-					Object object = objectsToDraw[currentTile.x][currentTile.y];
-					Entity entity = entitysToDraw[currentTile.x][currentTile.y];
-					Entity entityDead = entitysDeadToDraw[currentTile.x][currentTile.y];
-					
-					coorAbsolute = mapToAbsolute(currentTile.x,
-							currentTile.y);
-
-					g.drawImage(tiles[map[currentTile.y][currentTile.x] - 1]
-							.getImage(), 
-							(coorAbsolute.x - this.x) - tileSize.x / 2,
-							(coorAbsolute.y - this.y) - tileSize.y, null);
-					
-					if (walls[currentTile.x][currentTile.y] != 0) {
-						g.drawImage(tiles[walls[currentTile.x][currentTile.y] - 1]
-								.getImage(), 
-								(coorAbsolute.x - this.x) - tileSize.x / 2,
-								(coorAbsolute.y - this.y) - 192, null);
-					}
-					
-					if (entityDead != null) 
-						entityDead.draw(g);
-					if (object != null) 
-						object.draw(g);
-					if (entity != null) 
-						entity.draw(g);
-				}
-
-				// Si llego al final de la fila nos salimos
-				if (currentTile.x == finalTileOfRowToDraw.x
-						&& currentTile.y == finalTileOfRowToDraw.y)
+				
+				drawImages(g,currentTile);
+				
+				if (	currentTile.x == finalTileOfRowToDraw.x
+					&& currentTile.y == finalTileOfRowToDraw.y)
 					completedRow = true;
 				else
-					currentTile = TileWalk
-							.walkTo("E", currentTile, 1);
+					currentTile = 
+					TileWalk.walkTo("E", currentTile, 1);
 			}
 
-			// Comprobamos si la fila recorrida era la ultima
 			if (firstTileOfRowToDraw.x > coorMapBottomLeft.x
 					&& firstTileOfRowToDraw.y > coorMapBottomLeft.y
 					&& finalTileOfRowToDraw.x > coorMapBottomRight.x
@@ -320,18 +296,14 @@ public class TileMap {
 				completed = true;
 
 			else {
-				// Si no lo era, movemos las casillas de inicio y fin
-				// hacia abajo para comenzar con la siguiente
 
 				if (rowCounter % 2 != 0) {
-					// Fila impar
 					firstTileOfRowToDraw = TileWalk.walkTo("SW",
 							firstTileOfRowToDraw, 1);
 					finalTileOfRowToDraw = TileWalk.walkTo("SE",
 							finalTileOfRowToDraw, 1);
 
 				} else {
-					// Fila par
 					firstTileOfRowToDraw = TileWalk.walkTo("SE",
 							firstTileOfRowToDraw, 1);
 					finalTileOfRowToDraw = TileWalk.walkTo("SW",
@@ -341,6 +313,48 @@ public class TileMap {
 				rowCounter++;
 			}
 		}
+	}
+	/****************************************************************************************/
+	private void drawImages(Graphics2D g, Point currentTile) {
+		
+		if (currentTile.x >= 0 && currentTile.y >= 0
+				&& currentTile.x < numColMap
+				&& currentTile.y < numRowsMap) {
+
+			Point coorAbsolute = 
+				mapToAbsolute(currentTile.x,currentTile.y);
+
+			g.drawImage(tiles[map[currentTile.y][currentTile.x] - 1]
+					.getImage(), 
+					(coorAbsolute.x - this.x) - tileSize.x / 2,
+					(coorAbsolute.y - this.y) - tileSize.y, null);
+			
+			if (walls[currentTile.x][currentTile.y] != 0) {
+				g.drawImage(tiles[walls[currentTile.x][currentTile.y] - 1]
+						.getImage(), 
+						(coorAbsolute.x - this.x) - tileSize.x / 2,
+						(coorAbsolute.y - this.y) - 192, null);
+			}
+			
+			if (objects[currentTile.x][currentTile.y] != 0) {
+				g.drawImage(tiles[objects[currentTile.x][currentTile.y] - 1]
+						.getImage(), 
+						(coorAbsolute.x - this.x) - tileSize.x / 2,
+						(coorAbsolute.y - this.y) - 192, null);
+			}
+			
+			Object object = objectsToDraw[currentTile.x][currentTile.y];
+			Entity entity = entitysToDraw[currentTile.x][currentTile.y];
+			Entity entityDead = entitysDeadToDraw[currentTile.x][currentTile.y];
+			
+			if (entityDead != null) 
+				entityDead.draw(g);
+			if (object != null) 
+				object.draw(g);
+			if (entity != null) 
+				entity.draw(g);
+		}
+		
 	}
 	/****************************************************************************************/
 	public int getX() {
@@ -378,6 +392,9 @@ public class TileMap {
 	}
 	public int getWallPosition(int a, int b) {
 		return walls[a][b];
+	}
+	public int getObjectsPosition(int a, int b) {
+		return objects[a][b];
 	}
 	
 }

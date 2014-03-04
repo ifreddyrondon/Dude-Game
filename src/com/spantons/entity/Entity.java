@@ -233,8 +233,10 @@ public class Entity {
 			&& nextPositionInMap.x < tileMap.getNumColMap() 
 			&& nextPositionInMap.y < tileMap.getNumRowsMap()){
 			
-			if(tileMap.getWallPosition(nextPositionInMap.x, nextPositionInMap.y) == 0)
-				return true;
+			if(tileMap.getWallPosition(nextPositionInMap.x, nextPositionInMap.y) == 0){
+				if(tileMap.getObjectsPosition(nextPositionInMap.x, nextPositionInMap.y) == 0)
+					return true;
+			}
 		}
 		
 		return false;

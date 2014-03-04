@@ -21,7 +21,6 @@ import com.spantons.entity.character.LizSherman;
 import com.spantons.entity.character.Preso;
 import com.spantons.object.Hammer;
 import com.spantons.object.Object;
-import com.spantons.object.Wc;
 import com.spantons.tileMap.TileMap;
 
 public class Level1Stage extends Stage {
@@ -56,7 +55,6 @@ public class Level1Stage extends Stage {
 		characters.add(new LizSherman(tileMap, this, 30, 4, 0.10));
 		characters.add(new DanaScullyXFiles(tileMap, this, 45, 30, 0.10));
 		
-		//objects.add(new Wc(tileMap, 3, 1, 1));
 		objects.add(new Hammer(tileMap, 25, 27, 0.15));
 		objects.add(new Hammer(tileMap, 15, 17, 0.15));
 		
