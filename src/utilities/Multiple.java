@@ -12,13 +12,13 @@ public class Multiple {
 		if (number % multipleOf == 0) 
 			return number;
 		else
-			return ((int) (number / multipleOf)) * multipleOf;		
+			return (number / multipleOf) * multipleOf;		
 	}
 
 	public static Point findPointCloserTo(Point point, Point pointMultiple) {
 
-		int x = findNumberCloserTo((int) point.x, (int) pointMultiple.x);
-		int y = findNumberCloserTo((int) point.y, (int) pointMultiple.y);
+		int x = findNumberCloserTo(point.x, pointMultiple.x);
+		int y = findNumberCloserTo(point.y, pointMultiple.y);
 		
 		return new Point(x,y);
 	}

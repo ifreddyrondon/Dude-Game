@@ -210,7 +210,15 @@ public class EntityLogic {
 			characterClose.setHealth(0);
 			characterClose.setDead(true);
 		}
+		
+		movFaceToAttack();
 
+		characterClose.recoveringFromAttack = true;
+		characterClose.flinchingTimeRecoveringFromAttack = System.nanoTime();
+		}
+	}
+	/****************************************************************************************/
+	private void movFaceToAttack() {
 		if (characterCloseDirection.equals("north")) 
 			animation.setFrames(sprites.get(WALKING_BACK));
 		
@@ -220,15 +228,20 @@ public class EntityLogic {
 		else if (characterCloseDirection.equals("west")) {
 			facingRight = false;
 			animation.setFrames(sprites.get(WALKING_SIDE));
-		}
-		else if (characterCloseDirection.equals("east")){
+		
+		} else if (characterCloseDirection.equals("east")){
 			facingRight = true;
 			animation.setFrames(sprites.get(WALKING_SIDE));
-		}
-
-		characterClose.recoveringFromAttack = true;
-		characterClose.flinchingTimeRecoveringFromAttack = System.nanoTime();
-		}
+		} else if (characterCloseDirection.equals("northWest")){
+			facingRight = false;
+			animation.setFrames(sprites.get(WALKING_PERSPECTIVE_BACK));
+		} else if (characterCloseDirection.equals("northEast")){
+			facingRight = true;
+			animation.setFrames(sprites.get(WALKING_PERSPECTIVE_BACK));
+		} else if (characterCloseDirection.equals("southWest"))
+			facingRight = false;
+		else if (characterCloseDirection.equals("southEast"))
+			facingRight = true;
 	}
 	/****************************************************************************************/
 	protected void checkIsRecoveringFromAttack() {

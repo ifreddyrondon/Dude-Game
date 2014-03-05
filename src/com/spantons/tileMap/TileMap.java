@@ -74,7 +74,6 @@ public class TileMap {
 			RESOLUTION_WIDTH_FIX = fixResolution.x;
 			RESOLUTION_HEIGHT_FIX = fixResolution.y;
 		}
- 
 	}
 	/****************************************************************************************/
 	private void loadMap() {
@@ -169,32 +168,28 @@ public class TileMap {
 					objects[col][row] = Integer.parseInt(tokens[col]);
 			}
 
-			
 			getBounds();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 	/****************************************************************************************/
 	private void getBounds() {
-
 		xMin = -mapToAbsolute(numRowsMap - 1, 0).x - tileSize.y;
 		yMin = -tileSize.y;
 		Point fix = Multiple.findPointCloserTo(new Point(
 				xMin, yMin),tileSize);
 		xMin = fix.x;
 		yMin = fix.y;
-
-		xMax = (-mapToAbsolute(0, numColMap - 1).x - RESOLUTION_WIDTH_FIX)
+		
+		xMax = -mapToAbsolute(0, numColMap - 1).x - GamePanel.RESOLUTION_WIDTH
 				+ tileSize.x * 2;
-		yMax = (mapToAbsolute(numRowsMap - 1, numColMap - 1).y - RESOLUTION_HEIGHT_FIX)
-				+ tileSize.y * 2;
+		yMax = (mapToAbsolute(numRowsMap - 1, numColMap - 1).y - GamePanel.RESOLUTION_HEIGHT)
+				+ tileSize.y * 3;
 		fix = Multiple.findPointCloserTo(new Point(xMax, yMax),tileSize);
 		xMax = fix.x;
 		yMax = fix.y;
-		
 	}
 	/****************************************************************************************/
 	public Point absoluteToMap(int x, int y) {
@@ -213,7 +208,7 @@ public class TileMap {
 		return new Point(absoluteX, absoluteY);
 	}
 	/****************************************************************************************/
-	public void fixBounds() {
+	private void fixBounds() {
 		if (x < xMin)
 			x = xMin;
 		if (y < yMin)
@@ -225,15 +220,8 @@ public class TileMap {
 	}
 	/****************************************************************************************/
 	public void setPosition(int _x, int _y) {
-		if (_x % tileSize.x == 0 && _y % tileSize.y == 0) {
-			x = _x;
-			y = _y;
-		} else {
-			Point multiple = Multiple.findPointCloserTo(
-					new Point(_x, _y), tileSize);
-			x = multiple.x;
-			y = multiple.y;
-		}
+		x = _x;
+		y = _y;
 		fixBounds();
 	}
 	/****************************************************************************************/
@@ -250,19 +238,14 @@ public class TileMap {
 		coorMapTopLeft = absoluteToMap(x, y);
 		coorMapTopRight = absoluteToMap(x + RESOLUTION_WIDTH_FIX, y);
 		coorMapBottomLeft = absoluteToMap(x, y + RESOLUTION_HEIGHT_FIX);
-		coorMapBottomRight = absoluteToMap(x + RESOLUTION_WIDTH_FIX, y
-				+ RESOLUTION_HEIGHT_FIX);
+		coorMapBottomRight = absoluteToMap(x + RESOLUTION_WIDTH_FIX, 
+				y + RESOLUTION_HEIGHT_FIX);
 
 		// Desplazamos cada esquina para tener el buffer con un poquito mas
-		coorMapTopLeft = TileWalk.walkTo("NW", coorMapTopLeft, 3);
-		coorMapTopRight = TileWalk.walkTo("NE", coorMapTopRight, 3);
-		coorMapBottomLeft = TileWalk.walkTo("SW", coorMapBottomLeft, 3);
-		coorMapBottomRight = TileWalk.walkTo("SE", coorMapBottomRight, 3);
-
-		// Desplazamos las esquinas inferiores 2 pasos al sur para compensar
-		// por los objetos altos
-		coorMapBottomLeft = TileWalk.walkTo("S", coorMapBottomLeft, 2);
-		coorMapBottomRight = TileWalk.walkTo("S", coorMapBottomRight, 2);
+		coorMapTopLeft = TileWalk.walkTo("NW", coorMapTopLeft, 2);
+		coorMapTopRight = TileWalk.walkTo("NE", coorMapTopRight, 2);
+		coorMapBottomLeft = TileWalk.walkTo("SW", coorMapBottomLeft, 2);
+		coorMapBottomRight = TileWalk.walkTo("SE", coorMapBottomRight, 2);
 
 		// banderas de dibujado
 		boolean completed, completedRow;
@@ -281,18 +264,17 @@ public class TileMap {
 				
 				drawImages(g,currentTile);
 				
-				if (	currentTile.x == finalTileOfRowToDraw.x
-					&& currentTile.y == finalTileOfRowToDraw.y)
+				if (currentTile.x == finalTileOfRowToDraw.x)
 					completedRow = true;
 				else
 					currentTile = 
 					TileWalk.walkTo("E", currentTile, 1);
 			}
 
-			if (firstTileOfRowToDraw.x > coorMapBottomLeft.x
-					&& firstTileOfRowToDraw.y > coorMapBottomLeft.y
-					&& finalTileOfRowToDraw.x > coorMapBottomRight.x
-					&& finalTileOfRowToDraw.y > coorMapBottomRight.y)
+			if (	firstTileOfRowToDraw.x > coorMapBottomLeft.x
+				&& firstTileOfRowToDraw.y > coorMapBottomLeft.y
+				&& finalTileOfRowToDraw.x > coorMapBottomRight.x
+				&& finalTileOfRowToDraw.y > coorMapBottomRight.y)
 				completed = true;
 
 			else {

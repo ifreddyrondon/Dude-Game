@@ -249,18 +249,17 @@ public class DialogueStage1 {
 		
 		if (characterSpeaking != null) {
 			g.drawImage(dialogueImage,
-				characterSpeaking.getX() - characterWidth / 2, 
+				characterSpeaking.getX() - characterWidth , 
 				characterSpeaking.getY() - dialogueImage.getHeight() - characterHeight, 
 				null);
 						
 			g.setColor(fontColor);
 			g.setFont(dialogueFont);
 						
-			int x = characterSpeaking.getX() - 5;
+			int x = characterSpeaking.getX() - 30;
 			int y = characterSpeaking.getY() - 180;
 			g.drawString(characterSpeakingDialog, x, y);
-		}	
-		
+		}		
 	}
 	
 }
