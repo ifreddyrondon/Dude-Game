@@ -221,14 +221,14 @@ public class DialogueStage1 {
 			if (stage.getCurrentCharacter().getCharacterClose().getDescription().equals("Jason")) {
 				timerExclamation.setDelay(200);
 				g.drawImage(exclamationImg[1],
-					stage.getCurrentCharacter().getX() + characterWidth / 4, 
+					stage.getCurrentCharacter().getX() - characterWidth / 3, 
 					stage.getCurrentCharacter().getY() - exclamationImg[0].getHeight() - characterHeight, 
 				null);
 			}
 			else if (!stage.getCurrentCharacter().getCharacterClose().getDescription().equals("Jason")){
 				timerExclamation.setDelay(500);
 				g.drawImage(exclamationImg[0],
-					stage.getCurrentCharacter().getX() + characterWidth / 4, 
+					stage.getCurrentCharacter().getX() - characterWidth / 3, 
 					stage.getCurrentCharacter().getY() - exclamationImg[0].getHeight() - characterHeight, 
 				null);
 			}

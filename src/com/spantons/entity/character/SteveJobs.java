@@ -34,10 +34,6 @@ public class SteveJobs extends Entity {
 		deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;
 		dead = false;
 		moveSpeed = 1;
-		fallSpeed = 0.15;
-		maxFallSpeed = 4.0;
-		jumpStart = -4.8;
-		reducerJumpSpeed = 0.3;
 		facingRight = true;
 
 		loadSprite();
