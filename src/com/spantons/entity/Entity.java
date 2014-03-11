@@ -8,7 +8,7 @@ import utilities.TileWalk;
 import com.spantons.gameState.Stage;
 import com.spantons.tileMap.TileMap;
 
-public class Entity extends EntityLogic{
+public class Entity extends EntityLogic {
 
 	protected int x;
 	protected int y;
@@ -19,8 +19,8 @@ public class Entity extends EntityLogic{
 
 	protected boolean flinching;
 	protected long flinchingTime;
-	protected boolean flinchingRandom;
-	protected long flinchingTimeRandom;
+	protected boolean flinchingJasonMov;
+	protected long flinchingTimeJasonMov;
 
 	/****************************************************************************************/
 	public Entity(TileMap _tm, Stage _stage, int _xMap, int _yMap) {
@@ -39,24 +39,28 @@ public class Entity extends EntityLogic{
 			object = null;
 		}
 	}
+
 	/****************************************************************************************/
 	public Point getMapPositionOfCharacter() {
 		int _x = x + tileMap.getX();
 		int _y = y + tileMap.getY();
 		return tileMap.absoluteToMap(_x, _y);
 	}
+
 	/****************************************************************************************/
 	public Point getMapPosition(int _x, int _y) {
 		_x = _x + tileMap.getX();
 		_y = _y + tileMap.getY();
 		return tileMap.absoluteToMap(_x, _y);
 	}
+
 	/****************************************************************************************/
 	public void setMapPosition(int _x, int _y) {
 		Point absolutePosition = tileMap.mapToAbsolute(_x, _y);
 		setPosition(absolutePosition.x - tileMap.getX(), absolutePosition.y
 				- tileMap.getY());
 	}
+
 	/****************************************************************************************/
 	public Point getAbsolutePosition(int _x, int _y) {
 		Point absolutePosition = tileMap.mapToAbsolute(_x, _y);
@@ -64,42 +68,43 @@ public class Entity extends EntityLogic{
 		absolutePosition.y = absolutePosition.y - tileMap.getY();
 		return absolutePosition;
 	}
+
 	/****************************************************************************************/
 	protected void getNextPosition() {
 		nextPositionInMap = getMapPositionOfCharacter();
-	
-		if (movUp && movLeft) 
-			nextPositionInMap = 
-				TileWalk.walkTo("NW", nextPositionInMap,moveSpeed);
-		
-		else if (movUp && movRight) 
-			nextPositionInMap = 
-				TileWalk.walkTo("NE", nextPositionInMap,moveSpeed);
-		
-		else if (movDown && movLeft) 
-			nextPositionInMap = 
-				TileWalk.walkTo("SW", nextPositionInMap,moveSpeed);
-		
-		else if (movDown && movRight) 
-			nextPositionInMap = 
-				TileWalk.walkTo("SE", nextPositionInMap,moveSpeed);
-		
+
+		if (movUp && movLeft)
+			nextPositionInMap = TileWalk.walkTo("NW", nextPositionInMap,
+					moveSpeed);
+
+		else if (movUp && movRight)
+			nextPositionInMap = TileWalk.walkTo("NE", nextPositionInMap,
+					moveSpeed);
+
+		else if (movDown && movLeft)
+			nextPositionInMap = TileWalk.walkTo("SW", nextPositionInMap,
+					moveSpeed);
+
+		else if (movDown && movRight)
+			nextPositionInMap = TileWalk.walkTo("SE", nextPositionInMap,
+					moveSpeed);
+
 		else {
 			if (movUp)
-				nextPositionInMap = 
-					TileWalk.walkTo("N", nextPositionInMap,moveSpeed);
-			
+				nextPositionInMap = TileWalk.walkTo("N",
+						nextPositionInMap, moveSpeed);
+
 			else if (movDown)
-				nextPositionInMap = 
-					TileWalk.walkTo("S", nextPositionInMap,moveSpeed);
+				nextPositionInMap = TileWalk.walkTo("S",
+						nextPositionInMap, moveSpeed);
 
 			else if (movLeft)
-				nextPositionInMap = 
-					TileWalk.walkTo("W", nextPositionInMap,moveSpeed);
+				nextPositionInMap = TileWalk.walkTo("W",
+						nextPositionInMap, moveSpeed);
 
 			else if (movRight)
-				nextPositionInMap = 
-					TileWalk.walkTo("E", nextPositionInMap,moveSpeed);
+				nextPositionInMap = TileWalk.walkTo("E",
+						nextPositionInMap, moveSpeed);
 		}
 
 		nextPositionInAbsolute = getAbsolutePosition(nextPositionInMap.x,
@@ -111,6 +116,7 @@ public class Entity extends EntityLogic{
 				tileMap.getY()
 						+ (nextPositionInAbsolute.y - tileMap.RESOLUTION_HEIGHT_FIX / 2));
 	}
+
 	/****************************************************************************************/
 	protected Entity checkIsCloseToAnotherCharacter() {
 
@@ -118,86 +124,91 @@ public class Entity extends EntityLogic{
 		Point south = TileWalk.walkTo("S", getMapPositionOfCharacter(), 1);
 		Point west = TileWalk.walkTo("W", getMapPositionOfCharacter(), 1);
 		Point east = TileWalk.walkTo("E", getMapPositionOfCharacter(), 1);
-		Point northWest = TileWalk.walkTo("NW", getMapPositionOfCharacter(), 1);
-		Point northEast = TileWalk.walkTo("NE", getMapPositionOfCharacter(), 1);
-		Point southWest = TileWalk.walkTo("SW", getMapPositionOfCharacter(), 1);
-		Point southEast = TileWalk.walkTo("SE", getMapPositionOfCharacter(), 1);
+		Point northWest = 
+			TileWalk.walkTo("NW",getMapPositionOfCharacter(), 1);
+		Point northEast = 
+			TileWalk.walkTo("NE",getMapPositionOfCharacter(), 1);
+		Point southWest =
+			TileWalk.walkTo("SW",getMapPositionOfCharacter(), 1);
+		Point southEast = 
+			TileWalk.walkTo("SE",getMapPositionOfCharacter(), 1);
 
-		if (stage.getCharacters().size() > 0) {
-			for (Entity character : stage.getCharacters()) {
-				if (character.getMapPositionOfCharacter().equals(north)) {
-					characterCloseDirection = "north";
-					return character;
-				} else if (character.getMapPositionOfCharacter()
-						.equals(south)) {
-					characterCloseDirection = "south";
-					return character;
-				} else if (character.getMapPositionOfCharacter()
-						.equals(west)) {
-					characterCloseDirection = "west";
-					return character;
-				} else if (character.getMapPositionOfCharacter()
-						.equals(east)) {
-					characterCloseDirection = "east";
-					return character;
-				} else if (character.getMapPositionOfCharacter()
-						.equals(northWest)) {
-					characterCloseDirection = "northWest";
-					return character;
-				} else if (character.getMapPositionOfCharacter()
-						.equals(northEast)) {
-					characterCloseDirection = "northEast";
-					return character;
-				} else if (character.getMapPositionOfCharacter()
-						.equals(southWest)) {
-					characterCloseDirection = "southWest";
-					return character;
-				} else if (character.getMapPositionOfCharacter()
-						.equals(southEast)) {
-					characterCloseDirection = "southEast";
-					return character;
+		if (this.equals(stage.getCurrentCharacter())) {
+			if (stage.getCharacters().size() > 0) {
+				for (Entity character : stage.getCharacters()) {
+					if (character.getMapPositionOfCharacter().equals(north)) {
+						characterCloseDirection = "north";
+						return character;
+					} else if (character.getMapPositionOfCharacter()
+							.equals(south)) {
+						characterCloseDirection = "south";
+						return character;
+					} else if (character.getMapPositionOfCharacter()
+							.equals(west)) {
+						characterCloseDirection = "west";
+						return character;
+					} else if (character.getMapPositionOfCharacter()
+							.equals(east)) {
+						characterCloseDirection = "east";
+						return character;
+					} else if (character.getMapPositionOfCharacter()
+							.equals(northWest)) {
+						characterCloseDirection = "northWest";
+						return character;
+					} else if (character.getMapPositionOfCharacter()
+							.equals(northEast)) {
+						characterCloseDirection = "northEast";
+						return character;
+					} else if (character.getMapPositionOfCharacter()
+							.equals(southWest)) {
+						characterCloseDirection = "southWest";
+						return character;
+					} else if (character.getMapPositionOfCharacter()
+							.equals(southEast)) {
+						characterCloseDirection = "southEast";
+						return character;
+					}
+				}
+			}
+
+			if (stage.getJasons().size() > 0) {
+				for (Entity jason : stage.getJasons()) {
+					if (jason.getMapPositionOfCharacter().equals(north)) {
+						characterCloseDirection = "north";
+						return jason;
+					} else if (jason.getMapPositionOfCharacter().equals(
+							south)) {
+						characterCloseDirection = "south";
+						return jason;
+					} else if (jason.getMapPositionOfCharacter().equals(
+							west)) {
+						characterCloseDirection = "west";
+						return jason;
+					} else if (jason.getMapPositionOfCharacter().equals(
+							east)) {
+						characterCloseDirection = "east";
+						return jason;
+					} else if (jason.getMapPositionOfCharacter().equals(
+							northWest)) {
+						characterCloseDirection = "northWest";
+						return jason;
+					} else if (jason.getMapPositionOfCharacter().equals(
+							northEast)) {
+						characterCloseDirection = "northEast";
+						return jason;
+					} else if (jason.getMapPositionOfCharacter().equals(
+							southWest)) {
+						characterCloseDirection = "southWest";
+						return jason;
+					} else if (jason.getMapPositionOfCharacter().equals(
+							southEast)) {
+						characterCloseDirection = "southEast";
+						return jason;
+					}
 				}
 			}
 		}
-
-		if (stage.getJasons().size() > 0) {
-			for (Entity jason : stage.getJasons()) {
-				if (jason.getMapPositionOfCharacter().equals(north)) {
-					characterCloseDirection = "north";
-					return jason;
-				} else if (jason.getMapPositionOfCharacter().equals(
-						south)) {
-					characterCloseDirection = "south";
-					return jason;
-				} else if (jason.getMapPositionOfCharacter().equals(
-						west)) {
-					characterCloseDirection = "west";
-					return jason;
-				} else if (jason.getMapPositionOfCharacter().equals(
-						east)) {
-					characterCloseDirection = "east";
-					return jason;
-				} else if (jason.getMapPositionOfCharacter()
-						.equals(northWest)) {
-					characterCloseDirection = "northWest";
-					return jason;
-				} else if (jason.getMapPositionOfCharacter()
-						.equals(northEast)) {
-					characterCloseDirection = "northEast";
-					return jason;
-				} else if (jason.getMapPositionOfCharacter()
-						.equals(southWest)) {
-					characterCloseDirection = "southWest";
-					return jason;
-				} else if (jason.getMapPositionOfCharacter()
-						.equals(southEast)) {
-					characterCloseDirection = "southEast";
-					return jason;
-				}
-			}
-		}
-
-		if (!this.equals(stage.getCurrentCharacter())) {
+		else {
 			if (stage.getCurrentCharacter().getMapPositionOfCharacter()
 					.equals(north)) {
 				characterCloseDirection = "north";
@@ -232,11 +243,13 @@ public class Entity extends EntityLogic{
 				return stage.getCurrentCharacter();
 			}
 		}
-		
+
 		return null;
 	}
+
 	/****************************************************************************************/
 	public boolean checkCharactersCollision() {
+
 		if (stage.getCharacters().size() > 0) {
 			for (Entity character : stage.getCharacters()) {
 				if (character.getMapPositionOfCharacter().equals(
@@ -252,24 +265,28 @@ public class Entity extends EntityLogic{
 					return false;
 			}
 		}
+
 		return true;
 	}
+
 	/****************************************************************************************/
 	public boolean checkTileCollision() {
 
-		if (	nextPositionInMap.x >= 0
-			&& nextPositionInMap.y >= 0
-			&& nextPositionInMap.x < tileMap.getNumColMap()
-			&& nextPositionInMap.y < tileMap.getNumRowsMap()){
-			
-			if(tileMap.getWallPosition(nextPositionInMap.x, nextPositionInMap.y) == 0){
-				if(tileMap.getObjectsPosition(nextPositionInMap.x, nextPositionInMap.y) == 0)
+		if (nextPositionInMap.x >= 0 && nextPositionInMap.y >= 0
+				&& nextPositionInMap.x < tileMap.getNumColMap()
+				&& nextPositionInMap.y < tileMap.getNumRowsMap()) {
+
+			if (tileMap.getWallPosition(nextPositionInMap.x,
+					nextPositionInMap.y) == 0) {
+				if (tileMap.getObjectsPosition(nextPositionInMap.x,
+						nextPositionInMap.y) == 0)
 					return true;
 			}
 		}
-		
+
 		return false;
 	}
+
 	/****************************************************************************************/
 	public void update() {
 
@@ -294,19 +311,20 @@ public class Entity extends EntityLogic{
 		} else {
 			getNextPosition();
 			if (checkTileCollision()) {
-				if (checkCharactersCollision())
+				if (checkCharactersCollision()) {
 					magicWalk();
+					entitysToDraw[xMap][yMap] = null;
+					xMap = getMapPositionOfCharacter().x;
+					yMap = getMapPositionOfCharacter().y;
+					entitysToDraw[xMap][yMap] = this;
+				}
 			}
-
-			entitysToDraw[xMap][yMap] = null;
-			xMap = getMapPositionOfCharacter().x;
-			yMap = getMapPositionOfCharacter().y;
-			entitysToDraw[xMap][yMap] = this;
 
 			flinching = true;
 			flinchingTime = System.nanoTime();
 		}
 	}
+
 	/****************************************************************************************/
 	public void updateOtherCharacters() {
 		checkIsVisible();
@@ -318,6 +336,7 @@ public class Entity extends EntityLogic{
 		setMapPosition(xMap, yMap);
 		increasePerversity();
 	}
+
 	/****************************************************************************************/
 	public void updateJason() {
 		checkIsVisible();
@@ -326,17 +345,47 @@ public class Entity extends EntityLogic{
 			checkIsRecoveringFromAttack();
 			updateAnimation();
 		}
-		setMapPosition(xMap, yMap);
 		characterClose = checkIsCloseToAnotherCharacter();
-		if (characterClose != null)
+		if (characterClose != null) {
 			attack();
-		else 
+		} else {
 			animation.setFrames(sprites.get(IDLE));
+			movJason();
+		}
+		
+		setMapPosition(nextPositionInMap.x, nextPositionInMap.y);
 	}
+
+	/****************************************************************************************/
+	private void movJason() {
+		if (flinchingJasonMov) {
+			long elapsedTime = (System.nanoTime() - flinchingTimeJasonMov) / 1000000;
+			if (elapsedTime > 100)
+				flinchingJasonMov = false;
+
+		} else {
+			nextPositionInMap = TileWalk.randomMov(nextPositionInMap,
+					moveSpeed);
+			
+			if (checkTileCollision()) {
+				entitysToDraw[xMap][yMap] = null;
+				xMap = nextPositionInMap.x;
+				yMap = nextPositionInMap.y;
+				entitysToDraw[xMap][yMap] = this;
+			
+			} else 
+				nextPositionInMap = getMapPositionOfCharacter();
+
+			flinchingJasonMov = true;
+			flinchingTimeJasonMov = System.nanoTime();
+		}
+	}
+
 	/****************************************************************************************/
 	public void updateDead() {
 		setMapPosition(xMap, yMap);
 	}
+
 	/****************************************************************************************/
 	private void magicWalk() {
 
@@ -378,6 +427,7 @@ public class Entity extends EntityLogic{
 			tileMap.setPosition(nextMapPosition.x, nextMapPosition.y);
 		}
 	}
+
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 		if (visible) {
@@ -400,6 +450,7 @@ public class Entity extends EntityLogic{
 				object.draw(g);
 		}
 	}
+
 	/****************************************************************************************/
 	private void checkIsVisible() {
 		if (x >= 0 && x <= tileMap.RESOLUTION_WIDTH_FIX && y >= 0
@@ -409,6 +460,7 @@ public class Entity extends EntityLogic{
 		else
 			visible = false;
 	}
+
 	/****************************************************************************************/
 	// Setter and Getter
 	public int getX() {
@@ -531,8 +583,8 @@ public class Entity extends EntityLogic{
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
-	
+
 	public boolean isFacingRight() {
 		return facingRight;
-	}	
+	}
 }
