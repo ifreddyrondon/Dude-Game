@@ -44,47 +44,36 @@ public class TileWalk {
 		return out;		
 	}
 	
-	public static Point randomMov(Point _coor, int _steps){
+	public static String randomMov(){
 		randomGenerator = new Random();
-		Point mov = null;
-		switch (randomGenerator.nextInt(8)) {
+		switch (randomGenerator.nextInt((8 - 1) + 1) + 1) {
 		case 1:
-			mov = TileWalk.walkTo("NW", _coor,_steps);
-			break;
-			
+			return "NW";
+						
 		case 2:
-			mov = TileWalk.walkTo("NE", _coor,_steps);
-			break;
+			return "NE";
 		
 		case 3:
-			mov = TileWalk.walkTo("SE", _coor,_steps);
-			break;
+			return "SE";
 		
 		case 4:
-			mov = TileWalk.walkTo("SW", _coor,_steps);
-			break;
+			return "SW";
 		
 		case 5:
-			mov = TileWalk.walkTo("N", _coor,_steps);
-			break;
+			return "N";
 		
 		case 6:
-			mov = TileWalk.walkTo("E", _coor,_steps);
-			break;
+			return "E";
 		
 		case 7:
-			mov = TileWalk.walkTo("S", _coor,_steps);
-			break;
+			return "S";
 		
 		case 8:
-			mov = TileWalk.walkTo("W", _coor,_steps);
-			break;
+			return "W";
 
 		default:
-			mov = TileWalk.walkTo("non", _coor,_steps);
-			break;
+			return "non";
 		}
-		return mov;
 	}
 	
 }

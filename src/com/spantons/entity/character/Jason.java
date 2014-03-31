@@ -8,12 +8,16 @@ import javax.imageio.ImageIO;
 
 import org.imgscalr.Scalr;
 
+import utilities.TileWalk;
+
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.gameState.Stage;
 import com.spantons.tileMap.TileMap;
 
 public class Jason extends Entity {
+	
+	private String nextDirectionJason;
 
 	/****************************************************************************************/
 	public Jason(TileMap _tm, Stage _stage, int _xMap, int _yMap,
@@ -35,6 +39,7 @@ public class Jason extends Entity {
 		dead = false;
 		moveSpeed = 1;
 		facingRight = true;
+		nextDirectionJason = TileWalk.randomMov(); 
 
 		loadSprite();
 
@@ -103,12 +108,48 @@ public class Jason extends Entity {
 			e.printStackTrace();
 		}
 	}
-
 	/****************************************************************************************/
 	public void update() {
-		super.update();
+		checkIsVisible();
+		if (visible) {
+			checkCharacterIsDead();
+			checkIsRecoveringFromAttack();
+			updateAnimation();
+		}
+		characterClose = checkIsCloseToAnotherCharacter();
+		if (characterClose != null) {
+			attack();
+		} else 
+			movJason();
+		
+		setMapPosition(nextPositionInMap.x, nextPositionInMap.y);
 	}
+	/****************************************************************************************/
+	private void movJason() {
+		if (flinchingJasonMov) {
+			long elapsedTime = (System.nanoTime() - flinchingTimeJasonMov) / 1000000;
+			if (elapsedTime > 100)
+				flinchingJasonMov = false;
+		} else {
+			
+			nextPositionInMap = 
+					TileWalk.walkTo(nextDirectionJason, nextPositionInMap, moveSpeed);
+			
+			if (checkTileCollision()) {
+				entitysToDraw[xMap][yMap] = null;
+				xMap = nextPositionInMap.x;
+				yMap = nextPositionInMap.y;
+				entitysToDraw[xMap][yMap] = this;
+			} else {
+				nextDirectionJason = TileWalk.randomMov();
+				movFace(nextDirectionJason);
+				nextPositionInMap = getMapPositionOfCharacter();
+			}
 
+			flinchingJasonMov = true;
+			flinchingTimeJasonMov = System.nanoTime();
+		}
+	}
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 		super.draw(g);

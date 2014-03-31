@@ -98,7 +98,7 @@ public class Level1Stage extends Stage {
 		
 		if (jasons.size() > 0) {
 			for (Entity jason : jasons) 
-				jason.updateJason();
+				jason.update();
 		}
 		
 		if (objects.size() > 0) {

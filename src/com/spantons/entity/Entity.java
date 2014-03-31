@@ -12,7 +12,7 @@ public class Entity extends EntityLogic {
 
 	protected int x;
 	protected int y;
-	private Point nextPositionInMap;
+	protected Point nextPositionInMap;
 	private Point nextPositionInAbsolute;
 	private Point nextMapPosition;
 	protected boolean visible;
@@ -137,35 +137,35 @@ public class Entity extends EntityLogic {
 			if (stage.getCharacters().size() > 0) {
 				for (Entity character : stage.getCharacters()) {
 					if (character.getMapPositionOfCharacter().equals(north)) {
-						characterCloseDirection = "north";
+						characterCloseDirection = "N";
 						return character;
 					} else if (character.getMapPositionOfCharacter()
 							.equals(south)) {
-						characterCloseDirection = "south";
+						characterCloseDirection = "S";
 						return character;
 					} else if (character.getMapPositionOfCharacter()
 							.equals(west)) {
-						characterCloseDirection = "west";
+						characterCloseDirection = "W";
 						return character;
 					} else if (character.getMapPositionOfCharacter()
 							.equals(east)) {
-						characterCloseDirection = "east";
+						characterCloseDirection = "E";
 						return character;
 					} else if (character.getMapPositionOfCharacter()
 							.equals(northWest)) {
-						characterCloseDirection = "northWest";
+						characterCloseDirection = "NW";
 						return character;
 					} else if (character.getMapPositionOfCharacter()
 							.equals(northEast)) {
-						characterCloseDirection = "northEast";
+						characterCloseDirection = "NE";
 						return character;
 					} else if (character.getMapPositionOfCharacter()
 							.equals(southWest)) {
-						characterCloseDirection = "southWest";
+						characterCloseDirection = "SW";
 						return character;
 					} else if (character.getMapPositionOfCharacter()
 							.equals(southEast)) {
-						characterCloseDirection = "southEast";
+						characterCloseDirection = "SE";
 						return character;
 					}
 				}
@@ -174,35 +174,35 @@ public class Entity extends EntityLogic {
 			if (stage.getJasons().size() > 0) {
 				for (Entity jason : stage.getJasons()) {
 					if (jason.getMapPositionOfCharacter().equals(north)) {
-						characterCloseDirection = "north";
+						characterCloseDirection = "N";
 						return jason;
 					} else if (jason.getMapPositionOfCharacter().equals(
 							south)) {
-						characterCloseDirection = "south";
+						characterCloseDirection = "S";
 						return jason;
 					} else if (jason.getMapPositionOfCharacter().equals(
 							west)) {
-						characterCloseDirection = "west";
+						characterCloseDirection = "W";
 						return jason;
 					} else if (jason.getMapPositionOfCharacter().equals(
 							east)) {
-						characterCloseDirection = "east";
+						characterCloseDirection = "E";
 						return jason;
 					} else if (jason.getMapPositionOfCharacter().equals(
 							northWest)) {
-						characterCloseDirection = "northWest";
+						characterCloseDirection = "NW";
 						return jason;
 					} else if (jason.getMapPositionOfCharacter().equals(
 							northEast)) {
-						characterCloseDirection = "northEast";
+						characterCloseDirection = "NE";
 						return jason;
 					} else if (jason.getMapPositionOfCharacter().equals(
 							southWest)) {
-						characterCloseDirection = "southWest";
+						characterCloseDirection = "SW";
 						return jason;
 					} else if (jason.getMapPositionOfCharacter().equals(
 							southEast)) {
-						characterCloseDirection = "southEast";
+						characterCloseDirection = "SE";
 						return jason;
 					}
 				}
@@ -211,42 +211,41 @@ public class Entity extends EntityLogic {
 		else {
 			if (stage.getCurrentCharacter().getMapPositionOfCharacter()
 					.equals(north)) {
-				characterCloseDirection = "north";
+				characterCloseDirection = "N";
 				return stage.getCurrentCharacter();
 			} else if (stage.getCurrentCharacter()
 					.getMapPositionOfCharacter().equals(south)) {
-				characterCloseDirection = "south";
+				characterCloseDirection = "S";
 				return stage.getCurrentCharacter();
 			} else if (stage.getCurrentCharacter()
 					.getMapPositionOfCharacter().equals(west)) {
-				characterCloseDirection = "west";
+				characterCloseDirection = "W";
 				return stage.getCurrentCharacter();
 			} else if (stage.getCurrentCharacter()
 					.getMapPositionOfCharacter().equals(east)) {
-				characterCloseDirection = "east";
+				characterCloseDirection = "E";
 				return stage.getCurrentCharacter();
 			} else if (stage.getCurrentCharacter()
 					.getMapPositionOfCharacter().equals(northWest)) {
-				characterCloseDirection = "northWest";
+				characterCloseDirection = "NW";
 				return stage.getCurrentCharacter();
 			} else if (stage.getCurrentCharacter()
 					.getMapPositionOfCharacter().equals(northEast)) {
-				characterCloseDirection = "northEast";
+				characterCloseDirection = "NE";
 				return stage.getCurrentCharacter();
 			} else if (stage.getCurrentCharacter()
 					.getMapPositionOfCharacter().equals(southWest)) {
-				characterCloseDirection = "southWest";
+				characterCloseDirection = "SW";
 				return stage.getCurrentCharacter();
 			} else if (stage.getCurrentCharacter()
 					.getMapPositionOfCharacter().equals(southEast)) {
-				characterCloseDirection = "southEast";
+				characterCloseDirection = "SE";
 				return stage.getCurrentCharacter();
 			}
 		}
 
 		return null;
 	}
-
 	/****************************************************************************************/
 	public boolean checkCharactersCollision() {
 
@@ -268,7 +267,6 @@ public class Entity extends EntityLogic {
 
 		return true;
 	}
-
 	/****************************************************************************************/
 	public boolean checkTileCollision() {
 
@@ -283,10 +281,9 @@ public class Entity extends EntityLogic {
 					return true;
 			}
 		}
-
+		
 		return false;
 	}
-
 	/****************************************************************************************/
 	public void update() {
 
@@ -329,63 +326,17 @@ public class Entity extends EntityLogic {
 	public void updateOtherCharacters() {
 		checkIsVisible();
 		if (visible) {
-			checkOtherCharacterIsDead();
+			checkCharacterIsDead();
 			checkIsRecoveringFromAttack();
 			updateAnimation();
 		}
 		setMapPosition(xMap, yMap);
 		increasePerversity();
 	}
-
-	/****************************************************************************************/
-	public void updateJason() {
-		checkIsVisible();
-		if (visible) {
-			checkOtherCharacterIsDead();
-			checkIsRecoveringFromAttack();
-			updateAnimation();
-		}
-		characterClose = checkIsCloseToAnotherCharacter();
-		if (characterClose != null) {
-			attack();
-		} else {
-			animation.setFrames(sprites.get(IDLE));
-			movJason();
-		}
-		
-		setMapPosition(nextPositionInMap.x, nextPositionInMap.y);
-	}
-
-	/****************************************************************************************/
-	private void movJason() {
-		if (flinchingJasonMov) {
-			long elapsedTime = (System.nanoTime() - flinchingTimeJasonMov) / 1000000;
-			if (elapsedTime > 100)
-				flinchingJasonMov = false;
-
-		} else {
-			nextPositionInMap = TileWalk.randomMov(nextPositionInMap,
-					moveSpeed);
-			
-			if (checkTileCollision()) {
-				entitysToDraw[xMap][yMap] = null;
-				xMap = nextPositionInMap.x;
-				yMap = nextPositionInMap.y;
-				entitysToDraw[xMap][yMap] = this;
-			
-			} else 
-				nextPositionInMap = getMapPositionOfCharacter();
-
-			flinchingJasonMov = true;
-			flinchingTimeJasonMov = System.nanoTime();
-		}
-	}
-
 	/****************************************************************************************/
 	public void updateDead() {
 		setMapPosition(xMap, yMap);
 	}
-
 	/****************************************************************************************/
 	private void magicWalk() {
 
@@ -450,9 +401,8 @@ public class Entity extends EntityLogic {
 				object.draw(g);
 		}
 	}
-
 	/****************************************************************************************/
-	private void checkIsVisible() {
+	protected void checkIsVisible() {
 		if (x >= 0 && x <= tileMap.RESOLUTION_WIDTH_FIX && y >= 0
 				&& y <= tileMap.RESOLUTION_HEIGHT_FIX)
 
@@ -460,7 +410,6 @@ public class Entity extends EntityLogic {
 		else
 			visible = false;
 	}
-
 	/****************************************************************************************/
 	// Setter and Getter
 	public int getX() {

@@ -211,36 +211,40 @@ public class EntityLogic {
 			characterClose.setDead(true);
 		}
 		
-		movFaceToAttack();
+		movFace(characterCloseDirection);
 
 		characterClose.recoveringFromAttack = true;
 		characterClose.flinchingTimeRecoveringFromAttack = System.nanoTime();
 		}
 	}
 	/****************************************************************************************/
-	private void movFaceToAttack() {
-		if (characterCloseDirection.equals("north")) 
+	protected void movFace(String _direction) {
+		if (_direction.equals("N")) 
 			animation.setFrames(sprites.get(WALKING_BACK));
 		
-		else if (characterCloseDirection.equals("south")) 
+		else if (_direction.equals("S")) 
 			animation.setFrames(sprites.get(WALKING_FRONT));
 		
-		else if (characterCloseDirection.equals("west")) {
+		else if (_direction.equals("W")) {
 			facingRight = false;
 			animation.setFrames(sprites.get(WALKING_SIDE));
+			
+		} else if (_direction.equals("E")){
+			facingRight = true;
+			animation.setFrames(sprites.get(WALKING_SIDE));
+			
+		} else if (_direction.equals("NW")){
+			facingRight = false;
+			animation.setFrames(sprites.get(WALKING_PERSPECTIVE_BACK));
+			
+		} else if (_direction.equals("NE")){
+			facingRight = true;
+			animation.setFrames(sprites.get(WALKING_PERSPECTIVE_BACK));
+			
+		} else if (_direction.equals("SW"))
+			facingRight = false;
 		
-		} else if (characterCloseDirection.equals("east")){
-			facingRight = true;
-			animation.setFrames(sprites.get(WALKING_SIDE));
-		} else if (characterCloseDirection.equals("northWest")){
-			facingRight = false;
-			animation.setFrames(sprites.get(WALKING_PERSPECTIVE_BACK));
-		} else if (characterCloseDirection.equals("northEast")){
-			facingRight = true;
-			animation.setFrames(sprites.get(WALKING_PERSPECTIVE_BACK));
-		} else if (characterCloseDirection.equals("southWest"))
-			facingRight = false;
-		else if (characterCloseDirection.equals("southEast"))
+		else if (_direction.equals("SE"))
 			facingRight = true;
 	}
 	/****************************************************************************************/
@@ -252,7 +256,7 @@ public class EntityLogic {
 		}
 	}
 	/****************************************************************************************/
-	protected void checkOtherCharacterIsDead() {
+	protected void checkCharacterIsDead() {
 		if (dead) {
 			if (description == "Jason")
 				stage.getJasons().remove(this);
