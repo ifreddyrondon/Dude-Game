@@ -241,11 +241,14 @@ public class EntityLogic {
 			facingRight = true;
 			animation.setFrames(sprites.get(WALKING_PERSPECTIVE_BACK));
 			
-		} else if (_direction.equals("SW"))
+		} else if (_direction.equals("SW")){
 			facingRight = false;
+			animation.setFrames(sprites.get(WALKING_PERSPECTIVE_FRONT));
 		
-		else if (_direction.equals("SE"))
+		} else if (_direction.equals("SE")){
 			facingRight = true;
+			animation.setFrames(sprites.get(WALKING_PERSPECTIVE_FRONT));
+		}
 	}
 	/****************************************************************************************/
 	protected void checkIsRecoveringFromAttack() {

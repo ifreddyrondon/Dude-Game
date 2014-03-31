@@ -40,13 +40,11 @@ public class Jason extends Entity {
 		moveSpeed = 1;
 		facingRight = true;
 		nextDirectionJason = TileWalk.randomMov(); 
-
+		
 		loadSprite();
 
 		animation = new Animation();
-		currentAnimation = IDLE;
-		animation.setFrames(sprites.get(IDLE));
-		animation.setDelayTime(1000);
+		movFace(nextDirectionJason);
 	}
 
 	/****************************************************************************************/
@@ -128,10 +126,9 @@ public class Jason extends Entity {
 	private void movJason() {
 		if (flinchingJasonMov) {
 			long elapsedTime = (System.nanoTime() - flinchingTimeJasonMov) / 1000000;
-			if (elapsedTime > 100)
+			if (elapsedTime > 120)
 				flinchingJasonMov = false;
-		} else {
-			
+		} else {			
 			nextPositionInMap = 
 					TileWalk.walkTo(nextDirectionJason, nextPositionInMap, moveSpeed);
 			
@@ -142,10 +139,9 @@ public class Jason extends Entity {
 				entitysToDraw[xMap][yMap] = this;
 			} else {
 				nextDirectionJason = TileWalk.randomMov();
-				movFace(nextDirectionJason);
 				nextPositionInMap = getMapPositionOfCharacter();
 			}
-
+			movFace(nextDirectionJason);
 			flinchingJasonMov = true;
 			flinchingTimeJasonMov = System.nanoTime();
 		}
