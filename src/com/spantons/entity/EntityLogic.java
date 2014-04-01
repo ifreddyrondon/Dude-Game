@@ -165,6 +165,11 @@ public class EntityLogic {
 		if (object != null)
 			object.setCarrier(null);
 
+//		Jason a = new Jason(tileMap, stage, xMap, yMap, 0.10);
+//		Thread thread = new Thread(a);
+//		thread.start();  
+//		stage.getJasons().add(a);
+		
 		stage.getJasons().add(new Jason(tileMap, stage, xMap, yMap, 0.10));
 	}
 	/****************************************************************************************/

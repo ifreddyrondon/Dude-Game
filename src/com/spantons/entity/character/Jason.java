@@ -1,6 +1,7 @@
 package com.spantons.entity.character;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -15,8 +16,8 @@ import com.spantons.entity.Entity;
 import com.spantons.gameState.Stage;
 import com.spantons.tileMap.TileMap;
 
-public class Jason extends Entity {
-	
+public class Jason extends Entity implements Runnable {
+
 	private String nextDirectionJason;
 
 	/****************************************************************************************/
@@ -39,8 +40,8 @@ public class Jason extends Entity {
 		dead = false;
 		moveSpeed = 1;
 		facingRight = true;
-		nextDirectionJason = TileWalk.randomMov(); 
-		
+		nextDirectionJason = TileWalk.randomMov();
+
 		loadSprite();
 
 		animation = new Animation();
@@ -106,6 +107,14 @@ public class Jason extends Entity {
 			e.printStackTrace();
 		}
 	}
+
+	/****************************************************************************************/
+	@Override
+	public void run() {
+		System.out.println("Thread start");
+
+	}
+
 	/****************************************************************************************/
 	public void update() {
 		checkIsVisible();
@@ -117,21 +126,22 @@ public class Jason extends Entity {
 		characterClose = checkIsCloseToAnotherCharacter();
 		if (characterClose != null) {
 			attack();
-		} else 
+		} else
 			movJason();
-		
+
 		setMapPosition(nextPositionInMap.x, nextPositionInMap.y);
 	}
+
 	/****************************************************************************************/
 	private void movJason() {
 		if (flinchingJasonMov) {
 			long elapsedTime = (System.nanoTime() - flinchingTimeJasonMov) / 1000000;
 			if (elapsedTime > 120)
 				flinchingJasonMov = false;
-		} else {			
-			nextPositionInMap = 
-					TileWalk.walkTo(nextDirectionJason, nextPositionInMap, moveSpeed);
-			
+		} else {
+			nextPositionInMap = TileWalk.walkTo(nextDirectionJason,
+					nextPositionInMap, moveSpeed);
+
 			if (checkTileCollision()) {
 				entitysToDraw[xMap][yMap] = null;
 				xMap = nextPositionInMap.x;
@@ -146,6 +156,93 @@ public class Jason extends Entity {
 			flinchingTimeJasonMov = System.nanoTime();
 		}
 	}
+
+	/****************************************************************************************/
+	private Entity checkIsCloseToAnotherCharacter() {
+
+		Point north = TileWalk.walkTo("N", getMapPositionOfCharacter(), 1);
+		Point south = TileWalk.walkTo("S", getMapPositionOfCharacter(), 1);
+		Point west = TileWalk.walkTo("W", getMapPositionOfCharacter(), 1);
+		Point east = TileWalk.walkTo("E", getMapPositionOfCharacter(), 1);
+		Point northWest = TileWalk.walkTo("NW",
+				getMapPositionOfCharacter(), 1);
+		Point northEast = TileWalk.walkTo("NE",
+				getMapPositionOfCharacter(), 1);
+		Point southWest = TileWalk.walkTo("SW",
+				getMapPositionOfCharacter(), 1);
+		Point southEast = TileWalk.walkTo("SE",
+				getMapPositionOfCharacter(), 1);
+
+		if (stage.getCurrentCharacter().getMapPositionOfCharacter()
+				.equals(north)) {
+			characterCloseDirection = "N";
+			return stage.getCurrentCharacter();
+		} else if (stage.getCurrentCharacter().getMapPositionOfCharacter()
+				.equals(south)) {
+			characterCloseDirection = "S";
+			return stage.getCurrentCharacter();
+		} else if (stage.getCurrentCharacter().getMapPositionOfCharacter()
+				.equals(west)) {
+			characterCloseDirection = "W";
+			return stage.getCurrentCharacter();
+		} else if (stage.getCurrentCharacter().getMapPositionOfCharacter()
+				.equals(east)) {
+			characterCloseDirection = "E";
+			return stage.getCurrentCharacter();
+		} else if (stage.getCurrentCharacter().getMapPositionOfCharacter()
+				.equals(northWest)) {
+			characterCloseDirection = "NW";
+			return stage.getCurrentCharacter();
+		} else if (stage.getCurrentCharacter().getMapPositionOfCharacter()
+				.equals(northEast)) {
+			characterCloseDirection = "NE";
+			return stage.getCurrentCharacter();
+		} else if (stage.getCurrentCharacter().getMapPositionOfCharacter()
+				.equals(southWest)) {
+			characterCloseDirection = "SW";
+			return stage.getCurrentCharacter();
+		} else if (stage.getCurrentCharacter().getMapPositionOfCharacter()
+				.equals(southEast)) {
+			characterCloseDirection = "SE";
+			return stage.getCurrentCharacter();
+		}
+
+		for (Entity character : stage.getCharacters()) {
+			if (character.getMapPositionOfCharacter().equals(north)) {
+				characterCloseDirection = "N";
+				return character;
+			} else if (character.getMapPositionOfCharacter()
+					.equals(south)) {
+				characterCloseDirection = "S";
+				return character;
+			} else if (character.getMapPositionOfCharacter().equals(west)) {
+				characterCloseDirection = "W";
+				return character;
+			} else if (character.getMapPositionOfCharacter().equals(east)) {
+				characterCloseDirection = "E";
+				return character;
+			} else if (character.getMapPositionOfCharacter().equals(
+					northWest)) {
+				characterCloseDirection = "NW";
+				return character;
+			} else if (character.getMapPositionOfCharacter().equals(
+					northEast)) {
+				characterCloseDirection = "NE";
+				return character;
+			} else if (character.getMapPositionOfCharacter().equals(
+					southWest)) {
+				characterCloseDirection = "SW";
+				return character;
+			} else if (character.getMapPositionOfCharacter().equals(
+					southEast)) {
+				characterCloseDirection = "SE";
+				return character;
+			}
+		}
+
+		return null;
+	}
+
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 		super.draw(g);
