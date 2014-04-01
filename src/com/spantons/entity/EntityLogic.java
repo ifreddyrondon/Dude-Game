@@ -161,16 +161,17 @@ public class EntityLogic {
 	}
 	/****************************************************************************************/
 	private void jasonTransform() {
-		stage.getCharacters().remove(this);
-		if (object != null)
+		if (object != null){
 			object.setCarrier(null);
-
-//		Jason a = new Jason(tileMap, stage, xMap, yMap, 0.10);
-//		Thread thread = new Thread(a);
-//		thread.start();  
-//		stage.getJasons().add(a);
+			objectsToDraw[xMap][yMap] = object;
+		}
+			
+		stage.getCharacters().remove(this);
 		
-		stage.getJasons().add(new Jason(tileMap, stage, xMap, yMap, 0.10));
+		Jason a = new Jason(tileMap, stage, xMap, yMap, 0.10);
+		Thread thread = new Thread(a);
+		thread.start();  
+		stage.getJasons().add(a);
 	}
 	/****************************************************************************************/
 	private Object checkIsOverObject() {
@@ -201,25 +202,31 @@ public class EntityLogic {
 	}
 	/****************************************************************************************/
 	protected void attack() {
-
+		if (health <= 0) {
+			dead = true;
+			return;
+		}
+		
 		if (characterClose != null) {
 			if (characterClose.recoveringFromAttack)
 				return;
+			
+			if (characterClose.getHealth() <= 0) {
+				characterClose.setHealth(0);
+				characterClose.setDead(true);
+				characterClose = null;
+				return;
+			}
+			
+			characterClose.setHealth(characterClose.getHealth() - damage);
 
-		characterClose.setHealth(characterClose.getHealth() - damage);
+			if (this == stage.getCurrentCharacter())
+				flinchingIncreaseDeltaTimePerversity -= deltaForReduceFlinchingIncreaseDeltaTimePerversity;
 
-		if (this == stage.getCurrentCharacter())
-			flinchingIncreaseDeltaTimePerversity -= deltaForReduceFlinchingIncreaseDeltaTimePerversity;
+			movFace(characterCloseDirection);
 
-		if (characterClose.getHealth() <= 0) {
-			characterClose.setHealth(0);
-			characterClose.setDead(true);
-		}
-		
-		movFace(characterCloseDirection);
-
-		characterClose.recoveringFromAttack = true;
-		characterClose.flinchingTimeRecoveringFromAttack = System.nanoTime();
+			characterClose.recoveringFromAttack = true;
+			characterClose.flinchingTimeRecoveringFromAttack = System.nanoTime();
 		}
 	}
 	/****************************************************************************************/
@@ -266,11 +273,6 @@ public class EntityLogic {
 	/****************************************************************************************/
 	protected void checkCharacterIsDead() {
 		if (dead) {
-			if (description == "Jason")
-				stage.getJasons().remove(this);
-			else if (description != "Jason")
-				stage.getCharacters().remove(this);
-
 			if (object != null)
 				object.setCarrier(null);
 
@@ -278,6 +280,11 @@ public class EntityLogic {
 			entitysDeadToDraw[xMap][yMap] = (Entity) this;
 			recoveringFromAttack = false;
 			stage.getDead().add((Entity) this);
+			
+			if (description == "Jason")
+				stage.getJasons().remove(this);
+			else if (description != "Jason")
+				stage.getCharacters().remove(this);
 		}
 	}
 	/****************************************************************************************/

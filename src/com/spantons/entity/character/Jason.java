@@ -111,10 +111,10 @@ public class Jason extends Entity implements Runnable {
 	/****************************************************************************************/
 	@Override
 	public void run() {
-		System.out.println("Thread start");
+		
 
 	}
-
+	
 	/****************************************************************************************/
 	public void update() {
 		checkIsVisible();
