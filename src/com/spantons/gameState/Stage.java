@@ -35,11 +35,11 @@ public abstract class Stage {
 		if (characters.isEmpty()) 
 			return;
 		
-		currentCharacter.setAllMov(false);
 		characters.add(currentCharacter);
+		currentCharacter.setAllMov(false);
 		currentCharacter = characters.get(0);
-		currentCharacter.setVisible(true);
 		characters.remove(0);
+		currentCharacter.setVisible(true);
 	}
 	/****************************************************************************************/
 	public Entity getCurrentCharacter() {

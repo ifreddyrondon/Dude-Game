@@ -40,7 +40,7 @@ public class Hud {
 		
 		g.setColor(fontColor);
 		g.setFont(descriptionFont);
-		g.drawString(stage.getCurrentCharacter().getDescription(), 15, 48);
+		g.drawString(stage.getCurrentCharacter().getDescription(), 15, 50);
 		
 		g.drawImage(stage.getCurrentCharacter().face,18, 63, null);
 		

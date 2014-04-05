@@ -216,20 +216,34 @@ public class DialogueStage1 {
 	}
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
+
+		if (characterSpeaking != null) {
+			g.drawImage(dialogueImage,
+				characterSpeaking.getX() - characterWidth , 
+				characterSpeaking.getY() - dialogueImage.getHeight() - characterHeight, 
+				null);
+						
+			g.setColor(fontColor);
+			g.setFont(dialogueFont);
+						
+			int x = characterSpeaking.getX() - 30;
+			int y = characterSpeaking.getY() - 180;
+			g.drawString(characterSpeakingDialog, x, y);
+		}
 		
 		if (exclamation) {
 			if (stage.getCurrentCharacter().getCharacterClose().getDescription().equals("Jason")) {
 				timerExclamation.setDelay(200);
 				g.drawImage(exclamationImg[1],
 					stage.getCurrentCharacter().getX() - characterWidth / 3, 
-					stage.getCurrentCharacter().getY() - exclamationImg[0].getHeight() - characterHeight, 
+					stage.getCurrentCharacter().getY() - exclamationImg[0].getHeight() - 10 - characterHeight, 
 				null);
 			}
 			else if (!stage.getCurrentCharacter().getCharacterClose().getDescription().equals("Jason")){
 				timerExclamation.setDelay(500);
 				g.drawImage(exclamationImg[0],
 					stage.getCurrentCharacter().getX() - characterWidth / 3, 
-					stage.getCurrentCharacter().getY() - exclamationImg[0].getHeight() - characterHeight, 
+					stage.getCurrentCharacter().getY() - exclamationImg[0].getHeight() - 10 - characterHeight, 
 				null);
 			}
 		}
@@ -246,20 +260,6 @@ public class DialogueStage1 {
 				GamePanel.RESOLUTION_WIDTH / 2 + 50, 
 				50 + GamePanel.RESOLUTION_HEIGHT / 2);
 		}
-		
-		if (characterSpeaking != null) {
-			g.drawImage(dialogueImage,
-				characterSpeaking.getX() - characterWidth , 
-				characterSpeaking.getY() - dialogueImage.getHeight() - characterHeight, 
-				null);
-						
-			g.setColor(fontColor);
-			g.setFont(dialogueFont);
-						
-			int x = characterSpeaking.getX() - 30;
-			int y = characterSpeaking.getY() - 180;
-			g.drawString(characterSpeakingDialog, x, y);
-		}		
 	}
 	
 }

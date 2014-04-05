@@ -16,7 +16,7 @@ import com.spantons.entity.Entity;
 import com.spantons.gameState.Stage;
 import com.spantons.tileMap.TileMap;
 
-public class Jason extends Entity implements Runnable {
+public class Jason extends Entity{
 
 	private String nextDirectionJason;
 
@@ -51,7 +51,6 @@ public class Jason extends Entity implements Runnable {
 	/****************************************************************************************/
 	private void loadSprite() {
 		try {
-
 			face = ImageIO.read(getClass().getResourceAsStream(
 					"/hud/Jason.png"));
 
@@ -107,13 +106,6 @@ public class Jason extends Entity implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
-	/****************************************************************************************/
-	@Override
-	public void run() {
-		
-
-	}
 	
 	/****************************************************************************************/
 	public void update() {
@@ -124,9 +116,9 @@ public class Jason extends Entity implements Runnable {
 			updateAnimation();
 		}
 		characterClose = checkIsCloseToAnotherCharacter();
-		if (characterClose != null) {
+		if (characterClose != null) 
 			attack();
-		} else
+		else
 			movJason();
 
 		setMapPosition(nextPositionInMap.x, nextPositionInMap.y);
@@ -160,84 +152,74 @@ public class Jason extends Entity implements Runnable {
 	/****************************************************************************************/
 	private Entity checkIsCloseToAnotherCharacter() {
 
-		Point north = TileWalk.walkTo("N", getMapPositionOfCharacter(), 1);
-		Point south = TileWalk.walkTo("S", getMapPositionOfCharacter(), 1);
-		Point west = TileWalk.walkTo("W", getMapPositionOfCharacter(), 1);
-		Point east = TileWalk.walkTo("E", getMapPositionOfCharacter(), 1);
-		Point northWest = TileWalk.walkTo("NW",
-				getMapPositionOfCharacter(), 1);
-		Point northEast = TileWalk.walkTo("NE",
-				getMapPositionOfCharacter(), 1);
-		Point southWest = TileWalk.walkTo("SW",
-				getMapPositionOfCharacter(), 1);
-		Point southEast = TileWalk.walkTo("SE",
-				getMapPositionOfCharacter(), 1);
-
-		if (stage.getCurrentCharacter().getMapPositionOfCharacter()
-				.equals(north)) {
-			characterCloseDirection = "N";
-			return stage.getCurrentCharacter();
-		} else if (stage.getCurrentCharacter().getMapPositionOfCharacter()
-				.equals(south)) {
-			characterCloseDirection = "S";
-			return stage.getCurrentCharacter();
-		} else if (stage.getCurrentCharacter().getMapPositionOfCharacter()
-				.equals(west)) {
-			characterCloseDirection = "W";
-			return stage.getCurrentCharacter();
-		} else if (stage.getCurrentCharacter().getMapPositionOfCharacter()
-				.equals(east)) {
-			characterCloseDirection = "E";
-			return stage.getCurrentCharacter();
-		} else if (stage.getCurrentCharacter().getMapPositionOfCharacter()
-				.equals(northWest)) {
-			characterCloseDirection = "NW";
-			return stage.getCurrentCharacter();
-		} else if (stage.getCurrentCharacter().getMapPositionOfCharacter()
-				.equals(northEast)) {
-			characterCloseDirection = "NE";
-			return stage.getCurrentCharacter();
-		} else if (stage.getCurrentCharacter().getMapPositionOfCharacter()
-				.equals(southWest)) {
-			characterCloseDirection = "SW";
-			return stage.getCurrentCharacter();
-		} else if (stage.getCurrentCharacter().getMapPositionOfCharacter()
-				.equals(southEast)) {
-			characterCloseDirection = "SE";
-			return stage.getCurrentCharacter();
-		}
-
+		Point position = new Point(xMap, yMap);
+		Point north = TileWalk.walkTo("N", position, 1);
+		Point south = TileWalk.walkTo("S", position, 1);
+		Point west = TileWalk.walkTo("W", position, 1);
+		Point east = TileWalk.walkTo("E", position, 1);
+		Point northWest = TileWalk.walkTo("NW",position, 1);
+		Point northEast = TileWalk.walkTo("NE",position, 1);
+		Point southWest = TileWalk.walkTo("SW",position, 1);
+		Point southEast = TileWalk.walkTo("SE",position, 1);
+		Point currentCharacterPosition = null;
+		
 		for (Entity character : stage.getCharacters()) {
-			if (character.getMapPositionOfCharacter().equals(north)) {
+			currentCharacterPosition = character.getMapPositionOfCharacter();
+
+			if (currentCharacterPosition.equals(north)) {
 				characterCloseDirection = "N";
 				return character;
-			} else if (character.getMapPositionOfCharacter()
-					.equals(south)) {
+			} else if (currentCharacterPosition.equals(south)) {
 				characterCloseDirection = "S";
 				return character;
-			} else if (character.getMapPositionOfCharacter().equals(west)) {
+			} else if (currentCharacterPosition.equals(west)) {
 				characterCloseDirection = "W";
 				return character;
-			} else if (character.getMapPositionOfCharacter().equals(east)) {
+			} else if (currentCharacterPosition.equals(east)) {
 				characterCloseDirection = "E";
 				return character;
-			} else if (character.getMapPositionOfCharacter().equals(
-					northWest)) {
+			} else if (currentCharacterPosition.equals(northWest)) {
 				characterCloseDirection = "NW";
 				return character;
-			} else if (character.getMapPositionOfCharacter().equals(
-					northEast)) {
+			} else if (currentCharacterPosition.equals(northEast)) {
 				characterCloseDirection = "NE";
 				return character;
-			} else if (character.getMapPositionOfCharacter().equals(
-					southWest)) {
+			} else if (currentCharacterPosition.equals(southWest)) {
 				characterCloseDirection = "SW";
 				return character;
-			} else if (character.getMapPositionOfCharacter().equals(
-					southEast)) {
+			} else if (currentCharacterPosition.equals(southEast)) {
 				characterCloseDirection = "SE";
 				return character;
 			}
+		}
+		
+		currentCharacterPosition = 
+				stage.getCurrentCharacter().getMapPositionOfCharacter();
+		
+		if (currentCharacterPosition.equals(north)) {
+			characterCloseDirection = "N";
+			return stage.getCurrentCharacter();
+		} else if (currentCharacterPosition.equals(south)) {
+			characterCloseDirection = "S";
+			return stage.getCurrentCharacter();
+		} else if (currentCharacterPosition.equals(west)) {
+			characterCloseDirection = "W";
+			return stage.getCurrentCharacter();
+		} else if (currentCharacterPosition.equals(east)) {
+			characterCloseDirection = "E";
+			return stage.getCurrentCharacter();
+		} else if (currentCharacterPosition.equals(northWest)) {
+			characterCloseDirection = "NW";
+			return stage.getCurrentCharacter();
+		} else if (currentCharacterPosition.equals(northEast)) {
+			characterCloseDirection = "NE";
+			return stage.getCurrentCharacter();
+		} else if (currentCharacterPosition.equals(southWest)) {
+			characterCloseDirection = "SW";
+			return stage.getCurrentCharacter();
+		} else if (currentCharacterPosition.equals(southEast)) {
+			characterCloseDirection = "SE";
+			return stage.getCurrentCharacter();
 		}
 
 		return null;
