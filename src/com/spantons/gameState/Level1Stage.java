@@ -16,6 +16,7 @@ import com.spantons.entity.Entity;
 import com.spantons.entity.Hud;
 import com.spantons.entity.character.DanaScullyXFiles;
 import com.spantons.entity.character.GordonFreeman;
+import com.spantons.entity.character.Jason;
 import com.spantons.entity.character.LeonTheProfessional‎;
 import com.spantons.entity.character.LizSherman;
 import com.spantons.entity.character.Preso;
@@ -121,9 +122,15 @@ public class Level1Stage extends Stage {
 	/****************************************************************************************/
 	private void deployJason(){
 		currentCharacter.setFlinchingIncreaseDeltaTimePerversity(250);
+		for (Entity character : characters) 
+			character.setFlinchingIncreaseDeltaTimePerversity(250);
 		
-		for (int i = 0; i < characters.size(); i++) 
-			characters.get(i).setFlinchingIncreaseDeltaTimePerversity(250);
+		ArrayList<Entity> aux = new ArrayList<Entity>();
+		
+		for (Entity jason : jasons) 
+			aux.add(new Jason(tileMap, this, jason.getXMap(), jason.getYMap(), 0.10));
+		
+		jasons.addAll(aux);
 	}
 	/****************************************************************************************/
 	@Override

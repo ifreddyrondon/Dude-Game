@@ -377,6 +377,14 @@ public class Entity extends EntityLogic {
 		return y;
 	}
 
+	public int getXMap() {
+		return xMap;
+	}
+
+	public int getYMap() {
+		return yMap;
+	}
+
 	public void setPosition(int _x, int _y) {
 		x = _x;
 		y = _y;
