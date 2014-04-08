@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.spantons.audio.AudioPlayer;
+import com.spantons.dialogue.Dialogue;
 import com.spantons.entity.Entity;
 import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
@@ -17,6 +18,7 @@ public abstract class Stage {
 	protected ArrayList<Entity> dead;
 	protected ArrayList<Object> objects;
 	protected Entity currentCharacter;
+	protected Dialogue dialogues;
 	protected boolean secondaryMenu;
 	protected AudioPlayer player;
 	
@@ -32,8 +34,10 @@ public abstract class Stage {
 		if (characters.isEmpty() && currentCharacter.isDead())
 			endStage();
 		
-		if (characters.isEmpty()) 
+		if (characters.isEmpty()) {
+			dialogues.alone();
 			return;
+		}
 		
 		characters.add(currentCharacter);
 		currentCharacter.setAllMov(false);

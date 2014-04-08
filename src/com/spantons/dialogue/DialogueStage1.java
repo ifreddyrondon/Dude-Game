@@ -20,246 +20,258 @@ import com.spantons.entity.Entity;
 import com.spantons.gameState.Stage;
 import com.spantons.main.GamePanel;
 
-public class DialogueStage1 {
-	
+public class DialogueStage1 extends Dialogue {
+
 	private static final int STORY = 0;
 	private static final int HELP = 1;
 	private static final int THOUGHTS = 2;
-	
+
 	private static final int THOUGHTS_RAMDON = 0;
 	private static final int THOUGHTS_WANTOUT = 1;
 	private static final int THOUGHTS_AWAKENING = 2;
-	
+
 	private static final int HELP_0_BATHROOM = 0;
-	
+
 	private static final int STORY_ROOM_1 = 0;
 	private static final int STORY_MAIN_ROOM = 1;
-	
+
 	public Map<Integer, String[]> thoughts;
 	public Map<Integer, String[]> help;
 	public Map<Integer, String[]> story;
-	
-	
-	
-	
-	
-	
-	private Stage stage;
-	
-	private ArrayList<BufferedImage> speechBallon;
-	private BufferedImage[] exclamationImg;
-	
-	private Color fontColor;
-	private Font dialogueFont;
-	
+
 	private int characterWidth;
 	private int characterHeight;
-	
-	private Timer timerExclamation;
-	private int countdownExclamation = 500; 
-	private boolean exclamation;
-	
+
 	private Timer timerCharactersSpeaking;
 	private int countdownCharactersSpeaking = 2000;
 	private Entity characterSpeaking;
 	private String characterSpeakingDialog;
 	private BufferedImage dialogueImage;
 	private ArrayList<String> setOfDialogues;
-	
+
 	private Timer timerAwakeningDialogues;
 	private int countdownAwakeningDialogues = 2000;
-	
+
 	/****************************************************************************************/
 	public DialogueStage1(Stage _stage) {
 		stage = _stage;
 		fontColor = Color.BLACK;
 		dialogueFont = new Font("Century Gothic", Font.PLAIN, 16);
-		
+		secondaryMenuFont = new Font("Century Gothic", Font.PLAIN, 35);
+		aloneFont = new Font("Century Gothic", Font.PLAIN, 50);
+
 		characterWidth = stage.getCurrentCharacter().getSpriteWidth();
 		characterHeight = stage.getCurrentCharacter().getSpriteHeight();
-		
+
 		loadImages();
-		startTimers(); 
-		
-		
-		
-		
-		// THOUGHTS ----------------------------------------------------------------------------------------
+		startTimers();
+
+		// THOUGHTS
+		// ----------------------------------------------------------------------------------------
 		thoughts = new HashMap<Integer, String[]>();
-		
-		String[] aux = {	"Odio este sitio", 
+
+		String[] aux = { "Odio este sitio",
 				"seguramente alguno de ellos me trajo hasta aca",
-				"debería deshacerme de ellos"};
+				"debería deshacerme de ellos" };
 		thoughts.put(THOUGHTS_RAMDON, aux);
 
-		String[] aux2 = {"Debemos salir de aquí",
+		String[] aux2 = { "Debemos salir de aquí",
 				"Hay que buscar una salida",
-				"Debe haber una puerta en algún lado"};
+				"Debe haber una puerta en algún lado" };
 		thoughts.put(THOUGHTS_WANTOUT, aux2);
-		
-		String[] aux3 = {	"Hey qué hago aquí",
-				"Quienes son ustedes",
-				"Qué sucede",
-				"???"};
+
+		String[] aux3 = { "Hey qué hago aquí", "Quienes son ustedes",
+				"Qué sucede", "???" };
 		thoughts.put(THOUGHTS_AWAKENING, aux3);
-				
-		
-		// HELP ----------------------------------------------------------------------------------------
+
+		// HELP
+		// ----------------------------------------------------------------------------------------
 		help = new HashMap<Integer, String[]>();
-		
-		String[] aux4 = {	"Parece que hay algo detrás que no deja abrirla",
-												"necesitamos una palanca"};
+
+		String[] aux4 = { "Parece que hay algo detrás que no deja abrirla",
+				"necesitamos una palanca" };
 		help.put(HELP_0_BATHROOM, aux4);
-		
-		// STORY ----------------------------------------------------------------------------------------
+
+		// STORY
+		// ----------------------------------------------------------------------------------------
 		story = new HashMap<Integer, String[]>();
-		String[] aux5 = {"Falta alguien",
-										"Seguro se quedó para usar el baño",
-										"Qué asqueroso",
-										"Tal vez encontró una salida"};
+		String[] aux5 = { "Falta alguien",
+				"Seguro se quedó para usar el baño", "Qué asqueroso",
+				"Tal vez encontró una salida" };
 		story.put(STORY_ROOM_1, aux5);
-		
-		String[] aux6 = {	"¿Quién hizo esto?",
-												"Lo sabía",
-												"No tuve nada que ver con esto",
-												"Maldición ¿Quién fue?",
-												"¿Por qué lo hicieron?",
-												"Vamos a morir todos"};
+
+		String[] aux6 = { "¿Quién hizo esto?", "Lo sabía",
+				"No tuve nada que ver con esto",
+				"Maldición ¿Quién fue?", "¿Por qué lo hicieron?",
+				"Vamos a morir todos" };
 		story.put(STORY_MAIN_ROOM, aux6);
-		
+
 	}
+
 	/****************************************************************************************/
-	private void loadImages(){
-		try {			
+	protected void loadImages() {
+		try {
 			exclamationImg = new BufferedImage[2];
-			
+
 			exclamationImg[0] = ImageIO.read(getClass()
 					.getResourceAsStream("/dialog/exclamation.png"));
-			
+
 			exclamationImg[1] = ImageIO.read(getClass()
-					.getResourceAsStream("/dialog/exclamation_alert.png"));
-			
+					.getResourceAsStream(
+							"/dialog/exclamation_alert.png"));
+
 			speechBallon = new ArrayList<BufferedImage>();
-			
-			speechBallon.add(ImageIO.read(getClass()
-					.getResourceAsStream("/dialog/speech_balloon_normal.png")));
-			speechBallon.add(ImageIO.read(getClass()
-					.getResourceAsStream("/dialog/speech_balloon_medium.png")));
-			speechBallon.add(ImageIO.read(getClass()
-					.getResourceAsStream("/dialog/speech_balloon_high.png")));
-			
+
+			speechBallon.add(ImageIO.read(getClass().getResourceAsStream(
+					"/dialog/speech_balloon_normal.png")));
+			speechBallon.add(ImageIO.read(getClass().getResourceAsStream(
+					"/dialog/speech_balloon_medium.png")));
+			speechBallon.add(ImageIO.read(getClass().getResourceAsStream(
+					"/dialog/speech_balloon_high.png")));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	/****************************************************************************************/
-	private void startTimers(){
-		timerExclamation = new Timer(countdownExclamation, new ActionListener() { 
-			@Override 
-			public void actionPerformed(ActionEvent ae) { 
-				if (exclamation) 
-					exclamation = false;
-				else 
-					exclamation = true;
-			} 
-		});
+	private void startTimers() {
+		timerExclamation = new Timer(countdownExclamation,
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent ae) {
+						if (exclamation)
+							exclamation = false;
+						else
+							exclamation = true;
+					}
+				});
 		
-		timerCharactersSpeaking = new Timer(countdownCharactersSpeaking, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (setOfDialogues.size() == 0) {
-					characterSpeaking = null;
-					timerCharactersSpeaking.stop();
-					return;
-				}
-				@SuppressWarnings("unchecked")
-				ArrayList<Entity> aux = (ArrayList<Entity>) stage.getCharacters().clone();
-				aux.add(stage.getCurrentCharacter());
-				characterSpeaking = (Entity) RandomItemArrayList.getRandomItemFromArrayList(aux);
-				aux = null;
-				if (!characterSpeaking.isVisible()) 
-					characterSpeaking = null;
-				else {
-					characterSpeakingDialog = setOfDialogues.get(0);
-					setOfDialogues.remove(0);
-				}
-			}
-		});
-		
-		timerAwakeningDialogues = new Timer(countdownAwakeningDialogues, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				setOfDialogues = new ArrayList<String>(Arrays.asList(thoughts.get(THOUGHTS_AWAKENING)));
-				dialogueImage = speechBallon.get(0);
-				timerCharactersSpeaking.start();
-				timerAwakeningDialogues.stop();
-			}
-		});
+		timerAlone = new Timer(countdownAlone,
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent ae) {
+						alone = false;
+					}
+				});
+
+		timerCharactersSpeaking = new Timer(countdownCharactersSpeaking,
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (setOfDialogues.size() == 0) {
+							characterSpeaking = null;
+							timerCharactersSpeaking.stop();
+							return;
+						}
+						@SuppressWarnings("unchecked")
+						ArrayList<Entity> aux = (ArrayList<Entity>) stage
+								.getCharacters().clone();
+						aux.add(stage.getCurrentCharacter());
+						characterSpeaking = (Entity) RandomItemArrayList
+								.getRandomItemFromArrayList(aux);
+						aux = null;
+						if (!characterSpeaking.isVisible())
+							characterSpeaking = null;
+						else {
+							characterSpeakingDialog = setOfDialogues
+									.get(0);
+							setOfDialogues.remove(0);
+						}
+					}
+				});
+
+		timerAwakeningDialogues = new Timer(countdownAwakeningDialogues,
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						setOfDialogues = new ArrayList<String>(
+								Arrays.asList(thoughts
+										.get(THOUGHTS_AWAKENING)));
+						dialogueImage = speechBallon.get(0);
+						timerCharactersSpeaking.start();
+						timerAwakeningDialogues.stop();
+					}
+				});
 		timerAwakeningDialogues.start();
-				
+
 	}
+
 	/****************************************************************************************/
-	private void characterClose(){
-		timerExclamation.start();
-	}
-	/****************************************************************************************/
-	private void characterFar(){
-		timerExclamation.stop();
-		exclamation = false;
-	}
-	/****************************************************************************************/
-	public void update(){
-		if (stage.getCurrentCharacter().getCharacterClose() != null) 
+	public void update() {
+		if (stage.getCurrentCharacter().getCharacterClose() != null)
 			characterClose();
-		else 
+		else
 			characterFar();
 	}
+
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 
 		if (characterSpeaking != null) {
-			g.drawImage(dialogueImage,
-				characterSpeaking.getX() - characterWidth , 
-				characterSpeaking.getY() - dialogueImage.getHeight() - characterHeight, 
-				null);
-						
+			g.drawImage(dialogueImage, characterSpeaking.getX()
+					- characterWidth, characterSpeaking.getY()
+					- dialogueImage.getHeight() - characterHeight,
+					null);
+
 			g.setColor(fontColor);
 			g.setFont(dialogueFont);
-						
+
 			int x = characterSpeaking.getX() - 30;
 			int y = characterSpeaking.getY() - 180;
 			g.drawString(characterSpeakingDialog, x, y);
 		}
-		
+
 		if (exclamation) {
-			if (stage.getCurrentCharacter().getCharacterClose().getDescription().equals("Jason")) {
+			if (stage.getCurrentCharacter().getCharacterClose()
+					.getDescription().equals("Jason")) {
 				timerExclamation.setDelay(200);
-				g.drawImage(exclamationImg[1],
-					stage.getCurrentCharacter().getX() - characterWidth / 3, 
-					stage.getCurrentCharacter().getY() - exclamationImg[0].getHeight() - 10 - characterHeight, 
-				null);
-			}
-			else if (!stage.getCurrentCharacter().getCharacterClose().getDescription().equals("Jason")){
+				g.drawImage(exclamationImg[1], stage
+						.getCurrentCharacter().getX()
+						- characterWidth / 3, stage
+						.getCurrentCharacter().getY()
+						- exclamationImg[0].getHeight()
+						- 10
+						- characterHeight, null);
+			} else if (!stage.getCurrentCharacter().getCharacterClose()
+					.getDescription().equals("Jason")) {
 				timerExclamation.setDelay(500);
-				g.drawImage(exclamationImg[0],
-					stage.getCurrentCharacter().getX() - characterWidth / 3, 
-					stage.getCurrentCharacter().getY() - exclamationImg[0].getHeight() - 10 - characterHeight, 
-				null);
+				g.drawImage(exclamationImg[0], stage
+						.getCurrentCharacter().getX()
+						- characterWidth / 3, stage
+						.getCurrentCharacter().getY()
+						- exclamationImg[0].getHeight()
+						- 10
+						- characterHeight, null);
 			}
 		}
-		
-		if(stage.isSecondaryMenu()){
+
+		if (stage.isSecondaryMenu()) {
 			g.setColor(Color.WHITE);
-			g.drawString("Resume (R)", 
-				GamePanel.RESOLUTION_WIDTH / 2 + 50, 
-				-50 + GamePanel.RESOLUTION_HEIGHT / 2);
-			g.drawString("Main Menu (M)", 
-				GamePanel.RESOLUTION_WIDTH / 2 + 50, 
-				GamePanel.RESOLUTION_HEIGHT / 2);
-			g.drawString("Quit Game (Q)", 
-				GamePanel.RESOLUTION_WIDTH / 2 + 50, 
-				50 + GamePanel.RESOLUTION_HEIGHT / 2);
+			g.setFont(secondaryMenuFont);
+			g.drawString("Resume (R)",
+					GamePanel.RESOLUTION_WIDTH / 2 + 50, -50
+							+ GamePanel.RESOLUTION_HEIGHT / 2);
+			g.drawString("Main Menu (M)",
+					GamePanel.RESOLUTION_WIDTH / 2 + 50,
+					GamePanel.RESOLUTION_HEIGHT / 2);
+			g.drawString("Quit Game (Q)",
+					GamePanel.RESOLUTION_WIDTH / 2 + 50,
+					50 + GamePanel.RESOLUTION_HEIGHT / 2);
+		}
+		
+		if (alone) {
+			g.setColor(new Color(0f,0f,0f,.5f));
+			g.fillRect(0, 0, GamePanel.RESOLUTION_WIDTH,
+				GamePanel.RESOLUTION_HEIGHT);
+			g.setColor(Color.WHITE);
+			g.setFont(aloneFont);
+			fm = g.getFontMetrics();
+			String stringAlone = "¡Estás solo!";
+			r = fm.getStringBounds(stringAlone, g);
+			int x = (GamePanel.RESOLUTION_WIDTH - (int) r.getWidth()) / 2;
+			int y = (GamePanel.RESOLUTION_HEIGHT - (int) r.getHeight()) / 2 - 150;
+			g.drawString(stringAlone, x, y);
 		}
 	}
-	
 }
