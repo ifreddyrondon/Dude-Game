@@ -28,7 +28,7 @@ public class Level1Stage extends Stage {
 
 	private Hud hud;
 	
-	private int countdown = 1; 
+	private int countdown = 180; 
 	private Timer timer;
 
 	public Level1Stage(GameStagesManager _gsm) {
