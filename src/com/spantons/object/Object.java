@@ -16,6 +16,7 @@ public class Object {
 	
 	protected TileMap tileMap;
 	protected Entity carrier;
+	protected boolean showObject;
 	private Object[][] objectsToDraw;
 	
 	protected String description;
@@ -40,6 +41,7 @@ public class Object {
 		yMap = _yMap;
 		objectsToDraw = tileMap.getObjectsToDraw();
 		objectsToDraw[xMap][yMap] = this;
+		showObject = true;
 	}
 	/****************************************************************************************/
 	private void calculatePositionToDraw() {
@@ -58,6 +60,10 @@ public class Object {
 	}
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
+		
+		if (showObject == false) 
+			return;
+		
 		if (carrier != null && type == NON_BLOCKED) {
 			if (carrier.isMovUp() && !carrier.isMovLeft() && !carrier.isMovRight()) 
 				return;

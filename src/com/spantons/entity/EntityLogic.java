@@ -1,7 +1,11 @@
 package com.spantons.entity;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
+import javax.swing.Timer;
 
 import com.spantons.entity.character.Jason;
 import com.spantons.gameState.Stage;
@@ -194,6 +198,20 @@ public class EntityLogic {
 				damage = damage + object.getDamage();
 			}
 		}
+	}
+	/****************************************************************************************/
+	public void getDrunk(Object _object){
+		final float damageObject = _object.getDamage();
+		stage.getObjects().remove(_object);
+		damage = damage + damageObject;
+		Timer timer = new Timer(5000, new ActionListener() { 
+			@Override 
+			public void actionPerformed(ActionEvent ae) { 
+				damage = damage - damageObject;
+			} 
+		}); 
+		timer.setRepeats(false);
+		timer.start();
 	}
 	/****************************************************************************************/
 	protected void attack() {

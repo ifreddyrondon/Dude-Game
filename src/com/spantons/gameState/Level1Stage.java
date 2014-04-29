@@ -20,6 +20,7 @@ import com.spantons.entity.character.Jason;
 import com.spantons.entity.character.LeonTheProfessional‎;
 import com.spantons.entity.character.LizSherman;
 import com.spantons.entity.character.Preso;
+import com.spantons.object.Alcohol;
 import com.spantons.object.Hammer;
 import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
@@ -57,6 +58,7 @@ public class Level1Stage extends Stage {
 		
 		objects.add(new Hammer(tileMap, 25, 27, 0.15));
 		objects.add(new Hammer(tileMap, 15, 17, 0.15));
+		objects.add(new Alcohol(tileMap, 15, 4));
 		
 		// Sonido del juego
 		player = new AudioPlayer("/music/terror.wav");
