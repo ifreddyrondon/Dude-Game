@@ -34,7 +34,9 @@ public class TileMap {
 	private String[] tokens;
 	private int[][] map;
 	private int[][] walls;
+	private int[][] wallsRestore;
 	private int[][] objects;
+	private String transparentWalls;
 	public Point tileSize;
 	private int numRowsMap;
 	private int numColMap;
@@ -155,7 +157,20 @@ public class TileMap {
 				for (int col = 0; col < numColMap; col++)
 					walls[col][row] = Integer.parseInt(tokens[col]);
 			}
-
+			
+			wallsRestore = new int[numRowsMap][numColMap];
+			for (int i = 0; i < numRowsMap; i++) {
+				for (int j = 0; j < numColMap; j++) {
+					wallsRestore[i][j] = walls[i][j];
+				}
+			}
+			
+//			System.out.println(walls[4][8]);
+//			System.out.println(wallsRestore[4][8]);
+//			walls[0][0] = 1;
+//			System.out.println(walls[0][0]);
+//			System.out.println(wallsRestore[0][0]);
+			
 			br.readLine();
 			br.readLine();
 			br.readLine();
@@ -312,6 +327,23 @@ public class TileMap {
 					(coorAbsolute.y - this.y) - tileSize.y, null);
 			
 			if (walls[currentTile.x][currentTile.y] != 0) {
+				
+				if (!transparentWalls.equals("")) {
+					if (transparentWalls.equals("bathroom")) {
+						for (int i = 3; i < 10; i++) 
+							walls[i][8] = 35;
+						for (int i = 3; i < 8; i++) 
+							walls[11][i] = 34;
+					}
+				}
+				else {
+					for (int i = 0; i < numRowsMap; i++) {
+						for (int j = 0; j < numColMap; j++) {
+							walls[i][j] = wallsRestore[i][j];
+						}
+					}
+				}
+				
 				g.drawImage(tiles[walls[currentTile.x][currentTile.y] - 1]
 						.getImage(), 
 						(coorAbsolute.x - this.x) - tileSize.x / 2,
@@ -377,6 +409,12 @@ public class TileMap {
 	}
 	public int getObjectsPosition(int a, int b) {
 		return objects[a][b];
+	}
+	public String getTransparentWalls() {
+		return transparentWalls;
+	}
+	public void setTransparentWalls(String transparentWalls) {
+		this.transparentWalls = transparentWalls;
 	}
 	
 }

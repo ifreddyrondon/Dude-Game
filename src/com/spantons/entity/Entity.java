@@ -37,6 +37,7 @@ public class Entity extends EntityLogic {
 			entitysToDraw[xMap][yMap] = this;
 			flinchingIncreasePerversity = true;
 			object = null;
+			tileMap.setTransparentWalls("");
 		}
 	}
 
@@ -233,10 +234,20 @@ public class Entity extends EntityLogic {
 					return true;
 			}
 		}
-
 		return false;
 	}
-
+	/****************************************************************************************/
+	private void checkTransparentWalls() {
+		// bathroom walls
+		if (	nextPositionInMap.equals(new Point(9, 7)) 
+			|| nextPositionInMap.equals(new Point(10, 7))) 
+			tileMap.setTransparentWalls("bathroom");
+		
+		else if (nextPositionInMap.equals(new Point(10, 8))
+			|| nextPositionInMap.equals(new Point(11, 8))) 
+			tileMap.setTransparentWalls("");
+	}
+	
 	/****************************************************************************************/
 	public void update() {
 
@@ -262,6 +273,7 @@ public class Entity extends EntityLogic {
 			getNextPosition();
 			if (checkTileCollision()) {
 				if (checkCharactersCollision()) {
+					checkTransparentWalls();
 					magicWalk();
 					entitysToDraw[xMap][yMap] = null;
 					xMap = getMapPositionOfCharacter().x;
@@ -274,7 +286,7 @@ public class Entity extends EntityLogic {
 			flinchingTime = System.nanoTime();
 		}
 	}
-
+	
 	/****************************************************************************************/
 	public void updateOtherCharacters() {
 		checkIsVisible();
