@@ -204,7 +204,7 @@ public class EntityLogic {
 		final float damageObject = _object.getDamage();
 		stage.getObjects().remove(_object);
 		damage = damage + damageObject;
-		Timer timer = new Timer(5000, new ActionListener() { 
+		Timer timer = new Timer(30000, new ActionListener() { 
 			@Override 
 			public void actionPerformed(ActionEvent ae) { 
 				damage = damage - damageObject;
@@ -212,6 +212,19 @@ public class EntityLogic {
 		}); 
 		timer.setRepeats(false);
 		timer.start();
+	}
+	/****************************************************************************************/
+	public void getHealth(Object _object) {
+		float healthObject = _object.getHealth();
+		stage.getObjects().remove(_object);
+		if (health == maxHealth) 
+			return;
+		else {
+			if (health + healthObject > maxHealth)
+				health = maxHealth;
+			else
+				health = health + healthObject;
+		}
 	}
 	/****************************************************************************************/
 	protected void attack() {

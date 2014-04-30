@@ -21,8 +21,11 @@ import com.spantons.entity.character.LeonTheProfessional‎;
 import com.spantons.entity.character.LizSherman;
 import com.spantons.entity.character.Preso;
 import com.spantons.object.Alcohol;
+import com.spantons.object.Food;
 import com.spantons.object.Hammer;
 import com.spantons.object.Object;
+import com.spantons.object.PieceOfPizza;
+import com.spantons.object.Pizza;
 import com.spantons.tileMap.TileMap;
 
 public class Level1Stage extends Stage {
@@ -59,6 +62,9 @@ public class Level1Stage extends Stage {
 		objects.add(new Hammer(tileMap, 25, 27, 0.15));
 		objects.add(new Hammer(tileMap, 15, 17, 0.15));
 		objects.add(new Alcohol(tileMap, 15, 4));
+		objects.add(new Pizza(tileMap, 7, 7));
+		objects.add(new PieceOfPizza(tileMap, 9,10));
+		objects.add(new Food(tileMap, 15,10));
 		
 		// Sonido del juego
 		player = new AudioPlayer("/music/terror.wav");

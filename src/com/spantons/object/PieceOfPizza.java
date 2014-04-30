@@ -9,17 +9,18 @@ import javax.imageio.ImageIO;
 import com.spantons.entity.Animation;
 import com.spantons.tileMap.TileMap;
 
-public class Alcohol extends Object{
+public class PieceOfPizza extends Object {
 
 	private static final int IDLE = 0;
 	private ArrayList<BufferedImage[]> sprites;
 	
-	public Alcohol(TileMap _tileMap, int _xMap, int _yMap) {
+	public PieceOfPizza(TileMap _tileMap, int _xMap, int _yMap) {
 		super(_tileMap, _xMap, _yMap);
 		
-		description = "Alcohol";
+		description = "Pedazo de Pizza";
 		type = NON_BLOCKED;
-		damage = -0.3f;
+		damage = 0;
+		health = 0.3f;
 		
 		loadSprite();
 		
@@ -28,11 +29,12 @@ public class Alcohol extends Object{
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelayTime(1000);
 	}
+	
 	/****************************************************************************************/
 	private void loadSprite() {
 		try {
 			BufferedImage spriteSheet = ImageIO.read(getClass()
-					.getResourceAsStream("/objects_sprites/Alcohol.png"));
+					.getResourceAsStream("/objects_sprites/PieceOfPizza.png"));
 			
 			spriteWidth = spriteSheet.getWidth();
 			spriteHeight = spriteSheet.getHeight();
@@ -54,7 +56,7 @@ public class Alcohol extends Object{
 		
 		if(carrier != null){
 			showObject = false;
-			carrier.getDrunk(this);
+			carrier.getHealth(this);
 			carrier.takeOrLeaveObject();
 		}
 		else {

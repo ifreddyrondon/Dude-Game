@@ -21,6 +21,7 @@ public class Object {
 	
 	protected String description;
 	protected float damage;
+	protected float health;
 	
 	protected Animation animation;
 	protected int currentAnimation;
@@ -110,6 +111,9 @@ public class Object {
 	}
 	public int getType(){
 		return type;
+	}
+	public float getHealth() {
+		return health;
 	}
 	
 }
