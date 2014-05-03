@@ -331,9 +331,9 @@ public class TileMap {
 				if (!transparentWalls.equals("")) {
 					if (transparentWalls.equals("bathroom")) {
 						for (int i = 3; i < 10; i++) 
-							walls[i][8] = 35;
-						for (int i = 3; i < 8; i++) 
-							walls[11][i] = 34;
+							walls[i][8] = 48;
+						for (int i = 4; i < 8; i++) 
+							walls[11][i] = 47;
 					}
 				}
 				else {
