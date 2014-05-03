@@ -1,6 +1,7 @@
 package com.spantons.gameState;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.util.ArrayList;
 
 import com.spantons.audio.AudioPlayer;
@@ -29,6 +30,8 @@ public abstract class Stage {
 	public abstract void keyPressed(int k);
 	public abstract void keyReleased(int k);
 	
+	private Point saveNextCurrentCharMapPosition;
+	
 	/****************************************************************************************/
 	public void selectNextCurrentCharacter(){
 		if (characters.isEmpty() && currentCharacter.isDead())
@@ -42,6 +45,13 @@ public abstract class Stage {
 		characters.add(currentCharacter);
 		currentCharacter.setAllMov(false);
 		currentCharacter = characters.get(0);
+		
+		saveNextCurrentCharMapPosition = currentCharacter.getMapPositionOfCharacter();
+		tileMap.setPositionByCharacter(currentCharacter);
+		currentCharacter.setMapPosition(
+				saveNextCurrentCharMapPosition.x, 
+				saveNextCurrentCharMapPosition.y);
+		
 		characters.remove(0);
 		currentCharacter.setVisible(true);
 	}

@@ -165,12 +165,6 @@ public class TileMap {
 				}
 			}
 			
-//			System.out.println(walls[4][8]);
-//			System.out.println(wallsRestore[4][8]);
-//			walls[0][0] = 1;
-//			System.out.println(walls[0][0]);
-//			System.out.println(wallsRestore[0][0]);
-			
 			br.readLine();
 			br.readLine();
 			br.readLine();
@@ -238,6 +232,12 @@ public class TileMap {
 		x = _x;
 		y = _y;
 		fixBounds();
+	}
+	/****************************************************************************************/
+	public void setPositionByCharacter(Entity _entity){
+		setPosition(
+			x + (_entity.getX() - RESOLUTION_WIDTH_FIX / 2)
+			, y + (_entity.getY() - RESOLUTION_HEIGHT_FIX / 2));
 	}
 	/****************************************************************************************/
 	public void update() {

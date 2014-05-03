@@ -13,6 +13,7 @@ public class Entity extends EntityLogic {
 	protected int x;
 	protected int y;
 	protected Point nextPositionInMap;
+	protected Point oldPositionInMap;
 	private Point nextPositionInAbsolute;
 	private Point nextMapPosition;
 	protected boolean visible;
@@ -31,6 +32,7 @@ public class Entity extends EntityLogic {
 			yMap = _yMap;
 			setMapPosition(xMap, yMap);
 			getNextPosition();
+			oldPositionInMap = nextPositionInMap; 
 			entitysToDraw = tileMap.getEntitysToDraw();
 			entitysDeadToDraw = tileMap.getEntitysDeadToDraw();
 			objectsToDraw = tileMap.getObjectsToDraw();
@@ -271,17 +273,22 @@ public class Entity extends EntityLogic {
 
 		} else {
 			getNextPosition();
-			if (checkTileCollision()) {
-				if (checkCharactersCollision()) {
-					checkTransparentWalls();
-					magicWalk();
-					entitysToDraw[xMap][yMap] = null;
-					xMap = getMapPositionOfCharacter().x;
-					yMap = getMapPositionOfCharacter().y;
-					entitysToDraw[xMap][yMap] = this;
+			
+			if (nextPositionInMap != oldPositionInMap) {
+				if (checkTileCollision()) {
+					if (checkCharactersCollision()) {
+						checkTransparentWalls();
+						magicWalk();
+						entitysToDraw[xMap][yMap] = null;
+						xMap = getMapPositionOfCharacter().x;
+						yMap = getMapPositionOfCharacter().y;
+						entitysToDraw[xMap][yMap] = this;
+						
+						oldPositionInMap = nextPositionInMap;
+					}
 				}
 			}
-
+			
 			flinching = true;
 			flinchingTime = System.nanoTime();
 		}
@@ -307,10 +314,10 @@ public class Entity extends EntityLogic {
 	/****************************************************************************************/
 	private void magicWalk() {
 
-		if (tileMap.getX() <= tileMap.getXMin()
-				|| tileMap.getX() >= tileMap.getXMax()
-				|| tileMap.getY() <= tileMap.getYMin()
-				|| tileMap.getY() >= tileMap.getYMax()) {
+		if (	tileMap.getX() <= tileMap.getXMin()
+			|| tileMap.getX() >= tileMap.getXMax()
+			|| tileMap.getY() <= tileMap.getYMin()
+			|| tileMap.getY() >= tileMap.getYMax()) {
 
 			if ((tileMap.getX() == tileMap.getXMin() && x > tileMap.RESOLUTION_WIDTH_FIX / 2)
 					|| (tileMap.getX() == tileMap.getXMax() && x < tileMap.RESOLUTION_WIDTH_FIX / 2)
@@ -339,7 +346,8 @@ public class Entity extends EntityLogic {
 					setMapPosition(nextPositionInMap.x,
 							nextPositionInMap.y);
 			}
-		} else {
+		} 
+		else {
 			setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2,
 					tileMap.RESOLUTION_HEIGHT_FIX / 2);
 			tileMap.setPosition(nextMapPosition.x, nextMapPosition.y);
@@ -401,7 +409,7 @@ public class Entity extends EntityLogic {
 		x = _x;
 		y = _y;
 	}
-
+	
 	public void setAllMov(boolean b) {
 		movDown = b;
 		movLeft = b;
@@ -513,4 +521,5 @@ public class Entity extends EntityLogic {
 	public boolean isFacingRight() {
 		return facingRight;
 	}
+
 }
