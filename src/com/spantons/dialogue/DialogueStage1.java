@@ -72,23 +72,23 @@ public class DialogueStage1 extends Dialogue {
 
 		String[] aux = { "Odio este sitio",
 				"seguramente alguno de ellos me trajo hasta aca",
-				"debería deshacerme de ellos" };
+				"deber√≠a deshacerme de ellos" };
 		thoughts.put(THOUGHTS_RAMDON, aux);
 
-		String[] aux2 = { "Debemos salir de aquí",
+		String[] aux2 = { "Debemos salir de aqu√≠",
 				"Hay que buscar una salida",
-				"Debe haber una puerta en algún lado" };
+				"Debe haber una puerta en alg√∫n lado" };
 		thoughts.put(THOUGHTS_WANTOUT, aux2);
 
-		String[] aux3 = { "Hey qué hago aquí", "Quienes son ustedes",
-				"Qué sucede", "???" };
+		String[] aux3 = { "Hey qu√© hago aqu√≠", "Quienes son ustedes",
+				"Qu√© sucede", "???" };
 		thoughts.put(THOUGHTS_AWAKENING, aux3);
 
 		// HELP
 		// ----------------------------------------------------------------------------------------
 		help = new HashMap<Integer, String[]>();
 
-		String[] aux4 = { "Parece que hay algo detrás que no deja abrirla",
+		String[] aux4 = { "Parece que hay algo detr√°s que no deja abrirla",
 				"necesitamos una palanca" };
 		help.put(HELP_0_BATHROOM, aux4);
 
@@ -96,13 +96,13 @@ public class DialogueStage1 extends Dialogue {
 		// ----------------------------------------------------------------------------------------
 		story = new HashMap<Integer, String[]>();
 		String[] aux5 = { "Falta alguien",
-				"Seguro se quedó para usar el baño", "Qué asqueroso",
-				"Tal vez encontró una salida" };
+				"Seguro se qued√≥ para usar el ba√±o", "Qu√© asqueroso",
+				"Tal vez encontr√≥ una salida" };
 		story.put(STORY_ROOM_1, aux5);
 
-		String[] aux6 = { "¿Quién hizo esto?", "Lo sabía",
+		String[] aux6 = { "¬øQui√©n hizo esto?", "Lo sab√≠a",
 				"No tuve nada que ver con esto",
-				"Maldición ¿Quién fue?", "¿Por qué lo hicieron?",
+				"Maldici√≥n ¬øQui√©n fue?", "¬øPor qu√© lo hicieron?",
 				"Vamos a morir todos" };
 		story.put(STORY_MAIN_ROOM, aux6);
 
@@ -267,7 +267,7 @@ public class DialogueStage1 extends Dialogue {
 			g.setColor(Color.WHITE);
 			g.setFont(aloneFont);
 			fm = g.getFontMetrics();
-			String stringAlone = "¡Estás solo!";
+			String stringAlone = "ÔøΩEstÔøΩs solo!";
 			r = fm.getStringBounds(stringAlone, g);
 			int x = (GamePanel.RESOLUTION_WIDTH - (int) r.getWidth()) / 2;
 			int y = (GamePanel.RESOLUTION_HEIGHT - (int) r.getHeight()) / 2 - 150;

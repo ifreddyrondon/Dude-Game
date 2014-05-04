@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import com.spantons.entity.Animation;
+import com.spantons.entity.Entity;
 import com.spantons.tileMap.TileMap;
 
 public class Alcohol extends Object{
@@ -20,6 +21,7 @@ public class Alcohol extends Object{
 		description = "Alcohol";
 		type = NON_BLOCKED;
 		damage = -0.3f;
+		timeOfDrunk = 30000;
 		
 		loadSprite();
 		
@@ -50,14 +52,22 @@ public class Alcohol extends Object{
 		}
 	}
 	/****************************************************************************************/
+	@Override
+	public void load(Entity _entity) {
+		showObject = false;
+		carrier.getDrunk(this);
+		setCarrier(null);
+	}
+	/****************************************************************************************/
+	@Override
+	public void unload(Entity _entity) {
+		// TODO Auto-generated method stub
+		
+	}
+	/****************************************************************************************/
 	public void update() {
 		
-		if(carrier != null){
-			showObject = false;
-			carrier.getDrunk(this);
-			carrier.takeOrLeaveObject();
-		}
-		else {
+		if(carrier == null){
 			if (currentAnimation != IDLE) {
 				currentAnimation = IDLE;
 				animation.setFrames(sprites.get(IDLE));

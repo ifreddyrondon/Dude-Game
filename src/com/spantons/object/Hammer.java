@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import org.imgscalr.Scalr;
 
 import com.spantons.entity.Animation;
+import com.spantons.entity.Entity;
 import com.spantons.tileMap.TileMap;
 
 public class Hammer extends Object{
@@ -74,6 +75,18 @@ public class Hammer extends Object{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	/****************************************************************************************/
+	@Override
+	public void load(Entity _entity) {
+		_entity.setDamage((float) (_entity.getDamage() + damage));
+		
+	}
+	/****************************************************************************************/
+	@Override
+	public void unload(Entity _entity) {
+		_entity.setDamage((float) (_entity.getDamage() - damage));
+		
 	}
 	/****************************************************************************************/
 	public void update() {

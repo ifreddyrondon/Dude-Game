@@ -509,6 +509,10 @@ public class Entity extends EntityLogic {
 	public double getDamage() {
 		return damage;
 	}
+	
+	public void setDamage(float a) {
+		damage = a;
+	}
 
 	public boolean isVisible() {
 		return visible;

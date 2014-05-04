@@ -7,7 +7,7 @@ import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.tileMap.TileMap;
 
-public class Object {
+public abstract class Object {
 
 	protected int xMap;
 	protected int yMap;
@@ -21,6 +21,7 @@ public class Object {
 	
 	protected String description;
 	protected float damage;
+	protected int timeOfDrunk;
 	protected float health;
 	
 	protected Animation animation;
@@ -34,6 +35,9 @@ public class Object {
 	protected int type;
 	public static int BLOCKED = 0;
 	public static int NON_BLOCKED = 1;
+	
+	public abstract void load(Entity _entity);
+	public abstract void unload(Entity _entity);
 	
 	/****************************************************************************************/
 	public Object(TileMap _tileMap, int _xMap, int _yMap) {
@@ -114,6 +118,9 @@ public class Object {
 	}
 	public float getHealth() {
 		return health;
+	}
+	public int getTimeOfDrunk() {
+		return timeOfDrunk;
 	}
 	
 }

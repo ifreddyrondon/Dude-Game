@@ -176,8 +176,10 @@ public class EntityLogic {
 	private Object checkIsOverObject() {
 		if (stage.getObjects().size() > 0) {
 			for (Object object : stage.getObjects()) {
-				if (xMap == object.getxMap()
-						&& yMap == object.getyMap())
+				if (	xMap == object.getxMap()
+					&& yMap == object.getyMap()
+					&& !object.equals(this.object))
+					
 					return object;
 			}
 		}
@@ -186,25 +188,39 @@ public class EntityLogic {
 	/****************************************************************************************/
 	public void takeOrLeaveObject() {
 		if (object != null) {
-			object.setCarrier(null);
-			damage = damage - object.getDamage();
-			objectsToDraw[xMap][yMap] = object;
-			object = null;
+			Object newObject = checkIsOverObject();
+			if (newObject != null) {
+				
+				newObject.setCarrier((Entity) this);
+				object.setCarrier(null);
+				object.unload((Entity) this);
+				objectsToDraw[xMap][yMap] = object;
+				object = newObject;
+				object.load((Entity) this);
+			}
+			else {
+				object.setCarrier(null);
+				object.unload((Entity) this);
+				objectsToDraw[xMap][yMap] = object;
+				object = null;
+			}
 		} else {
 			object = checkIsOverObject();
 			if (object != null) {
 				object.setCarrier((Entity) this);
+				object.load((Entity) this);
 				objectsToDraw[xMap][yMap] = null;
-				damage = damage + object.getDamage();
 			}
 		}
 	}
 	/****************************************************************************************/
 	public void getDrunk(Object _object){
-		final float damageObject = _object.getDamage();
-		stage.getObjects().remove(_object);
+		object = null;
+		final float damageObject = _object.getDamage();		
 		damage = damage + damageObject;
-		Timer timer = new Timer(30000, new ActionListener() { 
+		stage.getObjects().remove(_object);
+		
+		Timer timer = new Timer(_object.getTimeOfDrunk(), new ActionListener() { 
 			@Override 
 			public void actionPerformed(ActionEvent ae) { 
 				damage = damage - damageObject;

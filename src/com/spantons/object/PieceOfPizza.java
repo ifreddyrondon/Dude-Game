@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import com.spantons.entity.Animation;
+import com.spantons.entity.Entity;
 import com.spantons.tileMap.TileMap;
 
 public class PieceOfPizza extends Object {
@@ -52,14 +53,22 @@ public class PieceOfPizza extends Object {
 		}
 	}
 	/****************************************************************************************/
+	@Override
+	public void load(Entity _entity) {
+		showObject = false;
+		carrier.getHealth(this);
+		carrier.takeOrLeaveObject();
+	}
+	/****************************************************************************************/
+	@Override
+	public void unload(Entity _entity) {
+		// TODO Auto-generated method stub
+		
+	}
+	/****************************************************************************************/
 	public void update() {
 		
-		if(carrier != null){
-			showObject = false;
-			carrier.getHealth(this);
-			carrier.takeOrLeaveObject();
-		}
-		else {
+		if(carrier == null){
 			if (currentAnimation != IDLE) {
 				currentAnimation = IDLE;
 				animation.setFrames(sprites.get(IDLE));
