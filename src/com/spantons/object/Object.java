@@ -23,6 +23,8 @@ public abstract class Object {
 	protected float damage;
 	protected int timeOfDrunk;
 	protected float health;
+	protected int moveSpeed;
+	protected int timeOfHigh;
 	
 	protected Animation animation;
 	protected int currentAnimation;
@@ -121,6 +123,12 @@ public abstract class Object {
 	}
 	public int getTimeOfDrunk() {
 		return timeOfDrunk;
+	}
+	public int getMoveSpeed() {
+		return moveSpeed;
+	}
+	public int getTimeOfHigh() {
+		return timeOfHigh;
 	}
 	
 }

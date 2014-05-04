@@ -10,17 +10,18 @@ import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.tileMap.TileMap;
 
-public class Food extends Object {
+public class Pipe extends Object {
 
 	private static final int IDLE = 0;
 	private ArrayList<BufferedImage[]> sprites;
 	
-	public Food(TileMap _tileMap, int _xMap, int _yMap) {
+	public Pipe(TileMap _tileMap, int _xMap, int _yMap) {
 		super(_tileMap, _xMap, _yMap);
 		
-		description = "Comida";
+		description = "Pipa";
 		type = NON_BLOCKED;
-		health = 1f;
+		moveSpeed = -50;
+		timeOfHigh = 30000;
 		
 		loadSprite();
 		
@@ -33,7 +34,7 @@ public class Food extends Object {
 	private void loadSprite() {
 		try {
 			BufferedImage spriteSheet = ImageIO.read(getClass()
-					.getResourceAsStream("/objects_sprites/Food.png"));
+					.getResourceAsStream("/objects_sprites/Pipe.png"));
 			
 			spriteWidth = spriteSheet.getWidth();
 			spriteHeight = spriteSheet.getHeight();
@@ -49,13 +50,13 @@ public class Food extends Object {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}	
+	}
 	/****************************************************************************************/
 	@Override
 	public void load(Entity _entity) {
 		showObject = false;
-		carrier.getHealth(this);
-		carrier.takeOrLeaveObject();
+		carrier.getHigh(this);
+		setCarrier(null);
 	}
 	/****************************************************************************************/
 	@Override

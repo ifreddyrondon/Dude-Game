@@ -20,7 +20,6 @@ public class Pizza extends Object {
 		
 		description = "Pizza";
 		type = NON_BLOCKED;
-		damage = 0;
 		health = 0.8f;
 		
 		loadSprite();

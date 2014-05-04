@@ -230,6 +230,22 @@ public class EntityLogic {
 		timer.start();
 	}
 	/****************************************************************************************/
+	public void getHigh(Object _object){
+		object = null;
+		final int moveSpeedObject = _object.getMoveSpeed();		
+		moveSpeed = moveSpeed - moveSpeedObject;
+		stage.getObjects().remove(_object);
+		
+		Timer timer = new Timer(_object.getTimeOfHigh(), new ActionListener() { 
+			@Override 
+			public void actionPerformed(ActionEvent ae) { 
+				moveSpeed = moveSpeed + moveSpeedObject;
+			} 
+		}); 
+		timer.setRepeats(false);
+		timer.start();
+	}
+	/****************************************************************************************/
 	public void getHealth(Object _object) {
 		float healthObject = _object.getHealth();
 		stage.getObjects().remove(_object);

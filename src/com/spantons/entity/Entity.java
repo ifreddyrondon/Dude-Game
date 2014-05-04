@@ -77,37 +77,29 @@ public class Entity extends EntityLogic {
 		nextPositionInMap = getMapPositionOfCharacter();
 
 		if (movUp && movLeft)
-			nextPositionInMap = TileWalk.walkTo("NW", nextPositionInMap,
-					moveSpeed);
+			nextPositionInMap = TileWalk.walkTo("NW", nextPositionInMap,1);
 
 		else if (movUp && movRight)
-			nextPositionInMap = TileWalk.walkTo("NE", nextPositionInMap,
-					moveSpeed);
+			nextPositionInMap = TileWalk.walkTo("NE", nextPositionInMap,1);
 
 		else if (movDown && movLeft)
-			nextPositionInMap = TileWalk.walkTo("SW", nextPositionInMap,
-					moveSpeed);
+			nextPositionInMap = TileWalk.walkTo("SW", nextPositionInMap,1);
 
 		else if (movDown && movRight)
-			nextPositionInMap = TileWalk.walkTo("SE", nextPositionInMap,
-					moveSpeed);
+			nextPositionInMap = TileWalk.walkTo("SE", nextPositionInMap,1);
 
 		else {
 			if (movUp)
-				nextPositionInMap = TileWalk.walkTo("N",
-						nextPositionInMap, moveSpeed);
+				nextPositionInMap = TileWalk.walkTo("N",nextPositionInMap, 1);
 
 			else if (movDown)
-				nextPositionInMap = TileWalk.walkTo("S",
-						nextPositionInMap, moveSpeed);
+				nextPositionInMap = TileWalk.walkTo("S",nextPositionInMap, 1);
 
 			else if (movLeft)
-				nextPositionInMap = TileWalk.walkTo("W",
-						nextPositionInMap, moveSpeed);
+				nextPositionInMap = TileWalk.walkTo("W",nextPositionInMap, 1);
 
 			else if (movRight)
-				nextPositionInMap = TileWalk.walkTo("E",
-						nextPositionInMap, moveSpeed);
+				nextPositionInMap = TileWalk.walkTo("E",nextPositionInMap, 1);
 		}
 
 		nextPositionInAbsolute = getAbsolutePosition(nextPositionInMap.x,
@@ -268,7 +260,7 @@ public class Entity extends EntityLogic {
 
 		if (flinching) {
 			long elapsedTime = (System.nanoTime() - flinchingTime) / 1000000;
-			if (elapsedTime > 70)
+			if (elapsedTime > moveSpeed)
 				flinching = false;
 
 		} else {

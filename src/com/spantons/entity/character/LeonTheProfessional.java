@@ -33,7 +33,7 @@ public class LeonTheProfessional extends Entity {
 		flinchingDecreaseDeltaTimePerversity = 1000;
 		deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;
 		dead = false;
-		moveSpeed = 1;
+		moveSpeed = 70;
 		facingRight = true;
 
 		loadSprite();

@@ -33,7 +33,7 @@ public class DanaScullyXFiles extends Entity {
 		flinchingDecreaseDeltaTimePerversity = 1000;
 		deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;
 		dead = false;
-		moveSpeed = 1;
+		moveSpeed = 110;
 		facingRight = true;
 
 		loadSprite();
