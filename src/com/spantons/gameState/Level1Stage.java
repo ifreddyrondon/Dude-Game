@@ -21,6 +21,7 @@ import com.spantons.entity.character.LeonTheProfessional;
 import com.spantons.entity.character.LizSherman;
 import com.spantons.entity.character.Preso;
 import com.spantons.object.Alcohol;
+import com.spantons.object.Door;
 import com.spantons.object.Food;
 import com.spantons.object.Hammer;
 import com.spantons.object.Object;
@@ -59,6 +60,9 @@ public class Level1Stage extends Stage {
 		characters.add(new GordonFreeman(tileMap, this, 4, 30, 0.10));
 		characters.add(new LizSherman(tileMap, this, 30, 4, 0.10));
 		characters.add(new DanaScullyXFiles(tileMap, this, 37, 30, 0.10));
+		
+		objects.add(new Door(tileMap, 2,11, Door.CLOSE_A));
+		objects.add(new Door(tileMap, 10,8, Door.CLOSE_B));
 		
 		objects.add(new Hammer(tileMap, 25, 27, 0.15));
 		objects.add(new Hammer(tileMap, 15, 17, 0.15));
