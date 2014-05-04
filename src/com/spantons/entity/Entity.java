@@ -6,6 +6,7 @@ import java.awt.Point;
 import utilities.TileWalk;
 
 import com.spantons.gameState.Stage;
+import com.spantons.object.Door;
 import com.spantons.tileMap.TileMap;
 
 public class Entity extends EntityLogic {
@@ -234,12 +235,17 @@ public class Entity extends EntityLogic {
 	private void checkTransparentWalls() {
 		// bathroom walls
 		if (	nextPositionInMap.equals(new Point(9, 7)) 
-			|| nextPositionInMap.equals(new Point(10, 7))) 
+			|| nextPositionInMap.equals(new Point(10, 7))){
+			
 			tileMap.setTransparentWalls("bathroom");
-		
+			stage.getDoors().get("bathroom").setStatusOpen(Door.OPEN);
+		}
 		else if (nextPositionInMap.equals(new Point(10, 8))
-			|| nextPositionInMap.equals(new Point(11, 8))) 
+			|| nextPositionInMap.equals(new Point(11, 8))){
+			
 			tileMap.setTransparentWalls("");
+			stage.getDoors().get("bathroom").setStatusOpen(Door.CLOSE);
+		}
 	}
 	
 	/****************************************************************************************/

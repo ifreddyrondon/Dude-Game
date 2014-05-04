@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.Timer;
 
@@ -53,6 +54,7 @@ public class Level1Stage extends Stage {
 		jasons = new ArrayList<Entity>();
 		dead = new ArrayList<Entity>();
 		objects = new ArrayList<Object>();
+		doors = new HashMap<String, Door>();
 		
 		currentCharacter = new LeonTheProfessional(tileMap, this, 25, 25, 0.10);
 		
@@ -61,8 +63,11 @@ public class Level1Stage extends Stage {
 		characters.add(new LizSherman(tileMap, this, 30, 4, 0.10));
 		characters.add(new DanaScullyXFiles(tileMap, this, 37, 30, 0.10));
 		
-		objects.add(new Door(tileMap, 2,11, Door.CLOSE_A));
-		objects.add(new Door(tileMap, 10,8, Door.CLOSE_B));
+		doors.put("bathroom", new Door(
+				tileMap, 10,8, 
+				Door.ANIMATION_CLOSE_B, 
+				Door.CLOSE, 
+				Door.UNLOCK));
 		
 		objects.add(new Hammer(tileMap, 25, 27, 0.15));
 		objects.add(new Hammer(tileMap, 15, 17, 0.15));
@@ -118,6 +123,11 @@ public class Level1Stage extends Stage {
 		if (objects.size() > 0) {
 			for (Object object : objects) 
 				object.update();
+		}
+		
+		if (doors.size() > 0) {
+		      for(String key : doors.keySet())
+		      	doors.get(key).update();
 		}
 		
 		if (dead.size() > 0) {

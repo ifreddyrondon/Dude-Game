@@ -3,10 +3,12 @@ package com.spantons.gameState;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.spantons.audio.AudioPlayer;
 import com.spantons.dialogue.Dialogue;
 import com.spantons.entity.Entity;
+import com.spantons.object.Door;
 import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
 
@@ -18,6 +20,7 @@ public abstract class Stage {
 	protected ArrayList<Entity> jasons;
 	protected ArrayList<Entity> dead;
 	protected ArrayList<Object> objects;
+	protected HashMap<String, Door> doors;
 	protected Entity currentCharacter;
 	protected Dialogue dialogues;
 	protected boolean secondaryMenu;
@@ -73,6 +76,9 @@ public abstract class Stage {
 	}
 	public ArrayList<Object> getObjects() {
 		return objects;
+	}
+	public HashMap<String, Door> getDoors() {
+		return doors;
 	}
 	public boolean isSecondaryMenu() {
 		return secondaryMenu;
