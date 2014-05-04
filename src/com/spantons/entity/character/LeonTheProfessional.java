@@ -13,10 +13,10 @@ import com.spantons.entity.Entity;
 import com.spantons.gameState.Stage;
 import com.spantons.tileMap.TileMap;
 
-public class LeonTheProfessional‎ extends Entity {
+public class LeonTheProfessional extends Entity {
 
 	/****************************************************************************************/
-	public LeonTheProfessional‎(TileMap _tm, Stage _stage, int _xMap,
+	public LeonTheProfessional(TileMap _tm, Stage _stage, int _xMap,
 			int _yMap, double _scale) {
 
 		super(_tm, _stage, _xMap, _yMap);

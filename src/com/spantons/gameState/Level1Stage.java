@@ -17,7 +17,7 @@ import com.spantons.entity.Hud;
 import com.spantons.entity.character.DanaScullyXFiles;
 import com.spantons.entity.character.GordonFreeman;
 import com.spantons.entity.character.Jason;
-import com.spantons.entity.character.LeonTheProfessional‎;
+import com.spantons.entity.character.LeonTheProfessional;
 import com.spantons.entity.character.LizSherman;
 import com.spantons.entity.character.Preso;
 import com.spantons.object.Alcohol;
@@ -52,7 +52,7 @@ public class Level1Stage extends Stage {
 		dead = new ArrayList<Entity>();
 		objects = new ArrayList<Object>();
 		
-		currentCharacter = new LeonTheProfessional‎(tileMap, this, 25, 25, 0.10);	
+		currentCharacter = new LeonTheProfessional(tileMap, this, 25, 25, 0.10);	
 		
 		characters.add(new Preso(tileMap, this, 15, 25, 0.10));
 		characters.add(new GordonFreeman(tileMap, this, 4, 30, 0.10));
