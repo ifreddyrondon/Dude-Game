@@ -64,18 +64,24 @@ public class Level1Stage extends Stage {
 		characters.add(new DanaScullyXFiles(tileMap, this, 37, 30, 0.10));
 		
 		doors.put("bathroom", new Door(
-				tileMap, 10,8, 
+				tileMap, 14,10, 
 				Door.ANIMATION_CLOSE_B, 
 				Door.CLOSE, 
 				Door.UNLOCK));
+		doors.put("next", new Door(
+				tileMap, 14,3, 
+				Door.ANIMATION_CLOSE_A, 
+				Door.CLOSE, 
+				Door.UNLOCK));
 		
-		objects.add(new Hammer(tileMap, 25, 27, 0.15));
-		objects.add(new Hammer(tileMap, 15, 17, 0.15));
-		objects.add(new Alcohol(tileMap, 15, 4));
-		objects.add(new Pizza(tileMap, 7, 7));
-		objects.add(new PieceOfPizza(tileMap, 9,10));
-		objects.add(new Food(tileMap, 13,7));
-		objects.add(new Pipe(tileMap, 15,11));
+		objects.add(new Hammer(tileMap, 14, 7, 0.15));
+		objects.add(new Hammer(tileMap, 4, 15, 0.15));
+		objects.add(new Alcohol(tileMap, 14, 11));
+		objects.add(new Alcohol(tileMap, 11, 7));
+		objects.add(new Pipe(tileMap, 16,10));
+		objects.add(new Pizza(tileMap, 7, 9));
+		objects.add(new Food(tileMap, 18,5));
+		objects.add(new PieceOfPizza(tileMap, 8,11));
 		
 		// Sonido del juego
 		player = new AudioPlayer("/music/terror.wav");
