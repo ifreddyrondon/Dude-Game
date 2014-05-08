@@ -13,6 +13,7 @@ import utilities.TileWalk;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
+import com.spantons.entity.EntityChecks;
 import com.spantons.gameState.Stage;
 import com.spantons.tileMap.TileMap;
 
@@ -109,7 +110,7 @@ public class Jason extends Entity{
 	
 	/****************************************************************************************/
 	public void update() {
-		checkIsVisible();
+		EntityChecks.checkIsVisible(this, tileMap);
 		if (visible) {
 			checkCharacterIsDead();
 			checkIsRecoveringFromAttack();
@@ -134,7 +135,7 @@ public class Jason extends Entity{
 			nextPositionInMap = TileWalk.walkTo(nextDirectionJason,
 					nextPositionInMap, 1);
 
-			if (checkTileCollision()) {
+			if (EntityChecks.checkTileCollision(this, tileMap)) {
 				entitysToDraw[xMap][yMap] = null;
 				xMap = nextPositionInMap.x;
 				yMap = nextPositionInMap.y;
