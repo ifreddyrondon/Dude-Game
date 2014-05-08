@@ -13,6 +13,7 @@ import utilities.Multiple;
 import utilities.TileWalk;
 
 import com.spantons.entity.Entity;
+import com.spantons.gameState.Level1Stage;
 import com.spantons.main.GamePanel;
 import com.spantons.object.Object;
 
@@ -36,6 +37,7 @@ public class TileMap {
 	private int[][] walls;
 	private int[][] wallsRestore;
 	private int[][] objects;
+	private int[][] objectsWithoutCollision;
 	private String transparentWalls;
 	public Point tileSize;
 	private int numRowsMap;
@@ -129,6 +131,7 @@ public class TileMap {
 			map = new int[numRowsMap][numColMap];
 			walls = new int[numRowsMap][numColMap];
 			objects = new int[numRowsMap][numColMap];
+			objectsWithoutCollision = new int[numRowsMap][numColMap];
 			
 			entitysToDraw = new Entity[numRowsMap][numColMap];
 			entitysDeadToDraw = new Entity[numRowsMap][numColMap];
@@ -177,6 +180,18 @@ public class TileMap {
 					objects[col][row] = Integer.parseInt(tokens[col]);
 			}
 
+			br.readLine();
+			br.readLine();
+			br.readLine();
+			br.readLine();
+			
+			for (int row = 0; row < numRowsMap; row++) {
+				line = br.readLine();
+				tokens = line.split(delimsChar);
+				for (int col = 0; col < numColMap; col++)
+					objectsWithoutCollision[col][row] = Integer.parseInt(tokens[col]);
+			}
+			
 			getBounds();
 
 		} catch (Exception e) {
@@ -330,12 +345,10 @@ public class TileMap {
 				
 				if (!transparentWalls.equals("")) {
 					if (transparentWalls.equals("bathroom")) {
-						for (int i = 4; i < 14; i++) 
-							walls[i][10] = 56;
-						walls[15][10] = 56;
-						for (int i = 5; i < 10; i++) 
-							walls[15][i] = 55;
-						walls[15][4] = 51;
+						for (Point a : Level1Stage.A) 
+							walls[a.x][a.y] = Level1Stage.TRANSPARENT_A;
+						for (Point b : Level1Stage.B) 
+							walls[b.x][b.y] = Level1Stage.TRANSPARENT_B;
 					}
 				}
 				else {
@@ -354,6 +367,13 @@ public class TileMap {
 			
 			if (objects[currentTile.x][currentTile.y] != 0) {
 				g.drawImage(tiles[objects[currentTile.x][currentTile.y] - 1]
+						.getImage(), 
+						(coorAbsolute.x - this.x) - tileSize.x / 2,
+						(coorAbsolute.y - this.y) - 192, null);
+			}
+			
+			if (objectsWithoutCollision[currentTile.x][currentTile.y] != 0) {
+				g.drawImage(tiles[objectsWithoutCollision[currentTile.x][currentTile.y] - 1]
 						.getImage(), 
 						(coorAbsolute.x - this.x) - tileSize.x / 2,
 						(coorAbsolute.y - this.y) - 192, null);

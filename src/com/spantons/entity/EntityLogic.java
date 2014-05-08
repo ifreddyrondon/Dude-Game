@@ -216,8 +216,10 @@ public class EntityLogic {
 	/****************************************************************************************/
 	public void getDrunk(Object _object){
 		object = null;
-		final float damageObject = _object.getDamage();		
+		final float damageObject = _object.getDamage();	
 		damage = damage + damageObject;
+		if (damage <= 0) 
+			damage = 0;		
 		stage.getObjects().remove(_object);
 		
 		Timer timer = new Timer(_object.getTimeOfDrunk(), new ActionListener() { 

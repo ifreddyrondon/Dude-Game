@@ -1,6 +1,7 @@
 package com.spantons.gameState;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -22,10 +23,12 @@ import com.spantons.entity.character.LeonTheProfessional;
 import com.spantons.entity.character.LizSherman;
 import com.spantons.entity.character.Preso;
 import com.spantons.object.Alcohol;
+import com.spantons.object.Beers;
 import com.spantons.object.Door;
 import com.spantons.object.Food;
 import com.spantons.object.Hammer;
 import com.spantons.object.Object;
+import com.spantons.object.Crowbar;
 import com.spantons.object.PieceOfPizza;
 import com.spantons.object.Pipe;
 import com.spantons.object.Pizza;
@@ -38,6 +41,14 @@ public class Level1Stage extends Stage {
 	private int countdown = 180; 
 	private Timer timer;
 
+	public static int TRANSPARENT_A = 71;
+	public static int TRANSPARENT_B = 70;
+	public static Point[] A = {new Point(10, 16),new Point(11, 16),new Point(12, 16),new Point(13, 16),new Point(14, 16),new Point(15, 16),new Point(16, 16),
+		new Point(17, 16),new Point(18, 16),new Point(19, 16),new Point(20, 16),new Point(22, 16)};
+	
+	public static Point[] B = {new Point(22, 8),new Point(22, 9),new Point(22, 10),new Point(22, 11),new Point(22, 12),new Point(22, 13),new Point(22, 14),
+		new Point(22, 15)};
+	
 	public Level1Stage(GameStagesManager _gsm) {
 		gsm = _gsm;
 		init();
@@ -56,32 +67,55 @@ public class Level1Stage extends Stage {
 		objects = new ArrayList<Object>();
 		doors = new HashMap<String, Door>();
 		
-		currentCharacter = new LeonTheProfessional(tileMap, this, 25, 25, 0.10);
+		currentCharacter = new LeonTheProfessional(tileMap, this, 16, 19, 0.10);
 		
-		characters.add(new Preso(tileMap, this, 15, 25, 0.10));
-		characters.add(new GordonFreeman(tileMap, this, 4, 30, 0.10));
-		characters.add(new LizSherman(tileMap, this, 30, 4, 0.10));
-		characters.add(new DanaScullyXFiles(tileMap, this, 37, 30, 0.10));
+		characters.add(new Preso(tileMap, this, 7, 17, 0.10));
+		characters.add(new GordonFreeman(tileMap, this, 8, 20, 0.10));
+		characters.add(new LizSherman(tileMap, this, 13, 17, 0.10));
+		characters.add(new DanaScullyXFiles(tileMap, this, 13, 21, 0.10));
+		
+		doors.put("panicroom", new Door(
+				tileMap, 18,17, 
+				Door.ANIMATION_OPEN_A, 
+				Door.OPEN, 
+				Door.UNLOCK));
+		
+		doors.put("exit", new Door(
+				tileMap, 21,6, 
+				Door.ANIMATION_CLOSE_A, 
+				Door.CLOSE, 
+				Door.LOCK));
 		
 		doors.put("bathroom", new Door(
-				tileMap, 14,10, 
+				tileMap, 21,16, 
+				Door.ANIMATION_OPEN_B, 
+				Door.OPEN, 
+				Door.UNLOCK));
+		
+		doors.put("main", new Door(
+				tileMap, 32,28, 
 				Door.ANIMATION_CLOSE_B, 
 				Door.CLOSE, 
 				Door.UNLOCK));
-		doors.put("next", new Door(
-				tileMap, 14,3, 
-				Door.ANIMATION_CLOSE_A, 
-				Door.CLOSE, 
-				Door.UNLOCK));
 		
-		objects.add(new Hammer(tileMap, 14, 7, 0.15));
-		objects.add(new Hammer(tileMap, 4, 15, 0.15));
-		objects.add(new Alcohol(tileMap, 14, 11));
-		objects.add(new Alcohol(tileMap, 11, 7));
-		objects.add(new Pipe(tileMap, 16,10));
-		objects.add(new Pizza(tileMap, 7, 9));
-		objects.add(new Food(tileMap, 18,5));
-		objects.add(new PieceOfPizza(tileMap, 8,11));
+		objects.add(new Crowbar(tileMap, 10, 12, 0.23));
+		objects.add(new Hammer(tileMap, 12, 13, 0.15));
+		objects.add(new Hammer(tileMap, 14, 18, 0.15));
+		objects.add(new Hammer(tileMap, 19, 20, 0.15));
+		objects.add(new Alcohol(tileMap, 27, 16));
+		objects.add(new Alcohol(tileMap, 17, 11));
+		objects.add(new Alcohol(tileMap, 21, 25));
+		objects.add(new Beers(tileMap, 28, 10));
+		objects.add(new Beers(tileMap, 21, 17));
+		objects.add(new Beers(tileMap, 24, 16));
+		objects.add(new Pipe(tileMap, 27,19));
+		objects.add(new Pipe(tileMap, 17,27));
+		objects.add(new Pipe(tileMap, 27,13));
+		objects.add(new PieceOfPizza(tileMap, 21,18));
+		objects.add(new PieceOfPizza(tileMap, 10,29));
+		objects.add(new Pizza(tileMap, 28, 13));
+		objects.add(new Pizza(tileMap, 32, 8));
+		objects.add(new Food(tileMap, 11,11));
 		
 		// Sonido del juego
 		player = new AudioPlayer("/music/terror.wav");

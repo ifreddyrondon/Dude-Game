@@ -234,14 +234,14 @@ public class Entity extends EntityLogic {
 	/****************************************************************************************/
 	private void checkTransparentWalls() {
 		// bathroom walls
-		if (	nextPositionInMap.equals(new Point(14, 9)) 
-			|| nextPositionInMap.equals(new Point(13, 9))){
+		if (	nextPositionInMap.equals(new Point(20, 15)) 
+			|| nextPositionInMap.equals(new Point(21, 15))){
 			
 			tileMap.setTransparentWalls("bathroom");
 			stage.getDoors().get("bathroom").setStatusOpen(Door.OPEN);
 		}
-		else if (nextPositionInMap.equals(new Point(14, 10))
-			|| nextPositionInMap.equals(new Point(13, 10))){
+		else if (nextPositionInMap.equals(new Point(20, 16))
+			|| nextPositionInMap.equals(new Point(21, 16))){
 			
 			tileMap.setTransparentWalls("");
 			stage.getDoors().get("bathroom").setStatusOpen(Door.CLOSE);

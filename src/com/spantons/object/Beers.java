@@ -6,29 +6,22 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import org.imgscalr.Scalr;
-
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.tileMap.TileMap;
 
-public class Hammer extends Object{
+public class Beers extends Object {
 
 	private static final int IDLE = 0;
-	private static final int LOADING = 1;
-	private static final int ATTACKING = 2;
-	
 	private ArrayList<BufferedImage[]> sprites;
-	/****************************************************************************************/
-	public Hammer(TileMap _tileMap, int _xMap, int _yMap, double _scale) {
+	
+	public Beers(TileMap _tileMap, int _xMap, int _yMap) {
 		super(_tileMap, _xMap, _yMap);
-		scale = _scale;
 		
-		description = "Martillo";
+		description = "Cerveza";
 		type = NON_BLOCKED;
-		damage = 0.6f;
-		offSetXLoading = 12;
-		offSetYLoading = 12;
+		damage = -0.5f;
+		timeOfDrunk = 30000;
 		
 		loadSprite();
 		
@@ -41,34 +34,16 @@ public class Hammer extends Object{
 	private void loadSprite() {
 		try {
 			BufferedImage spriteSheet = ImageIO.read(getClass()
-					.getResourceAsStream("/objects_sprites/Hammer.png"));
+					.getResourceAsStream("/objects_sprites/Beers.png"));
 			
-			spriteWidth = ((int) (spriteSheet.getWidth() / 3 * scale));
-			spriteHeight = ((int) (spriteSheet.getHeight() * scale));
-			
-			spriteSheet = Scalr.resize(spriteSheet, (int)(spriteSheet.getWidth() * scale));
+			spriteWidth = spriteSheet.getWidth();
+			spriteHeight = spriteSheet.getHeight();
 			
 			sprites = new ArrayList<BufferedImage[]>();
 
 			// IDLE
 			BufferedImage[] bi = new BufferedImage[1];
 			bi[0] = spriteSheet.getSubimage(0, 0, spriteWidth,
-					spriteHeight);
-			sprites.add(bi);
-			
-			// LOADING
-			bi = new BufferedImage[1];
-			bi[0] = spriteSheet.getSubimage(spriteWidth, 0, spriteWidth,
-					spriteHeight);
-			sprites.add(bi);
-			
-			// ATTACKING
-			bi = new BufferedImage[3];
-			bi[0] = spriteSheet.getSubimage(spriteWidth, 0, spriteWidth,
-					spriteHeight);
-			bi[1] = spriteSheet.getSubimage(0, 0, spriteWidth,
-					spriteHeight);
-			bi[2] = spriteSheet.getSubimage(spriteWidth * 2, 0, spriteWidth,
 					spriteHeight);
 			sprites.add(bi);
 
@@ -79,34 +54,20 @@ public class Hammer extends Object{
 	/****************************************************************************************/
 	@Override
 	public void load(Entity _entity) {
-		_entity.setDamage((float) (_entity.getDamage() + damage));
-		
+		showObject = false;
+		carrier.getDrunk(this);
+		setCarrier(null);
 	}
 	/****************************************************************************************/
 	@Override
 	public void unload(Entity _entity) {
-		_entity.setDamage((float) (_entity.getDamage() - damage));
+		// TODO Auto-generated method stub
 		
 	}
 	/****************************************************************************************/
 	public void update() {
 		
-		if(carrier != null){
-			if (carrier.isAttack()) {
-				if (currentAnimation != ATTACKING) {
-					currentAnimation = ATTACKING;
-					animation.setFrames(sprites.get(ATTACKING));
-					animation.setDelayTime(50);
-				}
-			} else {
-				if (currentAnimation != LOADING) {
-					currentAnimation = LOADING;
-					animation.setFrames(sprites.get(LOADING));
-					animation.setDelayTime(1000);
-				}
-			}
-		}
-		else {
+		if(carrier == null){
 			if (currentAnimation != IDLE) {
 				currentAnimation = IDLE;
 				animation.setFrames(sprites.get(IDLE));

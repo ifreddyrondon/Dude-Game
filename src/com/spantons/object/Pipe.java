@@ -20,7 +20,7 @@ public class Pipe extends Object {
 		
 		description = "Pipa";
 		type = NON_BLOCKED;
-		moveSpeed = -50;
+		moveSpeed = -60;
 		timeOfHigh = 30000;
 		
 		loadSprite();

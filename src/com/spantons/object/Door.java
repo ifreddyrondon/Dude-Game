@@ -13,8 +13,8 @@ import com.spantons.tileMap.TileMap;
 public class Door extends Object {
 
 	public static final int ANIMATION_CLOSE_A = 0;
-	public static final int ANIMATION_CLOSE_B = 1;
-	public static final int ANIMATION_OPEN_A = 2;
+	public static final int ANIMATION_OPEN_A = 1;
+	public static final int ANIMATION_CLOSE_B = 2;
 	public static final int ANIMATION_OPEN_B = 3;
 	
 	public static final int LOCK = 1;
@@ -50,39 +50,31 @@ public class Door extends Object {
 					.getResourceAsStream("/objects_sprites/Doors.png"));
 
 			spriteWidth = ((int) (spriteSheet.getWidth()));
-			spriteHeight = ((int) (spriteSheet.getHeight() / 8));
+			spriteHeight = ((int) (spriteSheet.getHeight() / 4));
 
 			sprites = new ArrayList<BufferedImage[]>();
 
 			// CLOSE_A
-			BufferedImage[] bi = new BufferedImage[2];
+			BufferedImage[] bi = new BufferedImage[1];
 			bi[0] = spriteSheet.getSubimage(0, 0, spriteWidth,
-					spriteHeight);
-			bi[1] = spriteSheet.getSubimage(0, spriteHeight, spriteWidth,
 					spriteHeight);
 			sprites.add(bi);
 
 			// CLOSE_B
-			bi = new BufferedImage[2];
-			bi[0] = spriteSheet.getSubimage(0, spriteHeight * 2,
-					spriteWidth, spriteHeight);
-			bi[1] = spriteSheet.getSubimage(0, spriteHeight * 3,
+			bi = new BufferedImage[1];
+			bi[0] = spriteSheet.getSubimage(0, spriteHeight,
 					spriteWidth, spriteHeight);
 			sprites.add(bi);
 
 			// OPEN_A
-			bi = new BufferedImage[2];
-			bi[0] = spriteSheet.getSubimage(0, spriteHeight * 4,
-					spriteWidth, spriteHeight);
-			bi[1] = spriteSheet.getSubimage(0, spriteHeight * 5,
+			bi = new BufferedImage[1];
+			bi[0] = spriteSheet.getSubimage(0, spriteHeight * 2,
 					spriteWidth, spriteHeight);
 			sprites.add(bi);
 
 			// OPEN_B
-			bi = new BufferedImage[2];
-			bi[0] = spriteSheet.getSubimage(0, spriteHeight * 6,
-					spriteWidth, spriteHeight);
-			bi[1] = spriteSheet.getSubimage(0, spriteHeight * 7,
+			bi = new BufferedImage[1];
+			bi[0] = spriteSheet.getSubimage(0, spriteHeight * 3,
 					spriteWidth, spriteHeight);
 			sprites.add(bi);
 
