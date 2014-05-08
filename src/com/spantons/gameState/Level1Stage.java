@@ -96,7 +96,7 @@ public class Level1Stage extends Stage {
 				tileMap, 32,28, 
 				Door.ANIMATION_CLOSE_B, 
 				Door.CLOSE, 
-				Door.UNLOCK));
+				Door.LOCK));
 		
 		objects.add(new Crowbar(tileMap, 10, 12, 0.23));
 		objects.add(new Hammer(tileMap, 12, 13, 0.15));

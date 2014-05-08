@@ -1,6 +1,7 @@
 package com.spantons.object;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -130,6 +131,10 @@ public class Door extends Object {
 	}
 	/****************************************************************************************/
 
+	public Point getPositionInMap() {
+		return new Point(xMap, yMap);
+	}
+	
 	public int getStatusBlock() {
 		return statusBlock;
 	}

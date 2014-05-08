@@ -249,6 +249,19 @@ public class Entity extends EntityLogic {
 	}
 	
 	/****************************************************************************************/
+	private boolean checkDoors(){
+		if (stage.getDoors().size() > 0) {
+		      for(String key : stage.getDoors().keySet()){
+		      	if (nextPositionInMap.equals(stage.getDoors().get(key).getPositionInMap())) {
+					if (stage.getDoors().get(key).getStatusBlock() == Door.LOCK) {
+						return false;
+					}
+				}
+		      }
+		}
+		return true;
+	}
+	/****************************************************************************************/
 	public void update() {
 
 		if (dead) {
@@ -271,18 +284,18 @@ public class Entity extends EntityLogic {
 
 		} else {
 			getNextPosition();
-			
 			if (nextPositionInMap != oldPositionInMap) {
 				if (checkTileCollision()) {
 					if (checkCharactersCollision()) {
-						checkTransparentWalls();
-						magicWalk();
-						entitysToDraw[xMap][yMap] = null;
-						xMap = getMapPositionOfCharacter().x;
-						yMap = getMapPositionOfCharacter().y;
-						entitysToDraw[xMap][yMap] = this;
-						
-						oldPositionInMap = nextPositionInMap;
+						if(checkDoors()){
+							checkTransparentWalls();
+							magicWalk();
+							entitysToDraw[xMap][yMap] = null;
+							xMap = getMapPositionOfCharacter().x;
+							yMap = getMapPositionOfCharacter().y;
+							entitysToDraw[xMap][yMap] = this;
+							oldPositionInMap = nextPositionInMap;
+						}
 					}
 				}
 			}
