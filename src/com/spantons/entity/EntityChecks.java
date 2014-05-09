@@ -6,28 +6,30 @@ import utilities.TileWalk;
 
 import com.spantons.gameState.Stage;
 import com.spantons.object.Door;
+import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
 
 public class EntityChecks {
 
 	/****************************************************************************************/
-	public static Entity checkIsCloseToAnotherEntity(Entity _entity, Stage _stage) {
+	public static Entity checkIsCloseToAnotherEntity(Entity _entity,
+			Stage _stage) {
 
 		Point position = _entity.getMapPositionOfCharacter();
 		Point north = TileWalk.walkTo("N", position, 1);
 		Point south = TileWalk.walkTo("S", position, 1);
 		Point west = TileWalk.walkTo("W", position, 1);
 		Point east = TileWalk.walkTo("E", position, 1);
-		Point northWest = TileWalk.walkTo("NW",position, 1);
-		Point northEast = TileWalk.walkTo("NE",position, 1);
-		Point southWest = TileWalk.walkTo("SW",position, 1);
-		Point southEast = TileWalk.walkTo("SE",position, 1);
+		Point northWest = TileWalk.walkTo("NW", position, 1);
+		Point northEast = TileWalk.walkTo("NE", position, 1);
+		Point southWest = TileWalk.walkTo("SW", position, 1);
+		Point southEast = TileWalk.walkTo("SE", position, 1);
 		Point currentCharacterPosition = null;
-		
+
 		if (_stage.getCharacters().size() > 0) {
 			for (Entity character : _stage.getCharacters()) {
-				currentCharacterPosition = 
-					character.getMapPositionOfCharacter();
+				currentCharacterPosition = character
+						.getMapPositionOfCharacter();
 				if (currentCharacterPosition.equals(north)) {
 					_entity.setCharacterCloseDirection("N");
 					return character;
@@ -58,7 +60,8 @@ public class EntityChecks {
 
 		if (_stage.getJasons().size() > 0) {
 			for (Entity jason : _stage.getJasons()) {
-				currentCharacterPosition = jason.getMapPositionOfCharacter();
+				currentCharacterPosition = jason
+						.getMapPositionOfCharacter();
 				if (currentCharacterPosition.equals(north)) {
 					_entity.setCharacterCloseDirection("N");
 					return jason;
@@ -89,9 +92,10 @@ public class EntityChecks {
 
 		return null;
 	}
-	
+
 	/****************************************************************************************/
-	public static boolean checkCharactersCollision(Entity _entity, Stage _stage) {
+	public static boolean checkCharactersCollision(Entity _entity,
+			Stage _stage) {
 
 		if (_stage.getCharacters().size() > 0) {
 			for (Entity character : _stage.getCharacters()) {
@@ -115,10 +119,12 @@ public class EntityChecks {
 	/****************************************************************************************/
 	public static boolean checkTileCollision(Entity _entity, TileMap _tileMap) {
 
-		if (	_entity.getNextPositionInMap().x >= 0 
-			&& _entity.getNextPositionInMap().y >= 0
-			&& _entity.getNextPositionInMap().x < _tileMap.getNumColMap()
-			&& _entity.getNextPositionInMap().y < _tileMap.getNumRowsMap()) {
+		if (_entity.getNextPositionInMap().x >= 0
+				&& _entity.getNextPositionInMap().y >= 0
+				&& _entity.getNextPositionInMap().x < _tileMap
+						.getNumColMap()
+				&& _entity.getNextPositionInMap().y < _tileMap
+						.getNumRowsMap()) {
 
 			if (_tileMap.getWallPosition(
 					_entity.getNextPositionInMap().x,
@@ -131,19 +137,21 @@ public class EntityChecks {
 		}
 		return false;
 	}
-	
+
 	/****************************************************************************************/
-	public static void checkTransparentWalls(Entity _entity, Stage _stage, TileMap _tileMap) {
+	public static void checkTransparentWalls(Entity _entity, Stage _stage,
+			TileMap _tileMap) {
 		// bathroom walls
-		if (	_entity.getNextPositionInMap().equals(new Point(20, 15)) 
-			|| _entity.getNextPositionInMap().equals(new Point(21, 15))){
-			
+		if (_entity.getNextPositionInMap().equals(new Point(20, 15))
+				|| _entity.getNextPositionInMap().equals(
+						new Point(21, 15))) {
+
 			_tileMap.setTransparentWalls("bathroom");
 			_stage.getDoors().get("bathroom").setStatusOpen(Door.OPEN);
-		}
-		else if (_entity.getNextPositionInMap().equals(new Point(20, 16))
-				|| _entity.getNextPositionInMap().equals(new Point(21, 16))){
-			
+		} else if (_entity.getNextPositionInMap().equals(new Point(20, 16))
+				|| _entity.getNextPositionInMap().equals(
+						new Point(21, 16))) {
+
 			_tileMap.setTransparentWalls("");
 			_stage.getDoors().get("bathroom").setStatusOpen(Door.CLOSE);
 		}
@@ -152,28 +160,93 @@ public class EntityChecks {
 	/****************************************************************************************/
 	public static boolean checkDoors(Entity _entity, Stage _stage) {
 		if (_stage.getDoors().size() > 0) {
-		      for(String key : _stage.getDoors().keySet()){
-		      	if (_entity.getNextPositionInMap().equals(_stage.getDoors().get(key).getPositionInMap())) {
+			for (String key : _stage.getDoors().keySet()) {
+				if (_entity.getNextPositionInMap().equals(
+						_stage.getDoors().get(key)
+								.getPositionInMap())) {
 					if (_stage.getDoors().get(key).getStatusBlock() == Door.LOCK) {
 						return false;
 					}
 				}
-		      }
+			}
 		}
 		return true;
 	}
-	
+
+	/****************************************************************************************/
+	public static void checkIfDoorOpenWithKey(Entity _entity, Stage _stage) {
+		
+		Point position = _entity.getMapPositionOfCharacter();
+		Point north = TileWalk.walkTo("N", position, 1);
+		Point south = TileWalk.walkTo("S", position, 1);
+		Point west = TileWalk.walkTo("W", position, 1);
+		Point east = TileWalk.walkTo("E", position, 1);
+		Point northWest = TileWalk.walkTo("NW", position, 1);
+		Point northEast = TileWalk.walkTo("NE", position, 1);
+		Point southWest = TileWalk.walkTo("SW", position, 1);
+		Point southEast = TileWalk.walkTo("SE", position, 1);
+		Door door = null;
+
+		if (_stage.getDoors().size() > 0) {
+			for (String key : _stage.getDoors().keySet()) {
+				Point doorPosition = 
+					_stage.getDoors().get(key).getPositionInMap();
+				if (doorPosition.equals(north)
+						|| doorPosition.equals(south)
+						|| doorPosition.equals(west)
+						|| doorPosition.equals(east)
+						|| doorPosition.equals(northWest)
+						|| doorPosition.equals(northEast)
+						|| doorPosition.equals(southWest)
+						|| doorPosition.equals(southEast))
+					door = _stage.getDoors().get(key);
+			}
+			
+			if (door != null) {
+				if (door.getStatusBlock() == 1){
+					if (_entity.getObject() != null) {
+						if(_entity.getObject().getIdAssociated() != null) {
+							if (_entity.getObject().getIdAssociated().equals(door.getId())) {
+								door.setStatusBlock(Door.UNLOCK);
+								door.setStatusOpen(Door.OPEN);
+							} else
+								System.out.println("este objeto no puede abrir esta puerta");
+						} else 
+							System.out.println("este objeto no sirve para abrir puertas");
+					} else 
+						System.out.println("debes conseguir algo para abrir la puerta");
+				} else 
+					System.out.println("puerta abierta");
+			} else 
+				System.out.println("debes estar cerca de la puerta");
+		}
+	}
+
 	/****************************************************************************************/
 	public static void checkIsVisible(Entity _entity, TileMap _tileMap) {
-		if (	_entity.getX() >= 0 
-			&& _entity.getX() <= _tileMap.RESOLUTION_WIDTH_FIX 
-			&& _entity.getY() >= 0
-			&& _entity.getY() <= _tileMap.RESOLUTION_HEIGHT_FIX)
+		if (_entity.getX() >= 0
+				&& _entity.getX() <= _tileMap.RESOLUTION_WIDTH_FIX
+				&& _entity.getY() >= 0
+				&& _entity.getY() <= _tileMap.RESOLUTION_HEIGHT_FIX)
 
 			_entity.setVisible(true);
 		else
 			_entity.setVisible(false);
 	}
+
 	/****************************************************************************************/
-	
+	public static Object checkIsOverObject(Entity _entity, Stage _stage) {
+		if (_stage.getObjects().size() > 0) {
+			for (Object object : _stage.getObjects()) {
+				if (_entity.getXMap() == object.getxMap()
+						&& _entity.getYMap() == object.getyMap()
+						&& !object.equals(_entity.getObject()))
+
+					return object;
+			}
+		}
+		return null;
+	}
+
+	/****************************************************************************************/
 }

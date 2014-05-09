@@ -20,11 +20,12 @@ public class Crowbar extends Object {
 	
 	private ArrayList<BufferedImage[]> sprites;
 	/****************************************************************************************/
-	public Crowbar(TileMap _tileMap, int _xMap, int _yMap, double _scale) {
+	public Crowbar(TileMap _tileMap, int _xMap, int _yMap, double _scale, String _idAssociated) {
 		super(_tileMap, _xMap, _yMap);
 		scale = _scale;
 		
 		description = "Palanca";
+		idAssociated = _idAssociated;
 		type = NON_BLOCKED;
 		damage = 0.4f;
 		offSetXLoading = 12;

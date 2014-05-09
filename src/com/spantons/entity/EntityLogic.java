@@ -128,6 +128,7 @@ public class EntityLogic {
 			animation.update();
 		}
 	}
+	
 	/****************************************************************************************/
 	protected void increasePerversity() {
 		if (flinchingIncreasePerversity) {
@@ -163,6 +164,7 @@ public class EntityLogic {
 			flinchingDecreaseTimePerversity = System.nanoTime();
 		}
 	}
+	
 	/****************************************************************************************/
 	private void jasonTransform() {
 		if (object != null){
@@ -172,23 +174,11 @@ public class EntityLogic {
 		stage.getCharacters().remove(this);
 		stage.getJasons().add(new Jason(tileMap, stage, xMap, yMap, 0.10));
 	}
-	/****************************************************************************************/
-	private Object checkIsOverObject() {
-		if (stage.getObjects().size() > 0) {
-			for (Object object : stage.getObjects()) {
-				if (	xMap == object.getxMap()
-					&& yMap == object.getyMap()
-					&& !object.equals(this.object))
-					
-					return object;
-			}
-		}
-		return null;
-	}
+	
 	/****************************************************************************************/
 	public void takeOrLeaveObject() {
 		if (object != null) {
-			Object newObject = checkIsOverObject();
+			Object newObject = EntityChecks.checkIsOverObject((Entity) this, stage);
 			if (newObject != null) {
 				
 				newObject.setCarrier((Entity) this);
@@ -205,7 +195,7 @@ public class EntityLogic {
 				object = null;
 			}
 		} else {
-			object = checkIsOverObject();
+			object = EntityChecks.checkIsOverObject((Entity) this, stage);
 			if (object != null) {
 				object.setCarrier((Entity) this);
 				object.load((Entity) this);
@@ -213,6 +203,7 @@ public class EntityLogic {
 			}
 		}
 	}
+	
 	/****************************************************************************************/
 	public void getDrunk(Object _object){
 		object = null;
@@ -231,6 +222,7 @@ public class EntityLogic {
 		timer.setRepeats(false);
 		timer.start();
 	}
+	
 	/****************************************************************************************/
 	public void getHigh(Object _object){
 		object = null;
@@ -247,6 +239,7 @@ public class EntityLogic {
 		timer.setRepeats(false);
 		timer.start();
 	}
+	
 	/****************************************************************************************/
 	public void getHealth(Object _object) {
 		float healthObject = _object.getHealth();
@@ -260,6 +253,7 @@ public class EntityLogic {
 				health = health + healthObject;
 		}
 	}
+	
 	/****************************************************************************************/
 	protected void attack() {
 				
@@ -283,6 +277,7 @@ public class EntityLogic {
 			characterClose.flinchingTimeRecoveringFromAttack = System.nanoTime();
 		}
 	}
+	
 	/****************************************************************************************/
 	protected void movFace(String _direction) {
 		if (_direction.equals("N")) 

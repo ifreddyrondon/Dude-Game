@@ -43,14 +43,14 @@ public class DialogueStage1 extends Dialogue {
 	private int characterHeight;
 
 	private Timer timerCharactersSpeaking;
-	private int countdownCharactersSpeaking = 2000;
+	private int countdownCharactersSpeaking = 3000;
 	private Entity characterSpeaking;
 	private String characterSpeakingDialog;
 	private BufferedImage dialogueImage;
 	private ArrayList<String> setOfDialogues;
 
 	private Timer timerAwakeningDialogues;
-	private int countdownAwakeningDialogues = 2000;
+	private int countdownAwakeningDialogues = 2500;
 
 	/****************************************************************************************/
 	public DialogueStage1(Stage _stage) {

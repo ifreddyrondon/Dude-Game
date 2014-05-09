@@ -26,12 +26,23 @@ public class Door extends Object {
 	public static final int CLOSE = 2;
 	private int statusOpen;
 	
+	private String id;
+	
 	private ArrayList<BufferedImage[]> sprites;
 
-	public Door(TileMap _tileMap, int _xMap, int _yMap, int _animation, int _statusOpen, int _statusBlock) {
+	public Door(
+			TileMap _tileMap, 
+			int _xMap, 
+			int _yMap, 
+			int _animation, 
+			int _statusOpen, 
+			int _statusBlock,
+			String _id) {
+		
 		super(_tileMap, _xMap, _yMap);
 
 		description = "Puerta";
+		id = _id;
 		type = BLOCKED;
 		statusOpen = _statusOpen;
 		statusBlock = _statusBlock;
@@ -149,6 +160,10 @@ public class Door extends Object {
 
 	public void setStatusOpen(int statusOpen) {
 		this.statusOpen = statusOpen;
+	}
+	
+	public String getId(){
+		return id;
 	}
 	
 }

@@ -15,6 +15,7 @@ import utilities.ToHours;
 import com.spantons.audio.AudioPlayer;
 import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
+import com.spantons.entity.EntityChecks;
 import com.spantons.entity.Hud;
 import com.spantons.entity.character.DanaScullyXFiles;
 import com.spantons.entity.character.GordonFreeman;
@@ -74,31 +75,37 @@ public class Level1Stage extends Stage {
 		characters.add(new LizSherman(tileMap, this, 13, 17, 0.10));
 		characters.add(new DanaScullyXFiles(tileMap, this, 13, 21, 0.10));
 		
+		Jason characterDead = new Jason(tileMap, this, 26, 21, 0.10);
+		characterDead.update();
+		characterDead.setDead(true);
+		
+		jasons.add(characterDead);
+		
 		doors.put("panicroom", new Door(
 				tileMap, 18,17, 
 				Door.ANIMATION_OPEN_A, 
 				Door.OPEN, 
-				Door.UNLOCK));
+				Door.UNLOCK,"panicroom"));
 		
 		doors.put("exit", new Door(
 				tileMap, 21,6, 
 				Door.ANIMATION_CLOSE_A, 
 				Door.CLOSE, 
-				Door.LOCK));
+				Door.LOCK,"exit"));
 		
 		doors.put("bathroom", new Door(
 				tileMap, 21,16, 
 				Door.ANIMATION_OPEN_B, 
 				Door.OPEN, 
-				Door.UNLOCK));
+				Door.UNLOCK,"bathroom"));
 		
 		doors.put("main", new Door(
 				tileMap, 32,28, 
 				Door.ANIMATION_CLOSE_B, 
 				Door.CLOSE, 
-				Door.LOCK));
+				Door.LOCK,"main"));
 		
-		objects.add(new Crowbar(tileMap, 10, 12, 0.23));
+		objects.add(new Crowbar(tileMap, 10, 12, 0.23, "exit"));
 		objects.add(new Hammer(tileMap, 12, 13, 0.15));
 		objects.add(new Hammer(tileMap, 14, 18, 0.15));
 		objects.add(new Hammer(tileMap, 19, 20, 0.15));
@@ -213,6 +220,8 @@ public class Level1Stage extends Stage {
 			currentCharacter.setAttack(true);
 		if (k == KeyEvent.VK_ENTER)
 			currentCharacter.takeOrLeaveObject();
+		if (k == KeyEvent.VK_O)
+			EntityChecks.checkIfDoorOpenWithKey(currentCharacter, this);
 		if(k == KeyEvent.VK_ESCAPE)
 			secondaryMenu = !secondaryMenu;
 		if(k == KeyEvent.VK_R && secondaryMenu)

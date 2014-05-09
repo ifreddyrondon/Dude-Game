@@ -6,6 +6,7 @@ import java.awt.Point;
 import utilities.TileWalk;
 
 import com.spantons.gameState.Stage;
+import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
 
 public class Entity extends EntityLogic {
@@ -384,6 +385,10 @@ public class Entity extends EntityLogic {
 	
 	public void setCharacterCloseDirection(String a){
 		characterCloseDirection = a;
+	}
+
+	public  Object getObject(){
+		return object;
 	}
 
 }

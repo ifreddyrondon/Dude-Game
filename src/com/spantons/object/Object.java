@@ -25,6 +25,7 @@ public abstract class Object {
 	protected float health;
 	protected int moveSpeed;
 	protected int timeOfHigh;
+	protected String idAssociated;
 	
 	protected Animation animation;
 	protected int currentAnimation;
@@ -131,4 +132,8 @@ public abstract class Object {
 		return timeOfHigh;
 	}
 	
+	public String getIdAssociated(){
+		return idAssociated;
+	}
+		
 }
