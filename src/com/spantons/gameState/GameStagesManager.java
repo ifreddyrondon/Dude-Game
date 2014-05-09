@@ -7,10 +7,11 @@ public class GameStagesManager {
 	private Stage[] gameStages;
 	private int currentStage;
 
-	public static final int NUM_STAGES = 3;
+	public static final int NUM_STAGES = 4;
 	public static final int MENU_STAGE = 0;
 	public static final int LEVEL_1_STAGE = 1;
 	public static final int GAME_OVER_STAGE = 2;
+	public static final int HELP_STAGE = 3;
 
 	public GameStagesManager() {
 		gameStages = new Stage[NUM_STAGES];
@@ -25,6 +26,8 @@ public class GameStagesManager {
 			gameStages[LEVEL_1_STAGE] = new Level1Stage(this);
 		if (stage == GAME_OVER_STAGE)
 			gameStages[GAME_OVER_STAGE] = new GameOverStage(this);
+		if (stage == HELP_STAGE)
+			gameStages[HELP_STAGE] = new HelpStage(this);
 	}
 
 	private void unloadStage(int stage) {

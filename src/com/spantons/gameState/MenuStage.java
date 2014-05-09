@@ -67,6 +67,10 @@ public class MenuStage extends Stage {
 //		player.close();
 		gsm.setStage(GameStagesManager.LEVEL_1_STAGE);
 	}
+	public void helpStage(){
+		gsm.setStage(GameStagesManager.HELP_STAGE);
+		
+	}
 	/****************************************************************************************/
 	@Override
 	public void update() {
@@ -119,7 +123,7 @@ public class MenuStage extends Stage {
 		if (currentChoice == 0) 
 			endStage();
 		else if (currentChoice == 1) 
-			System.out.println("MENU AYUDA");
+			helpStage();
 		else if (currentChoice == 2) 
 			System.exit(0);
 	}
