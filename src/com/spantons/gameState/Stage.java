@@ -83,4 +83,8 @@ public abstract class Stage {
 	public boolean isSecondaryMenu() {
 		return secondaryMenu;
 	}
+	public void helpStage() {
+		// TODO Auto-generated method stub
+		
+	}
 }
