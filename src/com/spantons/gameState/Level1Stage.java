@@ -39,7 +39,7 @@ public class Level1Stage extends Stage {
 
 	private Hud hud;
 	
-	private int countdown = 180; 
+	private int countdown = 150; 
 	private Timer timer;
 
 	public static int TRANSPARENT_A = 71;

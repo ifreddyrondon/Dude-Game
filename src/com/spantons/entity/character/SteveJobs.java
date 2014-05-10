@@ -41,7 +41,7 @@ public class SteveJobs extends Entity {
 		animation = new Animation();
 		currentAnimation = IDLE;
 		animation.setFrames(sprites.get(IDLE));
-		animation.setDelayTime(1000);
+		animation.setDelayTime(400);
 	}
 
 	/****************************************************************************************/
@@ -83,9 +83,13 @@ public class SteveJobs extends Entity {
 			sprites.add(bi);
 
 			// WALKING_PERSPECTIVE_FRONT
-			bi = new BufferedImage[1];
-			bi[0] = spriteSheet.getSubimage(0, spriteHeight, spriteWidth,
-					spriteHeight);
+			bi = new BufferedImage[3];
+			bi[0] = spriteSheet.getSubimage(spriteWidth * 2, 0,
+					spriteWidth, spriteHeight);
+			bi[1] = spriteSheet.getSubimage(spriteWidth * 3, 0,
+					spriteWidth, spriteHeight);
+			bi[2] = spriteSheet.getSubimage(0, spriteHeight,
+					spriteWidth, spriteHeight);
 			sprites.add(bi);
 
 			// WALKING_PERSPECTIVE_BACK
