@@ -7,11 +7,13 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
 import org.imgscalr.Scalr;
 
+import com.spantons.audio.AudioPlayer;
 import com.spantons.main.GamePanel;
 import com.spantons.tileMap.Background;
 
@@ -63,8 +65,10 @@ public class HelpStage extends Stage {
 			helpColor = Color.BLACK;
 			footerFont = new Font("Helvetica", 8, 12);
 			
-			// player = new AudioPlayer("/music/ghosttown.wav");
-			// player.loop();
+			bgMusic = new AudioPlayer("/music/horrorMovieAmbiance.mp3");
+			bgMusic.loop();
+			sfx = new HashMap<String, AudioPlayer>();
+			sfx.put("scratch", new AudioPlayer("/sfx/scratch.mp3"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,8 +84,8 @@ public class HelpStage extends Stage {
 	/****************************************************************************************/
 	@Override
 	public void endStage() {
-		// player.close();
-		gsm.setStage(GameStagesManager.LEVEL_1_STAGE);
+		bgMusic.close();
+		gsm.setStage(GameStagesManager.MENU_STAGE);
 	}
 
 	/****************************************************************************************/
@@ -134,27 +138,20 @@ public class HelpStage extends Stage {
 	/****************************************************************************************/
 	private void select() {
 		if (currentChoice == 0)
-			gsm.setStage(GameStagesManager.MENU_STAGE);
-
+			endStage();
 	}
 
 	/****************************************************************************************/
-	@Override
+	@Override	
 	public void keyPressed(int k) {
+		sfx.get("scratch").play();
 		if (k == KeyEvent.VK_ENTER)
 			select();
-
 	}
 
 	/****************************************************************************************/
 	@Override
 	public void keyReleased(int k) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void helpStage() {
 		// TODO Auto-generated method stub
 
 	}

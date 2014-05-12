@@ -5,6 +5,7 @@ import java.awt.Point;
 
 import utilities.TileWalk;
 
+import com.spantons.audio.AudioPlayer;
 import com.spantons.gameState.Stage;
 import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
@@ -126,8 +127,14 @@ public class Entity extends EntityLogic {
 		characterClose = EntityChecks.checkIsCloseToAnotherEntity(this, stage);
 		checkIsRecoveringFromAttack();
 
-		if (attack)
+		if (attack) {
+			if (object == null)
+				new AudioPlayer(PUNCHING).play();
+			else
+				new AudioPlayer(PUNCHINGWITHOBJECT).play();
 			attack();
+		} 
+			
 
 		if (flinching) {
 			long elapsedTime = (System.nanoTime() - flinchingTime) / 1000000;

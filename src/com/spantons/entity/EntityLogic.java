@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.Timer;
 
+import com.spantons.audio.AudioPlayer;
 import com.spantons.entity.character.Jason;
 import com.spantons.gameState.Stage;
 import com.spantons.object.Object;
@@ -72,6 +73,13 @@ public class EntityLogic {
 	protected Entity[][] entitysDeadToDraw;
 	protected Object[][] objectsToDraw;
 	
+	protected static String PUNCHING = "/sfx/punch.mp3";
+	protected static String PUNCHINGWITHOBJECT = "/sfx/punchWithObject.mp3";
+	protected static String DYING = "/sfx/dying.mp3";
+	protected static String EATING = "/sfx/eat.mp3";
+	protected static String BURPING = "/sfx/burp.mp3";
+	protected static String SMOKING = "/sfx/smoke.mp3";
+		
 	/****************************************************************************************/
 	protected void updateAnimation() {
 		if (dead) {
@@ -206,6 +214,7 @@ public class EntityLogic {
 	
 	/****************************************************************************************/
 	public void getDrunk(Object _object){
+		new AudioPlayer(BURPING).play();
 		object = null;
 		final float damageObject = _object.getDamage();	
 		damage = damage + damageObject;
@@ -225,6 +234,7 @@ public class EntityLogic {
 	
 	/****************************************************************************************/
 	public void getHigh(Object _object){
+		new AudioPlayer(SMOKING).play();
 		object = null;
 		final int moveSpeedObject = _object.getMoveSpeed();		
 		moveSpeed = moveSpeed - moveSpeedObject;
@@ -242,6 +252,7 @@ public class EntityLogic {
 	
 	/****************************************************************************************/
 	public void getHealth(Object _object) {
+		new AudioPlayer(EATING).play();
 		float healthObject = _object.getHealth();
 		stage.getObjects().remove(_object);
 		if (health == maxHealth) 
@@ -256,7 +267,7 @@ public class EntityLogic {
 	
 	/****************************************************************************************/
 	protected void attack() {
-				
+		
 		if (characterClose != null) {
 			if (characterClose.recoveringFromAttack)
 				return;
@@ -322,6 +333,7 @@ public class EntityLogic {
 	/****************************************************************************************/
 	public void checkCharacterIsDead() {
 		if (dead) {
+			new AudioPlayer(DYING).play();
 			if (object != null)
 				object.setCarrier(null);
 

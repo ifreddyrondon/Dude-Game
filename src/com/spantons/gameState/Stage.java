@@ -24,7 +24,8 @@ public abstract class Stage {
 	protected Entity currentCharacter;
 	protected Dialogue dialogues;
 	protected boolean secondaryMenu;
-	protected AudioPlayer player;
+	protected AudioPlayer bgMusic;
+	protected HashMap<String, AudioPlayer> sfx;
 	
 	public abstract void init();
 	public abstract void endStage();

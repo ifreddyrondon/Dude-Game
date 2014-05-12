@@ -8,11 +8,13 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
 import org.imgscalr.Scalr;
 
+import com.spantons.audio.AudioPlayer;
 import com.spantons.entity.Entity;
 import com.spantons.entity.character.SteveJobs;
 import com.spantons.main.GamePanel;
@@ -23,6 +25,7 @@ public class MenuStage extends Stage {
 	private Background bg;
 	private BufferedImage tricycle;
 	private BufferedImage all;
+	private BufferedImage bloodyHand;
 	
 	private int currentChoice = 0;
 	private String[] choices = { "Jugar", "Ayuda", "Salir" };
@@ -49,6 +52,7 @@ public class MenuStage extends Stage {
 			tricycle = Scalr.resize(tricycle, 350);
 			all = ImageIO.read(getClass().getResourceAsStream("/backgrounds/all.png"));
 			all = Scalr.resize(all, 560);
+			bloodyHand = ImageIO.read(getClass().getResourceAsStream("/backgrounds/bloodyHand.png"));
 			
 			titleColor = new Color(128, 0, 0);
 			titleFont = new Font("Century Gothic", Font.TRUETYPE_FONT, 60);
@@ -56,12 +60,16 @@ public class MenuStage extends Stage {
 			footerFont = new Font("Helvetica", 8, 12);
 
 			characters = new ArrayList<Entity>();
-			SteveJobs sj = new SteveJobs(null, null, 0, 0, 0.5);
-			sj.setPosition(450, 520);
+			SteveJobs sj = new SteveJobs(null, null, 0, 0, 0.50);
+			sj.setPosition(
+					GamePanel.RESOLUTION_WIDTH - tricycle.getWidth() - 30, 
+					250);
 			characters.add(sj);
 			
-//			player = new AudioPlayer("/music/ghosttown.wav");
-//			player.loop();
+			bgMusic = new AudioPlayer("/music/horrorMovieAmbiance.mp3");
+			bgMusic.loop();
+			sfx = new HashMap<String, AudioPlayer>();
+			sfx.put("scratch", new AudioPlayer("/sfx/scratch.mp3"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,10 +83,13 @@ public class MenuStage extends Stage {
 	/****************************************************************************************/
 	@Override
 	public void endStage() {
-//		player.close();
+		bgMusic.close();
 		gsm.setStage(GameStagesManager.LEVEL_1_STAGE);
 	}
+	
+	/****************************************************************************************/
 	public void helpStage(){
+		bgMusic.close();
 		gsm.setStage(GameStagesManager.HELP_STAGE);
 		
 	}
@@ -92,10 +103,19 @@ public class MenuStage extends Stage {
 	@Override
 	public void draw(Graphics2D g) {
 		bg.draw(g);
-		g.drawImage(all, 0,30, null);
+		
+		for (int i = 0; i < characters.size(); i++)
+			characters.get(i).draw(g);
+		
+		g.drawImage(bloodyHand,
+				200,
+				300, null);
+		g.drawImage(all,
+				GamePanel.RESOLUTION_WIDTH / 2 - 330,
+				30, null);
 		g.drawImage(tricycle, 
 				GamePanel.RESOLUTION_WIDTH - tricycle.getWidth(),
-				80, null);
+				105, null);
 
 		// Dibujar titulo
 		g.setColor(titleColor);
@@ -131,9 +151,6 @@ public class MenuStage extends Stage {
 				GamePanel.RESOLUTION_WIDTH - 438, 
 				GamePanel.RESOLUTION_HEIGHT - 20);
 
-		for (int i = 0; i < characters.size(); i++)
-			characters.get(i).draw(g);
-
 	}
 	/****************************************************************************************/
 	private void select() {
@@ -147,7 +164,8 @@ public class MenuStage extends Stage {
 
 	/****************************************************************************************/@Override
 	public void keyPressed(int k) {
-		// Mover en el menu
+		sfx.get("scratch").play();
+		
 		if (k == KeyEvent.VK_ENTER) {
 			select();
 		} else if (k == KeyEvent.VK_UP) {
