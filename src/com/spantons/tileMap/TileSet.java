@@ -2,7 +2,7 @@ package com.spantons.tileMap;
 
 import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
+import utilities.ImageCache;
 
 public class TileSet {
 
@@ -14,7 +14,7 @@ public class TileSet {
 			int xDrawingOffSet = _xDrawingOffSet;
 			int yDrawingOffSet = _yDrawingOffSet;
 			
-			BufferedImage tileSet = ImageIO.read(TileSet.class.getResourceAsStream(src));
+			BufferedImage tileSet = ImageCache.getInstance().getImage(src);
 
 			int numRowsTileSet = tileSet.getHeight()
 					/ tileHeightSize;

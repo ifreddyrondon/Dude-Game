@@ -5,10 +5,11 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
+import utilities.ImageCache;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
+import com.spantons.path.ImagePath;
 import com.spantons.tileMap.TileMap;
 
 public class Door extends Object {
@@ -58,8 +59,7 @@ public class Door extends Object {
 	/****************************************************************************************/
 	private void loadSprite() {
 		try {
-			BufferedImage spriteSheet = ImageIO.read(getClass()
-					.getResourceAsStream("/objects_sprites/Doors.png"));
+			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.OBJECT_DOORS);
 
 			spriteWidth = ((int) (spriteSheet.getWidth()));
 			spriteHeight = ((int) (spriteSheet.getHeight() / 4));

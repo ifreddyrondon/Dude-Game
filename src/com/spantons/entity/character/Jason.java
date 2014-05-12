@@ -5,16 +5,16 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-
 import org.imgscalr.Scalr;
 
+import utilities.ImageCache;
 import utilities.TileWalk;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.entity.EntityChecks;
 import com.spantons.gameState.Stage;
+import com.spantons.path.ImagePath;
 import com.spantons.tileMap.TileMap;
 
 public class Jason extends Entity{
@@ -52,12 +52,9 @@ public class Jason extends Entity{
 	/****************************************************************************************/
 	private void loadSprite() {
 		try {
-			face = ImageIO.read(getClass().getResourceAsStream(
-					"/hud/Jason.png"));
+			face = ImageCache.getInstance().getImage(ImagePath.HUD_CHARACTER_JASON);
 
-			BufferedImage spriteSheet = ImageIO.read(getClass()
-					.getResourceAsStream(
-							"/characteres_sprites/Jason.png"));
+			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.SPRITE_CHARACTER_JASON);
 
 			spriteWidth = ((int) (spriteSheet.getWidth() / 3 * scale));
 			spriteHeight = ((int) (spriteSheet.getHeight() / 2 * scale));

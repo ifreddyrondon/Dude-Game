@@ -9,6 +9,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
 import com.spantons.main.GamePanel;
+import com.spantons.path.ImagePath;
 import com.spantons.tileMap.Background;
 
 public class GameOverStage extends Stage {
@@ -36,7 +37,7 @@ public class GameOverStage extends Stage {
 		currentChoiceColor = new Color(227, 23, 23);
 		choicesColor = Color.WHITE;
 		
-		String imagesPath[] = {"/backgrounds/game_over.png", "/backgrounds/game_over2.png"};
+		String imagesPath[] = {ImagePath.BACKGROUND_GAME_OVER, ImagePath.BACKGROUND_GAME_OVER_2};
 		Random randomGenerator;
 		randomGenerator = new Random();
 		bg = new Background(imagesPath[randomGenerator.nextInt(2)], 0, false);

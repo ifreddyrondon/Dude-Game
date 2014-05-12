@@ -14,11 +14,13 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
+import utilities.ImageCache;
 import utilities.RandomItemArrayList;
 
 import com.spantons.entity.Entity;
 import com.spantons.gameState.Stage;
 import com.spantons.main.GamePanel;
+import com.spantons.path.ImagePath;
 
 public class DialogueStage1 extends Dialogue {
 
@@ -113,21 +115,15 @@ public class DialogueStage1 extends Dialogue {
 		try {
 			exclamationImg = new BufferedImage[2];
 
-			exclamationImg[0] = ImageIO.read(getClass()
-					.getResourceAsStream("/dialog/exclamation.png"));
+			exclamationImg[0] = ImageCache.getInstance().getImage(ImagePath.DIALOGUE_EXCLAMATION);
 
-			exclamationImg[1] = ImageIO.read(getClass()
-					.getResourceAsStream(
-							"/dialog/exclamation_alert.png"));
+			exclamationImg[1] = ImageCache.getInstance().getImage(ImagePath.DIALOGUE_EXCLAMATION_ALERT);
 
 			speechBallon = new ArrayList<BufferedImage>();
 
-			speechBallon.add(ImageIO.read(getClass().getResourceAsStream(
-					"/dialog/speech_balloon_normal.png")));
-			speechBallon.add(ImageIO.read(getClass().getResourceAsStream(
-					"/dialog/speech_balloon_medium.png")));
-			speechBallon.add(ImageIO.read(getClass().getResourceAsStream(
-					"/dialog/speech_balloon_high.png")));
+			speechBallon.add(ImageCache.getInstance().getImage(ImagePath.DIALOGUE_SPEECH_BALLON_NORMAL));
+			speechBallon.add(ImageCache.getInstance().getImage(ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM));
+			speechBallon.add(ImageCache.getInstance().getImage(ImagePath.DIALOGUE_SPEECH_BALLON_HIGH));
 
 		} catch (Exception e) {
 			e.printStackTrace();

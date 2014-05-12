@@ -10,14 +10,15 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.imageio.ImageIO;
-
 import org.imgscalr.Scalr;
+
+import utilities.ImageCache;
 
 import com.spantons.audio.AudioPlayer;
 import com.spantons.entity.Entity;
 import com.spantons.entity.character.SteveJobs;
 import com.spantons.main.GamePanel;
+import com.spantons.path.ImagePath;
 import com.spantons.tileMap.Background;
 
 public class MenuStage extends Stage {
@@ -46,13 +47,13 @@ public class MenuStage extends Stage {
 		gsm = _gsm;
 
 		try {
-			bg = new Background("/backgrounds/menubg2.png", 0, true);
+			bg = new Background(ImagePath.BACKGROUND_MENU, 0, true);
 			bg.setVector(-0.1, 0);
-			tricycle = ImageIO.read(getClass().getResourceAsStream("/backgrounds/tricycle.png"));
+			tricycle = ImageCache.getInstance().getImage(ImagePath.BACKGROUND_TRICYCLE);
 			tricycle = Scalr.resize(tricycle, 350);
-			all = ImageIO.read(getClass().getResourceAsStream("/backgrounds/all.png"));
+			all = ImageCache.getInstance().getImage(ImagePath.BACKGROUND_ALL);
 			all = Scalr.resize(all, 560);
-			bloodyHand = ImageIO.read(getClass().getResourceAsStream("/backgrounds/bloodyHand.png"));
+			bloodyHand = ImageCache.getInstance().getImage(ImagePath.BACKGROUND_BLOODY_HAND);
 			
 			titleColor = new Color(128, 0, 0);
 			titleFont = new Font("Century Gothic", Font.TRUETYPE_FONT, 60);

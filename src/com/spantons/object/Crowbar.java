@@ -4,12 +4,13 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-
 import org.imgscalr.Scalr;
+
+import utilities.ImageCache;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
+import com.spantons.path.ImagePath;
 import com.spantons.tileMap.TileMap;
 
 public class Crowbar extends Object {
@@ -41,8 +42,7 @@ public class Crowbar extends Object {
 	/****************************************************************************************/
 	private void loadSprite() {
 		try {
-			BufferedImage spriteSheet = ImageIO.read(getClass()
-					.getResourceAsStream("/objects_sprites/Crowbar.png"));
+			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.OBJECT_CROWBAR);
 			
 			spriteWidth = ((int) (spriteSheet.getWidth() / 3 * scale));
 			spriteHeight = ((int) (spriteSheet.getHeight() * scale));

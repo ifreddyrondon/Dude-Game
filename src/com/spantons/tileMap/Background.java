@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
-
 import org.imgscalr.Scalr;
+
+import utilities.ImageCache;
 
 import com.spantons.main.GamePanel;
 
@@ -27,8 +27,7 @@ public class Background {
 			repeat = _repeat;
 			movementScale = _movementScale;
 			
-			 image = ImageIO.read(getClass().getResourceAsStream(
-						_imageSource));
+			 image = ImageCache.getInstance().getImage(_imageSource);
 			 			 
 			if (!_repeat){
 				image = Scalr.resize(image, GamePanel.RESOLUTION_HEIGHT);

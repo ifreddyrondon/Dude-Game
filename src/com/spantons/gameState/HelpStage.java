@@ -9,12 +9,13 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
-import javax.imageio.ImageIO;
-
 import org.imgscalr.Scalr;
+
+import utilities.ImageCache;
 
 import com.spantons.audio.AudioPlayer;
 import com.spantons.main.GamePanel;
+import com.spantons.path.ImagePath;
 import com.spantons.tileMap.Background;
 
 public class HelpStage extends Stage {
@@ -49,12 +50,10 @@ public class HelpStage extends Stage {
 		gsm = _gsm;
 
 		try {
-			bg = new Background("/backgrounds/menubg2.png", 0, true);
+			bg = new Background(ImagePath.BACKGROUND_MENU, 0, true);
 			bg.setVector(-0.1, 0);
-			helpCharacter = ImageIO.read(getClass().getResourceAsStream(
-					"/backgrounds/helpCharacter.png"));
-			arrowRed = ImageIO.read(getClass().getResourceAsStream(
-					"/backgrounds/arrowRed.png"));
+			helpCharacter = ImageCache.getInstance().getImage(ImagePath.BACKGROUND_HELP_CHARACTER);
+			arrowRed = ImageCache.getInstance().getImage(ImagePath.BACKGROUND_ARROW_RED);
 			arrowRed = Scalr.resize(arrowRed, 250);
 
 			warningFont = new Font("Helvetica", 8, 22);

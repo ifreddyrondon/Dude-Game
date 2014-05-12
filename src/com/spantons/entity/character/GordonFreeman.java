@@ -4,13 +4,14 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-
 import org.imgscalr.Scalr;
+
+import utilities.ImageCache;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.gameState.Stage;
+import com.spantons.path.ImagePath;
 import com.spantons.tileMap.TileMap;
 
 public class GordonFreeman extends Entity {
@@ -48,13 +49,9 @@ public class GordonFreeman extends Entity {
 	private void loadSprite() {
 		try {
 
-			face = ImageIO.read(getClass().getResourceAsStream(
-					"/hud/GordonFreeman.png"));
+			face = ImageCache.getInstance().getImage(ImagePath.HUD_CHARACTER_GORDON_FREEMAN);
 
-			BufferedImage spriteSheet = ImageIO
-					.read(getClass()
-							.getResourceAsStream(
-									"/characteres_sprites/GordonFreeman.png"));
+			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.SPRITE_CHARACTER_GORDON_FREEMAN);
 
 			spriteWidth = ((int) (spriteSheet.getWidth() / 3 * scale));
 			spriteHeight = ((int) (spriteSheet.getHeight() / 2 * scale));

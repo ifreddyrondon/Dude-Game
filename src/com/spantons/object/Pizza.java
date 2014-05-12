@@ -4,10 +4,11 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
+import utilities.ImageCache;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
+import com.spantons.path.ImagePath;
 import com.spantons.tileMap.TileMap;
 
 public class Pizza extends Object {
@@ -32,8 +33,7 @@ public class Pizza extends Object {
 	/****************************************************************************************/
 	private void loadSprite() {
 		try {
-			BufferedImage spriteSheet = ImageIO.read(getClass()
-					.getResourceAsStream("/objects_sprites/Pizza.png"));
+			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.OBJECT_PIZZA);
 			
 			spriteWidth = spriteSheet.getWidth();
 			spriteHeight = spriteSheet.getHeight();
