@@ -7,15 +7,15 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
 
 import org.imgscalr.Scalr;
 
 import utilities.ImageCache;
+import utilities.SoundCache;
 
-import com.spantons.audio.AudioPlayer;
 import com.spantons.main.GamePanel;
 import com.spantons.path.ImagePath;
+import com.spantons.path.SoundPath;
 import com.spantons.tileMap.Background;
 
 public class HelpStage extends Stage {
@@ -56,19 +56,18 @@ public class HelpStage extends Stage {
 			arrowRed = ImageCache.getInstance().getImage(ImagePath.BACKGROUND_ARROW_RED);
 			arrowRed = Scalr.resize(arrowRed, 250);
 
-			warningFont = new Font("Helvetica", 8, 22);
-			warningColor = new Color(227, 23, 23);
-			titleFont = new Font("Century Gothic", Font.TRUETYPE_FONT, 30);
+			warningFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/horrendo.ttf"));
+			warningFont = warningFont.deriveFont(Font.PLAIN, 30);
+			warningColor = Color.BLACK;
+			titleFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/sixty.ttf"));
+			titleFont = titleFont.deriveFont(Font.PLAIN, 40);
 			titleColor = new Color(128, 0, 0);
 			helpFont = new Font("Century Gothic", Font.TRUETYPE_FONT, 22);
 			helpColor = Color.BLACK;
-			footerFont = new Font("Helvetica", 8, 12);
+			footerFont = new Font("Arial", 8, 12);
 			
-			bgMusic = new AudioPlayer("/music/horrorMovieAmbiance.mp3");
-			bgMusic.loop();
-			sfx = new HashMap<String, AudioPlayer>();
-			sfx.put("scratch", new AudioPlayer("/sfx/scratch.mp3"));
-
+			SoundCache.getInstance().getSound(SoundPath.MUSIC_HORROR_MOVIE_AMBIANCE).loop();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,7 +82,7 @@ public class HelpStage extends Stage {
 	/****************************************************************************************/
 	@Override
 	public void endStage() {
-		bgMusic.close();
+		SoundCache.getInstance().stopAllSound();
 		gsm.setStage(GameStagesManager.MENU_STAGE);
 	}
 
@@ -129,7 +128,7 @@ public class HelpStage extends Stage {
 		g.drawString(titleString, x, 650);
 
 		g.setFont(footerFont);
-		g.setColor(Color.BLACK);
+		g.setColor(Color.LIGHT_GRAY);
 		g.drawString(footer, GamePanel.RESOLUTION_WIDTH - 438,
 				GamePanel.RESOLUTION_HEIGHT - 20);
 	}
@@ -143,7 +142,7 @@ public class HelpStage extends Stage {
 	/****************************************************************************************/
 	@Override	
 	public void keyPressed(int k) {
-		sfx.get("scratch").play();
+		SoundCache.getInstance().getSound(SoundPath.SFX_SCRATCH).play();
 		if (k == KeyEvent.VK_ENTER)
 			select();
 	}

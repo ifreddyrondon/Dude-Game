@@ -3,7 +3,7 @@ package com.spantons.path;
 public interface ImagePath {
 
 	public static final String BACKGROUND_ALL = "/backgrounds/all.png";
-	public static final String BACKGROUND_MENU = "/backgrounds/menubg.png";
+	public static final String BACKGROUND_MENU = "/backgrounds/menubg2.png";
 	public static final String BACKGROUND_GAME_OVER = "/backgrounds/game_over.png";
 	public static final String BACKGROUND_GAME_OVER_2 = "/backgrounds/game_over2.png";
 	public static final String BACKGROUND_ARROW_RED = "/backgrounds/arrowRed.png";

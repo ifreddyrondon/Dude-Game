@@ -10,9 +10,9 @@ import java.util.HashMap;
 
 import javax.swing.Timer;
 
+import utilities.SoundCache;
 import utilities.ToHours;
 
-import com.spantons.audio.AudioPlayer;
 import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
 import com.spantons.entity.EntityChecks;
@@ -25,14 +25,15 @@ import com.spantons.entity.character.LizSherman;
 import com.spantons.entity.character.Preso;
 import com.spantons.object.Alcohol;
 import com.spantons.object.Beers;
+import com.spantons.object.Crowbar;
 import com.spantons.object.Door;
 import com.spantons.object.Food;
 import com.spantons.object.Hammer;
 import com.spantons.object.Object;
-import com.spantons.object.Crowbar;
 import com.spantons.object.PieceOfPizza;
 import com.spantons.object.Pipe;
 import com.spantons.object.Pizza;
+import com.spantons.path.SoundPath;
 import com.spantons.tileMap.TileMap;
 
 public class Level1Stage extends Stage {
@@ -125,10 +126,7 @@ public class Level1Stage extends Stage {
 		objects.add(new Pizza(tileMap, 32, 8));
 		objects.add(new Food(tileMap, 11,11));
 		
-		bgMusic = new AudioPlayer("/music/horrorAmbiance.mp3");
-		bgMusic.loop();
-		sfx = new HashMap<String, AudioPlayer>();
-		sfx.put("zombieComeHere", new AudioPlayer("/sfx/zombieComeHere.mp3"));
+		SoundCache.getInstance().getSound(SoundPath.MUSIC_HORROR_AMBIANCE).loop();
 		
 		// Dialogos
 		dialogues = new DialogueStage1(this);
@@ -149,7 +147,7 @@ public class Level1Stage extends Stage {
 	/****************************************************************************************/
 	@Override
 	public void endStage() {
-		bgMusic.close();
+		SoundCache.getInstance().stopAllSound();
 		gsm.setStage(GameStagesManager.GAME_OVER_STAGE);
 	}
 	/****************************************************************************************/
@@ -193,7 +191,7 @@ public class Level1Stage extends Stage {
 	}
 	/****************************************************************************************/
 	private void deployJason(){
-		sfx.get("zombieComeHere").play();
+		SoundCache.getInstance().getSound(SoundPath.SFX_ZOMBIE_COME_HERE).play();
 		currentCharacter.setFlinchingIncreaseDeltaTimePerversity(250);
 		for (Entity character : characters) 
 			character.setFlinchingIncreaseDeltaTimePerversity(250);
@@ -230,11 +228,11 @@ public class Level1Stage extends Stage {
 		if(k == KeyEvent.VK_R && secondaryMenu)
 			secondaryMenu = false;
 		if(k == KeyEvent.VK_Q && secondaryMenu){
-			bgMusic.close();
+			SoundCache.getInstance().closeAllSound();
 			System.exit(0);
 		}
 		if(k == KeyEvent.VK_M && secondaryMenu){
-			bgMusic.close();
+			SoundCache.getInstance().stopAllSound();
 			gsm.setStage(GameStagesManager.MENU_STAGE);
 		}
 	}

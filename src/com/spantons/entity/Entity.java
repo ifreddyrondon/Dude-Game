@@ -3,11 +3,12 @@ package com.spantons.entity;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+import utilities.SoundCache;
 import utilities.TileWalk;
 
-import com.spantons.audio.AudioPlayer;
 import com.spantons.gameState.Stage;
 import com.spantons.object.Object;
+import com.spantons.path.SoundPath;
 import com.spantons.tileMap.TileMap;
 
 public class Entity extends EntityLogic {
@@ -129,9 +130,9 @@ public class Entity extends EntityLogic {
 
 		if (attack) {
 			if (object == null)
-				new AudioPlayer(PUNCHING).play();
+				SoundCache.getInstance().getSound(SoundPath.SFX_PUNCH).play();
 			else
-				new AudioPlayer(PUNCHINGWITHOBJECT).play();
+				SoundCache.getInstance().getSound(SoundPath.SFX_PUNCH_WITH_OBJECT).play();
 			attack();
 		} 
 			

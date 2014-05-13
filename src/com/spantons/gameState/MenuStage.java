@@ -8,17 +8,17 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.imgscalr.Scalr;
 
 import utilities.ImageCache;
+import utilities.SoundCache;
 
-import com.spantons.audio.AudioPlayer;
 import com.spantons.entity.Entity;
 import com.spantons.entity.character.SteveJobs;
 import com.spantons.main.GamePanel;
 import com.spantons.path.ImagePath;
+import com.spantons.path.SoundPath;
 import com.spantons.tileMap.Background;
 
 public class MenuStage extends Stage {
@@ -50,27 +50,27 @@ public class MenuStage extends Stage {
 			bg = new Background(ImagePath.BACKGROUND_MENU, 0, true);
 			bg.setVector(-0.1, 0);
 			tricycle = ImageCache.getInstance().getImage(ImagePath.BACKGROUND_TRICYCLE);
-			tricycle = Scalr.resize(tricycle, 350);
+			tricycle = Scalr.resize(tricycle, 365);
 			all = ImageCache.getInstance().getImage(ImagePath.BACKGROUND_ALL);
-			all = Scalr.resize(all, 560);
+			all = Scalr.resize(all, 300);
 			bloodyHand = ImageCache.getInstance().getImage(ImagePath.BACKGROUND_BLOODY_HAND);
 			
-			titleColor = new Color(128, 0, 0);
-			titleFont = new Font("Century Gothic", Font.TRUETYPE_FONT, 60);
-			choicesFont = new Font("Century Gothic", Font.TRUETYPE_FONT, 32);
-			footerFont = new Font("Helvetica", 8, 12);
+			titleColor = Color.BLACK;
+			titleFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/sixty.ttf"));
+			titleFont = titleFont.deriveFont(Font.PLAIN, 90);
+
+			choicesFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/horrendo.ttf"));
+			choicesFont = choicesFont.deriveFont(Font.PLAIN, 30);
+			footerFont = new Font("Arial", 8, 12);
 
 			characters = new ArrayList<Entity>();
 			SteveJobs sj = new SteveJobs(null, null, 0, 0, 0.50);
 			sj.setPosition(
 					GamePanel.RESOLUTION_WIDTH - tricycle.getWidth() - 30, 
-					250);
+					265);
 			characters.add(sj);
 			
-			bgMusic = new AudioPlayer("/music/horrorMovieAmbiance.mp3");
-			bgMusic.loop();
-			sfx = new HashMap<String, AudioPlayer>();
-			sfx.put("scratch", new AudioPlayer("/sfx/scratch.mp3"));
+			SoundCache.getInstance().getSound(SoundPath.MUSIC_HORROR_MOVIE_AMBIANCE).loop();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,13 +84,13 @@ public class MenuStage extends Stage {
 	/****************************************************************************************/
 	@Override
 	public void endStage() {
-		bgMusic.close();
+		SoundCache.getInstance().stopAllSound();
 		gsm.setStage(GameStagesManager.LEVEL_1_STAGE);
 	}
 	
 	/****************************************************************************************/
 	public void helpStage(){
-		bgMusic.close();
+		SoundCache.getInstance().stopAllSound();
 		gsm.setStage(GameStagesManager.HELP_STAGE);
 		
 	}
@@ -108,12 +108,9 @@ public class MenuStage extends Stage {
 		for (int i = 0; i < characters.size(); i++)
 			characters.get(i).draw(g);
 		
-		g.drawImage(bloodyHand,
-				200,
-				300, null);
-		g.drawImage(all,
-				GamePanel.RESOLUTION_WIDTH / 2 - 330,
-				30, null);
+		g.drawImage(bloodyHand,200,200, null);
+		g.drawImage(all,0,
+				GamePanel.RESOLUTION_HEIGHT - 300, null);
 		g.drawImage(tricycle, 
 				GamePanel.RESOLUTION_WIDTH - tricycle.getWidth(),
 				105, null);
@@ -139,7 +136,7 @@ public class MenuStage extends Stage {
 					+ fm.getDescent();
 			
 			if (i == currentChoice)
-				g.setColor(Color.DARK_GRAY);
+				g.setColor(Color.BLACK);
 			else
 				g.setColor(Color.LIGHT_GRAY);
 
@@ -147,7 +144,7 @@ public class MenuStage extends Stage {
 		}
 		
 		g.setFont(footerFont);
-		g.setColor(Color.BLACK);
+		g.setColor(Color.LIGHT_GRAY);
 		g.drawString(footer, 
 				GamePanel.RESOLUTION_WIDTH - 438, 
 				GamePanel.RESOLUTION_HEIGHT - 20);
@@ -159,13 +156,16 @@ public class MenuStage extends Stage {
 			endStage();
 		else if (currentChoice == 1) 
 			helpStage();
-		else if (currentChoice == 2) 
+		else if (currentChoice == 2) {
+			SoundCache.getInstance().closeAllSound();
 			System.exit(0);
+		}
+			
 	}
 
 	/****************************************************************************************/@Override
 	public void keyPressed(int k) {
-		sfx.get("scratch").play();
+		SoundCache.getInstance().getSound(SoundPath.SFX_SCRATCH).play();
 		
 		if (k == KeyEvent.VK_ENTER) {
 			select();

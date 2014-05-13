@@ -5,7 +5,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.spantons.audio.AudioPlayer;
 import com.spantons.dialogue.Dialogue;
 import com.spantons.entity.Entity;
 import com.spantons.object.Door;
@@ -24,8 +23,6 @@ public abstract class Stage {
 	protected Entity currentCharacter;
 	protected Dialogue dialogues;
 	protected boolean secondaryMenu;
-	protected AudioPlayer bgMusic;
-	protected HashMap<String, AudioPlayer> sfx;
 	
 	public abstract void init();
 	public abstract void endStage();
