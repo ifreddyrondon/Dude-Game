@@ -59,7 +59,7 @@ public class Hud {
 		g.setColor(Color.WHITE);
 		g.drawString("Maldad: "+ stage.getCurrentCharacter().getPerversity() 
 				+ "/" + stage.getCurrentCharacter().getMaxPerversity(), 80, 87);
-		g.drawString("Daño: "+ String.format("%.1f", stage.getCurrentCharacter().getDamage()), 80, 106);
+		g.drawString("Golpe: "+ String.format("%.1f", stage.getCurrentCharacter().getDamage()), 80, 106);
 		
 		g.setFont(countdownFont);
 		g.drawString(countdown, GamePanel.RESOLUTION_WIDTH / 2 - 20, 55);
