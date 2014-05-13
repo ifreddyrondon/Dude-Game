@@ -14,7 +14,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
-import utilities.ImageCache;
+import singleton.ImageCache;
 import utilities.RandomItemArrayList;
 
 import com.spantons.entity.Entity;

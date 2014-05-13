@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 import javax.swing.Timer;
 
-import utilities.SoundCache;
+import singleton.SoundCache;
 import utilities.ToHours;
 
 import com.spantons.dialogue.DialogueStage1;

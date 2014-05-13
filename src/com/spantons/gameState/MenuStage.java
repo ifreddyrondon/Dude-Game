@@ -11,12 +11,14 @@ import java.util.ArrayList;
 
 import org.imgscalr.Scalr;
 
-import utilities.ImageCache;
-import utilities.SoundCache;
+import singleton.FontCache;
+import singleton.ImageCache;
+import singleton.SoundCache;
 
 import com.spantons.entity.Entity;
 import com.spantons.entity.character.SteveJobs;
 import com.spantons.main.GamePanel;
+import com.spantons.path.FontPath;
 import com.spantons.path.ImagePath;
 import com.spantons.path.SoundPath;
 import com.spantons.tileMap.Background;
@@ -56,10 +58,10 @@ public class MenuStage extends Stage {
 			bloodyHand = ImageCache.getInstance().getImage(ImagePath.BACKGROUND_BLOODY_HAND);
 			
 			titleColor = Color.BLACK;
-			titleFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/sixty.ttf"));
+			titleFont = FontCache.getInstance().getFont(FontPath.FONT_SIXTY); 
 			titleFont = titleFont.deriveFont(Font.PLAIN, 90);
 
-			choicesFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/horrendo.ttf"));
+			choicesFont = FontCache.getInstance().getFont(FontPath.FONT_HORRENDO);
 			choicesFont = choicesFont.deriveFont(Font.PLAIN, 30);
 			footerFont = new Font("Arial", 8, 12);
 

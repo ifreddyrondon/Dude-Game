@@ -1,4 +1,4 @@
-package utilities;
+package singleton;
 
 import java.util.HashMap;
 import java.util.Map;

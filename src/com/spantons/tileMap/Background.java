@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import org.imgscalr.Scalr;
 
-import utilities.ImageCache;
+import singleton.ImageCache;
 
 import com.spantons.main.GamePanel;
 

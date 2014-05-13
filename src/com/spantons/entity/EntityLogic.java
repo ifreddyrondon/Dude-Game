@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.Timer;
 
-import utilities.SoundCache;
+import singleton.SoundCache;
 
 import com.spantons.entity.character.Jason;
 import com.spantons.gameState.Stage;

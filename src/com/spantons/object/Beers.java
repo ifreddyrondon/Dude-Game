@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import utilities.ImageCache;
+import singleton.ImageCache;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;

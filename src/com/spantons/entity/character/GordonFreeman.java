@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import org.imgscalr.Scalr;
 
-import utilities.ImageCache;
+import singleton.ImageCache;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;

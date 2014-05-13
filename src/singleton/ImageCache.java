@@ -1,4 +1,4 @@
-package utilities;
+package singleton;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

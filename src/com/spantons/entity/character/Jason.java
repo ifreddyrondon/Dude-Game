@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import org.imgscalr.Scalr;
 
-import utilities.ImageCache;
+import singleton.ImageCache;
 import utilities.TileWalk;
 
 import com.spantons.entity.Animation;

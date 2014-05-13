@@ -10,10 +10,12 @@ import java.awt.image.BufferedImage;
 
 import org.imgscalr.Scalr;
 
-import utilities.ImageCache;
-import utilities.SoundCache;
+import singleton.FontCache;
+import singleton.ImageCache;
+import singleton.SoundCache;
 
 import com.spantons.main.GamePanel;
+import com.spantons.path.FontPath;
 import com.spantons.path.ImagePath;
 import com.spantons.path.SoundPath;
 import com.spantons.tileMap.Background;
@@ -56,10 +58,10 @@ public class HelpStage extends Stage {
 			arrowRed = ImageCache.getInstance().getImage(ImagePath.BACKGROUND_ARROW_RED);
 			arrowRed = Scalr.resize(arrowRed, 250);
 
-			warningFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/horrendo.ttf"));
+			warningFont = FontCache.getInstance().getFont(FontPath.FONT_HORRENDO);
 			warningFont = warningFont.deriveFont(Font.PLAIN, 30);
 			warningColor = Color.BLACK;
-			titleFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/sixty.ttf"));
+			titleFont = FontCache.getInstance().getFont(FontPath.FONT_SIXTY);
 			titleFont = titleFont.deriveFont(Font.PLAIN, 40);
 			titleColor = new Color(128, 0, 0);
 			helpFont = new Font("Century Gothic", Font.TRUETYPE_FONT, 22);

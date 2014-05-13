@@ -3,7 +3,7 @@ package com.spantons.entity;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import utilities.SoundCache;
+import singleton.SoundCache;
 import utilities.TileWalk;
 
 import com.spantons.gameState.Stage;
