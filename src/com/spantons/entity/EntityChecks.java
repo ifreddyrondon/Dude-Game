@@ -219,7 +219,8 @@ public class EntityChecks {
 												Level1Stage.colorDialogues, 
 												2000, 
 												ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
-												Dialogue.CURRENT
+												Dialogue.CURRENT,
+												Dialogue.MEDIUM_PRIORITY
 										)
 								);
 						} else 
@@ -230,7 +231,8 @@ public class EntityChecks {
 											Level1Stage.colorDialogues, 
 											2000, 
 											ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
-											Dialogue.CURRENT
+											Dialogue.CURRENT,
+											Dialogue.MEDIUM_PRIORITY
 									)
 							);
 					} else 
@@ -241,7 +243,8 @@ public class EntityChecks {
 										Level1Stage.colorDialogues, 
 										2000, 
 										ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
-										Dialogue.CURRENT
+										Dialogue.CURRENT,
+										Dialogue.MEDIUM_PRIORITY
 								)
 						);
 				} else 
@@ -252,7 +255,8 @@ public class EntityChecks {
 									Level1Stage.colorDialogues, 
 									2000, 
 									ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
-									Dialogue.CURRENT
+									Dialogue.CURRENT,
+									Dialogue.MEDIUM_PRIORITY
 							)
 					);
 			} else 
@@ -263,7 +267,8 @@ public class EntityChecks {
 								Level1Stage.colorDialogues, 
 								2000, 
 								ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
-								Dialogue.CURRENT
+								Dialogue.CURRENT,
+								Dialogue.MEDIUM_PRIORITY
 						)
 				);
 		}

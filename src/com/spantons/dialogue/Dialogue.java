@@ -10,7 +10,7 @@ public class Dialogue {
 	
 	public static final int NORMAL_PRIORITY = 0;
 	public static final int MEDIUM_PRIORITY = 1;
-	public static final int HIGH_PRIORITY = 1;
+	public static final int HIGH_PRIORITY = 2;
 	
 	private String txt;
 	private Font font;
@@ -18,6 +18,7 @@ public class Dialogue {
 	private int countdown;
 	private String typeOfBallon;
 	private int whoSpeak;
+	private int priority;
 	
 	/****************************************************************************************/
 	public Dialogue(
@@ -26,7 +27,8 @@ public class Dialogue {
 			Color _color, 
 			int _countdown, 
 			String _typeOfBallon, 
-			int _whoSpeak) {
+			int _whoSpeak,
+			int _priority) {
 		
 		txt = _txt;
 		font = _font;
@@ -34,6 +36,7 @@ public class Dialogue {
 		countdown = _countdown;
 		typeOfBallon = _typeOfBallon;
 		whoSpeak = _whoSpeak;
+		priority = _priority;
 	}
 	
 	/****************************************************************************************/
@@ -74,6 +77,14 @@ public class Dialogue {
 
 	public void setWhoSpeak(int whoSpeak) {
 		this.whoSpeak = whoSpeak;
+	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 	
 }

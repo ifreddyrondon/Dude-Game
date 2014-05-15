@@ -5,8 +5,9 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.PriorityQueue;
 
 import javax.swing.Timer;
 
@@ -16,6 +17,21 @@ import com.spantons.magicNumbers.StringDialogue;
 import com.spantons.main.GamePanel;
 import com.spantons.singleton.ImageCache;
 
+class DialogueComparator implements Comparator<Dialogue> {
+
+	@Override
+	public int compare(Dialogue o1, Dialogue o2) {
+		
+		if (o1.getPriority() > o2.getPriority()) 
+			return -1;
+		
+		if (o1.getPriority() < o2.getPriority())
+			return 1;
+		  
+		return 0;
+	}	
+}
+
 public class DialogueStage1 extends DialogueManager {
 
 	private int characterWidth;
@@ -24,10 +40,13 @@ public class DialogueStage1 extends DialogueManager {
 	private boolean endedDialogue = true;
 	private Timer timerDialogue;
 	
+	private Comparator<Dialogue> comparator;
+	
 	/****************************************************************************************/
 	public DialogueStage1(Stage _stage) {
 		stage = _stage;
-		dialogues = new ArrayList<Dialogue>();
+		comparator = new DialogueComparator();
+		dialogues = new PriorityQueue<Dialogue>(10, comparator);
 		strings = new HashMap<String, String[]>();
 		loadStrings();
 		
@@ -82,7 +101,7 @@ public class DialogueStage1 extends DialogueManager {
 		
 		if (endedDialogue && getDialogues().size() > 0) {
 			endedDialogue = false;
-			currentDialogue = getDialogues().remove(0);
+			currentDialogue = getDialogues().poll();
 			calculatePositionOfDialogue();
 			
 			timerDialogue = new Timer(currentDialogue.getCountdown(),

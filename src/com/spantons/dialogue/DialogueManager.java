@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Queue;
 
 import javax.swing.Timer;
 
@@ -17,7 +18,7 @@ import com.spantons.utilities.RandomItemArrayList;
 public abstract class DialogueManager {
 
 	protected Stage stage;	
-	protected ArrayList<Dialogue> dialogues;
+	protected Queue<Dialogue> dialogues;
 	protected Dialogue currentDialogue;
 	protected HashMap<String, String[]> strings;
 	protected Entity characterSpeaking;
@@ -81,7 +82,7 @@ public abstract class DialogueManager {
 	}
 	
 	/****************************************************************************************/
-	public ArrayList<Dialogue> getDialogues() {
+	public Queue<Dialogue> getDialogues() {
 		return dialogues;
 	}
 	public HashMap<String, String[]> getStrings() {

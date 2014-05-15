@@ -152,9 +152,11 @@ public class Level1Stage extends Stage {
 			@Override 
 			public void actionPerformed(ActionEvent ae) { 
 				for (String txt : getDialogues().getStrings().get("THOUGHTS_AWAKENING_1")) {
-					getDialogues().addDialogue(new Dialogue(txt,fontDialogues, colorDialogues, 2500, 
+					getDialogues().addDialogue(
+						new Dialogue(
+							txt,fontDialogues, colorDialogues, 2500, 
 							ImagePath.DIALOGUE_SPEECH_BALLON_NORMAL,
-							Dialogue.RANDOM
+							Dialogue.RANDOM, Dialogue.NORMAL_PRIORITY
 					));
 				}
 				startDialogues.stop();
