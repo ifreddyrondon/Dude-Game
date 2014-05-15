@@ -25,6 +25,8 @@ public class Door extends Object {
 	public static final int OPEN = 1;
 	public static final int CLOSE = 2;
 	private int statusOpen;
+	private boolean tryToOpen = false;
+	private boolean doorToNextLvl;
 	
 	private String id;
 	
@@ -37,7 +39,8 @@ public class Door extends Object {
 			int _animation, 
 			int _statusOpen, 
 			int _statusBlock,
-			String _id) {
+			String _id,
+			boolean _doorToNextLvl) {
 		
 		super(_tileMap, _xMap, _yMap);
 
@@ -46,7 +49,8 @@ public class Door extends Object {
 		type = BLOCKED;
 		statusOpen = _statusOpen;
 		statusBlock = _statusBlock;
-
+		doorToNextLvl = _doorToNextLvl;
+		
 		loadSprite();
 
 		animation = new Animation();
@@ -163,6 +167,18 @@ public class Door extends Object {
 	
 	public String getId(){
 		return id;
+	}
+
+	public boolean isTryToOpen() {
+		return tryToOpen;
+	}
+
+	public void setTryToOpen(boolean tryToOpen) {
+		this.tryToOpen = tryToOpen;
+	}
+
+	public boolean isDoorToNextLvl() {
+		return doorToNextLvl;
 	}
 	
 }

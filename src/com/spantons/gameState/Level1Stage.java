@@ -101,25 +101,29 @@ public class Level1Stage extends Stage {
 				tileMap, 18,17, 
 				Door.ANIMATION_OPEN_A, 
 				Door.OPEN, 
-				Door.UNLOCK,"panicroom"));
+				Door.UNLOCK,"panicroom",
+				false));
 		
 		doors.put("exit", new Door(
 				tileMap, 21,6, 
 				Door.ANIMATION_CLOSE_A, 
 				Door.CLOSE, 
-				Door.LOCK,"exit"));
+				Door.LOCK,"exit",
+				true));
 		
 		doors.put("bathroom", new Door(
 				tileMap, 21,16, 
 				Door.ANIMATION_OPEN_B, 
 				Door.OPEN, 
-				Door.UNLOCK,"bathroom"));
+				Door.UNLOCK,"bathroom",
+				false));
 		
 		doors.put("main", new Door(
 				tileMap, 32,28, 
 				Door.ANIMATION_CLOSE_B, 
 				Door.CLOSE, 
-				Door.LOCK,"main"));
+				Door.LOCK,"main",
+				false));
 		
 		objects.add(new Crowbar(tileMap, 10, 12, 0.23, "exit"));
 		objects.add(new Hammer(tileMap, 12, 13, 0.15));
@@ -206,8 +210,23 @@ public class Level1Stage extends Stage {
 		}
 		
 		if (doors.size() > 0) {
-		      for(String key : doors.keySet())
+		      for(String key : doors.keySet()) {
 		      	doors.get(key).update();
+		      	
+		      	if (	doors.get(key).isDoorToNextLvl() 
+		      		&& doors.get(key).isTryToOpen()) {
+					
+		      		for (String txt : getDialogues().getStrings().get("STORY_DOOR")) {
+						getDialogues().addDialogue(
+							new Dialogue(
+								txt,fontDialogues, colorDialogues, 1600, 
+								ImagePath.DIALOGUE_SPEECH_BALLON_HIGH,
+								Dialogue.CURRENT, Dialogue.HIGH_PRIORITY
+						));
+					}
+		      		doors.get(key).setTryToOpen(false);
+				}
+		      }
 		}
 		
 		if (dead.size() > 0) {

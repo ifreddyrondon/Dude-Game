@@ -211,49 +211,53 @@ public class EntityChecks {
 							if (_entity.getObject().getIdAssociated().equals(door.getId())) {
 								door.setStatusBlock(Door.UNLOCK);
 								door.setStatusOpen(Door.OPEN);
-							} else
+							} else 
 								_stage.getDialogues().addDialogue(
 										new Dialogue(
 												"Este objeto no puede \nabrir esta puerta",
 												Level1Stage.fontDialogues, 
 												Level1Stage.colorDialogues, 
-												2000, 
+												1500, 
 												ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
 												Dialogue.CURRENT,
 												Dialogue.MEDIUM_PRIORITY
 										)
 								);
-						} else 
+						} else {
 							_stage.getDialogues().addDialogue(
 									new Dialogue(
 											"Este objeto no sirve \npara abrir puertas",
 											Level1Stage.fontDialogues, 
 											Level1Stage.colorDialogues, 
-											2000, 
+											1500, 
 											ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
 											Dialogue.CURRENT,
 											Dialogue.MEDIUM_PRIORITY
 									)
 							);
-					} else 
+							door.setTryToOpen(true);
+						}
+					} else {
 						_stage.getDialogues().addDialogue(
 								new Dialogue(
 										"Debes conseguir algo \npara abrir la puerta",
 										Level1Stage.fontDialogues, 
 										Level1Stage.colorDialogues, 
-										2000, 
+										1500, 
 										ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
 										Dialogue.CURRENT,
 										Dialogue.MEDIUM_PRIORITY
 								)
 						);
+						door.setTryToOpen(true);
+					}
 				} else 
 					_stage.getDialogues().addDialogue(
 							new Dialogue(
 									"Puerta abierta",
 									Level1Stage.fontDialogues, 
 									Level1Stage.colorDialogues, 
-									2000, 
+									1500, 
 									ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
 									Dialogue.CURRENT,
 									Dialogue.MEDIUM_PRIORITY
@@ -265,7 +269,7 @@ public class EntityChecks {
 								"Debes estar cerca de \nla puerta",
 								Level1Stage.fontDialogues, 
 								Level1Stage.colorDialogues, 
-								2000, 
+								1500, 
 								ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
 								Dialogue.CURRENT,
 								Dialogue.MEDIUM_PRIORITY

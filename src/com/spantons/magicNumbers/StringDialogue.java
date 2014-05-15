@@ -19,7 +19,7 @@ public interface StringDialogue {
 		"Qué sucede","???"};
 	
 	public static final String[] STORY_DOOR = {
-		"Parece que hay algo detrás que no deja abrirla",
+		"Parece que hay algo \ndetrás que no deja abrirla",
 		"necesitamos una palanca"};
 	
 	public static final String[] STORY_ROOM1 = {
