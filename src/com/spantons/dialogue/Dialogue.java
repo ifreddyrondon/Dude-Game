@@ -8,6 +8,10 @@ public class Dialogue {
 	public static final int RANDOM = 0;
 	public static final int CURRENT = 1;
 	
+	public static final int NORMAL_PRIORITY = 0;
+	public static final int MEDIUM_PRIORITY = 1;
+	public static final int HIGH_PRIORITY = 1;
+	
 	private String txt;
 	private Font font;
 	private Color color;

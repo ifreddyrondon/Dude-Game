@@ -49,16 +49,21 @@ public class Level1Stage extends Stage {
 	private Timer timer;
 	private int countdownStartDialogues = 2000;
 	private Timer startDialogues;
-	private Font fontDialogues;
-	private Color colorDialogues;
+	public static Font fontDialogues;
+	public static Color colorDialogues;
 
 	public static int TRANSPARENT_A = 71;
 	public static int TRANSPARENT_B = 70;
-	public static Point[] A = {new Point(10, 16),new Point(11, 16),new Point(12, 16),new Point(13, 16),new Point(14, 16),new Point(15, 16),new Point(16, 16),
-		new Point(17, 16),new Point(18, 16),new Point(19, 16),new Point(20, 16),new Point(22, 16)};
+	public static Point[] A = {
+		new Point(10, 16),new Point(11, 16),new Point(12, 16),
+		new Point(13, 16),new Point(14, 16),new Point(15, 16),
+		new Point(16, 16),new Point(17, 16),new Point(18, 16),
+		new Point(19, 16),new Point(20, 16),new Point(22, 16)};
 	
-	public static Point[] B = {new Point(22, 8),new Point(22, 9),new Point(22, 10),new Point(22, 11),new Point(22, 12),new Point(22, 13),new Point(22, 14),
-		new Point(22, 15)};
+	public static Point[] B = {
+		new Point(22, 8),new Point(22, 9),new Point(22, 10),
+		new Point(22, 11),new Point(22, 12),new Point(22, 13),
+		new Point(22, 14),new Point(22, 15)};
 	
 	public Level1Stage(GameStagesManager _gsm) {
 		gsm = _gsm;
@@ -139,20 +144,18 @@ public class Level1Stage extends Stage {
 		
 		// Dialogos
 		fontDialogues = FontCache.getInstance().getFont(FontPath.FONT_DARK_IS_THE_NIGTH); 
-		fontDialogues = fontDialogues.deriveFont(Font.PLAIN, 24);
+		fontDialogues = fontDialogues.deriveFont(Font.PLAIN, 20);
 		colorDialogues = Color.BLACK;
 		
 		dialogues = new DialogueStage1(this);
 		startDialogues =  new Timer(countdownStartDialogues, new ActionListener() { 
 			@Override 
 			public void actionPerformed(ActionEvent ae) { 
-				for (String txt : dialogues.getStrings().get("THOUGHTS_AWAKENING_1")) {
-					dialogues.getDialogues().add(
-							new Dialogue(txt,fontDialogues, colorDialogues, 2500, 
-									ImagePath.DIALOGUE_SPEECH_BALLON_NORMAL,
-									Dialogue.RANDOM
-							)
-					);
+				for (String txt : getDialogues().getStrings().get("THOUGHTS_AWAKENING_1")) {
+					getDialogues().addDialogue(new Dialogue(txt,fontDialogues, colorDialogues, 2500, 
+							ImagePath.DIALOGUE_SPEECH_BALLON_NORMAL,
+							Dialogue.RANDOM
+					));
 				}
 				startDialogues.stop();
 			} 
@@ -183,7 +186,7 @@ public class Level1Stage extends Stage {
 	public void update() {
 		
 		currentCharacter.update();
-		dialogues.update();
+		getDialogues().update();
 		
 		if (characters.size() > 0) {
 			for (Entity character : characters)
@@ -215,7 +218,7 @@ public class Level1Stage extends Stage {
 	public void draw(Graphics2D g) {
 		tileMap.draw(g);
 		hud.Draw(g, ToHours.SecondsToHours(countdown));
-		dialogues.draw(g);
+		getDialogues().draw(g);
 	}
 	/****************************************************************************************/
 	private void deployJason(){

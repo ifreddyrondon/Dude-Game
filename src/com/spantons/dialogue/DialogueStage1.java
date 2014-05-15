@@ -27,8 +27,8 @@ public class DialogueStage1 extends DialogueManager {
 	/****************************************************************************************/
 	public DialogueStage1(Stage _stage) {
 		stage = _stage;
-		setDialogues(new ArrayList<Dialogue>());
-		setStrings(new HashMap<String, String[]>());
+		dialogues = new ArrayList<Dialogue>();
+		strings = new HashMap<String, String[]>();
 		loadStrings();
 		
 		secondaryMenuFont = new Font("Century Gothic", Font.PLAIN, 35);
@@ -115,10 +115,16 @@ public class DialogueStage1 extends DialogueManager {
 			g.setColor(currentDialogue.getColor());
 			g.setFont(currentDialogue.getFont());
 			
-			g.drawString(currentDialogue.getTxt(),
-				characterSpeaking.getX() - 30,
-				characterSpeaking.getY() - 180
-			);
+			String[] split = currentDialogue.getTxt().split("\n");
+			int y = characterSpeaking.getY() - 190;
+			int h = g.getFontMetrics().getHeight();
+			
+			for (int i = 0; i < split.length; i++) {
+				g.drawString(split[i],
+						characterSpeaking.getX() - 30,
+						y + (h*i)
+				);
+			}
 		}
 		/******/
 		if (exclamation) {
@@ -172,9 +178,9 @@ public class DialogueStage1 extends DialogueManager {
 			g.setFont(aloneFont);
 			fm = g.getFontMetrics();
 			String stringAlone = "Estás solo!!!";
-			r = fm.getStringBounds(stringAlone, g);
-			int x = (GamePanel.RESOLUTION_WIDTH - (int) r.getWidth()) / 2;
-			int y = (GamePanel.RESOLUTION_HEIGHT - (int) r.getHeight()) / 2 - 150;
+			rectangle = fm.getStringBounds(stringAlone, g);
+			int x = (GamePanel.RESOLUTION_WIDTH - (int) rectangle.getWidth()) / 2;
+			int y = (GamePanel.RESOLUTION_HEIGHT - (int) rectangle.getHeight()) / 2 - 150;
 			g.drawString(stringAlone, x, y);
 		}
 	}

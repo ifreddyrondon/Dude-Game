@@ -83,6 +83,9 @@ public abstract class Stage {
 	}
 	public void helpStage() {
 		// TODO Auto-generated method stub
-		
 	}
+	public DialogueManager getDialogues() {
+		return dialogues;
+	}
+
 }

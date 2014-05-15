@@ -28,7 +28,7 @@ public abstract class DialogueManager {
 	protected Color aloneColor;
 	
 	protected FontMetrics fm;
-	protected Rectangle2D r;
+	protected Rectangle2D rectangle;
 	
 	protected Timer timerExclamation;
 	protected int countdownExclamation = 500; 
@@ -84,14 +84,8 @@ public abstract class DialogueManager {
 	public ArrayList<Dialogue> getDialogues() {
 		return dialogues;
 	}
-	public void setDialogues(ArrayList<Dialogue> dialogues) {
-		this.dialogues = dialogues;
-	}
 	public HashMap<String, String[]> getStrings() {
 		return strings;
-	}
-	public void setStrings(HashMap<String, String[]> strings) {
-		this.strings = strings;
 	}
 	
 }

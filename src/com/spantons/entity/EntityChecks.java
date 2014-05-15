@@ -2,7 +2,10 @@ package com.spantons.entity;
 
 import java.awt.Point;
 
+import com.spantons.dialogue.Dialogue;
+import com.spantons.gameState.Level1Stage;
 import com.spantons.gameState.Stage;
+import com.spantons.magicNumbers.ImagePath;
 import com.spantons.object.Door;
 import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
@@ -209,15 +212,60 @@ public class EntityChecks {
 								door.setStatusBlock(Door.UNLOCK);
 								door.setStatusOpen(Door.OPEN);
 							} else
-								System.out.println("este objeto no puede abrir esta puerta");
+								_stage.getDialogues().addDialogue(
+										new Dialogue(
+												"Este objeto no puede \nabrir esta puerta",
+												Level1Stage.fontDialogues, 
+												Level1Stage.colorDialogues, 
+												2000, 
+												ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
+												Dialogue.CURRENT
+										)
+								);
 						} else 
-							System.out.println("este objeto no sirve para abrir puertas");
+							_stage.getDialogues().addDialogue(
+									new Dialogue(
+											"Este objeto no sirve \npara abrir puertas",
+											Level1Stage.fontDialogues, 
+											Level1Stage.colorDialogues, 
+											2000, 
+											ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
+											Dialogue.CURRENT
+									)
+							);
 					} else 
-						System.out.println("debes conseguir algo para abrir la puerta");
+						_stage.getDialogues().addDialogue(
+								new Dialogue(
+										"Debes conseguir algo \npara abrir la puerta",
+										Level1Stage.fontDialogues, 
+										Level1Stage.colorDialogues, 
+										2000, 
+										ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
+										Dialogue.CURRENT
+								)
+						);
 				} else 
-					System.out.println("puerta abierta");
+					_stage.getDialogues().addDialogue(
+							new Dialogue(
+									"Puerta abierta",
+									Level1Stage.fontDialogues, 
+									Level1Stage.colorDialogues, 
+									2000, 
+									ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
+									Dialogue.CURRENT
+							)
+					);
 			} else 
-				System.out.println("debes estar cerca de la puerta");
+				_stage.getDialogues().addDialogue(
+						new Dialogue(
+								"Debes estar cerca de \nla puerta",
+								Level1Stage.fontDialogues, 
+								Level1Stage.colorDialogues, 
+								2000, 
+								ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
+								Dialogue.CURRENT
+						)
+				);
 		}
 	}
 
