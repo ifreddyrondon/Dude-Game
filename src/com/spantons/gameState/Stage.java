@@ -5,7 +5,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.spantons.dialogue.Dialogue;
+import com.spantons.dialogue.DialogueManager;
 import com.spantons.entity.Entity;
 import com.spantons.object.Door;
 import com.spantons.object.Object;
@@ -21,7 +21,7 @@ public abstract class Stage {
 	protected ArrayList<Object> objects;
 	protected HashMap<String, Door> doors;
 	protected Entity currentCharacter;
-	protected Dialogue dialogues;
+	protected DialogueManager dialogues;
 	protected boolean secondaryMenu;
 	
 	public abstract void init();

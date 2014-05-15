@@ -6,11 +6,10 @@ import java.util.ArrayList;
 
 import org.imgscalr.Scalr;
 
-import singleton.ImageCache;
-
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
-import com.spantons.path.ImagePath;
+import com.spantons.magicNumbers.ImagePath;
+import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
 
 public class Hammer extends Object{

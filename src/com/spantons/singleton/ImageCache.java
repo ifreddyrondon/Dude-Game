@@ -1,4 +1,4 @@
-package singleton;
+package com.spantons.singleton;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

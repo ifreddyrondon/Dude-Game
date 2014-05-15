@@ -2,12 +2,11 @@ package com.spantons.entity;
 
 import java.awt.Point;
 
-import utilities.TileWalk;
-
 import com.spantons.gameState.Stage;
 import com.spantons.object.Door;
 import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
+import com.spantons.utilities.TileWalk;
 
 public class EntityChecks {
 

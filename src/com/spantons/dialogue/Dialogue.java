@@ -2,56 +2,74 @@ package com.spantons.dialogue;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
-import javax.swing.Timer;
+public class Dialogue {
 
-import com.spantons.gameState.Stage;
-
-public abstract class Dialogue {
-
-	protected Stage stage;
-	protected ArrayList<BufferedImage> speechBallon;
-	protected BufferedImage[] exclamationImg;
+	public static final int RANDOM = 0;
+	public static final int CURRENT = 1;
 	
-	protected Color fontColor;
-	protected Font dialogueFont;
-	protected Font secondaryMenuFont;
-	protected Font aloneFont;
-	
-	protected FontMetrics fm;
-	protected Rectangle2D r;
-	
-	protected Timer timerExclamation;
-	protected int countdownExclamation = 500; 
-	protected boolean exclamation;
-	
-	protected Timer timerAlone;
-	protected int countdownAlone = 1500;
-	protected boolean alone = false;
-	
-	protected abstract void loadImages();
-	public abstract void update();
-	public abstract void draw(Graphics2D g);
+	private String txt;
+	private Font font;
+	private Color color;
+	private int countdown;
+	private String typeOfBallon;
+	private int whoSpeak;
 	
 	/****************************************************************************************/
-	public void alone(){
-		alone = true;
-		timerAlone.start();
+	public Dialogue(
+			String _txt, 
+			Font _font, 
+			Color _color, 
+			int _countdown, 
+			String _typeOfBallon, 
+			int _whoSpeak) {
+		
+		txt = _txt;
+		font = _font;
+		color = _color;
+		countdown = _countdown;
+		typeOfBallon = _typeOfBallon;
+		whoSpeak = _whoSpeak;
 	}
+	
 	/****************************************************************************************/
-	protected void characterClose(){
-		timerExclamation.start();
+	public String getTxt() {
+		return txt;
 	}
-	/****************************************************************************************/
-	protected void characterFar(){
-		timerExclamation.stop();
-		exclamation = false;
+	public void setTxt(String txt) {
+		this.txt = txt;
 	}
-	/****************************************************************************************/
+	public Font getFont() {
+		return font;
+	}
+	public void setFont(Font font) {
+		this.font = font;
+	}
+	public Color getColor() {
+		return color;
+	}
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	public int getCountdown() {
+		return countdown;
+	}
+	public void setCountdown(int countdown) {
+		this.countdown = countdown;
+	}
+	public String getTypeOfBallon() {
+		return typeOfBallon;
+	}
+	public void setTypeOfBallon(String typeOfBallon) {
+		this.typeOfBallon = typeOfBallon;
+	}
+
+	public int getWhoSpeak() {
+		return whoSpeak;
+	}
+
+	public void setWhoSpeak(int whoSpeak) {
+		this.whoSpeak = whoSpeak;
+	}
 	
 }

@@ -1,5 +1,7 @@
 package com.spantons.gameState;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -10,9 +12,7 @@ import java.util.HashMap;
 
 import javax.swing.Timer;
 
-import singleton.SoundCache;
-import utilities.ToHours;
-
+import com.spantons.dialogue.Dialogue;
 import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
 import com.spantons.entity.EntityChecks;
@@ -23,6 +23,9 @@ import com.spantons.entity.character.Jason;
 import com.spantons.entity.character.LeonTheProfessional;
 import com.spantons.entity.character.LizSherman;
 import com.spantons.entity.character.Preso;
+import com.spantons.magicNumbers.FontPath;
+import com.spantons.magicNumbers.ImagePath;
+import com.spantons.magicNumbers.SoundPath;
 import com.spantons.object.Alcohol;
 import com.spantons.object.Beers;
 import com.spantons.object.Crowbar;
@@ -33,8 +36,10 @@ import com.spantons.object.Object;
 import com.spantons.object.PieceOfPizza;
 import com.spantons.object.Pipe;
 import com.spantons.object.Pizza;
-import com.spantons.path.SoundPath;
+import com.spantons.singleton.FontCache;
+import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
+import com.spantons.utilities.ToHours;
 
 public class Level1Stage extends Stage {
 
@@ -42,6 +47,10 @@ public class Level1Stage extends Stage {
 	
 	private int countdown = 120; 
 	private Timer timer;
+	private int countdownStartDialogues = 2000;
+	private Timer startDialogues;
+	private Font fontDialogues;
+	private Color colorDialogues;
 
 	public static int TRANSPARENT_A = 71;
 	public static int TRANSPARENT_B = 70;
@@ -129,8 +138,27 @@ public class Level1Stage extends Stage {
 		SoundCache.getInstance().getSound(SoundPath.MUSIC_HORROR_AMBIANCE).loop();
 		
 		// Dialogos
+		fontDialogues = FontCache.getInstance().getFont(FontPath.FONT_DARK_IS_THE_NIGTH); 
+		fontDialogues = fontDialogues.deriveFont(Font.PLAIN, 24);
+		colorDialogues = Color.BLACK;
+		
 		dialogues = new DialogueStage1(this);
-
+		startDialogues =  new Timer(countdownStartDialogues, new ActionListener() { 
+			@Override 
+			public void actionPerformed(ActionEvent ae) { 
+				for (String txt : dialogues.getStrings().get("THOUGHTS_AWAKENING_1")) {
+					dialogues.getDialogues().add(
+							new Dialogue(txt,fontDialogues, colorDialogues, 2500, 
+									ImagePath.DIALOGUE_SPEECH_BALLON_NORMAL,
+									Dialogue.RANDOM
+							)
+					);
+				}
+				startDialogues.stop();
+			} 
+		}); 
+		startDialogues.start();
+		
 		// Temporizador
 		timer = new Timer(1000, new ActionListener() { 
 			@Override 

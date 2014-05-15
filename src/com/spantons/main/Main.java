@@ -1,8 +1,5 @@
 package com.spantons.main;
 
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.JFrame;
 
 public class Main {

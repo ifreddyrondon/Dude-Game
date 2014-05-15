@@ -1,4 +1,4 @@
-package utilities;
+package com.spantons.utilities;
 
 import java.awt.Point;
 import java.util.Random;

@@ -1,4 +1,4 @@
-package com.spantons.path;
+package com.spantons.magicNumbers;
 
 public interface SoundPath {
 

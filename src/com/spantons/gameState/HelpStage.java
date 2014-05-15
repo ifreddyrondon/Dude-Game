@@ -10,14 +10,13 @@ import java.awt.image.BufferedImage;
 
 import org.imgscalr.Scalr;
 
-import singleton.FontCache;
-import singleton.ImageCache;
-import singleton.SoundCache;
-
+import com.spantons.magicNumbers.FontPath;
+import com.spantons.magicNumbers.ImagePath;
+import com.spantons.magicNumbers.SoundPath;
 import com.spantons.main.GamePanel;
-import com.spantons.path.FontPath;
-import com.spantons.path.ImagePath;
-import com.spantons.path.SoundPath;
+import com.spantons.singleton.FontCache;
+import com.spantons.singleton.ImageCache;
+import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.Background;
 
 public class HelpStage extends Stage {

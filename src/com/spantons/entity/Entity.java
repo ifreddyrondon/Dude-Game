@@ -3,13 +3,12 @@ package com.spantons.entity;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import singleton.SoundCache;
-import utilities.TileWalk;
-
 import com.spantons.gameState.Stage;
+import com.spantons.magicNumbers.SoundPath;
 import com.spantons.object.Object;
-import com.spantons.path.SoundPath;
+import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
+import com.spantons.utilities.TileWalk;
 
 public class Entity extends EntityLogic {
 

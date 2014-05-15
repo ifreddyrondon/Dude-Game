@@ -2,7 +2,7 @@ package com.spantons.tileMap;
 
 import java.awt.image.BufferedImage;
 
-import singleton.ImageCache;
+import com.spantons.singleton.ImageCache;
 
 public class TileSet {
 

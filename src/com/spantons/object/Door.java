@@ -5,11 +5,10 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import singleton.ImageCache;
-
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
-import com.spantons.path.ImagePath;
+import com.spantons.magicNumbers.ImagePath;
+import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
 
 public class Door extends Object {

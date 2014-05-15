@@ -7,12 +7,11 @@ import java.util.ArrayList;
 
 import javax.swing.Timer;
 
-import singleton.SoundCache;
-
 import com.spantons.entity.character.Jason;
 import com.spantons.gameState.Stage;
+import com.spantons.magicNumbers.SoundPath;
 import com.spantons.object.Object;
-import com.spantons.path.SoundPath;
+import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
 
 public class EntityLogic {

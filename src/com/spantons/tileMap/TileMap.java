@@ -8,14 +8,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import utilities.ArraysUtil;
-import utilities.Multiple;
-import utilities.TileWalk;
-
 import com.spantons.entity.Entity;
 import com.spantons.gameState.Level1Stage;
 import com.spantons.main.GamePanel;
 import com.spantons.object.Object;
+import com.spantons.utilities.ArraysUtil;
+import com.spantons.utilities.Multiple;
+import com.spantons.utilities.TileWalk;
 
 public class TileMap {
 

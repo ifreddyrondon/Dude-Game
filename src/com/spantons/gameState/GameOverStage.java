@@ -8,8 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
+import com.spantons.magicNumbers.ImagePath;
 import com.spantons.main.GamePanel;
-import com.spantons.path.ImagePath;
 import com.spantons.tileMap.Background;
 
 public class GameOverStage extends Stage {

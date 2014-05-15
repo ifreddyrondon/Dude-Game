@@ -1,4 +1,4 @@
-package singleton;
+package com.spantons.singleton;
 
 import java.awt.Font;
 import java.awt.FontFormatException;

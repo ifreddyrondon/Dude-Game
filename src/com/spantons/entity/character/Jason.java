@@ -7,15 +7,14 @@ import java.util.ArrayList;
 
 import org.imgscalr.Scalr;
 
-import singleton.ImageCache;
-import utilities.TileWalk;
-
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.entity.EntityChecks;
 import com.spantons.gameState.Stage;
-import com.spantons.path.ImagePath;
+import com.spantons.magicNumbers.ImagePath;
+import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
+import com.spantons.utilities.TileWalk;
 
 public class Jason extends Entity{
 

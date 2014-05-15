@@ -6,6 +6,8 @@ import java.awt.Point;
 
 import org.junit.Test;
 
+import com.spantons.utilities.TileWalk;
+
 public class TileWalkTest {
 	
 	Point sol;

@@ -6,9 +6,8 @@ import java.awt.image.BufferedImage;
 
 import org.imgscalr.Scalr;
 
-import singleton.ImageCache;
-
 import com.spantons.main.GamePanel;
+import com.spantons.singleton.ImageCache;
 
 public class Background {
 
