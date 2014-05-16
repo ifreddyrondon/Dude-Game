@@ -47,6 +47,7 @@ public class Level1Stage extends Stage {
 	
 	private int countdown = 120; 
 	private Timer timer;
+	private Timer lights;
 	private int countdownStartDialogues = 2000;
 	private Timer startDialogues;
 	public static Font fontDialogues;
@@ -87,6 +88,9 @@ public class Level1Stage extends Stage {
 		currentCharacter = new LeonTheProfessional(tileMap, this, 16, 19, 0.10);
 		
 		characters.add(new Preso(tileMap, this, 7, 17, 0.10));
+//		characters.add(new Preso(tileMap, this, 8, 20, 0.10));
+//		characters.add(new Preso(tileMap, this, 13, 17, 0.10));
+//		characters.add(new Preso(tileMap, this, 13, 21, 0.10));
 		characters.add(new GordonFreeman(tileMap, this, 8, 20, 0.10));
 		characters.add(new LizSherman(tileMap, this, 13, 17, 0.10));
 		characters.add(new DanaScullyXFiles(tileMap, this, 13, 21, 0.10));
@@ -243,6 +247,16 @@ public class Level1Stage extends Stage {
 	}
 	/****************************************************************************************/
 	private void deployJason(){
+		tileMap.turnLights();
+		lights = new Timer(1200, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				tileMap.turnLights();
+				lights.stop();
+			}
+		});
+		lights.start();
+		
 		SoundCache.getInstance().getSound(SoundPath.SFX_ZOMBIE_COME_HERE).play();
 		currentCharacter.setFlinchingIncreaseDeltaTimePerversity(250);
 		for (Entity character : characters) 

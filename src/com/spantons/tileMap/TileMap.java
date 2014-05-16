@@ -57,6 +57,8 @@ public class TileMap {
 	private Entity[][] entitysDeadToDraw;
 	private Entity[][] entitysToDraw;
 	private Object[][] objectsToDraw;
+	
+	private boolean lights = true;
 
 	/****************************************************************************************/
 	public TileMap(String _src) {
@@ -78,6 +80,7 @@ public class TileMap {
 			RESOLUTION_HEIGHT_FIX = fixResolution.y;
 		}
 	}
+	
 	/****************************************************************************************/
 	private void loadMap() {
 
@@ -197,6 +200,7 @@ public class TileMap {
 			e.printStackTrace();
 		}
 	}
+	
 	/****************************************************************************************/
 	private void getBounds() {
 		xMin = -mapToAbsolute(numRowsMap - 1, 0).x - tileSize.y;
@@ -214,6 +218,7 @@ public class TileMap {
 		xMax = fix.x;
 		yMax = fix.y;
 	}
+	
 	/****************************************************************************************/
 	public Point absoluteToMap(int x, int y) {
 		int mapX = ((x / (tileSize.x / 2) + y
@@ -222,6 +227,7 @@ public class TileMap {
 
 		return new Point(mapX, mapY);
 	}
+	
 	/****************************************************************************************/
 	public Point mapToAbsolute(int x, int y) {
 
@@ -230,6 +236,7 @@ public class TileMap {
 
 		return new Point(absoluteX, absoluteY);
 	}
+	
 	/****************************************************************************************/
 	private void fixBounds() {
 		if (x < xMin)
@@ -241,26 +248,43 @@ public class TileMap {
 		if (y > yMax)
 			y = yMax;
 	}
+	
 	/****************************************************************************************/
 	public void setPosition(int _x, int _y) {
 		x = _x;
 		y = _y;
 		fixBounds();
 	}
+	
 	/****************************************************************************************/
 	public void setPositionByCharacter(Entity _entity){
 		setPosition(
 			x + (_entity.getX() - RESOLUTION_WIDTH_FIX / 2)
 			, y + (_entity.getY() - RESOLUTION_HEIGHT_FIX / 2));
 	}
+	
 	/****************************************************************************************/
+	public void turnLights(){
+		lights = !lights;
+	}
+	
+	/****************************************************************************************/
+	
 	public void update() {
 		setPosition(x, y);
 	}
+	
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
+		if (!lights) {
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, GamePanel.RESOLUTION_WIDTH,
+				GamePanel.RESOLUTION_HEIGHT);
+			return;
+		}
+		
 		// Pintamos el fondo de gris
-		g.setColor(Color.gray);
+		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, 0, GamePanel.RESOLUTION_WIDTH,
 				GamePanel.RESOLUTION_HEIGHT);
 
@@ -325,6 +349,7 @@ public class TileMap {
 			}
 		}
 	}
+	
 	/****************************************************************************************/
 	private void drawImages(Graphics2D g, Point currentTile) {
 		
@@ -391,6 +416,7 @@ public class TileMap {
 		}
 		
 	}
+	
 	/****************************************************************************************/
 	public int getX() {
 		return x;

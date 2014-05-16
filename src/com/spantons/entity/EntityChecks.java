@@ -121,19 +121,22 @@ public class EntityChecks {
 	/****************************************************************************************/
 	public static boolean checkTileCollision(Entity _entity, TileMap _tileMap) {
 
-		if (_entity.getNextPositionInMap().x >= 0
-				&& _entity.getNextPositionInMap().y >= 0
-				&& _entity.getNextPositionInMap().x < _tileMap
-						.getNumColMap()
-				&& _entity.getNextPositionInMap().y < _tileMap
-						.getNumRowsMap()) {
-
-			if (_tileMap.getWallPosition(
+		if (	_entity.getNextPositionInMap().x >= 0
+			&& _entity.getNextPositionInMap().y >= 0
+			&& _entity.getNextPositionInMap().x < 
+				_tileMap.getNumColMap()
+			&& _entity.getNextPositionInMap().y < 
+				_tileMap.getNumRowsMap()
+			) {
+			if (	_tileMap.
+					getWallPosition(
 					_entity.getNextPositionInMap().x,
-					_entity.getNextPositionInMap().y) == 0) {
-				if (_tileMap.getObjectsPosition(
+					_entity.getNextPositionInMap().y) == 0
+					) {
+				if (	_tileMap.getObjectsPosition(
 						_entity.getNextPositionInMap().x,
-						_entity.getNextPositionInMap().y) == 0)
+						_entity.getNextPositionInMap().y) == 0
+					)
 					return true;
 			}
 		}
