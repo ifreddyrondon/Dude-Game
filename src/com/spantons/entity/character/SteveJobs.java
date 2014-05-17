@@ -29,6 +29,7 @@ public class SteveJobs extends Entity {
 		perversity = 0;
 		maxPerversity = 100;
 		damage = 1;
+		damageBackup = damage;
 		flinchingIncreaseDeltaTimePerversity = 1000;
 		flinchingDecreaseDeltaTimePerversity = 1000;
 		deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;

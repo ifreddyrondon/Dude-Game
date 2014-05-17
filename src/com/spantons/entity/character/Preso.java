@@ -29,6 +29,7 @@ public class Preso extends Entity {
 		perversity = 0;
 		maxPerversity = 100;
 		damage = 1.1f;
+		damageBackup = damage;
 		flinchingIncreaseDeltaTimePerversity = 800;
 		flinchingDecreaseDeltaTimePerversity = 1000;
 		deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;

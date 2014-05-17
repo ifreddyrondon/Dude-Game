@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import com.spantons.entity.Entity;
-import com.spantons.gameState.Level1Stage;
+import com.spantons.gameState.Level_1_1_Stage;
 import com.spantons.main.GamePanel;
 import com.spantons.object.Object;
 import com.spantons.utilities.ArraysUtil;
@@ -369,10 +369,10 @@ public class TileMap {
 				
 				if (!transparentWalls.equals("")) {
 					if (transparentWalls.equals("bathroom")) {
-						for (Point a : Level1Stage.A) 
-							walls[a.x][a.y] = Level1Stage.TRANSPARENT_A;
-						for (Point b : Level1Stage.B) 
-							walls[b.x][b.y] = Level1Stage.TRANSPARENT_B;
+						for (Point a : Level_1_1_Stage.A) 
+							walls[a.x][a.y] = Level_1_1_Stage.TRANSPARENT_A;
+						for (Point b : Level_1_1_Stage.B) 
+							walls[b.x][b.y] = Level_1_1_Stage.TRANSPARENT_B;
 					}
 				}
 				else {

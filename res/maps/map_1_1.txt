@@ -5,8 +5,8 @@ tilewidth=64
 tileheight=32
 
 [tilesets]
-tileset=/tilesets/floor.png,64,32,0,0
-tileset=/tilesets/walls.png,64,192,0,0
+tileset=/tilesets/lvl_1_1_floor.png,64,32,0,0
+tileset=/tilesets/lvl_1_1_walls.png,64,192,0,0
 tileset=/tilesets/objects.png,64,192,0,0
 
 [layer]

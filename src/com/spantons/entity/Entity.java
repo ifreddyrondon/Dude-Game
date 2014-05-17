@@ -46,6 +46,26 @@ public class Entity extends EntityLogic {
 	}
 
 	/****************************************************************************************/
+	public void respawn(TileMap _tm, Stage _stage, int _xMap, int _yMap){
+		if (_tm != null) {
+			tileMap = _tm;
+			stage = _stage;
+			xMap = _xMap;
+			yMap = _yMap;
+			setMapPosition(xMap, yMap);
+			getNextPosition();
+			oldPositionInMap = nextPositionInMap; 
+			entitysToDraw = tileMap.getEntitysToDraw();
+			entitysDeadToDraw = tileMap.getEntitysDeadToDraw();
+			objectsToDraw = tileMap.getObjectsToDraw();
+			entitysToDraw[xMap][yMap] = this;
+			flinchingIncreasePerversity = true;
+			damage = damageBackup;
+			object = null;
+			tileMap.setTransparentWalls("");
+		}
+	}
+	/****************************************************************************************/
 	public Point getMapPositionOfCharacter() {
 		int _x = x + tileMap.getX();
 		int _y = y + tileMap.getY();
@@ -396,6 +416,14 @@ public class Entity extends EntityLogic {
 
 	public  Object getObject(){
 		return object;
+	}
+	
+	public void setTileMap(TileMap _tileMap){
+		tileMap = _tileMap;
+	}
+	
+	public void setStage(Stage _stage){
+		stage = _stage;
 	}
 
 }

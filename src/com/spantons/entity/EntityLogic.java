@@ -53,6 +53,7 @@ public class EntityLogic {
 	protected int perversity;
 	protected int maxPerversity;
 	protected float damage;
+	protected float damageBackup;
 	protected int moveSpeed;
 	
 	protected boolean attack;
