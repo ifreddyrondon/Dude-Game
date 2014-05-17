@@ -129,6 +129,7 @@ public class Jason extends Entity{
 			if (elapsedTime > moveSpeed)
 				flinchingJasonMov = false;
 		} else {
+			oldPositionInMap = nextPositionInMap;
 			nextPositionInMap = TileWalk.walkTo(nextDirectionJason,
 					nextPositionInMap, 1);
 
@@ -139,7 +140,7 @@ public class Jason extends Entity{
 				entitysToDraw[xMap][yMap] = this;
 			} else {
 				nextDirectionJason = TileWalk.randomMov();
-				nextPositionInMap = getMapPositionOfCharacter();
+				nextPositionInMap = oldPositionInMap;
 			}
 			movFace(nextDirectionJason);
 			flinchingJasonMov = true;
