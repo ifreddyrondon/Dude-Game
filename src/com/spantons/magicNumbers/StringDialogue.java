@@ -22,11 +22,11 @@ public interface StringDialogue {
 		"Parece que hay algo \ndetrás que no deja abrirla",
 		"necesitamos una palanca"};
 	
-	public static final String[] STORY_ROOM1 = {
+	public static final String[] STORY_ROOM_1 = {
 		"Falta alguien",
-		"Seguro se quedó para usar el baño",
+		"Seguro se quedó para \nusar el baño",
 		"Qué asqueroso",
-		"Tal vez encontró una salida"};
+		"Tal vez encontró una \nsalida"};
 	
 	public static final String[] STORY_MAIN_ROOM = {
 		"¿Quién hizo esto?",

@@ -36,9 +36,9 @@ public class Level_1_2_Stage extends Stage{
 	private Timer lightsOn;
 	private int timeLightsOn = 8000;
 	private Timer lightsOff;
-	private int timeLightsOff = 1200;
-//	private int countdownStartDialogues = 2000;
-//	private Timer startDialogues;
+	private int timeLightsOff = 1100;
+	private int countdownStartDialogues = 2000;
+	private Timer startDialogues;
 	public static Font fontDialogues;
 	public static Color colorDialogues;
 
@@ -80,6 +80,21 @@ public class Level_1_2_Stage extends Stage{
 		colorDialogues = Color.BLACK;
 		
 		dialogues = new DialogueStage1(this);
+		startDialogues =  new Timer(countdownStartDialogues, new ActionListener() { 
+			@Override 
+			public void actionPerformed(ActionEvent ae) { 
+				for (String txt : getDialogues().getStrings().get("STORY_ROOM_1")) {
+					getDialogues().addDialogue(
+						new Dialogue(
+							txt,fontDialogues, colorDialogues, 2500, 
+							ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
+							Dialogue.RANDOM, Dialogue.MEDIUM_PRIORITY
+					));
+				}
+				startDialogues.stop();
+			} 
+		}); 
+		startDialogues.start();
 		
 		// Temporizador
 		timer = new Timer(1000, new ActionListener() { 
