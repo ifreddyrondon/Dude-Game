@@ -25,6 +25,7 @@ import com.spantons.object.Object;
 import com.spantons.singleton.FontCache;
 import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
+import com.spantons.utilities.RandomItemArrayList;
 import com.spantons.utilities.ToHours;
 
 public class Level_1_2_Stage extends Stage{
@@ -65,6 +66,9 @@ public class Level_1_2_Stage extends Stage{
 		currentCharacter.respawn(tileMap, this, 28, 34);
 		
 		characters = gsm.getCharacters();
+		characters.remove(
+				RandomItemArrayList.getRandomItemFromArrayList(characters)
+		);
 		int i = 26;
 		for (Entity entity : characters) {
 			entity.respawn(tileMap, this, i, 34);
@@ -113,12 +117,14 @@ public class Level_1_2_Stage extends Stage{
 				tileMap.turnLights();
 				lightsOn.stop();
 				lightsOff.start();
+				SoundCache.getInstance().getSound(SoundPath.SFX_ELECTRIC_CURRENT).play();
 			}
 		});
 		
 		lightsOff = new Timer(timeLightsOff, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				
 				tileMap.turnLights();
 				lightsOn.start();
 				lightsOff.stop();

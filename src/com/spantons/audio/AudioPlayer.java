@@ -45,6 +45,8 @@ public class AudioPlayer {
 	
 	/****************************************************************************************/
 	public void loop() {
+		stop();
+		clip.setFramePosition(0);
 		clip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 	
