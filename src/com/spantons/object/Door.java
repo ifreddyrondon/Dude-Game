@@ -32,6 +32,7 @@ public class Door extends Object {
 	
 	private ArrayList<BufferedImage[]> sprites;
 
+	/****************************************************************************************/
 	public Door(
 			TileMap _tileMap, 
 			int _xMap, 
@@ -143,8 +144,8 @@ public class Door extends Object {
 	public void draw(Graphics2D g) {
 		super.draw(g);
 	}
+	
 	/****************************************************************************************/
-
 	public Point getPositionInMap() {
 		return new Point(xMap, yMap);
 	}

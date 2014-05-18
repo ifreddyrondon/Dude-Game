@@ -14,5 +14,6 @@ public interface SoundPath {
 	public static final String SFX_SMOKE = "/sfx/smoke.mp3";
 	public static final String SFX_ZOMBIE_COME_HERE = "/sfx/zombieComeHere.mp3";
 	public static final String SFX_ELECTRIC_CURRENT = "/sfx/electricCurrent.mp3";
+	public static final String SFX_DRAG_DOOR = "/sfx/dragDoor.mp3";
 	
 }

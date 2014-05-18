@@ -92,6 +92,7 @@ public abstract class Object {
 				y - spriteHeight, null);
 	}
 	/****************************************************************************************/
+	
 	public int getxMap() {
 		return xMap;
 	}
@@ -131,7 +132,6 @@ public abstract class Object {
 	public int getTimeOfHigh() {
 		return timeOfHigh;
 	}
-	
 	public String getIdAssociated(){
 		return idAssociated;
 	}

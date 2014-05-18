@@ -42,5 +42,6 @@ public interface ImagePath {
 	public static final String OBJECT_PIECE_OF_PIZZA = "/objects_sprites/PieceOfPizza.png";
 	public static final String OBJECT_PIPE = "/objects_sprites/Pipe.png";
 	public static final String OBJECT_PIZZA = "/objects_sprites/Pizza.png";
+	public static final String OBJECT_TRIGGER_POINT = "/objects_sprites/TriggerPoint.png";
 	
 }

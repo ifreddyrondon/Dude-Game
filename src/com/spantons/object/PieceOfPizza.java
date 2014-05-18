@@ -15,6 +15,7 @@ public class PieceOfPizza extends Object {
 	private static final int IDLE = 0;
 	private ArrayList<BufferedImage[]> sprites;
 	
+	/****************************************************************************************/
 	public PieceOfPizza(TileMap _tileMap, int _xMap, int _yMap) {
 		super(_tileMap, _xMap, _yMap);
 		
@@ -50,6 +51,7 @@ public class PieceOfPizza extends Object {
 			e.printStackTrace();
 		}
 	}
+	
 	/****************************************************************************************/
 	@Override
 	public void load(Entity _entity) {
@@ -57,12 +59,14 @@ public class PieceOfPizza extends Object {
 		carrier.getHealth(this);
 		carrier.takeOrLeaveObject();
 	}
+	
 	/****************************************************************************************/
 	@Override
 	public void unload(Entity _entity) {
 		// TODO Auto-generated method stub
 		
 	}
+	
 	/****************************************************************************************/
 	public void update() {
 		
@@ -77,6 +81,7 @@ public class PieceOfPizza extends Object {
 		super.update();
 		animation.update();
 	}
+	
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 		super.draw(g);

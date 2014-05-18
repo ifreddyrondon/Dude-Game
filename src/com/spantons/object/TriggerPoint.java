@@ -10,19 +10,18 @@ import com.spantons.magicNumbers.ImagePath;
 import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
 
-public class Pizza extends Object {
-	
+public class TriggerPoint extends Object {
+
 	private static final int IDLE = 0;
 	private ArrayList<BufferedImage[]> sprites;
 	
 	/****************************************************************************************/
-	public Pizza(TileMap _tileMap, int _xMap, int _yMap) {
+	public TriggerPoint(TileMap _tileMap, int _xMap, int _yMap) {
 		super(_tileMap, _xMap, _yMap);
 		
-		description = "Pizza";
-		type = NON_BLOCKED;
-		health = 0.8f;
-		
+		description = "Punto de activacion";
+		type = BLOCKED;
+
 		loadSprite();
 		
 		animation = new Animation();
@@ -30,15 +29,14 @@ public class Pizza extends Object {
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelayTime(1000);
 	}
-	
+
 	/****************************************************************************************/
 	private void loadSprite() {
 		try {
-			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.OBJECT_PIZZA);
+			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.OBJECT_TRIGGER_POINT);
 			
 			spriteWidth = spriteSheet.getWidth();
-			spriteHeight = spriteSheet.getHeight();
-			
+			spriteHeight = spriteSheet.getHeight();			
 			sprites = new ArrayList<BufferedImage[]>();
 
 			// IDLE
@@ -55,11 +53,10 @@ public class Pizza extends Object {
 	/****************************************************************************************/
 	@Override
 	public void load(Entity _entity) {
-		showObject = false;
-		carrier.getHealth(this);
-		carrier.takeOrLeaveObject();
+		// TODO Auto-generated method stub
+		
 	}
-	
+
 	/****************************************************************************************/
 	@Override
 	public void unload(Entity _entity) {
@@ -69,15 +66,6 @@ public class Pizza extends Object {
 	
 	/****************************************************************************************/
 	public void update() {
-		
-		if(carrier == null){
-			if (currentAnimation != IDLE) {
-				currentAnimation = IDLE;
-				animation.setFrames(sprites.get(IDLE));
-				animation.setDelayTime(1000);
-			}
-		}
-		
 		super.update();
 		animation.update();
 	}

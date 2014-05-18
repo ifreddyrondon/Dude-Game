@@ -70,19 +70,15 @@ public class Dialogue {
 	public void setTypeOfBallon(String typeOfBallon) {
 		this.typeOfBallon = typeOfBallon;
 	}
-
 	public int getWhoSpeak() {
 		return whoSpeak;
 	}
-
 	public void setWhoSpeak(int whoSpeak) {
 		this.whoSpeak = whoSpeak;
 	}
-
 	public int getPriority() {
 		return priority;
 	}
-
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}

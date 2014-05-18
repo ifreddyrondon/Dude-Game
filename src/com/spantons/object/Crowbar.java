@@ -19,6 +19,7 @@ public class Crowbar extends Object {
 	private static final int ATTACKING = 2;
 	
 	private ArrayList<BufferedImage[]> sprites;
+	
 	/****************************************************************************************/
 	public Crowbar(TileMap _tileMap, int _xMap, int _yMap, double _scale, String _idAssociated) {
 		super(_tileMap, _xMap, _yMap);
@@ -38,6 +39,7 @@ public class Crowbar extends Object {
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelayTime(1000);
 	}
+	
 	/****************************************************************************************/
 	private void loadSprite() {
 		try {
@@ -76,18 +78,21 @@ public class Crowbar extends Object {
 			e.printStackTrace();
 		}
 	}
+	
 	/****************************************************************************************/
 	@Override
 	public void load(Entity _entity) {
 		_entity.setDamage((float) (_entity.getDamage() + damage));
 		
 	}
+	
 	/****************************************************************************************/
 	@Override
 	public void unload(Entity _entity) {
 		_entity.setDamage((float) (_entity.getDamage() - damage));
 		
 	}
+	
 	/****************************************************************************************/
 	public void update() {
 		
@@ -117,6 +122,7 @@ public class Crowbar extends Object {
 		super.update();
 		animation.update();
 	}
+	
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 		super.draw(g);

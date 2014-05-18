@@ -21,6 +21,7 @@ import com.spantons.magicNumbers.FontPath;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
 import com.spantons.object.Door;
+import com.spantons.object.Hammer;
 import com.spantons.object.Object;
 import com.spantons.singleton.FontCache;
 import com.spantons.singleton.SoundCache;
@@ -38,7 +39,7 @@ public class Level_1_2_Stage extends Stage{
 	private int timeLightsOn = 8000;
 	private Timer lightsOff;
 	private int timeLightsOff = 1100;
-	private int countdownStartDialogues = 2000;
+	private int countdownStartDialogues = 1300;
 	private Timer startDialogues;
 	public static Font fontDialogues;
 	public static Color colorDialogues;
@@ -76,6 +77,25 @@ public class Level_1_2_Stage extends Stage{
 		}
 		
 		jasons.add(new Jason(tileMap, this, 18, 24, 0.10));
+		
+//		objects.add(new TriggerPoint(tileMap, 10, 24));
+		objects.add(new Hammer(tileMap, 27, 18, 0.15));
+//		objects.add(new Hammer(tileMap, 18, 8, 0.15));
+//		objects.add(new Hammer(tileMap, 19, 20, 0.15));
+//		objects.add(new Alcohol(tileMap, 27, 16));
+//		objects.add(new Alcohol(tileMap, 17, 11));
+//		objects.add(new Alcohol(tileMap, 21, 25));
+//		objects.add(new Beers(tileMap, 28, 10));
+//		objects.add(new Beers(tileMap, 21, 17));
+//		objects.add(new Beers(tileMap, 24, 16));
+//		objects.add(new Pipe(tileMap, 27,19));
+//		objects.add(new Pipe(tileMap, 17,27));
+//		objects.add(new Pipe(tileMap, 27,13));
+//		objects.add(new PieceOfPizza(tileMap, 21,18));
+//		objects.add(new PieceOfPizza(tileMap, 10,29));
+//		objects.add(new Pizza(tileMap, 28, 13));
+//		objects.add(new Pizza(tileMap, 32, 8));
+//		objects.add(new Food(tileMap, 11,11));
 		
 		SoundCache.getInstance().getSound(SoundPath.MUSIC_HORROR_AMBIANCE).loop();
 		

@@ -15,6 +15,7 @@ public class Pipe extends Object {
 	private static final int IDLE = 0;
 	private ArrayList<BufferedImage[]> sprites;
 	
+	/****************************************************************************************/
 	public Pipe(TileMap _tileMap, int _xMap, int _yMap) {
 		super(_tileMap, _xMap, _yMap);
 		
@@ -30,6 +31,7 @@ public class Pipe extends Object {
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelayTime(1000);
 	}
+	
 	/****************************************************************************************/
 	private void loadSprite() {
 		try {
@@ -50,6 +52,7 @@ public class Pipe extends Object {
 			e.printStackTrace();
 		}
 	}
+	
 	/****************************************************************************************/
 	@Override
 	public void load(Entity _entity) {
@@ -57,12 +60,14 @@ public class Pipe extends Object {
 		carrier.getHigh(this);
 		setCarrier(null);
 	}
+	
 	/****************************************************************************************/
 	@Override
 	public void unload(Entity _entity) {
 		// TODO Auto-generated method stub
 		
 	}
+	
 	/****************************************************************************************/
 	public void update() {
 		
@@ -77,6 +82,7 @@ public class Pipe extends Object {
 		super.update();
 		animation.update();
 	}
+	
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 		super.draw(g);
