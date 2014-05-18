@@ -20,9 +20,16 @@ import com.spantons.entity.character.Jason;
 import com.spantons.magicNumbers.FontPath;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
+import com.spantons.object.Alcohol;
+import com.spantons.object.Beers;
 import com.spantons.object.Door;
+import com.spantons.object.Food;
 import com.spantons.object.Hammer;
 import com.spantons.object.Object;
+import com.spantons.object.PieceOfPizza;
+import com.spantons.object.Pipe;
+import com.spantons.object.Pizza;
+import com.spantons.object.TriggerPoint;
 import com.spantons.singleton.FontCache;
 import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
@@ -78,24 +85,25 @@ public class Level_1_2_Stage extends Stage{
 		
 		jasons.add(new Jason(tileMap, this, 18, 24, 0.10));
 		
-//		objects.add(new TriggerPoint(tileMap, 10, 24));
-		objects.add(new Hammer(tileMap, 27, 18, 0.15));
-//		objects.add(new Hammer(tileMap, 18, 8, 0.15));
-//		objects.add(new Hammer(tileMap, 19, 20, 0.15));
-//		objects.add(new Alcohol(tileMap, 27, 16));
-//		objects.add(new Alcohol(tileMap, 17, 11));
-//		objects.add(new Alcohol(tileMap, 21, 25));
-//		objects.add(new Beers(tileMap, 28, 10));
-//		objects.add(new Beers(tileMap, 21, 17));
-//		objects.add(new Beers(tileMap, 24, 16));
-//		objects.add(new Pipe(tileMap, 27,19));
-//		objects.add(new Pipe(tileMap, 17,27));
-//		objects.add(new Pipe(tileMap, 27,13));
-//		objects.add(new PieceOfPizza(tileMap, 21,18));
-//		objects.add(new PieceOfPizza(tileMap, 10,29));
-//		objects.add(new Pizza(tileMap, 28, 13));
-//		objects.add(new Pizza(tileMap, 32, 8));
-//		objects.add(new Food(tileMap, 11,11));
+		objects.add(new TriggerPoint(tileMap, this, 11, 23));
+		objects.add(new TriggerPoint(tileMap, this, 6, 6));
+		objects.add(new Hammer(tileMap, 19, 9, 0.15));
+		objects.add(new Hammer(tileMap, 7, 16, 0.15));
+		objects.add(new Alcohol(tileMap, 27, 18));
+		objects.add(new Alcohol(tileMap, 17, 26));
+		objects.add(new Alcohol(tileMap, 11, 33));
+		objects.add(new Beers(tileMap, 24, 19));
+		objects.add(new Beers(tileMap, 31, 8));
+		objects.add(new Beers(tileMap, 18, 13));
+		objects.add(new Pipe(tileMap, 33,8));
+		objects.add(new Pipe(tileMap, 25,16));
+		objects.add(new Pipe(tileMap, 8,10));
+		objects.add(new PieceOfPizza(tileMap, 6,35));
+		objects.add(new PieceOfPizza(tileMap, 25,22));
+		objects.add(new PieceOfPizza(tileMap, 26,6));
+		objects.add(new Pizza(tileMap, 10, 31));
+		objects.add(new Pizza(tileMap,22, 28));
+		objects.add(new Food(tileMap, 35,5));
 		
 		SoundCache.getInstance().getSound(SoundPath.MUSIC_HORROR_AMBIANCE).loop();
 		
@@ -144,7 +152,6 @@ public class Level_1_2_Stage extends Stage{
 		lightsOff = new Timer(timeLightsOff, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
 				tileMap.turnLights();
 				lightsOn.start();
 				lightsOff.stop();

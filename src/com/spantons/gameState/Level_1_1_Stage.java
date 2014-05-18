@@ -88,10 +88,10 @@ public class Level_1_1_Stage extends Stage {
 		
 		currentCharacter = new LeonTheProfessional(tileMap, this, 16, 19, 0.10);
 
-//		characters.add(new GordonFreeman(tileMap, this, 8, 20, 0.10));
-//		characters.add(new LizSherman(tileMap, this, 13, 17, 0.10));
-//		characters.add(new DanaScullyXFiles(tileMap, this, 13, 21, 0.10));
-//		characters.add(new Preso(tileMap, this, 7, 17, 0.10));
+		characters.add(new GordonFreeman(tileMap, this, 8, 20, 0.10));
+		characters.add(new LizSherman(tileMap, this, 13, 17, 0.10));
+		characters.add(new DanaScullyXFiles(tileMap, this, 13, 21, 0.10));
+		characters.add(new Preso(tileMap, this, 7, 17, 0.10));
 //		characters.add(new Preso(tileMap, this, 8, 20, 0.10));
 //		characters.add(new Preso(tileMap, this, 13, 17, 0.10));
 //		characters.add(new Preso(tileMap, this, 13, 21, 0.10));

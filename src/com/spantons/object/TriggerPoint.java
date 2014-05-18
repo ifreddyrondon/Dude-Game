@@ -6,21 +6,29 @@ import java.util.ArrayList;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
+import com.spantons.gameState.Stage;
 import com.spantons.magicNumbers.ImagePath;
+import com.spantons.magicNumbers.SoundPath;
 import com.spantons.singleton.ImageCache;
+import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
 
 public class TriggerPoint extends Object {
 
+	private Stage stage;
 	private static final int IDLE = 0;
 	private ArrayList<BufferedImage[]> sprites;
 	
+	private boolean soundPlay;
+	
 	/****************************************************************************************/
-	public TriggerPoint(TileMap _tileMap, int _xMap, int _yMap) {
+	public TriggerPoint(TileMap _tileMap, Stage _stage, int _xMap, int _yMap) {
 		super(_tileMap, _xMap, _yMap);
 		
+		stage = _stage;
 		description = "Punto de activacion";
 		type = BLOCKED;
+		soundPlay = false;
 
 		loadSprite();
 		
@@ -68,6 +76,17 @@ public class TriggerPoint extends Object {
 	public void update() {
 		super.update();
 		animation.update();
+		
+		if (	stage.getCurrentCharacter().getMapPositionOfCharacter().x == xMap
+			&& stage.getCurrentCharacter().getMapPositionOfCharacter().y == yMap) {
+			
+			if (!soundPlay) {
+				SoundCache.getInstance().getSound(SoundPath.SFX_DRAG_DOOR).play();
+				soundPlay = true;
+			}
+			
+		} else 
+			soundPlay = false;
 	}
 	
 	/****************************************************************************************/
