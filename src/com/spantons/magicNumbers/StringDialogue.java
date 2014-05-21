@@ -18,9 +18,14 @@ public interface StringDialogue {
 		"Quienes son ustedes",
 		"Qué sucede","???"};
 	
-	public static final String[] STORY_DOOR = {
+	public static final String[] STORY_DOOR_MAIN_ROOM = {
 		"Parece que hay algo \ndetrás que no deja abrirla",
-		"necesitamos una palanca"};
+		"Necesitamos una palanca!!"};
+	
+	public static final String[] STORY_DOOR_ROOM_1 = {
+		"Que puerta para particular",
+		"Creo que se abre con\n botones",
+		"Parece que tenemos que \n presionar algo"};
 	
 	public static final String[] STORY_ROOM_1 = {
 		"Falta alguien",

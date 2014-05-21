@@ -65,9 +65,10 @@ public class DialogueStage1 extends DialogueManager {
 		getStrings().put("THOUGHTS_RAMDON", StringDialogue.THOUGHTS_RAMDON);
 		getStrings().put("THOUGHTS_WANTOUT", StringDialogue.THOUGHTS_WANTOUT);
 		getStrings().put("THOUGHTS_AWAKENING_1", StringDialogue.THOUGHTS_AWAKENING_1);
-		getStrings().put("STORY_DOOR", StringDialogue.STORY_DOOR);
+		getStrings().put("STORY_DOOR", StringDialogue.STORY_DOOR_MAIN_ROOM);
 		getStrings().put("STORY_ROOM_1", StringDialogue.STORY_ROOM_1);
 		getStrings().put("STORY_MAIN_ROOM", StringDialogue.STORY_MAIN_ROOM);
+		getStrings().put("STORY_DOOR_ROOM_1", StringDialogue.STORY_DOOR_ROOM_1);
 	}
 
 	/****************************************************************************************/

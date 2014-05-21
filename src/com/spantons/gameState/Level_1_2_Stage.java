@@ -85,6 +85,20 @@ public class Level_1_2_Stage extends Stage{
 		
 		jasons.add(new Jason(tileMap, this, 18, 24, 0.10));
 		
+		doors.put("hall", new Door(
+				tileMap, 33,38, 
+				Door.ANIMATION_CLOSE_A, 
+				Door.CLOSE, 
+				Door.LOCK,"hall",
+				false));
+		
+		doors.put("exit", new Door(
+				tileMap, 29,4, 
+				Door.ANIMATION_CLOSE_B, 
+				Door.CLOSE, 
+				Door.LOCK,"exit",
+				true));
+		
 		objects.add(new TriggerPoint(tileMap, this, 11, 23));
 		objects.add(new TriggerPoint(tileMap, this, 6, 6));
 		objects.add(new Hammer(tileMap, 19, 9, 0.15));
@@ -197,11 +211,12 @@ public class Level_1_2_Stage extends Stage{
 		      	
 		      	if (	doors.get(key).isDoorToNextLvl() 
 		      		&& doors.get(key).isTryToOpen()) {
-					
-		      		for (String txt : getDialogues().getStrings().get("STORY_DOOR")) {
+		      		
+		      		for (String txt : getDialogues().getStrings().get("STORY_DOOR_ROOM_1")) {
+		      			
 						getDialogues().addDialogue(
 							new Dialogue(
-								txt,fontDialogues, colorDialogues, 1600, 
+								txt,fontDialogues, colorDialogues, 1800, 
 								ImagePath.DIALOGUE_SPEECH_BALLON_HIGH,
 								Dialogue.CURRENT, Dialogue.HIGH_PRIORITY
 						));
