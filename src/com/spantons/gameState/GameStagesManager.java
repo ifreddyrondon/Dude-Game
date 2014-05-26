@@ -4,8 +4,11 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.spantons.entity.Entity;
+import com.spantons.generalInterfaces.Drawable;
+import com.spantons.generalInterfaces.Keyable;
+import com.spantons.generalInterfaces.Updateable;
 
-public class GameStagesManager {
+public class GameStagesManager implements Drawable, Updateable, Keyable{
 
 	private Stage[] gameStages;
 	private int currentStage;

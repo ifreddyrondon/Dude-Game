@@ -1,17 +1,19 @@
 package com.spantons.gameState;
 
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.spantons.dialogue.DialogueManager;
 import com.spantons.entity.Entity;
+import com.spantons.generalInterfaces.Drawable;
+import com.spantons.generalInterfaces.Keyable;
+import com.spantons.generalInterfaces.Updateable;
 import com.spantons.object.Door;
 import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
 
-public abstract class Stage {
+public abstract class Stage implements Drawable, Updateable, Keyable{
 
 	protected TileMap tileMap;
 	protected GameStagesManager gsm;
@@ -26,10 +28,6 @@ public abstract class Stage {
 	
 	public abstract void init();
 	public abstract void endStage();
-	public abstract void update();
-	public abstract void draw(Graphics2D g);
-	public abstract void keyPressed(int k);
-	public abstract void keyReleased(int k);
 	
 	private Point saveNextCurrentCharMapPosition;
 	

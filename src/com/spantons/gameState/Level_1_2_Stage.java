@@ -50,6 +50,7 @@ public class Level_1_2_Stage extends Stage{
 	private Timer startDialogues;
 	public static Font fontDialogues;
 	public static Color colorDialogues;
+	boolean allTriggerPointActivated;
 
 	/****************************************************************************************/
 	public Level_1_2_Stage(GameStagesManager _gsm) {
@@ -201,28 +202,49 @@ public class Level_1_2_Stage extends Stage{
 		}
 		
 		if (objects.size() > 0) {
-			for (Object object : objects) 
+			allTriggerPointActivated = true;
+			for (Object object : objects) {
 				object.update();
+				
+				if (	object.getDescription().equals("Punto de activacion") 
+					&& allTriggerPointActivated) {
+					TriggerPoint aux = (TriggerPoint) object;
+					if (!aux.isActivated()) 
+						allTriggerPointActivated = false;
+				}
+			}
 		}
 		
 		if (doors.size() > 0) {
 		      for(String key : doors.keySet()) {
 		      	doors.get(key).update();
 		      	
-		      	if (	doors.get(key).isDoorToNextLvl() 
-		      		&& doors.get(key).isTryToOpen()) {
+		      	if (doors.get(key).isDoorToNextLvl()) {
+		      	
+		      		if (allTriggerPointActivated) {
+		      			doors.get(key).setStatusBlock(Door.UNLOCK);
+		      			doors.get(key).setStatusOpen(Door.OPEN);
+			      		return;
+			      	
+		      		} else {
+		      			doors.get(key).setStatusBlock(Door.LOCK);
+		      			doors.get(key).setStatusOpen(Door.CLOSE);
+		      		}
 		      		
-		      		for (String txt : getDialogues().getStrings().get("STORY_DOOR_ROOM_1")) {
-		      			
-						getDialogues().addDialogue(
-							new Dialogue(
-								txt,fontDialogues, colorDialogues, 1800, 
-								ImagePath.DIALOGUE_SPEECH_BALLON_HIGH,
-								Dialogue.CURRENT, Dialogue.HIGH_PRIORITY
-						));
+		      		if(doors.get(key).isTryToOpen()) {
+		      		
+			      		for (String txt : getDialogues().getStrings().get("STORY_DOOR_ROOM_1")) {
+			      			
+							getDialogues().addDialogue(
+								new Dialogue(
+									txt,fontDialogues, colorDialogues, 1800, 
+									ImagePath.DIALOGUE_SPEECH_BALLON_HIGH,
+									Dialogue.CURRENT, Dialogue.HIGH_PRIORITY
+							));
+						}
+			      		doors.get(key).setTryToOpen(false);
 					}
-		      		doors.get(key).setTryToOpen(false);
-				}
+		      	}	
 		      }
 		}
 		

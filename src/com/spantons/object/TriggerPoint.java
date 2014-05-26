@@ -16,8 +16,10 @@ import com.spantons.tileMap.TileMap;
 public class TriggerPoint extends Object {
 
 	private Stage stage;
+	private boolean activated;
 	private static final int IDLE = 0;
 	private ArrayList<BufferedImage[]> sprites;
+	private Entity characterInTrigger;
 	
 	private boolean soundPlay;
 	
@@ -80,13 +82,25 @@ public class TriggerPoint extends Object {
 		if (	stage.getCurrentCharacter().getMapPositionOfCharacter().x == xMap
 			&& stage.getCurrentCharacter().getMapPositionOfCharacter().y == yMap) {
 			
+			characterInTrigger = stage.getCurrentCharacter();
+			
 			if (!soundPlay) {
 				SoundCache.getInstance().getSound(SoundPath.SFX_DRAG_DOOR).play();
 				soundPlay = true;
+				activated = true;
 			}
 			
-		} else 
+		} else if (	characterInTrigger != null && !characterInTrigger.isDead()
+					&& characterInTrigger.getMapPositionOfCharacter().x == xMap
+					&& characterInTrigger.getMapPositionOfCharacter().y == yMap)
+			
+			activated = true;
+		
+		else {
 			soundPlay = false;
+			activated = false;
+			characterInTrigger = null;
+		}
 	}
 	
 	/****************************************************************************************/
@@ -94,4 +108,8 @@ public class TriggerPoint extends Object {
 		super.draw(g);
 	}
 
+	public boolean isActivated() {
+		return activated;
+	}
+	
 }
