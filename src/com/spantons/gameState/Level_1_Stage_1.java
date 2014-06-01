@@ -47,24 +47,22 @@ public class Level_1_Stage_1 extends Stage {
 	
 	private int countdown = 120; 
 	private Timer timer;
-	private Timer lights;
+	private Timer lightsDeploy;
 	private int countdownStartDialogues = 2000;
 	private Timer startDialogues;
 	public static Font fontDialogues;
 	public static Color colorDialogues;
 
-	public static int TRANSPARENT_A = 71;
-	public static int TRANSPARENT_B = 70;
+	public static int TRANSPARENT = 65;
 	public static Point[] A = {
 		new Point(10, 16),new Point(11, 16),new Point(12, 16),
 		new Point(13, 16),new Point(14, 16),new Point(15, 16),
 		new Point(16, 16),new Point(17, 16),new Point(18, 16),
-		new Point(19, 16),new Point(20, 16),new Point(22, 16)};
-	
-	public static Point[] B = {
-		new Point(22, 8),new Point(22, 9),new Point(22, 10),
-		new Point(22, 11),new Point(22, 12),new Point(22, 13),
-		new Point(22, 14),new Point(22, 15)};
+		new Point(19, 16),new Point(20, 16),new Point(22, 16),
+		new Point(23, 16),new Point(19,17), new Point(23, 7),
+		new Point(23, 8),new Point(23, 9),new Point(23, 10),
+		new Point(23, 11),new Point(23, 12),new Point(23, 13),
+		new Point(23, 14),new Point(23, 15)};
 	
 	/****************************************************************************************/
 	public Level_1_Stage_1(GameStagesManager _gsm) {
@@ -88,30 +86,30 @@ public class Level_1_Stage_1 extends Stage {
 		
 		currentCharacter = new LeonTheProfessional(tileMap, this, 16, 19, 0.10);
 
-		characters.add(new GordonFreeman(tileMap, this, 8, 20, 0.10));
+		characters.add(new GordonFreeman(tileMap, this, 9, 22, 0.10));
 		characters.add(new LizSherman(tileMap, this, 13, 17, 0.10));
-		characters.add(new DanaScullyXFiles(tileMap, this, 13, 21, 0.10));
+		characters.add(new DanaScullyXFiles(tileMap, this, 13, 22, 0.10));
 		characters.add(new Preso(tileMap, this, 7, 17, 0.10));
 //		characters.add(new Preso(tileMap, this, 8, 20, 0.10));
 //		characters.add(new Preso(tileMap, this, 13, 17, 0.10));
 //		characters.add(new Preso(tileMap, this, 13, 21, 0.10));
 		
-		Jason jason = new Jason(tileMap, this, 26, 21, 0.10);
+		Jason jason = new Jason(tileMap, this, 23, 18, 0.10);
 		jason.update();
 		jason.setDead(true);
 		jasons.add(jason);
 		jasons.add(new Jason(tileMap, this, 17, 12, 0.10));
-		jasons.add(new Jason(tileMap, this, 24, 19, 0.10));
+		jasons.add(new Jason(tileMap, this, 26, 23, 0.10));
 		
 		doors.put("panicroom", new Door(
-				tileMap, 18,17, 
+				tileMap, 19,18, 
 				Door.ANIMATION_OPEN_A, 
 				Door.OPEN, 
 				Door.UNLOCK,"panicroom",
 				false));
 		
 		doors.put("exit", new Door(
-				tileMap, 21,6, 
+				tileMap, 21,5, 
 				Door.ANIMATION_CLOSE_A, 
 				Door.CLOSE, 
 				Door.LOCK,"exit",
@@ -125,7 +123,7 @@ public class Level_1_Stage_1 extends Stage {
 				false));
 		
 		doors.put("main", new Door(
-				tileMap, 32,28, 
+				tileMap, 33,27, 
 				Door.ANIMATION_CLOSE_B, 
 				Door.CLOSE, 
 				Door.LOCK,"main",
@@ -134,14 +132,14 @@ public class Level_1_Stage_1 extends Stage {
 		objects.add(new Crowbar(tileMap, 10, 12, 0.23, "exit"));
 		objects.add(new Hammer(tileMap, 12, 13, 0.15));
 		objects.add(new Hammer(tileMap, 14, 18, 0.15));
-		objects.add(new Hammer(tileMap, 19, 20, 0.15));
+		objects.add(new Hammer(tileMap, 25, 32, 0.15));
 		objects.add(new Alcohol(tileMap, 27, 16));
 		objects.add(new Alcohol(tileMap, 17, 11));
-		objects.add(new Alcohol(tileMap, 21, 25));
+		objects.add(new Alcohol(tileMap, 20, 28));
 		objects.add(new Beers(tileMap, 28, 10));
 		objects.add(new Beers(tileMap, 21, 17));
-		objects.add(new Beers(tileMap, 24, 16));
-		objects.add(new Pipe(tileMap, 27,19));
+		objects.add(new Beers(tileMap, 25, 17));
+		objects.add(new Pipe(tileMap, 25,21));
 		objects.add(new Pipe(tileMap, 17,27));
 		objects.add(new Pipe(tileMap, 27,13));
 		objects.add(new PieceOfPizza(tileMap, 21,18));
@@ -264,14 +262,14 @@ public class Level_1_Stage_1 extends Stage {
 	/****************************************************************************************/
 	private void deployJason(){
 		tileMap.turnLights();
-		lights = new Timer(1200, new ActionListener() {
+		lightsDeploy = new Timer(1200, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				tileMap.turnLights();
-				lights.stop();
+				lightsDeploy.stop();
 			}
 		});
-		lights.start();
+		lightsDeploy.start();
 		
 		SoundCache.getInstance().getSound(SoundPath.SFX_ZOMBIE_COME_HERE).play();
 		currentCharacter.setFlinchingIncreaseDeltaTimePerversity(250);

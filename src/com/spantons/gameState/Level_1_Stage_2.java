@@ -41,8 +41,9 @@ public class Level_1_Stage_2 extends Stage{
 
 	private Hud hud;
 	
-	private int countdown = 120; 
+	private int countdown = 100; 
 	private Timer timer;
+	private Timer lightsDeploy;
 	private Timer lightsOn;
 	private int timeLightsOn = 8000;
 	private Timer lightsOff;
@@ -52,6 +53,7 @@ public class Level_1_Stage_2 extends Stage{
 	public static Font fontDialogues;
 	public static Color colorDialogues;
 	boolean allTriggerPointActivated;
+	Point[] exitPoint = {new Point(28,3),new Point(29,3),new Point(30,3)};
 
 	/****************************************************************************************/
 	public Level_1_Stage_2(GameStagesManager _gsm) {
@@ -66,7 +68,6 @@ public class Level_1_Stage_2 extends Stage{
 		secondaryMenu = false;
 		tileMap = new TileMap("/maps/map_1_2.txt");
 		tileMap.setPosition(0, 0);
-		exitPoint = new Point(29,3);
 		
 		jasons = new ArrayList<Entity>();
 		dead = new ArrayList<Entity>();
@@ -150,8 +151,11 @@ public class Level_1_Stage_2 extends Stage{
 			@Override 
 			public void actionPerformed(ActionEvent ae) { 
 				countdown--; 
-				if (countdown == 0) 
+				if (countdown == 0) {
 					timer.stop();
+					deployJason();
+				}
+					
 			} 
 		}); 
 		timer.start();
@@ -190,12 +194,19 @@ public class Level_1_Stage_2 extends Stage{
 	public void update() {
 		currentCharacter.update();
 		
-		if (currentCharacter.getMapPositionOfCharacter().equals(exitPoint)) {
-			SoundCache.getInstance().stopAllSound();
-      		gsm.setCurrentCharacter(currentCharacter);
-      		gsm.setCharacters(characters);
-      		currentCharacter.setAllMov(false);
-      		gsm.setStage(GameStagesManager.LEVEL_1_STAGE_3);
+		for (Point exit : exitPoint) {
+			if (currentCharacter.getMapPositionOfCharacter().equals(exit)) {
+				SoundCache.getInstance().stopAllSound();
+	      		gsm.setCurrentCharacter(currentCharacter);
+	      		ArrayList<Entity> charactersNotBusy = new ArrayList<Entity>();
+	      		for (Entity entity : characters) {
+					if (!entity.isBusy()) 
+						charactersNotBusy.add(entity);
+				}
+	      		gsm.setCharacters(charactersNotBusy);
+	      		currentCharacter.setAllMov(false);
+	      		gsm.setStage(GameStagesManager.LEVEL_1_STAGE_3);
+			}
 		}
 		
 		if (dialogues != null) 
@@ -272,6 +283,31 @@ public class Level_1_Stage_2 extends Stage{
 		dialogues.draw(g);
 	}
 
+	/****************************************************************************************/
+	private void deployJason(){
+		tileMap.turnLights();
+		lightsDeploy = new Timer(1200, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				tileMap.turnLights();
+				lightsDeploy.stop();
+			}
+		});
+		lightsDeploy.start();
+		
+		SoundCache.getInstance().getSound(SoundPath.SFX_ZOMBIE_COME_HERE).play();
+		currentCharacter.setFlinchingIncreaseDeltaTimePerversity(250);
+		for (Entity character : characters) 
+			character.setFlinchingIncreaseDeltaTimePerversity(250);
+		
+		ArrayList<Entity> aux = new ArrayList<Entity>();
+		
+		for (Entity jason : jasons) 
+			aux.add(new Jason(tileMap, this, jason.getXMap(), jason.getYMap(), 0.10));
+		
+		jasons.addAll(aux);
+	}
+	
 	/****************************************************************************************/
 	@Override
 	public void keyPressed(int k) {

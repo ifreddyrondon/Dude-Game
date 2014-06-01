@@ -147,15 +147,14 @@ public class EntityChecks {
 	public static void checkTransparentWalls(Entity _entity, Stage _stage,
 			TileMap _tileMap) {
 		// bathroom walls
-		if (_entity.getNextPositionInMap().equals(new Point(20, 15))
-				|| _entity.getNextPositionInMap().equals(
-						new Point(21, 15))) {
+		if (	_entity.getNextPositionInMap().equals(new Point(20, 15))
+			|| _entity.getNextPositionInMap().equals(new Point(21, 15))
+			|| _entity.getNextPositionInMap().equals(new Point(22, 15))) {
 
 			_tileMap.setTransparentWalls("bathroom");
 			_stage.getDoors().get("bathroom").setStatusOpen(Door.OPEN);
-		} else if (_entity.getNextPositionInMap().equals(new Point(20, 16))
-				|| _entity.getNextPositionInMap().equals(
-						new Point(21, 16))) {
+			
+		} else if (_entity.getNextPositionInMap().equals(new Point(21, 16))) {
 
 			_tileMap.setTransparentWalls("");
 			_stage.getDoors().get("bathroom").setStatusOpen(Door.CLOSE);

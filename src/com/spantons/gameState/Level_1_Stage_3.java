@@ -13,12 +13,7 @@ import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
 import com.spantons.entity.EntityChecks;
 import com.spantons.entity.Hud;
-import com.spantons.entity.character.DanaScullyXFiles;
-import com.spantons.entity.character.GordonFreeman;
 import com.spantons.entity.character.Jason;
-import com.spantons.entity.character.LeonTheProfessional;
-import com.spantons.entity.character.LizSherman;
-import com.spantons.entity.character.Preso;
 import com.spantons.object.Door;
 import com.spantons.object.Object;
 import com.spantons.singleton.SoundCache;
@@ -44,7 +39,7 @@ public class Level_1_Stage_3 extends Stage {
 		hud = new Hud(this);
 		secondaryMenu = false;
 		tileMap = new TileMap("/maps/map_1_3.txt");
-	//	tileMap.setPosition(0, 0);
+		tileMap.setPosition(0, 0);
 
 		characters = new ArrayList<Entity>();
 		jasons = new ArrayList<Entity>();
@@ -53,7 +48,14 @@ public class Level_1_Stage_3 extends Stage {
 		doors = new HashMap<String, Door>();
 
 		currentCharacter = gsm.getCurrentCharacter();
-		currentCharacter.respawn(tileMap, this, 5, 21);
+		currentCharacter.respawn(tileMap, this, 5, 22);
+		
+		characters = gsm.getCharacters();
+		int i = 21;
+		for (Entity entity : characters) {
+			entity.respawn(tileMap, this, 5, i);
+			i--;
+		}
 		
 		jasons.add(new Jason(tileMap, this, 15, 5, 0.10));
 		jasons.add(new Jason(tileMap, this, 20, 19, 0.10));

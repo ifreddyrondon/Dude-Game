@@ -55,6 +55,7 @@ public class EntityLogic {
 	protected float damage;
 	protected float damageBackup;
 	protected int moveSpeed;
+	protected boolean busy;
 	
 	protected boolean attack;
 	protected boolean recoveringFromAttack;

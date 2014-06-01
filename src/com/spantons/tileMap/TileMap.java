@@ -370,9 +370,7 @@ public class TileMap {
 				if (!transparentWalls.equals("")) {
 					if (transparentWalls.equals("bathroom")) {
 						for (Point a : Level_1_Stage_1.A) 
-							walls[a.x][a.y] = Level_1_Stage_1.TRANSPARENT_A;
-						for (Point b : Level_1_Stage_1.B) 
-							walls[b.x][b.y] = Level_1_Stage_1.TRANSPARENT_B;
+							walls[a.x][a.y] = Level_1_Stage_1.TRANSPARENT;
 					}
 				}
 				else {

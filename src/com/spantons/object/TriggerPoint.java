@@ -83,6 +83,7 @@ public class TriggerPoint extends Object {
 			&& stage.getCurrentCharacter().getMapPositionOfCharacter().y == yMap) {
 			
 			characterInTrigger = stage.getCurrentCharacter();
+			characterInTrigger.setBusy(true);
 			
 			if (!soundPlay) {
 				SoundCache.getInstance().getSound(SoundPath.SFX_DRAG_DOOR).play();
@@ -99,6 +100,8 @@ public class TriggerPoint extends Object {
 		else {
 			soundPlay = false;
 			activated = false;
+			if (characterInTrigger != null) 
+				characterInTrigger.setBusy(false);
 			characterInTrigger = null;
 		}
 	}

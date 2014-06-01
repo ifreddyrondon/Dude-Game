@@ -41,6 +41,7 @@ public class Entity extends EntityLogic {
 			entitysToDraw[xMap][yMap] = this;
 			flinchingIncreasePerversity = true;
 			object = null;
+			busy = false;
 			tileMap.setTransparentWalls("");
 		}
 	}
@@ -62,6 +63,7 @@ public class Entity extends EntityLogic {
 			flinchingIncreasePerversity = true;
 			damage = damageBackup;
 			object = null;
+			busy = false;
 			tileMap.setTransparentWalls("");
 		}
 	}
@@ -408,6 +410,14 @@ public class Entity extends EntityLogic {
 
 	public boolean isFacingRight() {
 		return facingRight;
+	}
+	
+	public boolean isBusy(){
+		return busy;
+	}
+	
+	public void setBusy(boolean a){
+		busy = a;
 	}
 	
 	public void setCharacterCloseDirection(String a){

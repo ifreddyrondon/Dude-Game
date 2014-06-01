@@ -25,7 +25,6 @@ public abstract class Stage implements IDrawable, IUpdateable, IKeyable{
 	protected Entity currentCharacter;
 	protected DialogueManager dialogues;
 	protected boolean secondaryMenu;
-	protected Point exitPoint;
 	
 	public abstract void init();
 	public abstract void endStage();
