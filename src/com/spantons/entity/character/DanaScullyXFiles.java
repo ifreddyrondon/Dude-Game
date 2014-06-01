@@ -44,6 +44,7 @@ public class DanaScullyXFiles extends Entity {
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelayTime(1000);
 	}
+	
 	/****************************************************************************************/
 	private void loadSprite() {
 		try {

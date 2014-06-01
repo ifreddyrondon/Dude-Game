@@ -3,6 +3,7 @@ package com.spantons.gameState;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -36,7 +37,7 @@ import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.RandomItemArrayList;
 import com.spantons.utilities.ToHours;
 
-public class Level_1_2_Stage extends Stage{
+public class Level_1_Stage_2 extends Stage{
 
 	private Hud hud;
 	
@@ -53,7 +54,7 @@ public class Level_1_2_Stage extends Stage{
 	boolean allTriggerPointActivated;
 
 	/****************************************************************************************/
-	public Level_1_2_Stage(GameStagesManager _gsm) {
+	public Level_1_Stage_2(GameStagesManager _gsm) {
 		gsm = _gsm;
 		init();
 	}
@@ -65,6 +66,7 @@ public class Level_1_2_Stage extends Stage{
 		secondaryMenu = false;
 		tileMap = new TileMap("/maps/map_1_2.txt");
 		tileMap.setPosition(0, 0);
+		exitPoint = new Point(29,3);
 		
 		jasons = new ArrayList<Entity>();
 		dead = new ArrayList<Entity>();
@@ -187,6 +189,14 @@ public class Level_1_2_Stage extends Stage{
 	@Override
 	public void update() {
 		currentCharacter.update();
+		
+		if (currentCharacter.getMapPositionOfCharacter().equals(exitPoint)) {
+			SoundCache.getInstance().stopAllSound();
+      		gsm.setCurrentCharacter(currentCharacter);
+      		gsm.setCharacters(characters);
+      		currentCharacter.setAllMov(false);
+      		gsm.setStage(GameStagesManager.LEVEL_1_STAGE_3);
+		}
 		
 		if (dialogues != null) 
 			dialogues.update();

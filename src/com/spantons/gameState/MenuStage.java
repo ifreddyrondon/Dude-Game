@@ -86,7 +86,7 @@ public class MenuStage extends Stage {
 	@Override
 	public void endStage() {
 		SoundCache.getInstance().stopAllSound();
-		gsm.setStage(GameStagesManager.LEVEL_1_STAGE);
+		gsm.setStage(GameStagesManager.LEVEL_1_STAGE_1);
 	}
 	
 	/****************************************************************************************/

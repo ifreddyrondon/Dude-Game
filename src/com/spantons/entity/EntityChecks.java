@@ -3,7 +3,7 @@ package com.spantons.entity;
 import java.awt.Point;
 
 import com.spantons.dialogue.Dialogue;
-import com.spantons.gameState.Level_1_1_Stage;
+import com.spantons.gameState.Level_1_Stage_1;
 import com.spantons.gameState.Stage;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.object.Door;
@@ -218,8 +218,8 @@ public class EntityChecks {
 								_stage.getDialogues().addDialogue(
 										new Dialogue(
 												"Este objeto no puede \nabrir esta puerta",
-												Level_1_1_Stage.fontDialogues, 
-												Level_1_1_Stage.colorDialogues, 
+												Level_1_Stage_1.fontDialogues, 
+												Level_1_Stage_1.colorDialogues, 
 												1500, 
 												ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
 												Dialogue.CURRENT,
@@ -230,8 +230,8 @@ public class EntityChecks {
 							_stage.getDialogues().addDialogue(
 									new Dialogue(
 											"Este objeto no sirve \npara abrir puertas",
-											Level_1_1_Stage.fontDialogues, 
-											Level_1_1_Stage.colorDialogues, 
+											Level_1_Stage_1.fontDialogues, 
+											Level_1_Stage_1.colorDialogues, 
 											1500, 
 											ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
 											Dialogue.CURRENT,
@@ -244,8 +244,8 @@ public class EntityChecks {
 						_stage.getDialogues().addDialogue(
 								new Dialogue(
 										"Debes conseguir algo \npara abrir la puerta",
-										Level_1_1_Stage.fontDialogues, 
-										Level_1_1_Stage.colorDialogues, 
+										Level_1_Stage_1.fontDialogues, 
+										Level_1_Stage_1.colorDialogues, 
 										1500, 
 										ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
 										Dialogue.CURRENT,
@@ -258,8 +258,8 @@ public class EntityChecks {
 					_stage.getDialogues().addDialogue(
 							new Dialogue(
 									"Puerta abierta",
-									Level_1_1_Stage.fontDialogues, 
-									Level_1_1_Stage.colorDialogues, 
+									Level_1_Stage_1.fontDialogues, 
+									Level_1_Stage_1.colorDialogues, 
 									1500, 
 									ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
 									Dialogue.CURRENT,
@@ -270,8 +270,8 @@ public class EntityChecks {
 				_stage.getDialogues().addDialogue(
 						new Dialogue(
 								"Debes estar cerca de \nla puerta",
-								Level_1_1_Stage.fontDialogues, 
-								Level_1_1_Stage.colorDialogues, 
+								Level_1_Stage_1.fontDialogues, 
+								Level_1_Stage_1.colorDialogues, 
 								1500, 
 								ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
 								Dialogue.CURRENT,

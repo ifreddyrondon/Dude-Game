@@ -146,7 +146,7 @@ public class Entity extends EntityLogic {
 		decreasePerversity();
 		characterClose = EntityChecks.checkIsCloseToAnotherEntity(this, stage);
 		checkIsRecoveringFromAttack();
-
+		
 		if (attack) {
 			if (object == null)
 				SoundCache.getInstance().getSound(SoundPath.SFX_PUNCH).play();

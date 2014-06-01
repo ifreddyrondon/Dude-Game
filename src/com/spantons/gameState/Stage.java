@@ -4,16 +4,16 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.spantons.Interfaces.IDrawable;
+import com.spantons.Interfaces.IKeyable;
+import com.spantons.Interfaces.IUpdateable;
 import com.spantons.dialogue.DialogueManager;
 import com.spantons.entity.Entity;
-import com.spantons.generalInterfaces.Drawable;
-import com.spantons.generalInterfaces.Keyable;
-import com.spantons.generalInterfaces.Updateable;
 import com.spantons.object.Door;
 import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
 
-public abstract class Stage implements Drawable, Updateable, Keyable{
+public abstract class Stage implements IDrawable, IUpdateable, IKeyable{
 
 	protected TileMap tileMap;
 	protected GameStagesManager gsm;
@@ -25,6 +25,7 @@ public abstract class Stage implements Drawable, Updateable, Keyable{
 	protected Entity currentCharacter;
 	protected DialogueManager dialogues;
 	protected boolean secondaryMenu;
+	protected Point exitPoint;
 	
 	public abstract void init();
 	public abstract void endStage();

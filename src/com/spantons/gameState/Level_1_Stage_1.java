@@ -41,7 +41,7 @@ import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.ToHours;
 
-public class Level_1_1_Stage extends Stage {
+public class Level_1_Stage_1 extends Stage {
 
 	private Hud hud;
 	
@@ -67,7 +67,7 @@ public class Level_1_1_Stage extends Stage {
 		new Point(22, 14),new Point(22, 15)};
 	
 	/****************************************************************************************/
-	public Level_1_1_Stage(GameStagesManager _gsm) {
+	public Level_1_Stage_1(GameStagesManager _gsm) {
 		gsm = _gsm;
 		init();
 	}
@@ -242,7 +242,7 @@ public class Level_1_1_Stage extends Stage {
 		      		SoundCache.getInstance().stopAllSound();
 		      		gsm.setCurrentCharacter(currentCharacter);
 		      		gsm.setCharacters(characters);
-		      		gsm.setStage(GameStagesManager.LEVEL_2_STAGE);
+		      		gsm.setStage(GameStagesManager.LEVEL_1_STAGE_2);
 		      	}
 		      }
 		}

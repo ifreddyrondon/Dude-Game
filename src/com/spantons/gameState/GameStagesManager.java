@@ -3,12 +3,12 @@ package com.spantons.gameState;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import com.spantons.Interfaces.IDrawable;
+import com.spantons.Interfaces.IKeyable;
+import com.spantons.Interfaces.IUpdateable;
 import com.spantons.entity.Entity;
-import com.spantons.generalInterfaces.Drawable;
-import com.spantons.generalInterfaces.Keyable;
-import com.spantons.generalInterfaces.Updateable;
 
-public class GameStagesManager implements Drawable, Updateable, Keyable{
+public class GameStagesManager implements IDrawable, IUpdateable, IKeyable{
 
 	private Stage[] gameStages;
 	private int currentStage;
@@ -18,10 +18,11 @@ public class GameStagesManager implements Drawable, Updateable, Keyable{
 
 	public static final int NUM_STAGES = 5;
 	public static final int MENU_STAGE = 0;
-	public static final int LEVEL_1_STAGE = 1;
-	public static final int LEVEL_2_STAGE = 2;
-	public static final int GAME_OVER_STAGE = 3;
-	public static final int HELP_STAGE = 4;
+	public static final int LEVEL_1_STAGE_1 = 1;
+	public static final int LEVEL_1_STAGE_2 = 2;
+	public static final int LEVEL_1_STAGE_3 = 3;
+	public static final int GAME_OVER_STAGE = 4;
+	public static final int HELP_STAGE = 5;
 
 	/****************************************************************************************/
 	public GameStagesManager() {
@@ -34,10 +35,12 @@ public class GameStagesManager implements Drawable, Updateable, Keyable{
 	private void loadStage(int stage) {
 		if (stage == MENU_STAGE)
 			gameStages[MENU_STAGE] = new MenuStage(this);
-		if (stage == LEVEL_1_STAGE)
-			gameStages[LEVEL_1_STAGE] = new Level_1_1_Stage(this);
-		if (stage == LEVEL_2_STAGE)
-			gameStages[LEVEL_2_STAGE] = new Level_1_2_Stage(this);
+		if (stage == LEVEL_1_STAGE_1)
+			gameStages[LEVEL_1_STAGE_1] = new Level_1_Stage_1(this);
+		if (stage == LEVEL_1_STAGE_2)
+			gameStages[LEVEL_1_STAGE_2] = new Level_1_Stage_2(this);
+		if (stage == LEVEL_1_STAGE_3)
+			gameStages[LEVEL_1_STAGE_3] = new Level_1_Stage_3(this);
 		if (stage == GAME_OVER_STAGE)
 			gameStages[GAME_OVER_STAGE] = new GameOverStage(this);
 		if (stage == HELP_STAGE)

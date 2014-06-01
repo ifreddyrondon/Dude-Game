@@ -52,7 +52,7 @@ public class GameOverStage extends Stage {
 	@Override
 	public void endStage() {
 //		player.close();
-		gsm.setStage(GameStagesManager.LEVEL_1_STAGE);
+		gsm.setStage(GameStagesManager.LEVEL_1_STAGE_1);
 	}
 	/****************************************************************************************/
 	@Override
