@@ -78,13 +78,15 @@ public class Level_1_Stage_2 extends Stage{
 		currentCharacter.respawn(tileMap, this, 28, 34);
 		
 		characters = gsm.getCharacters();
-		characters.remove(
-				RandomItemArrayList.getRandomItemFromArrayList(characters)
-		);
-		int i = 26;
-		for (Entity entity : characters) {
-			entity.respawn(tileMap, this, i, 34);
-			i = i - 2;
+		if (characters.size() > 0){
+			characters.remove(
+					RandomItemArrayList.getRandomItemFromArrayList(characters)
+			);
+			int i = 26;
+			for (Entity entity : characters) {
+				entity.respawn(tileMap, this, i, 34);
+				i = i - 2;
+			}
 		}
 		
 		jasons.add(new Jason(tileMap, this, 18, 24, 0.10));
