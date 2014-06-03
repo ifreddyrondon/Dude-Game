@@ -64,6 +64,11 @@ public class Level_1_Stage_1 extends Stage {
 		new Point(23, 11),new Point(23, 12),new Point(23, 13),
 		new Point(23, 14),new Point(23, 15)};
 	
+	public static Point[] ENABLE_TRANSPARENT = {
+		new Point(20, 15),new Point(21, 15),new Point(22, 15)};
+	
+	public static Point[] DISABLE_TRANSPARENT = {new Point(21, 16)};
+	
 	/****************************************************************************************/
 	public Level_1_Stage_1(GameStagesManager _gsm) {
 		gsm = _gsm;
@@ -198,6 +203,20 @@ public class Level_1_Stage_1 extends Stage {
 	public void update() {
 		
 		currentCharacter.update();
+		
+		for (Point position : ENABLE_TRANSPARENT) {
+			if (currentCharacter.getNextPositionInMap().equals(position)) {
+				tileMap.setTransparentWalls("bathroom");
+				doors.get("bathroom").setStatusOpen(Door.OPEN);
+			}
+		}
+		
+		for (Point position : DISABLE_TRANSPARENT) {
+			if (currentCharacter.getNextPositionInMap().equals(position)) {
+				tileMap.setTransparentWalls("");
+				doors.get("bathroom").setStatusOpen(Door.CLOSE);
+			}
+		}
 		
 		if (dialogues != null) 
 			dialogues.update();

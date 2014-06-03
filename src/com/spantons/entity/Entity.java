@@ -169,7 +169,6 @@ public class Entity extends EntityLogic {
 				if (EntityChecks.checkTileCollision(this, tileMap)) {
 					if (EntityChecks.checkCharactersCollision(this, stage)) {
 						if(EntityChecks.checkDoors(this, stage)){
-							EntityChecks.checkTransparentWalls(this, stage, tileMap);
 							magicWalk();
 							entitysToDraw[xMap][yMap] = null;
 							xMap = getMapPositionOfCharacter().x;
