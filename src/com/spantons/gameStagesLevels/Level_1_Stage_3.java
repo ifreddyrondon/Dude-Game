@@ -1,4 +1,4 @@
-package com.spantons.gameState;
+package com.spantons.gameStagesLevels;
 
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -14,6 +14,8 @@ import com.spantons.entity.Entity;
 import com.spantons.entity.EntityChecks;
 import com.spantons.entity.Hud;
 import com.spantons.entity.character.Jason;
+import com.spantons.gameStages.GameStagesManager;
+import com.spantons.gameStages.Stage;
 import com.spantons.object.Door;
 import com.spantons.object.Object;
 import com.spantons.singleton.SoundCache;

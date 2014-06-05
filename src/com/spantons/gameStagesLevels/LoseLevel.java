@@ -1,5 +1,6 @@
-package com.spantons.gameState;
+package com.spantons.gameStagesLevels;
 
+import com.spantons.gameStages.GameStagesManager;
 import com.spantons.gameState.interfaces.IEndStage;
 import com.spantons.singleton.SoundCache;
 

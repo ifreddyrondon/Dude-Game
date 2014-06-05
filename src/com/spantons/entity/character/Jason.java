@@ -10,7 +10,7 @@ import org.imgscalr.Scalr;
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.entity.EntityChecks;
-import com.spantons.gameState.Stage;
+import com.spantons.gameStages.Stage;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;

@@ -1,4 +1,4 @@
-package com.spantons.gameState;
+package com.spantons.gameStagesLevels;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -18,6 +18,8 @@ import com.spantons.entity.Entity;
 import com.spantons.entity.EntityChecks;
 import com.spantons.entity.Hud;
 import com.spantons.entity.character.Jason;
+import com.spantons.gameStages.GameStagesManager;
+import com.spantons.gameStages.Stage;
 import com.spantons.magicNumbers.FontPath;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;

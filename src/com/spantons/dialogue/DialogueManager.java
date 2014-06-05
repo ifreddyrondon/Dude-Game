@@ -12,7 +12,7 @@ import java.util.Queue;
 import javax.swing.Timer;
 
 import com.spantons.entity.Entity;
-import com.spantons.gameState.Stage;
+import com.spantons.gameStages.Stage;
 import com.spantons.utilities.RandomItemArrayList;
 
 public abstract class DialogueManager {

@@ -3,8 +3,8 @@ package com.spantons.entity;
 import java.awt.Point;
 
 import com.spantons.dialogue.Dialogue;
-import com.spantons.gameState.Level_1_Stage_1;
-import com.spantons.gameState.Stage;
+import com.spantons.gameStages.Stage;
+import com.spantons.gameStagesLevels.Level_1_Stage_1;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.object.Door;
 import com.spantons.object.Object;

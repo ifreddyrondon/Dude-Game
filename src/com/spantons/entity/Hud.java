@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.spantons.gameState.Stage;
+import com.spantons.gameStages.Stage;
 import com.spantons.main.GamePanel;
 
 public class Hud {

@@ -1,4 +1,4 @@
-package com.spantons.gameState;
+package com.spantons.gameStagesMenus;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
+import com.spantons.gameStages.GameStagesManager;
+import com.spantons.gameStages.Stage;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.main.GamePanel;
 import com.spantons.tileMap.Background;

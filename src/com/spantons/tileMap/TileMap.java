@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import com.spantons.entity.Entity;
-import com.spantons.gameState.Level_1_Stage_1;
+import com.spantons.gameStagesLevels.Level_1_Stage_1;
 import com.spantons.main.GamePanel;
 import com.spantons.object.Object;
 import com.spantons.utilities.ArraysUtil;

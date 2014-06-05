@@ -1,4 +1,4 @@
-package com.spantons.gameState;
+package com.spantons.gameStagesLevels;
 
 import com.spantons.gameState.interfaces.ITransformTransparentWalls;
 import com.spantons.object.Door;

@@ -1,4 +1,4 @@
-package com.spantons.gameState;
+package com.spantons.gameStagesMenus;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,6 +10,8 @@ import java.awt.image.BufferedImage;
 
 import org.imgscalr.Scalr;
 
+import com.spantons.gameStages.GameStagesManager;
+import com.spantons.gameStages.Stage;
 import com.spantons.magicNumbers.FontPath;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;

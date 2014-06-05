@@ -1,4 +1,4 @@
-package com.spantons.gameState;
+package com.spantons.gameStages;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -7,6 +7,12 @@ import com.spantons.Interfaces.IDrawable;
 import com.spantons.Interfaces.IKeyable;
 import com.spantons.Interfaces.IUpdateable;
 import com.spantons.entity.Entity;
+import com.spantons.gameStagesLevels.Level_1_Stage_1;
+import com.spantons.gameStagesLevels.Level_1_Stage_2;
+import com.spantons.gameStagesLevels.Level_1_Stage_3;
+import com.spantons.gameStagesMenus.GameOverStage;
+import com.spantons.gameStagesMenus.HelpStage;
+import com.spantons.gameStagesMenus.MenuStage;
 
 public class GameStagesManager implements IDrawable, IUpdateable, IKeyable{
 

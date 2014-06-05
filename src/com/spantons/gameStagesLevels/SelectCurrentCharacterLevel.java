@@ -1,4 +1,4 @@
-package com.spantons.gameState;
+package com.spantons.gameStagesLevels;
 
 import java.awt.Point;
 import java.util.ArrayList;

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
-import com.spantons.gameState.Stage;
+import com.spantons.gameStages.Stage;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
 import com.spantons.singleton.ImageCache;

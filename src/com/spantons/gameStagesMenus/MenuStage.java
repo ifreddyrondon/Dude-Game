@@ -1,4 +1,4 @@
-package com.spantons.gameState;
+package com.spantons.gameStagesMenus;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -13,6 +13,8 @@ import org.imgscalr.Scalr;
 
 import com.spantons.entity.Entity;
 import com.spantons.entity.character.SteveJobs;
+import com.spantons.gameStages.GameStagesManager;
+import com.spantons.gameStages.Stage;
 import com.spantons.magicNumbers.FontPath;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;

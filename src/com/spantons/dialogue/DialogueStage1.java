@@ -11,7 +11,7 @@ import java.util.PriorityQueue;
 
 import javax.swing.Timer;
 
-import com.spantons.gameState.Stage;
+import com.spantons.gameStages.Stage;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.StringDialogue;
 import com.spantons.main.GamePanel;

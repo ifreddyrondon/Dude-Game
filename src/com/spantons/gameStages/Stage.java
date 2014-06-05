@@ -1,4 +1,4 @@
-package com.spantons.gameState;
+package com.spantons.gameStages;
 
 import java.util.ArrayList;
 import java.util.HashMap;
