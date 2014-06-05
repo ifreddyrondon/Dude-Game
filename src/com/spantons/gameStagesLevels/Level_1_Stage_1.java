@@ -50,7 +50,6 @@ public class Level_1_Stage_1 extends Stage {
 	private TransformTransparentWallsLv1Stage1 transformTransparentWalls;
 	private DrawLevel drawLevel;
 	private SelectCurrentCharacterLevel nextCharacter;
-	private LoseLevel loseLevel;
 	
 	private int countdown = 120; 
 	private Timer timer;
@@ -202,14 +201,6 @@ public class Level_1_Stage_1 extends Stage {
 		transformTransparentWalls = new TransformTransparentWallsLv1Stage1(tileMap, doors.get("bathroom"));
 		drawLevel = new DrawLevel(tileMap, hud, dialogues);
 		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
-		loseLevel = new LoseLevel(gsm);
-	}
-	
-	/****************************************************************************************/
-	@Override
-	public void endStage() {
-		SoundCache.getInstance().stopAllSound();
-		gsm.setStage(GameStagesManager.GAME_OVER_STAGE);
 	}
 	
 	/****************************************************************************************/
@@ -217,7 +208,7 @@ public class Level_1_Stage_1 extends Stage {
 	public void update() {
 		
 		if (characters.isEmpty() && currentCharacter.isDead()) 
-			loseLevel.endStage();
+			gsm.setStage(GameStagesManager.GAME_OVER_STAGE);
 
 		if (currentCharacter.isDead()) 
 			currentCharacter = nextCharacter.selectNextCharacter();

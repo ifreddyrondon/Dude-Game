@@ -79,24 +79,13 @@ public class MenuStage extends Stage {
 			e.printStackTrace();
 		}
 	}
+	
 	/****************************************************************************************/
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub	
 	}
-	/****************************************************************************************/
-	@Override
-	public void endStage() {
-		SoundCache.getInstance().stopAllSound();
-		gsm.setStage(GameStagesManager.LEVEL_1_STAGE_1);
-	}
 	
-	/****************************************************************************************/
-	public void helpStage(){
-		SoundCache.getInstance().stopAllSound();
-		gsm.setStage(GameStagesManager.HELP_STAGE);
-		
-	}
 	/****************************************************************************************/
 	@Override
 	public void update() {
@@ -156,9 +145,9 @@ public class MenuStage extends Stage {
 	/****************************************************************************************/
 	private void select() {
 		if (currentChoice == 0) 
-			endStage();
+			gsm.setStage(GameStagesManager.LEVEL_1_STAGE_1);
 		else if (currentChoice == 1) 
-			helpStage();
+			gsm.setStage(GameStagesManager.HELP_STAGE);
 		else if (currentChoice == 2) {
 			SoundCache.getInstance().closeAllSound();
 			System.exit(0);

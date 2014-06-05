@@ -13,6 +13,7 @@ import com.spantons.gameStagesLevels.Level_1_Stage_3;
 import com.spantons.gameStagesMenus.GameOverStage;
 import com.spantons.gameStagesMenus.HelpStage;
 import com.spantons.gameStagesMenus.MenuStage;
+import com.spantons.singleton.SoundCache;
 
 public class GameStagesManager implements IDrawable, IUpdateable, IKeyable{
 
@@ -22,7 +23,7 @@ public class GameStagesManager implements IDrawable, IUpdateable, IKeyable{
 	private ArrayList<Entity> characters;
 	private Entity currentCharacter;
 
-	public static final int NUM_STAGES = 5;
+	public static final int NUM_STAGES = 6;
 	public static final int MENU_STAGE = 0;
 	public static final int LEVEL_1_STAGE_1 = 1;
 	public static final int LEVEL_1_STAGE_2 = 2;
@@ -39,6 +40,9 @@ public class GameStagesManager implements IDrawable, IUpdateable, IKeyable{
 
 	/****************************************************************************************/
 	private void loadStage(int stage) {
+		
+		SoundCache.getInstance().stopAllSound();
+		
 		if (stage == MENU_STAGE)
 			gameStages[MENU_STAGE] = new MenuStage(this);
 		if (stage == LEVEL_1_STAGE_1)

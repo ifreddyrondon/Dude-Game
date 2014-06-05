@@ -44,7 +44,6 @@ public class Level_1_Stage_2 extends Stage{
 	
 	private DrawLevel drawLevel;
 	private SelectCurrentCharacterLevel nextCharacter;
-	private LoseLevel loseLevel;
 	
 	private int countdown = 100; 
 	private Timer timer;
@@ -192,14 +191,6 @@ public class Level_1_Stage_2 extends Stage{
 		
 		drawLevel = new DrawLevel(tileMap, hud, dialogues);
 		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
-		loseLevel = new LoseLevel(gsm);
-	}
-
-	/****************************************************************************************/
-	@Override
-	public void endStage() {
-		SoundCache.getInstance().stopAllSound();
-		gsm.setStage(GameStagesManager.GAME_OVER_STAGE);
 	}
 
 	/****************************************************************************************/
@@ -207,7 +198,7 @@ public class Level_1_Stage_2 extends Stage{
 	public void update() {
 		
 		if (characters.isEmpty() && currentCharacter.isDead()) 
-			loseLevel.endStage();
+			gsm.setStage(GameStagesManager.GAME_OVER_STAGE);
 		
 		if (currentCharacter.isDead()) 
 			currentCharacter = nextCharacter.selectNextCharacter();

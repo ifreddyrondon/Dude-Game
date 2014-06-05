@@ -51,7 +51,7 @@ public class HelpStage extends Stage {
 	/****************************************************************************************/
 	public HelpStage(GameStagesManager _gsm) {
 		gsm = _gsm;
-
+		
 		try {
 			bg = new Background(ImagePath.BACKGROUND_MENU, 0, true);
 			bg.setVector(-0.1, 0);
@@ -80,13 +80,6 @@ public class HelpStage extends Stage {
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-	}
-
-	/****************************************************************************************/
-	@Override
-	public void endStage() {
-		SoundCache.getInstance().stopAllSound();
-		gsm.setStage(GameStagesManager.MENU_STAGE);
 	}
 
 	/****************************************************************************************/
@@ -139,7 +132,7 @@ public class HelpStage extends Stage {
 	/****************************************************************************************/
 	private void select() {
 		if (currentChoice == 0)
-			endStage();
+			gsm.setStage(GameStagesManager.MENU_STAGE);
 	}
 
 	/****************************************************************************************/

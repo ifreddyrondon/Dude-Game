@@ -29,7 +29,6 @@ public class GameOverStage extends Stage {
 	private Color choicesColor;
 	private FontMetrics fm;
 	private Rectangle2D r;
-
 	
 	/****************************************************************************************/
 	public GameOverStage(GameStagesManager _gsm) {
@@ -44,23 +43,20 @@ public class GameOverStage extends Stage {
 		randomGenerator = new Random();
 		bg = new Background(imagesPath[randomGenerator.nextInt(2)], 0, false);
 	}
+	
 	/****************************************************************************************/
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
 		
 	}
-	/****************************************************************************************/
-	@Override
-	public void endStage() {
-//		player.close();
-		gsm.setStage(GameStagesManager.LEVEL_1_STAGE_1);
-	}
+
 	/****************************************************************************************/
 	@Override
 	public void update() {
 		bg.update();
 	}
+	
 	/****************************************************************************************/
 	@Override
 	public void draw(Graphics2D g) {
@@ -85,17 +81,17 @@ public class GameOverStage extends Stage {
 		}
 
 	}
+	
 	/****************************************************************************************/
 	private void select() {
 		if (currentChoice == 0) 
-			endStage();
-		else if (currentChoice == 1) {
-//			player.close();
+			gsm.setStage(GameStagesManager.LEVEL_1_STAGE_1);
+		else if (currentChoice == 1) 
 			gsm.setStage(GameStagesManager.MENU_STAGE);
-		}
 		else if (currentChoice == 2) 
 			System.exit(0);
 	}
+	
 	/****************************************************************************************/
 	@Override
 	public void keyPressed(int k) {
@@ -113,6 +109,7 @@ public class GameOverStage extends Stage {
 			}
 		}
 	}
+	
 	/****************************************************************************************/
 	@Override
 	public void keyReleased(int k) {
