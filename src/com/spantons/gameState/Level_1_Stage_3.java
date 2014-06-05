@@ -24,6 +24,8 @@ public class Level_1_Stage_3 extends Stage {
 	private Hud hud;
 	
 	private DrawLevel drawLevel;
+	private SelectCurrentCharacterLevel nextCharacter;
+	private LoseLevel loseLevel;
 
 	private int countdown = 120;
 	private Timer timer;
@@ -65,8 +67,6 @@ public class Level_1_Stage_3 extends Stage {
 		
 		dialogues = new DialogueStage1(this);
 		
-		drawLevel = new DrawLevel(tileMap, hud, dialogues);
-		
 		// Temporizador
 		timer = new Timer(1000, new ActionListener() {
 			@Override
@@ -80,10 +80,23 @@ public class Level_1_Stage_3 extends Stage {
 			}
 		});
 		timer.start();
+		
+		
+		drawLevel = new DrawLevel(tileMap, hud, dialogues);
+		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
+		loseLevel = new LoseLevel(gsm);
 	}
-
+	
+	/****************************************************************************************/
 	@Override
 	public void update() {
+		
+		if (characters.isEmpty() && currentCharacter.isDead()) 
+			loseLevel.endStage();
+		
+		if (currentCharacter.isDead()) 
+			currentCharacter = nextCharacter.selectNextCharacter();
+		
 		currentCharacter.update();
 		
 		if (dialogues != null) 
@@ -100,11 +113,13 @@ public class Level_1_Stage_3 extends Stage {
 		}
 	}
 
+	/****************************************************************************************/
 	@Override
 	public void draw(Graphics2D g) {
 		drawLevel.draw(g);
 	}
 
+	/****************************************************************************************/
 	@Override
 	public void endStage() {
 		SoundCache.getInstance().stopAllSound();
@@ -122,8 +137,14 @@ public class Level_1_Stage_3 extends Stage {
 			currentCharacter.setMovUp(true);
 		if (k == KeyEvent.VK_DOWN)
 			currentCharacter.setMovDown(true);
-		if (k == KeyEvent.VK_TAB)
-			selectNextCurrentCharacter();
+		if (k == KeyEvent.VK_TAB) {
+			Entity oldCurrentCharacter = currentCharacter;
+			currentCharacter = nextCharacter.selectNextCharacter();
+			if (currentCharacter == null) {
+				currentCharacter = oldCurrentCharacter;
+				dialogues.alone();
+			}
+		}
 		if (k == KeyEvent.VK_SPACE)
 			currentCharacter.setAttack(true);
 		if (k == KeyEvent.VK_ENTER)

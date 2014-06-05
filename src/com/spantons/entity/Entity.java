@@ -138,12 +138,7 @@ public class Entity extends EntityLogic {
 
 	/****************************************************************************************/
 	public void update() {
-
-		if (dead) {
-			stage.selectNextCurrentCharacter();
-			return;
-		}
-			
+	
 		updateAnimation();
 		decreasePerversity();
 		characterClose = EntityChecks.checkIsCloseToAnotherEntity(this, stage);

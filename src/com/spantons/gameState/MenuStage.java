@@ -164,7 +164,8 @@ public class MenuStage extends Stage {
 			
 	}
 
-	/****************************************************************************************/@Override
+	/****************************************************************************************/
+	@Override
 	public void keyPressed(int k) {
 		SoundCache.getInstance().getSound(SoundPath.SFX_SCRATCH).play();
 		

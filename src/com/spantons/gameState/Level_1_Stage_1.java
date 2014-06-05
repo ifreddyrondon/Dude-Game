@@ -47,6 +47,8 @@ public class Level_1_Stage_1 extends Stage {
 	private CheckTransparentWallsLvl1Stage1 checkTransparentWalls;
 	private TransformTransparentWallsLv1Stage1 transformTransparentWalls;
 	private DrawLevel drawLevel;
+	private SelectCurrentCharacterLevel nextCharacter;
+	private LoseLevel loseLevel;
 	
 	private int countdown = 120; 
 	private Timer timer;
@@ -132,12 +134,6 @@ public class Level_1_Stage_1 extends Stage {
 				Door.LOCK,"main",
 				false));
 		
-		Point[] enable = {new Point(20, 15),new Point(21, 15),new Point(22, 15)};
-		Point[] disable = {new Point(21, 16)};
-		
-		checkTransparentWalls = new CheckTransparentWallsLvl1Stage1(enable, disable);
-		transformTransparentWalls = new TransformTransparentWallsLv1Stage1(tileMap, doors.get("bathroom"));
-		
 		objects.add(new Crowbar(tileMap, 10, 12, 0.23, "exit"));
 		objects.add(new Hammer(tileMap, 12, 13, 0.15));
 		objects.add(new Hammer(tileMap, 14, 18, 0.15));
@@ -165,9 +161,6 @@ public class Level_1_Stage_1 extends Stage {
 		colorDialogues = Color.BLACK;
 		
 		dialogues = new DialogueStage1(this);
-		
-		drawLevel = new DrawLevel(tileMap, hud, dialogues);
-		
 		
 		startDialogues =  new Timer(countdownStartDialogues, new ActionListener() { 
 			@Override 
@@ -198,6 +191,16 @@ public class Level_1_Stage_1 extends Stage {
 			} 
 		}); 
 		timer.start();
+		
+		
+		Point[] enable = {new Point(20, 15),new Point(21, 15),new Point(22, 15)};
+		Point[] disable = {new Point(21, 16)};
+		
+		checkTransparentWalls = new CheckTransparentWallsLvl1Stage1(enable, disable);
+		transformTransparentWalls = new TransformTransparentWallsLv1Stage1(tileMap, doors.get("bathroom"));
+		drawLevel = new DrawLevel(tileMap, hud, dialogues);
+		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
+		loseLevel = new LoseLevel(gsm);
 	}
 	
 	/****************************************************************************************/
@@ -210,6 +213,12 @@ public class Level_1_Stage_1 extends Stage {
 	/****************************************************************************************/
 	@Override
 	public void update() {
+		
+		if (characters.isEmpty() && currentCharacter.isDead()) 
+			loseLevel.endStage();
+
+		if (currentCharacter.isDead()) 
+			currentCharacter = nextCharacter.selectNextCharacter();
 		
 		currentCharacter.update();
 		
@@ -313,8 +322,14 @@ public class Level_1_Stage_1 extends Stage {
 			currentCharacter.setMovUp(true);
 		if (k == KeyEvent.VK_DOWN)
 			currentCharacter.setMovDown(true);
-		if (k == KeyEvent.VK_TAB)
-			selectNextCurrentCharacter();
+		if (k == KeyEvent.VK_TAB) {
+			Entity oldCurrentCharacter = currentCharacter;
+			currentCharacter = nextCharacter.selectNextCharacter();
+			if (currentCharacter == null) {
+				currentCharacter = oldCurrentCharacter;
+				dialogues.alone();
+			}
+		}
 		if (k == KeyEvent.VK_SPACE)
 			currentCharacter.setAttack(true);
 		if (k == KeyEvent.VK_ENTER)

@@ -1,6 +1,5 @@
 package com.spantons.gameState;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,31 +28,6 @@ public abstract class Stage implements IDrawable, IUpdateable, IKeyable{
 	public abstract void init();
 	public abstract void endStage();
 	
-	private Point saveNextCurrentCharMapPosition;
-	
-	/****************************************************************************************/
-	public void selectNextCurrentCharacter(){
-		if (characters.isEmpty() && currentCharacter.isDead())
-			endStage();
-		
-		if (characters.isEmpty()) {
-			dialogues.alone();
-			return;
-		}
-		
-		characters.add(currentCharacter);
-		currentCharacter.setAllMov(false);
-		currentCharacter = characters.get(0);
-		
-		saveNextCurrentCharMapPosition = currentCharacter.getMapPositionOfCharacter();
-		tileMap.setPositionByCharacter(currentCharacter);
-		currentCharacter.setMapPosition(
-				saveNextCurrentCharMapPosition.x, 
-				saveNextCurrentCharMapPosition.y);
-		
-		characters.remove(0);
-		currentCharacter.setVisible(true);
-	}
 	/****************************************************************************************/
 	public Entity getCurrentCharacter() {
 		return currentCharacter;

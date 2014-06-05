@@ -41,6 +41,8 @@ public class Level_1_Stage_2 extends Stage{
 	private Hud hud;
 	
 	private DrawLevel drawLevel;
+	private SelectCurrentCharacterLevel nextCharacter;
+	private LoseLevel loseLevel;
 	
 	private int countdown = 100; 
 	private Timer timer;
@@ -133,9 +135,7 @@ public class Level_1_Stage_2 extends Stage{
 		colorDialogues = Color.BLACK;
 		
 		dialogues = new DialogueStage1(this);
-		
-		drawLevel = new DrawLevel(tileMap, hud, dialogues);
-		
+				
 		startDialogues =  new Timer(countdownStartDialogues, new ActionListener() { 
 			@Override 
 			public void actionPerformed(ActionEvent ae) { 
@@ -187,6 +187,10 @@ public class Level_1_Stage_2 extends Stage{
 		});
 		
 		lightsOn.start();
+		
+		drawLevel = new DrawLevel(tileMap, hud, dialogues);
+		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
+		loseLevel = new LoseLevel(gsm);
 	}
 
 	/****************************************************************************************/
@@ -199,6 +203,13 @@ public class Level_1_Stage_2 extends Stage{
 	/****************************************************************************************/
 	@Override
 	public void update() {
+		
+		if (characters.isEmpty() && currentCharacter.isDead()) 
+			loseLevel.endStage();
+		
+		if (currentCharacter.isDead()) 
+			currentCharacter = nextCharacter.selectNextCharacter();
+		
 		currentCharacter.update();
 		
 		for (Point exit : exitPoint) {
@@ -324,8 +335,14 @@ public class Level_1_Stage_2 extends Stage{
 			currentCharacter.setMovUp(true);
 		if (k == KeyEvent.VK_DOWN)
 			currentCharacter.setMovDown(true);
-		if (k == KeyEvent.VK_TAB)
-			selectNextCurrentCharacter();
+		if (k == KeyEvent.VK_TAB) {
+			Entity oldCurrentCharacter = currentCharacter;
+			currentCharacter = nextCharacter.selectNextCharacter();
+			if (currentCharacter == null) {
+				currentCharacter = oldCurrentCharacter;
+				dialogues.alone();
+			}
+		}
 		if (k == KeyEvent.VK_SPACE)
 			currentCharacter.setAttack(true);
 		if (k == KeyEvent.VK_ENTER)
