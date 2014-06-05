@@ -23,13 +23,8 @@ import com.spantons.tileMap.TileMap;
 
 public class Level_1_Stage_3 extends StagesLevels {
 
-	private Hud hud;
-	
 	private DrawLevel drawLevel;
 	private SelectCurrentCharacterLevel nextCharacter;
-
-	private int countdown = 120;
-	private Timer timer;
 
 	/****************************************************************************************/
 	public Level_1_Stage_3(GameStagesManager _gsm) {
@@ -44,6 +39,7 @@ public class Level_1_Stage_3 extends StagesLevels {
 		secondaryMenu = false;
 		tileMap = new TileMap("/maps/map_1_3.txt");
 		tileMap.setPosition(0, 0);
+		countdown = 90;
 
 		characters = new ArrayList<Entity>();
 		jasons = new ArrayList<Entity>();
@@ -82,9 +78,9 @@ public class Level_1_Stage_3 extends StagesLevels {
 		});
 		timer.start();
 		
-		
 		drawLevel = new DrawLevel(tileMap, hud, dialogues);
 		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
+		drawLevel.setCountdown(countdown);
 	}
 	
 	/****************************************************************************************/

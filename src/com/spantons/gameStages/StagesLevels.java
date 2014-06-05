@@ -4,26 +4,31 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.spantons.Interfaces.IDrawable;
-import com.spantons.Interfaces.IKeyable;
-import com.spantons.Interfaces.IUpdateable;
+import javax.swing.Timer;
+
 import com.spantons.dialogue.DialogueManager;
 import com.spantons.entity.Entity;
+import com.spantons.entity.Hud;
 import com.spantons.gameState.interfaces.Stage;
 import com.spantons.object.Door;
 import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
 
-public abstract class StagesLevels implements Stage, IDrawable, IKeyable, IUpdateable {
+public abstract class StagesLevels implements Stage {
 
 	protected TileMap tileMap;
 	protected GameStagesManager gsm;
+	protected Hud hud;
+	protected int countdown;
+	protected Timer timer;
+	
 	protected ArrayList<Entity> characters;
 	protected ArrayList<Entity> jasons;
 	protected ArrayList<Entity> dead;
 	protected ArrayList<Object> objects;
 	protected HashMap<String, Door> doors;
 	protected Entity currentCharacter;
+	
 	protected DialogueManager dialogues;
 	protected boolean secondaryMenu;
 	

@@ -44,15 +44,11 @@ import com.spantons.tileMap.TileMap;
 
 public class Level_1_Stage_1 extends StagesLevels {
 
-	private Hud hud;
-	
 	private CheckTransparentWallsLvl1Stage1 checkTransparentWalls;
 	private TransformTransparentWallsLv1Stage1 transformTransparentWalls;
 	private DrawLevel drawLevel;
 	private SelectCurrentCharacterLevel nextCharacter;
-	
-	private int countdown = 120; 
-	private Timer timer;
+	 
 	private Timer lightsDeploy;
 	private int countdownStartDialogues = 2000;
 	private Timer startDialogues;
@@ -83,6 +79,7 @@ public class Level_1_Stage_1 extends StagesLevels {
 		secondaryMenu = false;
 		tileMap = new TileMap("/maps/map_1_1.txt");
 		tileMap.setPosition(0, 0);
+		countdown = 120;
 		
 		characters = new ArrayList<Entity>();
 		jasons = new ArrayList<Entity>();
@@ -201,6 +198,7 @@ public class Level_1_Stage_1 extends StagesLevels {
 		transformTransparentWalls = new TransformTransparentWallsLv1Stage1(tileMap, doors.get("bathroom"));
 		drawLevel = new DrawLevel(tileMap, hud, dialogues);
 		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
+		drawLevel.setCountdown(countdown);
 	}
 	
 	/****************************************************************************************/

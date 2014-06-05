@@ -29,8 +29,8 @@ public class Jason extends Entity{
 
 		visible = true;
 		description = "Jason";
-		health = 5;
-		maxHealth = 5;
+		health = 4;
+		maxHealth = 4;
 		perversity = 0;
 		maxPerversity = 100;
 		damage = 1.5f;

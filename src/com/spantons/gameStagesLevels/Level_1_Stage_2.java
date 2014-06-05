@@ -40,13 +40,9 @@ import com.spantons.utilities.RandomItemArrayList;
 
 public class Level_1_Stage_2 extends StagesLevels{
 
-	private Hud hud;
-	
 	private DrawLevel drawLevel;
 	private SelectCurrentCharacterLevel nextCharacter;
 	
-	private int countdown = 100; 
-	private Timer timer;
 	private Timer lightsDeploy;
 	private Timer lightsOn;
 	private int timeLightsOn = 8000;
@@ -72,6 +68,7 @@ public class Level_1_Stage_2 extends StagesLevels{
 		secondaryMenu = false;
 		tileMap = new TileMap("/maps/map_1_2.txt");
 		tileMap.setPosition(0, 0);
+		countdown = 100;
 		
 		jasons = new ArrayList<Entity>();
 		dead = new ArrayList<Entity>();
@@ -191,6 +188,7 @@ public class Level_1_Stage_2 extends StagesLevels{
 		
 		drawLevel = new DrawLevel(tileMap, hud, dialogues);
 		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
+		drawLevel.setCountdown(countdown);
 	}
 
 	/****************************************************************************************/

@@ -11,11 +11,13 @@ import java.util.Queue;
 
 import javax.swing.Timer;
 
+import com.spantons.Interfaces.IDrawable;
+import com.spantons.Interfaces.IUpdateable;
 import com.spantons.entity.Entity;
 import com.spantons.gameStages.StagesLevels;
 import com.spantons.utilities.RandomItemArrayList;
 
-public abstract class DialogueManager {
+public abstract class DialogueManager implements IDrawable, IUpdateable{
 
 	protected StagesLevels stage;	
 	protected Queue<Dialogue> dialogues;
