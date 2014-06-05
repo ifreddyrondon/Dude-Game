@@ -8,7 +8,7 @@ import org.imgscalr.Scalr;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
-import com.spantons.gameStages.Stage;
+import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
@@ -16,7 +16,7 @@ import com.spantons.tileMap.TileMap;
 public class LeonTheProfessional extends Entity {
 
 	/****************************************************************************************/
-	public LeonTheProfessional(TileMap _tm, Stage _stage, int _xMap,
+	public LeonTheProfessional(TileMap _tm, StagesLevels _stage, int _xMap,
 			int _yMap, double _scale) {
 
 		super(_tm, _stage, _xMap, _yMap);

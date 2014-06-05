@@ -7,14 +7,11 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 import org.imgscalr.Scalr;
 
-import com.spantons.entity.Entity;
-import com.spantons.entity.character.SteveJobs;
 import com.spantons.gameStages.GameStagesManager;
-import com.spantons.gameStages.Stage;
+import com.spantons.gameStages.StagesMenus;
 import com.spantons.magicNumbers.FontPath;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
@@ -24,7 +21,7 @@ import com.spantons.singleton.ImageCache;
 import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.Background;
 
-public class MenuStage extends Stage {
+public class MenuStage extends StagesMenus {
 
 	private Background bg;
 	private BufferedImage tricycle;
@@ -42,9 +39,6 @@ public class MenuStage extends Stage {
 	private FontMetrics fm;
 	private Rectangle2D r;
 
-	private ArrayList<Entity> characters;
-	private int currentCharacter;
-	
 	/****************************************************************************************/
 	public MenuStage(GameStagesManager _gsm) {
 		gsm = _gsm;
@@ -66,12 +60,7 @@ public class MenuStage extends Stage {
 			choicesFont = choicesFont.deriveFont(Font.PLAIN, 30);
 			footerFont = new Font("Arial", 8, 12);
 
-			characters = new ArrayList<Entity>();
-			SteveJobs sj = new SteveJobs(null, null, 0, 0, 0.50);
-			sj.setPosition(
-					GamePanel.RESOLUTION_WIDTH - tricycle.getWidth() - 30, 
-					265);
-			characters.add(sj);
+			
 			
 			SoundCache.getInstance().getSound(SoundPath.MUSIC_HORROR_MOVIE_AMBIANCE).loop();
 
@@ -82,23 +71,13 @@ public class MenuStage extends Stage {
 	
 	/****************************************************************************************/
 	@Override
-	public void init() {
-		// TODO Auto-generated method stub	
-	}
-	
-	/****************************************************************************************/
-	@Override
 	public void update() {
-		for (int i = 0; i < characters.size(); i++)
-			characters.get(i).update();
+		bg.update();
 	}
 	/****************************************************************************************/
 	@Override
 	public void draw(Graphics2D g) {
 		bg.draw(g);
-		
-		for (int i = 0; i < characters.size(); i++)
-			characters.get(i).draw(g);
 		
 		g.drawImage(bloodyHand,200,200, null);
 		g.drawImage(all,0,
@@ -173,32 +152,12 @@ public class MenuStage extends Stage {
 				currentChoice = 0;
 			}
 		}
-		// Mover personajes
-		if (k == KeyEvent.VK_A)
-			characters.get(currentCharacter).setMovLeft(true);
-		if (k == KeyEvent.VK_D)
-			characters.get(currentCharacter).setMovRight(true);
-		if (k == KeyEvent.VK_W)
-			characters.get(currentCharacter).setMovUp(true);
-		if (k == KeyEvent.VK_S)
-			characters.get(currentCharacter).setMovDown(true);
-		if (k == KeyEvent.VK_SPACE)
-			characters.get(currentCharacter).setMovJumping(true);
-	}
-	/****************************************************************************************/
-	@Override
-	public void keyReleased(int k) {
-		// Mover personajes
-		if (k == KeyEvent.VK_A)
-			characters.get(currentCharacter).setMovLeft(false);
-		if (k == KeyEvent.VK_D)
-			characters.get(currentCharacter).setMovRight(false);
-		if (k == KeyEvent.VK_W)
-			characters.get(currentCharacter).setMovUp(false);
-		if (k == KeyEvent.VK_S)
-			characters.get(currentCharacter).setMovDown(false);
-		if (k == KeyEvent.VK_SPACE)
-			characters.get(currentCharacter).setMovJumping(false);
 	}
 
+	@Override
+	public void keyReleased(int k) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

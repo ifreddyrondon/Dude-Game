@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
-import com.spantons.gameStages.Stage;
+import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
 import com.spantons.singleton.ImageCache;
@@ -15,7 +15,7 @@ import com.spantons.tileMap.TileMap;
 
 public class TriggerPoint extends Object {
 
-	private Stage stage;
+	private StagesLevels stage;
 	private boolean activated;
 	private static final int IDLE = 0;
 	private ArrayList<BufferedImage[]> sprites;
@@ -24,7 +24,7 @@ public class TriggerPoint extends Object {
 	private boolean soundPlay;
 	
 	/****************************************************************************************/
-	public TriggerPoint(TileMap _tileMap, Stage _stage, int _xMap, int _yMap) {
+	public TriggerPoint(TileMap _tileMap, StagesLevels _stage, int _xMap, int _yMap) {
 		super(_tileMap, _xMap, _yMap);
 		
 		stage = _stage;

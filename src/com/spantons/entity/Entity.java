@@ -3,7 +3,7 @@ package com.spantons.entity;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import com.spantons.gameStages.Stage;
+import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.SoundPath;
 import com.spantons.object.Object;
 import com.spantons.singleton.SoundCache;
@@ -26,7 +26,7 @@ public class Entity extends EntityLogic {
 	protected long flinchingTimeJasonMov;
 
 	/****************************************************************************************/
-	public Entity(TileMap _tm, Stage _stage, int _xMap, int _yMap) {
+	public Entity(TileMap _tm, StagesLevels _stage, int _xMap, int _yMap) {
 		if (_tm != null) {
 			tileMap = _tm;
 			stage = _stage;
@@ -47,7 +47,7 @@ public class Entity extends EntityLogic {
 	}
 
 	/****************************************************************************************/
-	public void respawn(TileMap _tm, Stage _stage, int _xMap, int _yMap){
+	public void respawn(TileMap _tm, StagesLevels _stage, int _xMap, int _yMap){
 		if (_tm != null) {
 			tileMap = _tm;
 			stage = _stage;
@@ -426,7 +426,7 @@ public class Entity extends EntityLogic {
 		tileMap = _tileMap;
 	}
 	
-	public void setStage(Stage _stage){
+	public void setStage(StagesLevels _stage){
 		stage = _stage;
 	}
 

@@ -13,9 +13,10 @@ import com.spantons.gameStagesLevels.Level_1_Stage_3;
 import com.spantons.gameStagesMenus.GameOverStage;
 import com.spantons.gameStagesMenus.HelpStage;
 import com.spantons.gameStagesMenus.MenuStage;
+import com.spantons.gameState.interfaces.Stage;
 import com.spantons.singleton.SoundCache;
 
-public class GameStagesManager implements IDrawable, IUpdateable, IKeyable{
+public class GameStagesManager implements IDrawable, IUpdateable, IKeyable {
 
 	private Stage[] gameStages;
 	private int currentStage;

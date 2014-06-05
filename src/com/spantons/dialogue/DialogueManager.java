@@ -12,12 +12,12 @@ import java.util.Queue;
 import javax.swing.Timer;
 
 import com.spantons.entity.Entity;
-import com.spantons.gameStages.Stage;
+import com.spantons.gameStages.StagesLevels;
 import com.spantons.utilities.RandomItemArrayList;
 
 public abstract class DialogueManager {
 
-	protected Stage stage;	
+	protected StagesLevels stage;	
 	protected Queue<Dialogue> dialogues;
 	protected Dialogue currentDialogue;
 	protected HashMap<String, String[]> strings;

@@ -24,7 +24,7 @@ import com.spantons.entity.character.LeonTheProfessional;
 import com.spantons.entity.character.LizSherman;
 import com.spantons.entity.character.Preso;
 import com.spantons.gameStages.GameStagesManager;
-import com.spantons.gameStages.Stage;
+import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.FontPath;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
@@ -42,7 +42,7 @@ import com.spantons.singleton.FontCache;
 import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
 
-public class Level_1_Stage_1 extends Stage {
+public class Level_1_Stage_1 extends StagesLevels {
 
 	private Hud hud;
 	

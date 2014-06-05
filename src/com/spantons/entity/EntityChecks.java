@@ -3,7 +3,7 @@ package com.spantons.entity;
 import java.awt.Point;
 
 import com.spantons.dialogue.Dialogue;
-import com.spantons.gameStages.Stage;
+import com.spantons.gameStages.StagesLevels;
 import com.spantons.gameStagesLevels.Level_1_Stage_1;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.object.Door;
@@ -15,7 +15,7 @@ public class EntityChecks {
 
 	/****************************************************************************************/
 	public static Entity checkIsCloseToAnotherEntity(Entity _entity,
-			Stage _stage) {
+			StagesLevels _stage) {
 
 		Point position = _entity.getMapPositionOfCharacter();
 		Point north = TileWalk.walkTo("N", position, 1);
@@ -97,7 +97,7 @@ public class EntityChecks {
 
 	/****************************************************************************************/
 	public static boolean checkCharactersCollision(Entity _entity,
-			Stage _stage) {
+			StagesLevels _stage) {
 
 		if (_stage.getCharacters().size() > 0) {
 			for (Entity character : _stage.getCharacters()) {
@@ -144,7 +144,7 @@ public class EntityChecks {
 	}
 
 	/****************************************************************************************/
-	public static boolean checkDoors(Entity _entity, Stage _stage) {
+	public static boolean checkDoors(Entity _entity, StagesLevels _stage) {
 		if (_stage.getDoors().size() > 0) {
 			for (String key : _stage.getDoors().keySet()) {
 				if (_entity.getNextPositionInMap().equals(
@@ -160,7 +160,7 @@ public class EntityChecks {
 	}
 
 	/****************************************************************************************/
-	public static void checkIfDoorOpenWithKey(Entity _entity, Stage _stage) {
+	public static void checkIfDoorOpenWithKey(Entity _entity, StagesLevels _stage) {
 		
 		Point position = _entity.getMapPositionOfCharacter();
 		Point north = TileWalk.walkTo("N", position, 1);
@@ -275,7 +275,7 @@ public class EntityChecks {
 	}
 
 	/****************************************************************************************/
-	public static Object checkIsOverObject(Entity _entity, Stage _stage) {
+	public static Object checkIsOverObject(Entity _entity, StagesLevels _stage) {
 		if (_stage.getObjects().size() > 0) {
 			for (Object object : _stage.getObjects()) {
 				if (_entity.getXMap() == object.getxMap()

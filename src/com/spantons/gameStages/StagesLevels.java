@@ -1,5 +1,6 @@
 package com.spantons.gameStages;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,11 +9,12 @@ import com.spantons.Interfaces.IKeyable;
 import com.spantons.Interfaces.IUpdateable;
 import com.spantons.dialogue.DialogueManager;
 import com.spantons.entity.Entity;
+import com.spantons.gameState.interfaces.Stage;
 import com.spantons.object.Door;
 import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
 
-public abstract class Stage implements IDrawable, IUpdateable, IKeyable{
+public abstract class StagesLevels implements Stage, IDrawable, IKeyable, IUpdateable {
 
 	protected TileMap tileMap;
 	protected GameStagesManager gsm;
@@ -26,13 +28,14 @@ public abstract class Stage implements IDrawable, IUpdateable, IKeyable{
 	protected boolean secondaryMenu;
 	
 	public abstract void init();
+	public abstract void draw(Graphics2D g);
+	public abstract void update();
+	public abstract void keyPressed(int k);
+	public abstract void keyReleased(int k);
 	
 	/****************************************************************************************/
 	public Entity getCurrentCharacter() {
 		return currentCharacter;
-	}
-	public void setCurrentCharacter(Entity i) {
-		currentCharacter = i;
 	}
 	public ArrayList<Entity> getCharacters() {
 		return characters;
@@ -52,11 +55,8 @@ public abstract class Stage implements IDrawable, IUpdateable, IKeyable{
 	public boolean isSecondaryMenu() {
 		return secondaryMenu;
 	}
-	public void helpStage() {
-		// TODO Auto-generated method stub
-	}
 	public DialogueManager getDialogues() {
 		return dialogues;
 	}
-
+	
 }

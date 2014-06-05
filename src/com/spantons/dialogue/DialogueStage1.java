@@ -11,7 +11,7 @@ import java.util.PriorityQueue;
 
 import javax.swing.Timer;
 
-import com.spantons.gameStages.Stage;
+import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.StringDialogue;
 import com.spantons.main.GamePanel;
@@ -43,7 +43,7 @@ public class DialogueStage1 extends DialogueManager {
 	private Comparator<Dialogue> comparator;
 	
 	/****************************************************************************************/
-	public DialogueStage1(Stage _stage) {
+	public DialogueStage1(StagesLevels _stage) {
 		stage = _stage;
 		comparator = new DialogueComparator();
 		dialogues = new PriorityQueue<Dialogue>(10, comparator);

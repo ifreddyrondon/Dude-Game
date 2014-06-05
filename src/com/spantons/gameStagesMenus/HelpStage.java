@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import org.imgscalr.Scalr;
 
 import com.spantons.gameStages.GameStagesManager;
-import com.spantons.gameStages.Stage;
+import com.spantons.gameStages.StagesMenus;
 import com.spantons.magicNumbers.FontPath;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
@@ -21,7 +21,7 @@ import com.spantons.singleton.ImageCache;
 import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.Background;
 
-public class HelpStage extends Stage {
+public class HelpStage extends StagesMenus {
 
 	private Background bg;
 	private BufferedImage helpCharacter;
@@ -76,11 +76,6 @@ public class HelpStage extends Stage {
 		}
 	}
 
-	/****************************************************************************************/
-	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-	}
 
 	/****************************************************************************************/
 	@Override
@@ -147,7 +142,7 @@ public class HelpStage extends Stage {
 	@Override
 	public void keyReleased(int k) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }

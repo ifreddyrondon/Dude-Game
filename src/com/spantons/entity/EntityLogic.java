@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.swing.Timer;
 
 import com.spantons.entity.character.Jason;
-import com.spantons.gameStages.Stage;
+import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.SoundPath;
 import com.spantons.object.Object;
 import com.spantons.singleton.SoundCache;
@@ -16,7 +16,7 @@ import com.spantons.tileMap.TileMap;
 
 public class EntityLogic {
 
-	protected Stage stage;
+	protected StagesLevels stage;
 	
 	protected TileMap tileMap;
 	protected int xMap;

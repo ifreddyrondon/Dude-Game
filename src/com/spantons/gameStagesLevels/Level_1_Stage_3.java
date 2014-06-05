@@ -15,13 +15,13 @@ import com.spantons.entity.EntityChecks;
 import com.spantons.entity.Hud;
 import com.spantons.entity.character.Jason;
 import com.spantons.gameStages.GameStagesManager;
-import com.spantons.gameStages.Stage;
+import com.spantons.gameStages.StagesLevels;
 import com.spantons.object.Door;
 import com.spantons.object.Object;
 import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
 
-public class Level_1_Stage_3 extends Stage {
+public class Level_1_Stage_3 extends StagesLevels {
 
 	private Hud hud;
 	

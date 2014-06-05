@@ -9,12 +9,12 @@ import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
 import com.spantons.gameStages.GameStagesManager;
-import com.spantons.gameStages.Stage;
+import com.spantons.gameStages.StagesMenus;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.main.GamePanel;
 import com.spantons.tileMap.Background;
 
-public class GameOverStage extends Stage {
+public class GameOverStage extends StagesMenus {
 	
 	private Background bg;
 	
@@ -44,13 +44,6 @@ public class GameOverStage extends Stage {
 		bg = new Background(imagesPath[randomGenerator.nextInt(2)], 0, false);
 	}
 	
-	/****************************************************************************************/
-	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	/****************************************************************************************/
 	@Override
 	public void update() {
@@ -109,7 +102,7 @@ public class GameOverStage extends Stage {
 			}
 		}
 	}
-	
+
 	/****************************************************************************************/
 	@Override
 	public void keyReleased(int k) {
