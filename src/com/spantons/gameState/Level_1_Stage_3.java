@@ -18,11 +18,12 @@ import com.spantons.object.Door;
 import com.spantons.object.Object;
 import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
-import com.spantons.utilities.ToHours;
 
 public class Level_1_Stage_3 extends Stage {
 
 	private Hud hud;
+	
+	private DrawLevel drawLevel;
 
 	private int countdown = 120;
 	private Timer timer;
@@ -64,11 +65,14 @@ public class Level_1_Stage_3 extends Stage {
 		
 		dialogues = new DialogueStage1(this);
 		
+		drawLevel = new DrawLevel(tileMap, hud, dialogues);
+		
 		// Temporizador
 		timer = new Timer(1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				countdown--;
+				drawLevel.setCountdown(countdown);
 				if (countdown == 0) {
 					timer.stop();
 
@@ -98,9 +102,7 @@ public class Level_1_Stage_3 extends Stage {
 
 	@Override
 	public void draw(Graphics2D g) {
-		tileMap.draw(g);
-		hud.Draw(g, ToHours.SecondsToHours(countdown));
-		dialogues.draw(g);
+		drawLevel.draw(g);
 	}
 
 	@Override

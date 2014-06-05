@@ -35,11 +35,12 @@ import com.spantons.singleton.FontCache;
 import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.RandomItemArrayList;
-import com.spantons.utilities.ToHours;
 
 public class Level_1_Stage_2 extends Stage{
 
 	private Hud hud;
+	
+	private DrawLevel drawLevel;
 	
 	private int countdown = 100; 
 	private Timer timer;
@@ -132,6 +133,9 @@ public class Level_1_Stage_2 extends Stage{
 		colorDialogues = Color.BLACK;
 		
 		dialogues = new DialogueStage1(this);
+		
+		drawLevel = new DrawLevel(tileMap, hud, dialogues);
+		
 		startDialogues =  new Timer(countdownStartDialogues, new ActionListener() { 
 			@Override 
 			public void actionPerformed(ActionEvent ae) { 
@@ -153,6 +157,7 @@ public class Level_1_Stage_2 extends Stage{
 			@Override 
 			public void actionPerformed(ActionEvent ae) { 
 				countdown--; 
+				drawLevel.setCountdown(countdown);
 				if (countdown == 0) {
 					timer.stop();
 					deployJason();
@@ -280,9 +285,7 @@ public class Level_1_Stage_2 extends Stage{
 	/****************************************************************************************/
 	@Override
 	public void draw(Graphics2D g) {
-		tileMap.draw(g);
-		hud.Draw(g, ToHours.SecondsToHours(countdown));
-		dialogues.draw(g);
+		drawLevel.draw(g);
 	}
 
 	/****************************************************************************************/

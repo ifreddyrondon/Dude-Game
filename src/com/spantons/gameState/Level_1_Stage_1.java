@@ -39,11 +39,14 @@ import com.spantons.object.Pizza;
 import com.spantons.singleton.FontCache;
 import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
-import com.spantons.utilities.ToHours;
 
 public class Level_1_Stage_1 extends Stage {
 
 	private Hud hud;
+	
+	private CheckTransparentWallsLvl1Stage1 checkTransparentWalls;
+	private TransformTransparentWallsLv1Stage1 transformTransparentWalls;
+	private DrawLevel drawLevel;
 	
 	private int countdown = 120; 
 	private Timer timer;
@@ -63,11 +66,6 @@ public class Level_1_Stage_1 extends Stage {
 		new Point(23, 8),new Point(23, 9),new Point(23, 10),
 		new Point(23, 11),new Point(23, 12),new Point(23, 13),
 		new Point(23, 14),new Point(23, 15)};
-	
-	public static Point[] ENABLE_TRANSPARENT = {
-		new Point(20, 15),new Point(21, 15),new Point(22, 15)};
-	
-	public static Point[] DISABLE_TRANSPARENT = {new Point(21, 16)};
 	
 	/****************************************************************************************/
 	public Level_1_Stage_1(GameStagesManager _gsm) {
@@ -134,6 +132,12 @@ public class Level_1_Stage_1 extends Stage {
 				Door.LOCK,"main",
 				false));
 		
+		Point[] enable = {new Point(20, 15),new Point(21, 15),new Point(22, 15)};
+		Point[] disable = {new Point(21, 16)};
+		
+		checkTransparentWalls = new CheckTransparentWallsLvl1Stage1(enable, disable);
+		transformTransparentWalls = new TransformTransparentWallsLv1Stage1(tileMap, doors.get("bathroom"));
+		
 		objects.add(new Crowbar(tileMap, 10, 12, 0.23, "exit"));
 		objects.add(new Hammer(tileMap, 12, 13, 0.15));
 		objects.add(new Hammer(tileMap, 14, 18, 0.15));
@@ -161,6 +165,10 @@ public class Level_1_Stage_1 extends Stage {
 		colorDialogues = Color.BLACK;
 		
 		dialogues = new DialogueStage1(this);
+		
+		drawLevel = new DrawLevel(tileMap, hud, dialogues);
+		
+		
 		startDialogues =  new Timer(countdownStartDialogues, new ActionListener() { 
 			@Override 
 			public void actionPerformed(ActionEvent ae) { 
@@ -182,6 +190,7 @@ public class Level_1_Stage_1 extends Stage {
 			@Override 
 			public void actionPerformed(ActionEvent ae) { 
 				countdown--; 
+				drawLevel.setCountdown(countdown);
 				if (countdown == 0) {
 					timer.stop();
 					deployJason();
@@ -204,19 +213,10 @@ public class Level_1_Stage_1 extends Stage {
 		
 		currentCharacter.update();
 		
-		for (Point position : ENABLE_TRANSPARENT) {
-			if (currentCharacter.getNextPositionInMap().equals(position)) {
-				tileMap.setTransparentWalls("bathroom");
-				doors.get("bathroom").setStatusOpen(Door.OPEN);
-			}
-		}
-		
-		for (Point position : DISABLE_TRANSPARENT) {
-			if (currentCharacter.getNextPositionInMap().equals(position)) {
-				tileMap.setTransparentWalls("");
-				doors.get("bathroom").setStatusOpen(Door.CLOSE);
-			}
-		}
+		if (checkTransparentWalls.checkTransparent(currentCharacter)) 
+			transformTransparentWalls.transformToTransparentWalls();
+		else
+			transformTransparentWalls.transformToOriginalWalls();
 		
 		if (dialogues != null) 
 			dialogues.update();
@@ -273,9 +273,7 @@ public class Level_1_Stage_1 extends Stage {
 	/****************************************************************************************/
 	@Override
 	public void draw(Graphics2D g) {
-		tileMap.draw(g);
-		hud.Draw(g, ToHours.SecondsToHours(countdown));
-		dialogues.draw(g);
+		drawLevel.draw(g);
 	}
 	
 	/****************************************************************************************/
@@ -352,4 +350,6 @@ public class Level_1_Stage_1 extends Stage {
 		if (k == KeyEvent.VK_SPACE)
 			currentCharacter.setAttack(false);	
 	}
+
+	
 }
