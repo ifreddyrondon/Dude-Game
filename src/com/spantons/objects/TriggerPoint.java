@@ -69,20 +69,6 @@ public class TriggerPoint extends Object {
 	}
 	
 	/****************************************************************************************/
-	@Override
-	public void load(Entity _entity) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/****************************************************************************************/
-	@Override
-	public void unload(Entity _entity) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	/****************************************************************************************/
 	public void update() {
 		updateObject.update();
 		animation.update();

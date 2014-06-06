@@ -8,12 +8,13 @@ import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.object.DrawObjectImmobile;
+import com.spantons.object.IObjectLoadable;
 import com.spantons.object.Object;
 import com.spantons.object.UpdateObjectImmobile;
 import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
 
-public class Alcohol extends Object{
+public class Alcohol extends Object implements IObjectLoadable {
 
 	private static final int IDLE = 0;
 	private ArrayList<BufferedImage[]> sprites;
@@ -66,14 +67,7 @@ public class Alcohol extends Object{
 	public void load(Entity _entity) {
 		showObject = false;
 		carrier.getDrunk(this);
-		setCarrier(null);
-	}
-	
-	/****************************************************************************************/
-	@Override
-	public void unload(Entity _entity) {
-		// TODO Auto-generated method stub
-		
+		carrier = null;
 	}
 	
 	/****************************************************************************************/

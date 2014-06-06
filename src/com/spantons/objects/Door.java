@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import com.spantons.entity.Animation;
-import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.object.DrawObjectImmobile;
 import com.spantons.object.Object;
@@ -105,20 +104,6 @@ public class Door extends Object {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	/****************************************************************************************/
-	@Override
-	public void load(Entity _entity) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/****************************************************************************************/
-	@Override
-	public void unload(Entity _entity) {
-		// TODO Auto-generated method stub
-
 	}
 
 	/****************************************************************************************/

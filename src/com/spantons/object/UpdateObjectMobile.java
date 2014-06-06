@@ -20,15 +20,15 @@ public class UpdateObjectMobile implements IUpdateable{
 	/****************************************************************************************/
 	@Override
 	public void update() {
-		if (object.getCarrier() != null) {
-			Point aux = object.getCarrier().getMapPositionOfCharacter();
-			object.setxMap(aux.x);
-			object.setyMap(aux.y);
+		if (object.carrier != null) {
+			Point aux = object.carrier.getMapPositionOfCharacter();
+			object.xMap = aux.x;
+			object.yMap = aux.y;
 		}	
 		
-		Point absolutePosition = PositionUtil.calculatePositionToDraw(tileMap, object.getxMap(), object.getyMap());
-		object.setX(absolutePosition.x);
-		object.setY(absolutePosition.y);
+		Point absolutePosition = PositionUtil.calculatePositionToDraw(tileMap, object.xMap, object.yMap);
+		object.x = absolutePosition.x;
+		object.y = absolutePosition.y;
 	}
 
 	

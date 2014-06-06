@@ -20,9 +20,9 @@ public class UpdateObjectImmobile implements IUpdateable{
 	/****************************************************************************************/
 	@Override
 	public void update() {
-		Point absolutePosition = PositionUtil.calculatePositionToDraw(tileMap, object.getxMap(), object.getyMap());
-		object.setX(absolutePosition.x);
-		object.setY(absolutePosition.y);
+		Point absolutePosition = PositionUtil.calculatePositionToDraw(tileMap, object.xMap, object.yMap);
+		object.x = absolutePosition.x;
+		object.y = absolutePosition.y;
 	}
 
 }

@@ -10,12 +10,14 @@ import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.object.DrawObjectMobile;
+import com.spantons.object.IObjectLoadable;
+import com.spantons.object.IObjectUnloadable;
 import com.spantons.object.Object;
 import com.spantons.object.UpdateObjectMobile;
 import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
 
-public class Crowbar extends Object {
+public class Crowbar extends Object implements IObjectLoadable, IObjectUnloadable {
 
 	private static final int IDLE = 0;
 	private static final int LOADING = 1;

@@ -36,8 +36,6 @@ public abstract class Object {
 	
 	public abstract void update();
 	public abstract void draw(Graphics2D g);
-	public abstract void load(Entity _entity);
-	public abstract void unload(Entity _entity);
 	
 	/****************************************************************************************/
 	public Object(TileMap _tileMap, int _xMap, int _yMap) {
@@ -54,20 +52,11 @@ public abstract class Object {
 	public int getxMap() {
 		return xMap;
 	}
-	public void setxMap(int xMap) {
-		this.xMap = xMap;
-	}
 	public int getyMap() {
 		return yMap;
 	}
-	public void setyMap(int yMap) {
-		this.yMap = yMap;
-	}
 	public String getDescription() {
 		return description;
-	}
-	public Entity getCarrier() {
-		return carrier;
 	}
 	public void setCarrier(Entity carrier) {
 		this.carrier = carrier;
@@ -90,17 +79,6 @@ public abstract class Object {
 	public String getIdAssociated(){
 		return idAssociated;
 	}
-	public int getX() {
-		return x;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public int getY() {
-		return y;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
+	
 		
 }
