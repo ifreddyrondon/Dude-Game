@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.ImagePath;
+import com.spantons.object.DrawObjectImmobile;
 import com.spantons.object.Object;
+import com.spantons.object.UpdateObjectImmobile;
 import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
 
@@ -32,6 +34,9 @@ public class Door extends Object {
 	private String id;
 	
 	private ArrayList<BufferedImage[]> sprites;
+	
+	private UpdateObjectImmobile updateObject;
+	private DrawObjectImmobile drawObject;
 
 	/****************************************************************************************/
 	public Door(
@@ -48,10 +53,12 @@ public class Door extends Object {
 
 		description = "Puerta";
 		id = _id;
-		type = BLOCKED;
 		statusOpen = _statusOpen;
 		statusBlock = _statusBlock;
 		doorToNextLvl = _doorToNextLvl;
+		
+		updateObject = new UpdateObjectImmobile(tileMap, this);
+		drawObject = new DrawObjectImmobile(this);
 		
 		loadSprite();
 
@@ -138,12 +145,12 @@ public class Door extends Object {
 			}
 		}
 
-		super.update();
+		updateObject.update();
 	}
 
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
-		super.draw(g);
+		drawObject.draw(g);
 	}
 	
 	/****************************************************************************************/

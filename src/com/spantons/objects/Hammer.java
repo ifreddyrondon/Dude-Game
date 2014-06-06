@@ -9,7 +9,9 @@ import org.imgscalr.Scalr;
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.ImagePath;
+import com.spantons.object.DrawObjectMobile;
 import com.spantons.object.Object;
+import com.spantons.object.UpdateObjectMobile;
 import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
 
@@ -21,16 +23,21 @@ public class Hammer extends Object{
 	
 	private ArrayList<BufferedImage[]> sprites;
 	
+	private UpdateObjectMobile updateObject;
+	private DrawObjectMobile drawObject;
+	
 	/****************************************************************************************/
 	public Hammer(TileMap _tileMap, int _xMap, int _yMap, double _scale) {
 		super(_tileMap, _xMap, _yMap);
 		scale = _scale;
 		
 		description = "Martillo";
-		type = NON_BLOCKED;
 		damage = 0.6f;
 		offSetXLoading = 12;
 		offSetYLoading = 12;
+		
+		updateObject = new UpdateObjectMobile(tileMap, this);
+		drawObject = new DrawObjectMobile(this);
 		
 		loadSprite();
 		
@@ -119,13 +126,13 @@ public class Hammer extends Object{
 			}
 		}
 		
-		super.update();
+		updateObject.update();
 		animation.update();
 	}
 	
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
-		super.draw(g);
+		drawObject.draw(g);
 	}
 
 }

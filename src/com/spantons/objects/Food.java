@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.ImagePath;
+import com.spantons.object.DrawObjectImmobile;
 import com.spantons.object.Object;
+import com.spantons.object.UpdateObjectImmobile;
 import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
 
@@ -16,15 +18,20 @@ public class Food extends Object {
 	private static final int IDLE = 0;
 	private ArrayList<BufferedImage[]> sprites;
 	
+	private UpdateObjectImmobile updateObject;
+	private DrawObjectImmobile drawObject;
+	
 	/****************************************************************************************/
 	public Food(TileMap _tileMap, int _xMap, int _yMap) {
 		super(_tileMap, _xMap, _yMap);
 		
 		description = "Comida";
-		type = NON_BLOCKED;
 		health = 1f;
 		
 		loadSprite();
+		
+		updateObject = new UpdateObjectImmobile(tileMap, this);
+		drawObject = new DrawObjectImmobile(this);
 		
 		animation = new Animation();
 		currentAnimation = IDLE;
@@ -79,13 +86,13 @@ public class Food extends Object {
 			}
 		}
 		
-		super.update();
+		updateObject.update();
 		animation.update();
 	}
 	
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
-		super.draw(g);
+		drawObject.draw(g);
 	}
 
 }

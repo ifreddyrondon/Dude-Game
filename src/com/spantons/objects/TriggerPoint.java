@@ -9,7 +9,9 @@ import com.spantons.entity.Entity;
 import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
+import com.spantons.object.DrawObjectImmobile;
 import com.spantons.object.Object;
+import com.spantons.object.UpdateObjectImmobile;
 import com.spantons.singleton.ImageCache;
 import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
@@ -24,16 +26,21 @@ public class TriggerPoint extends Object {
 	
 	private boolean soundPlay;
 	
+	private UpdateObjectImmobile updateObject;
+	private DrawObjectImmobile drawObject;
+	
 	/****************************************************************************************/
 	public TriggerPoint(TileMap _tileMap, StagesLevels _stage, int _xMap, int _yMap) {
 		super(_tileMap, _xMap, _yMap);
 		
 		stage = _stage;
 		description = "Punto de activacion";
-		type = BLOCKED;
 		soundPlay = false;
 
 		loadSprite();
+		
+		updateObject = new UpdateObjectImmobile(tileMap, this);
+		drawObject = new DrawObjectImmobile(this);
 		
 		animation = new Animation();
 		currentAnimation = IDLE;
@@ -77,7 +84,7 @@ public class TriggerPoint extends Object {
 	
 	/****************************************************************************************/
 	public void update() {
-		super.update();
+		updateObject.update();
 		animation.update();
 		
 		if (	stage.getCurrentCharacter().getMapPositionOfCharacter().x == xMap
@@ -109,7 +116,7 @@ public class TriggerPoint extends Object {
 	
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
-		super.draw(g);
+		drawObject.draw(g);
 	}
 
 	public boolean isActivated() {

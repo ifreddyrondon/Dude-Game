@@ -1,7 +1,6 @@
 package com.spantons.object;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
@@ -35,10 +34,8 @@ public abstract class Object {
 	protected int offSetYLoading;	
 	protected double scale;
 	
-	protected int type;
-	public static int BLOCKED = 0;
-	public static int NON_BLOCKED = 1;
-	
+	public abstract void update();
+	public abstract void draw(Graphics2D g);
 	public abstract void load(Entity _entity);
 	public abstract void unload(Entity _entity);
 	
@@ -51,46 +48,7 @@ public abstract class Object {
 		objectsToDraw[xMap][yMap] = this;
 		showObject = true;
 	}
-	/****************************************************************************************/
-	private void calculatePositionToDraw() {
-		Point absolutePosition = tileMap.mapToAbsolute(xMap, yMap);
-		x = (int) (absolutePosition.x - tileMap.getX());
-		y = (int) (absolutePosition.y - tileMap.getY());
-	}
-	/****************************************************************************************/
-	public void update() {
-		if (carrier != null && type == NON_BLOCKED) {
-			Point aux = carrier.getMapPositionOfCharacter();
-			xMap = (int) aux.x;
-			yMap = (int) aux.y;
-		}	
-		calculatePositionToDraw();
-	}
-	/****************************************************************************************/
-	public void draw(Graphics2D g) {
-		
-		if (showObject == false) 
-			return;
-		
-		if (carrier != null && type == NON_BLOCKED) {
-			if (carrier.isMovUp() && !carrier.isMovLeft() && !carrier.isMovRight()) 
-				return;
-			
-			if (carrier.isFacingRight()) 
-				g.drawImage(animation.getCurrentImageFrame(),
-					x + carrier.getSpriteWidth() / 2 - spriteWidth + offSetXLoading, 
-					y - spriteHeight - offSetYLoading, null);
-			
-			else 
-				g.drawImage(animation.getCurrentImageFrame(), 
-					x + carrier.getSpriteWidth() / 2 - spriteWidth + offSetXLoading,
-					y - spriteHeight - offSetYLoading, -spriteWidth, spriteHeight, null);
-		}			
-		else
-			g.drawImage(animation.getCurrentImageFrame(),
-				x - spriteWidth / 2, 
-				y - spriteHeight, null);
-	}
+	
 	/****************************************************************************************/
 	
 	public int getxMap() {
@@ -117,9 +75,6 @@ public abstract class Object {
 	public float getDamage() {
 		return damage;
 	}
-	public int getType(){
-		return type;
-	}
 	public float getHealth() {
 		return health;
 	}
@@ -134,6 +89,18 @@ public abstract class Object {
 	}
 	public String getIdAssociated(){
 		return idAssociated;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
 	}
 		
 }
