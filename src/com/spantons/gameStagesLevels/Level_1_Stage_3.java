@@ -16,8 +16,8 @@ import com.spantons.entity.Hud;
 import com.spantons.entity.character.Jason;
 import com.spantons.gameStages.GameStagesManager;
 import com.spantons.gameStages.StagesLevels;
-import com.spantons.object.Door;
 import com.spantons.object.Object;
+import com.spantons.objects.Door;
 import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
 
@@ -29,12 +29,6 @@ public class Level_1_Stage_3 extends StagesLevels {
 	/****************************************************************************************/
 	public Level_1_Stage_3(GameStagesManager _gsm) {
 		gsm = _gsm;
-		init();
-	}
-
-	/****************************************************************************************/
-	@Override
-	public void init() {
 		hud = new Hud(this);
 		secondaryMenu = false;
 		tileMap = new TileMap("/maps/map_1_3.txt");

@@ -1,7 +1,7 @@
 package com.spantons.gameStagesLevels;
 
 import com.spantons.gameState.interfaces.ITransformTransparentWalls;
-import com.spantons.object.Door;
+import com.spantons.objects.Door;
 import com.spantons.tileMap.TileMap;
 
 public class TransformTransparentWallsLv1Stage1 implements ITransformTransparentWalls{

@@ -1,5 +1,7 @@
 package com.spantons.gameStages;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,8 +12,10 @@ import com.spantons.dialogue.DialogueManager;
 import com.spantons.entity.Entity;
 import com.spantons.entity.Hud;
 import com.spantons.gameState.interfaces.Stage;
-import com.spantons.object.Door;
+import com.spantons.magicNumbers.FontPath;
 import com.spantons.object.Object;
+import com.spantons.objects.Door;
+import com.spantons.singleton.FontCache;
 import com.spantons.tileMap.TileMap;
 
 public abstract class StagesLevels implements Stage {
@@ -31,8 +35,11 @@ public abstract class StagesLevels implements Stage {
 	
 	protected DialogueManager dialogues;
 	protected boolean secondaryMenu;
+	public static Font fontDialogues = FontCache.getInstance().getFont(FontPath.FONT_DARK_IS_THE_NIGTH).deriveFont(Font.PLAIN, 20);
+	public static Color colorDialogues = Color.BLACK;
+	protected int countdownStartDialogues;
+	protected Timer startDialogues;
 	
-	public abstract void init();
 	public abstract void draw(Graphics2D g);
 	public abstract void update();
 	public abstract void keyPressed(int k);

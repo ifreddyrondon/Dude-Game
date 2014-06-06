@@ -6,10 +6,12 @@ import java.awt.image.BufferedImage;
 
 import org.imgscalr.Scalr;
 
+import com.spantons.Interfaces.IDrawable;
+import com.spantons.Interfaces.IUpdateable;
 import com.spantons.main.GamePanel;
 import com.spantons.singleton.ImageCache;
 
-public class Background {
+public class Background implements IDrawable, IUpdateable{
 
 	private BufferedImage image;
 	private boolean repeat;

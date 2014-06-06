@@ -1,4 +1,4 @@
-package com.spantons.object;
+package com.spantons.objects;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -7,21 +7,23 @@ import java.util.ArrayList;
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.ImagePath;
+import com.spantons.object.Object;
 import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
 
-public class Pizza extends Object {
-	
+public class Alcohol extends Object{
+
 	private static final int IDLE = 0;
 	private ArrayList<BufferedImage[]> sprites;
 	
 	/****************************************************************************************/
-	public Pizza(TileMap _tileMap, int _xMap, int _yMap) {
+	public Alcohol(TileMap _tileMap, int _xMap, int _yMap) {
 		super(_tileMap, _xMap, _yMap);
 		
-		description = "Pizza";
+		description = "Alcohol";
 		type = NON_BLOCKED;
-		health = 0.8f;
+		damage = -0.3f;
+		timeOfDrunk = 30000;
 		
 		loadSprite();
 		
@@ -34,7 +36,7 @@ public class Pizza extends Object {
 	/****************************************************************************************/
 	private void loadSprite() {
 		try {
-			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.OBJECT_PIZZA);
+			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.OBJECT_ALCOHOL); 
 			
 			spriteWidth = spriteSheet.getWidth();
 			spriteHeight = spriteSheet.getHeight();
@@ -56,8 +58,8 @@ public class Pizza extends Object {
 	@Override
 	public void load(Entity _entity) {
 		showObject = false;
-		carrier.getHealth(this);
-		carrier.takeOrLeaveObject();
+		carrier.getDrunk(this);
+		setCarrier(null);
 	}
 	
 	/****************************************************************************************/
@@ -70,7 +72,7 @@ public class Pizza extends Object {
 	/****************************************************************************************/
 	public void update() {
 		
-		if(carrier == null){
+		if(carrier == null) {
 			if (currentAnimation != IDLE) {
 				currentAnimation = IDLE;
 				animation.setFrames(sprites.get(IDLE));

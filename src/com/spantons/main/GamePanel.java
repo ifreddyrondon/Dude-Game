@@ -61,7 +61,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 */
 	private long targetTime = 1000 / FPS;
 
-	// imagen y dibujo
 	/**
 	 * Buffer de imagenes a dibujar en pantalla
 	 */
@@ -76,10 +75,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 */
 	private GameStagesManager gsm;
 
-	/**
-	 * Constructor por defecto y unico constructor, se encarga de ajustar las
-	 * dimensiones de la ventana
-	 */
 	/****************************************************************************************/
 	public GamePanel() {
 		super();
@@ -89,6 +84,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		setFocusTraversalKeysEnabled(false);
 		hidePointer(0);
 	}
+	
 	/****************************************************************************************/
 	/**
 	 * Espera a que Jpanel se adherido a JFrame o JApplet antes de comenzar,
@@ -102,10 +98,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			thread.start();
 		}
 	}
+	
 	/****************************************************************************************/
-	/**
-	 * Metodo principal del thread del juego, encargador del Game Loop
-	 */
 	@Override
 	public void run() {
 		// variables para calcular los tiempos de espera
@@ -114,7 +108,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		long waitTime;
 
 		init();
-		// loop del juego
 		while (running) {
 			startTime = System.nanoTime();
 			update();
@@ -134,56 +127,50 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			}
 		}
 	}
+	
 	/****************************************************************************************/
-	/**
-	 * Metodo encargado de inicializar las variables image (BufferedImage), g
-	 * (Graphics2D), running (boolean) y gsm (GameStateManager)
-	 */
 	private void init() {
 		image = new BufferedImage(RESOLUTION_WIDTH, RESOLUTION_HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.createGraphics();
 		running = true;
 		gsm = new GameStagesManager();
 	}
+	
 	/****************************************************************************************/
-	/**
-	 * Metodo encargado de actualizar todos los objetos, sprites, map etc del
-	 * juego
-	 */
 	private void update() {
 		gsm.update();
 	}
+	
 	/****************************************************************************************/
-	/**
-	 * Metodo encargado dibujar
-	 */
 	private void draw() {
 		gsm.draw(g);
 	}
+	
 	/****************************************************************************************/
-	/**
-	 * Metodo encargado de dibujar en pantalla
-	 */
 	private void drawToScreen() {
 		Graphics2D g2 = (Graphics2D) getGraphics();
 		g2.drawImage(image, 0, 0, RESOLUTION_WIDTH, RESOLUTION_HEIGHT, null);
 		g2.dispose();
 	}
+	
 	/****************************************************************************************/
 	@Override
 	public void keyPressed(KeyEvent e) {
 		gsm.keyPressed(e.getKeyCode());
 	}
+	
 	/****************************************************************************************/
 	@Override
 	public void keyReleased(KeyEvent e) {
 		gsm.keyReleased(e.getKeyCode());
 	}
+	
 	/****************************************************************************************/
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 	}
+	
 	/****************************************************************************************/
 	// Utilitarias
 	private void hidePointer(int n){

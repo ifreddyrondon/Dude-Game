@@ -1,4 +1,4 @@
-package com.spantons.object;
+package com.spantons.objects;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -9,10 +9,11 @@ import org.imgscalr.Scalr;
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.ImagePath;
+import com.spantons.object.Object;
 import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
 
-public class Hammer extends Object{
+public class Crowbar extends Object {
 
 	private static final int IDLE = 0;
 	private static final int LOADING = 1;
@@ -21,13 +22,14 @@ public class Hammer extends Object{
 	private ArrayList<BufferedImage[]> sprites;
 	
 	/****************************************************************************************/
-	public Hammer(TileMap _tileMap, int _xMap, int _yMap, double _scale) {
+	public Crowbar(TileMap _tileMap, int _xMap, int _yMap, double _scale, String _idAssociated) {
 		super(_tileMap, _xMap, _yMap);
 		scale = _scale;
 		
-		description = "Martillo";
+		description = "Palanca";
+		idAssociated = _idAssociated;
 		type = NON_BLOCKED;
-		damage = 0.6f;
+		damage = 0.4f;
 		offSetXLoading = 12;
 		offSetYLoading = 12;
 		
@@ -42,7 +44,7 @@ public class Hammer extends Object{
 	/****************************************************************************************/
 	private void loadSprite() {
 		try {
-			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.OBJECT_HAMMER);
+			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.OBJECT_CROWBAR);
 			
 			spriteWidth = ((int) (spriteSheet.getWidth() / 3 * scale));
 			spriteHeight = ((int) (spriteSheet.getHeight() * scale));

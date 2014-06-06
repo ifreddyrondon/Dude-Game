@@ -6,8 +6,8 @@ import com.spantons.dialogue.Dialogue;
 import com.spantons.gameStages.StagesLevels;
 import com.spantons.gameStagesLevels.Level_1_Stage_1;
 import com.spantons.magicNumbers.ImagePath;
-import com.spantons.object.Door;
 import com.spantons.object.Object;
+import com.spantons.objects.Door;
 import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.TileWalk;
 

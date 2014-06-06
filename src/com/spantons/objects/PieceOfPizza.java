@@ -1,4 +1,4 @@
-package com.spantons.object;
+package com.spantons.objects;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -7,22 +7,22 @@ import java.util.ArrayList;
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.ImagePath;
+import com.spantons.object.Object;
 import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
 
-public class Pipe extends Object {
+public class PieceOfPizza extends Object {
 
 	private static final int IDLE = 0;
 	private ArrayList<BufferedImage[]> sprites;
 	
 	/****************************************************************************************/
-	public Pipe(TileMap _tileMap, int _xMap, int _yMap) {
+	public PieceOfPizza(TileMap _tileMap, int _xMap, int _yMap) {
 		super(_tileMap, _xMap, _yMap);
 		
-		description = "Pipa";
+		description = "Pedazo de Pizza";
 		type = NON_BLOCKED;
-		moveSpeed = -60;
-		timeOfHigh = 30000;
+		health = 0.3f;
 		
 		loadSprite();
 		
@@ -35,7 +35,7 @@ public class Pipe extends Object {
 	/****************************************************************************************/
 	private void loadSprite() {
 		try {
-			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.OBJECT_PIPE);
+			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.OBJECT_PIECE_OF_PIZZA);
 			
 			spriteWidth = spriteSheet.getWidth();
 			spriteHeight = spriteSheet.getHeight();
@@ -57,8 +57,8 @@ public class Pipe extends Object {
 	@Override
 	public void load(Entity _entity) {
 		showObject = false;
-		carrier.getHigh(this);
-		setCarrier(null);
+		carrier.getHealth(this);
+		carrier.takeOrLeaveObject();
 	}
 	
 	/****************************************************************************************/

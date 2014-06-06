@@ -1,4 +1,4 @@
-package com.spantons.object;
+package com.spantons.objects;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.ImagePath;
+import com.spantons.object.Object;
 import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
 

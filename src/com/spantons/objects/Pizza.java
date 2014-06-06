@@ -1,4 +1,4 @@
-package com.spantons.object;
+package com.spantons.objects;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -6,32 +6,24 @@ import java.util.ArrayList;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
-import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.ImagePath;
-import com.spantons.magicNumbers.SoundPath;
+import com.spantons.object.Object;
 import com.spantons.singleton.ImageCache;
-import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
 
-public class TriggerPoint extends Object {
-
-	private StagesLevels stage;
-	private boolean activated;
+public class Pizza extends Object {
+	
 	private static final int IDLE = 0;
 	private ArrayList<BufferedImage[]> sprites;
-	private Entity characterInTrigger;
-	
-	private boolean soundPlay;
 	
 	/****************************************************************************************/
-	public TriggerPoint(TileMap _tileMap, StagesLevels _stage, int _xMap, int _yMap) {
+	public Pizza(TileMap _tileMap, int _xMap, int _yMap) {
 		super(_tileMap, _xMap, _yMap);
 		
-		stage = _stage;
-		description = "Punto de activacion";
-		type = BLOCKED;
-		soundPlay = false;
-
+		description = "Pizza";
+		type = NON_BLOCKED;
+		health = 0.8f;
+		
 		loadSprite();
 		
 		animation = new Animation();
@@ -39,14 +31,15 @@ public class TriggerPoint extends Object {
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelayTime(1000);
 	}
-
+	
 	/****************************************************************************************/
 	private void loadSprite() {
 		try {
-			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.OBJECT_TRIGGER_POINT);
+			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.OBJECT_PIZZA);
 			
 			spriteWidth = spriteSheet.getWidth();
-			spriteHeight = spriteSheet.getHeight();			
+			spriteHeight = spriteSheet.getHeight();
+			
 			sprites = new ArrayList<BufferedImage[]>();
 
 			// IDLE
@@ -63,10 +56,11 @@ public class TriggerPoint extends Object {
 	/****************************************************************************************/
 	@Override
 	public void load(Entity _entity) {
-		// TODO Auto-generated method stub
-		
+		showObject = false;
+		carrier.getHealth(this);
+		carrier.takeOrLeaveObject();
 	}
-
+	
 	/****************************************************************************************/
 	@Override
 	public void unload(Entity _entity) {
@@ -76,34 +70,17 @@ public class TriggerPoint extends Object {
 	
 	/****************************************************************************************/
 	public void update() {
+		
+		if(carrier == null){
+			if (currentAnimation != IDLE) {
+				currentAnimation = IDLE;
+				animation.setFrames(sprites.get(IDLE));
+				animation.setDelayTime(1000);
+			}
+		}
+		
 		super.update();
 		animation.update();
-		
-		if (	stage.getCurrentCharacter().getMapPositionOfCharacter().x == xMap
-			&& stage.getCurrentCharacter().getMapPositionOfCharacter().y == yMap) {
-			
-			characterInTrigger = stage.getCurrentCharacter();
-			characterInTrigger.setBusy(true);
-			
-			if (!soundPlay) {
-				SoundCache.getInstance().getSound(SoundPath.SFX_DRAG_DOOR).play();
-				soundPlay = true;
-				activated = true;
-			}
-			
-		} else if (	characterInTrigger != null && !characterInTrigger.isDead()
-					&& characterInTrigger.getMapPositionOfCharacter().x == xMap
-					&& characterInTrigger.getMapPositionOfCharacter().y == yMap)
-			
-			activated = true;
-		
-		else {
-			soundPlay = false;
-			activated = false;
-			if (characterInTrigger != null) 
-				characterInTrigger.setBusy(false);
-			characterInTrigger = null;
-		}
 	}
 	
 	/****************************************************************************************/
@@ -111,8 +88,4 @@ public class TriggerPoint extends Object {
 		super.draw(g);
 	}
 
-	public boolean isActivated() {
-		return activated;
-	}
-	
 }

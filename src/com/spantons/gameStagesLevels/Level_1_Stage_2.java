@@ -1,7 +1,5 @@
 package com.spantons.gameStagesLevels;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -20,20 +18,18 @@ import com.spantons.entity.Hud;
 import com.spantons.entity.character.Jason;
 import com.spantons.gameStages.GameStagesManager;
 import com.spantons.gameStages.StagesLevels;
-import com.spantons.magicNumbers.FontPath;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
-import com.spantons.object.Alcohol;
-import com.spantons.object.Beers;
-import com.spantons.object.Door;
-import com.spantons.object.Food;
-import com.spantons.object.Hammer;
 import com.spantons.object.Object;
-import com.spantons.object.PieceOfPizza;
-import com.spantons.object.Pipe;
-import com.spantons.object.Pizza;
-import com.spantons.object.TriggerPoint;
-import com.spantons.singleton.FontCache;
+import com.spantons.objects.Alcohol;
+import com.spantons.objects.Beers;
+import com.spantons.objects.Door;
+import com.spantons.objects.Food;
+import com.spantons.objects.Hammer;
+import com.spantons.objects.PieceOfPizza;
+import com.spantons.objects.Pipe;
+import com.spantons.objects.Pizza;
+import com.spantons.objects.TriggerPoint;
 import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.RandomItemArrayList;
@@ -48,27 +44,18 @@ public class Level_1_Stage_2 extends StagesLevels{
 	private int timeLightsOn = 8000;
 	private Timer lightsOff;
 	private int timeLightsOff = 1100;
-	private int countdownStartDialogues = 1300;
-	private Timer startDialogues;
-	public static Font fontDialogues;
-	public static Color colorDialogues;
 	boolean allTriggerPointActivated;
 	Point[] exitPoint = {new Point(28,3),new Point(29,3),new Point(30,3)};
 
 	/****************************************************************************************/
 	public Level_1_Stage_2(GameStagesManager _gsm) {
 		gsm = _gsm;
-		init();
-	}
-
-	/****************************************************************************************/
-	@Override
-	public void init() {
 		hud = new Hud(this);
 		secondaryMenu = false;
 		tileMap = new TileMap("/maps/map_1_2.txt");
 		tileMap.setPosition(0, 0);
 		countdown = 100;
+		countdownStartDialogues = 1300;
 		
 		jasons = new ArrayList<Entity>();
 		dead = new ArrayList<Entity>();
@@ -127,10 +114,6 @@ public class Level_1_Stage_2 extends StagesLevels{
 		objects.add(new Food(tileMap, 35,5));
 		
 		SoundCache.getInstance().getSound(SoundPath.MUSIC_HORROR_AMBIANCE).loop();
-		
-		fontDialogues = FontCache.getInstance().getFont(FontPath.FONT_DARK_IS_THE_NIGTH); 
-		fontDialogues = fontDialogues.deriveFont(Font.PLAIN, 20);
-		colorDialogues = Color.BLACK;
 		
 		dialogues = new DialogueStage1(this);
 				
