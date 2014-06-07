@@ -174,5 +174,17 @@ public class Door extends Object {
 	public boolean isDoorToNextLvl() {
 		return doorToNextLvl;
 	}
+
+	@Override
+	public void actionLoad() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void actionUnload() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

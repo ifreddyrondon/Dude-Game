@@ -16,9 +16,6 @@ public class DrawObjectMobile implements IDrawable{
 	/****************************************************************************************/
 	@Override
 	public void draw(Graphics2D g) {
-		if (object.showObject == false) 
-			return;
-		
 		if (object.carrier != null) {
 			if (object.carrier.isMovUp() && !object.carrier.isMovLeft() && !object.carrier.isMovRight()) 
 				return;

@@ -2,7 +2,6 @@ package com.spantons.gameStages;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,14 +10,14 @@ import javax.swing.Timer;
 import com.spantons.dialogue.DialogueManager;
 import com.spantons.entity.Entity;
 import com.spantons.entity.Hud;
-import com.spantons.gameState.interfaces.Stage;
+import com.spantons.gameState.interfaces.IStage;
 import com.spantons.magicNumbers.FontPath;
 import com.spantons.object.Object;
 import com.spantons.objects.Door;
 import com.spantons.singleton.FontCache;
 import com.spantons.tileMap.TileMap;
 
-public abstract class StagesLevels implements Stage {
+public abstract class StagesLevels implements IStage {
 
 	protected TileMap tileMap;
 	protected GameStagesManager gsm;
@@ -39,11 +38,6 @@ public abstract class StagesLevels implements Stage {
 	public static Color colorDialogues = Color.BLACK;
 	protected int countdownStartDialogues;
 	protected Timer startDialogues;
-	
-	public abstract void draw(Graphics2D g);
-	public abstract void update();
-	public abstract void keyPressed(int k);
-	public abstract void keyReleased(int k);
 	
 	/****************************************************************************************/
 	public Entity getCurrentCharacter() {

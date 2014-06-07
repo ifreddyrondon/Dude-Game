@@ -1,11 +1,7 @@
 package com.spantons.entity;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
-import javax.swing.Timer;
 
 import com.spantons.entity.character.Jason;
 import com.spantons.gameStages.StagesLevels;
@@ -46,15 +42,15 @@ public class EntityLogic {
 	protected boolean movJumping;
 	protected boolean movFalling;
 
-	protected float health;
-	protected float maxHealth;
+	protected double health;
+	protected double maxHealth;
 	protected boolean dead;
 	protected String description;
 	protected int perversity;
 	protected int maxPerversity;
-	protected float damage;
-	protected float damageBackup;
-	protected int moveSpeed;
+	protected double damage;
+	protected double damageBackup;
+	private int moveSpeed;
 	protected boolean busy;
 	
 	protected boolean attack;
@@ -180,87 +176,46 @@ public class EntityLogic {
 	}
 	
 	/****************************************************************************************/
+	private void loadObject(Object _object, boolean _change) {
+		object = _object;
+		object.setCarrier((Entity) this);
+		object.actionLoad();
+		if(!_change)
+			objectsToDraw[object.getXMap()][object.getYMap()] = null;
+		
+		if (object.getType() == Object.CONSUMABLE) {
+			stage.getObjects().remove(object);
+			object = null;
+		}
+	}
+	
+	private void unloadObject() {
+		if (object.getType() == Object.CONSUMABLE) 
+			return;
+		
+		object.actionUnload();
+		object.setCarrier(null);
+		objectsToDraw[object.getXMap()][object.getYMap()] = object;
+		object = null;
+	}
+	
+	/****************************************************************************************/
 	public void takeOrLeaveObject() {
 		if (object != null) {
 			Object newObject = EntityChecks.checkIsOverObject((Entity) this, stage);
 			if (newObject != null) {
-				
-				newObject.setCarrier((Entity) this);
-				object.setCarrier(null);
-				object.unload((Entity) this);
-				objectsToDraw[xMap][yMap] = object;
-				object = newObject;
-				object.load((Entity) this);
-			}
-			else {
-				object.setCarrier(null);
-				object.unload((Entity) this);
-				objectsToDraw[xMap][yMap] = object;
-				object = null;
-			}
+				unloadObject();
+				loadObject(newObject, true);
+			
+			} else 
+				unloadObject();
 		} else {
-			object = EntityChecks.checkIsOverObject((Entity) this, stage);
-			if (object != null) {
-				object.setCarrier((Entity) this);
-				object.load((Entity) this);
-				objectsToDraw[xMap][yMap] = null;
-			}
+			Object newObject = EntityChecks.checkIsOverObject((Entity) this, stage);
+			if (newObject != null) 
+				loadObject(newObject, false);
 		}
 	}
-	
-	/****************************************************************************************/
-	public void getDrunk(Object _object){
-		SoundCache.getInstance().getSound(SoundPath.SFX_BURP).play();
-		object = null;
-		final float damageObject = _object.getDamage();	
-		damage = damage + damageObject;
-		if (damage <= 0) 
-			damage = 0;		
-		stage.getObjects().remove(_object);
 		
-		Timer timer = new Timer(_object.getTimeOfDrunk(), new ActionListener() { 
-			@Override 
-			public void actionPerformed(ActionEvent ae) { 
-				damage = damage - damageObject;
-			} 
-		}); 
-		timer.setRepeats(false);
-		timer.start();
-	}
-	
-	/****************************************************************************************/
-	public void getHigh(Object _object){
-		SoundCache.getInstance().getSound(SoundPath.SFX_SMOKE).play();
-		object = null;
-		final int moveSpeedObject = _object.getMoveSpeed();		
-		moveSpeed = moveSpeed - moveSpeedObject;
-		stage.getObjects().remove(_object);
-		
-		Timer timer = new Timer(_object.getTimeOfHigh(), new ActionListener() { 
-			@Override 
-			public void actionPerformed(ActionEvent ae) { 
-				moveSpeed = moveSpeed + moveSpeedObject;
-			} 
-		}); 
-		timer.setRepeats(false);
-		timer.start();
-	}
-	
-	/****************************************************************************************/
-	public void getHealth(Object _object) {
-		SoundCache.getInstance().getSound(SoundPath.SFX_EAT).play();
-		float healthObject = _object.getHealth();
-		stage.getObjects().remove(_object);
-		if (health == maxHealth) 
-			return;
-		else {
-			if (health + healthObject > maxHealth)
-				health = maxHealth;
-			else
-				health = health + healthObject;
-		}
-	}
-	
 	/****************************************************************************************/
 	protected void attack() {
 		
@@ -269,7 +224,7 @@ public class EntityLogic {
 				return;
 			
 			movFace(characterCloseDirection);
-			characterClose.setHealth(characterClose.getHealth() - damage);
+			characterClose.health = characterClose.getHealth() - damage;
 			
 			if (characterClose.getHealth() <= 0) {
 				characterClose.setDead(true);
@@ -345,4 +300,12 @@ public class EntityLogic {
 		}
 	}
 	/****************************************************************************************/
+
+	public int getMoveSpeed() {
+		return moveSpeed;
+	}
+
+	public void setMoveSpeed(int moveSpeed) {
+		this.moveSpeed = moveSpeed;
+	}
 }

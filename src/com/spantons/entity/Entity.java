@@ -155,7 +155,7 @@ public class Entity extends EntityLogic {
 
 		if (flinching) {
 			long elapsedTime = (System.nanoTime() - flinchingTime) / 1000000;
-			if (elapsedTime > moveSpeed)
+			if (elapsedTime > getMoveSpeed())
 				flinching = false;
 
 		} else {
@@ -338,15 +338,15 @@ public class Entity extends EntityLogic {
 		return spriteHeight;
 	}
 
-	public float getHealth() {
+	public double getHealth() {
 		return health;
 	}
 
-	public void setHealth(float d) {
+	public void setHealth(double d) {
 		this.health = d;
 	}
 
-	public float getMaxHealth() {
+	public double getMaxHealth() {
 		return maxHealth;
 	}
 
@@ -390,7 +390,7 @@ public class Entity extends EntityLogic {
 		return damage;
 	}
 	
-	public void setDamage(float a) {
+	public void setDamage(double a) {
 		damage = a;
 	}
 

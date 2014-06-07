@@ -2,7 +2,7 @@ package com.spantons.gameState.interfaces;
 
 import java.awt.Graphics2D;
 
-public interface Stage {
+public interface IStage {
 
 	public void update();
 	public void draw(Graphics2D g);

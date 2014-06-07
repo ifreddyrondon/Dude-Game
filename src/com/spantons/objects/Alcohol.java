@@ -5,39 +5,36 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import com.spantons.entity.Animation;
-import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.object.DrawObjectImmobile;
-import com.spantons.object.IObjectLoadable;
 import com.spantons.object.Object;
+import com.spantons.object.ObjectAttributeGetDrunk;
 import com.spantons.object.UpdateObjectImmobile;
 import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
 
-public class Alcohol extends Object implements IObjectLoadable {
+public class Alcohol extends Object {
 
-	private static final int IDLE = 0;
-	private ArrayList<BufferedImage[]> sprites;
-	
 	private UpdateObjectImmobile updateObject;
 	private DrawObjectImmobile drawObject;
+	private ObjectAttributeGetDrunk attribute;
 	
 	/****************************************************************************************/
 	public Alcohol(TileMap _tileMap, int _xMap, int _yMap) {
 		super(_tileMap, _xMap, _yMap);
 		
-		description = "Alcohol";
-		damage = -0.3f;
-		timeOfDrunk = 30000;
-		
-		loadSprite();
-		
 		updateObject = new UpdateObjectImmobile(tileMap, this);
 		drawObject = new DrawObjectImmobile(this);
+		attribute = new ObjectAttributeGetDrunk(-0.3, this);
 		
+		type = CONSUMABLE;
+		timeToConsumable = 30000;
+		description = "Alcohol";
+		scale = 1;
+		
+		loadSprite();
 		animation = new Animation();
-		currentAnimation = IDLE;
-		animation.setFrames(sprites.get(IDLE));
+		animation.setFrames(sprites.get(0));
 		animation.setDelayTime(1000);
 	}
 	
@@ -45,49 +42,40 @@ public class Alcohol extends Object implements IObjectLoadable {
 	private void loadSprite() {
 		try {
 			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.OBJECT_ALCOHOL); 
-			
 			spriteWidth = spriteSheet.getWidth();
 			spriteHeight = spriteSheet.getHeight();
 			
 			sprites = new ArrayList<BufferedImage[]>();
 
-			// IDLE
 			BufferedImage[] bi = new BufferedImage[1];
-			bi[0] = spriteSheet.getSubimage(0, 0, spriteWidth,
-					spriteHeight);
+			bi[0] = spriteSheet.getSubimage(
+					0, 0, spriteWidth,spriteHeight);
 			sprites.add(bi);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	/****************************************************************************************/
-	@Override
-	public void load(Entity _entity) {
-		showObject = false;
-		carrier.getDrunk(this);
-		carrier = null;
-	}
-	
+
 	/****************************************************************************************/
 	public void update() {
-		
-		if(carrier == null) {
-			if (currentAnimation != IDLE) {
-				currentAnimation = IDLE;
-				animation.setFrames(sprites.get(IDLE));
-				animation.setDelayTime(1000);
-			}
-		}
-		
 		updateObject.update();
-		animation.update();
 	}
 	
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 		drawObject.draw(g);
+	}
+
+	/****************************************************************************************/
+	public void actionLoad() {
+		attribute.loadAttribute(carrier);
+	}
+
+	/****************************************************************************************/
+	@Override
+	public void actionUnload() {
+		attribute.unloadAttribute(carrier);
 	}
 
 }

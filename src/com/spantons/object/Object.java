@@ -1,39 +1,44 @@
 package com.spantons.object;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
+import com.spantons.Interfaces.IDrawable;
+import com.spantons.Interfaces.IUpdateable;
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.tileMap.TileMap;
 
-public abstract class Object {
-
+public abstract class Object implements IDrawable, IUpdateable {
+	
+	public static int NON_CONSUMABLE = 0;
+	public static int CONSUMABLE = 1;
+	protected int timeToConsumable;
+	
+	protected Entity carrier;
+	protected TileMap tileMap;
+	protected String description;
+	protected int type;
+	protected String idAssociated;
+	
 	protected int xMap;
 	protected int yMap;
 	protected int x;
 	protected int y;
-	
-	protected TileMap tileMap;
-	protected Entity carrier;
-	protected boolean showObject;
+	protected int spriteWidth;
+	protected int spriteHeight;
+	protected double scale;
 	private Object[][] objectsToDraw;
-	
-	protected String description;
-	protected float damage;
-	protected int timeOfDrunk;
-	protected float health;
-	protected int moveSpeed;
-	protected int timeOfHigh;
-	protected String idAssociated;
+	protected ArrayList<BufferedImage[]> sprites;
 	
 	protected Animation animation;
 	protected int currentAnimation;
-	protected int spriteWidth;
-	protected int spriteHeight;
 	protected int offSetXLoading;
-	protected int offSetYLoading;	
-	protected double scale;
+	protected int offSetYLoading;
 	
+	public abstract void actionLoad();
+	public abstract void actionUnload();
 	public abstract void update();
 	public abstract void draw(Graphics2D g);
 	
@@ -44,41 +49,36 @@ public abstract class Object {
 		yMap = _yMap;
 		objectsToDraw = tileMap.getObjectsToDraw();
 		objectsToDraw[xMap][yMap] = this;
-		showObject = true;
 	}
 	
 	/****************************************************************************************/
+	public void setCarrier(Entity _entity) {
+		carrier = _entity;
+	}
 	
-	public int getxMap() {
+	/****************************************************************************************/
+	public int getXMap() {
 		return xMap;
 	}
-	public int getyMap() {
+	
+	/****************************************************************************************/
+	public int getYMap() {
 		return yMap;
 	}
+	
+	/****************************************************************************************/
 	public String getDescription() {
 		return description;
 	}
-	public void setCarrier(Entity carrier) {
-		this.carrier = carrier;
+	
+	/****************************************************************************************/
+	public int getType() {
+		return type;
 	}
-	public float getDamage() {
-		return damage;
-	}
-	public float getHealth() {
-		return health;
-	}
-	public int getTimeOfDrunk() {
-		return timeOfDrunk;
-	}
-	public int getMoveSpeed() {
-		return moveSpeed;
-	}
-	public int getTimeOfHigh() {
-		return timeOfHigh;
-	}
+	
+	/****************************************************************************************/
 	public String getIdAssociated(){
 		return idAssociated;
 	}
 	
-		
 }

@@ -34,7 +34,7 @@ public class GordonFreeman extends Entity {
 		flinchingDecreaseDeltaTimePerversity = 1000;
 		deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;
 		dead = false;
-		moveSpeed = 90;
+		setMoveSpeed(90);
 		facingRight = true;
 
 		loadSprite();

@@ -39,7 +39,7 @@ public class Jason extends Entity{
 		flinchingDecreaseDeltaTimePerversity = 1000;
 		deltaForReduceFlinchingIncreaseDeltaTimePerversity = 0;
 		dead = false;
-		moveSpeed = 120;
+		setMoveSpeed(120);
 		facingRight = true;
 		nextDirectionJason = TileWalk.randomMov();
 
@@ -126,7 +126,7 @@ public class Jason extends Entity{
 	private void movJason() {
 		if (flinchingJasonMov) {
 			long elapsedTime = (System.nanoTime() - flinchingTimeJasonMov) / 1000000;
-			if (elapsedTime > moveSpeed)
+			if (elapsedTime > getMoveSpeed())
 				flinchingJasonMov = false;
 		} else {
 			oldPositionInMap = nextPositionInMap;

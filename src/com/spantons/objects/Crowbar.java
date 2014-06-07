@@ -7,41 +7,40 @@ import java.util.ArrayList;
 import org.imgscalr.Scalr;
 
 import com.spantons.entity.Animation;
-import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.object.DrawObjectMobile;
-import com.spantons.object.IObjectLoadable;
-import com.spantons.object.IObjectUnloadable;
 import com.spantons.object.Object;
+import com.spantons.object.ObjectAttributeGetMoreDamage;
 import com.spantons.object.UpdateObjectMobile;
 import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
 
-public class Crowbar extends Object implements IObjectLoadable, IObjectUnloadable {
+public class Crowbar extends Object {
 
 	private static final int IDLE = 0;
 	private static final int LOADING = 1;
 	private static final int ATTACKING = 2;
 	
-	private ArrayList<BufferedImage[]> sprites;
-	
 	private UpdateObjectMobile updateObject;
 	private DrawObjectMobile drawObject;
+	private ObjectAttributeGetMoreDamage attribute;
 	
 	/****************************************************************************************/
 	public Crowbar(TileMap _tileMap, int _xMap, int _yMap, double _scale, String _idAssociated) {
 		super(_tileMap, _xMap, _yMap);
-		scale = _scale;
-		
-		description = "Palanca";
-		idAssociated = _idAssociated;
-		damage = 0.4f;
-		offSetXLoading = 12;
-		offSetYLoading = 12;
 		
 		updateObject = new UpdateObjectMobile(tileMap, this);
 		drawObject = new DrawObjectMobile(this);
+		attribute = new ObjectAttributeGetMoreDamage(0.4);
+
+		type = NON_CONSUMABLE;
+		scale = _scale;
+		description = "Palanca";
+		idAssociated = _idAssociated;
 		
+		offSetXLoading = 12;
+		offSetYLoading = 12;
+				
 		loadSprite();
 		
 		animation = new Animation();
@@ -88,21 +87,7 @@ public class Crowbar extends Object implements IObjectLoadable, IObjectUnloadabl
 			e.printStackTrace();
 		}
 	}
-	
-	/****************************************************************************************/
-	@Override
-	public void load(Entity _entity) {
-		_entity.setDamage((float) (_entity.getDamage() + damage));
 		
-	}
-	
-	/****************************************************************************************/
-	@Override
-	public void unload(Entity _entity) {
-		_entity.setDamage((float) (_entity.getDamage() - damage));
-		
-	}
-	
 	/****************************************************************************************/
 	public void update() {
 		
@@ -136,6 +121,18 @@ public class Crowbar extends Object implements IObjectLoadable, IObjectUnloadabl
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 		drawObject.draw(g);
+	}
+
+	/****************************************************************************************/
+	@Override
+	public void actionLoad() {
+		attribute.loadAttribute(carrier);
+	}
+
+	/****************************************************************************************/
+	@Override
+	public void actionUnload() {
+		attribute.unloadAttribute(carrier);
 	}
 
 }

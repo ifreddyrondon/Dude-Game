@@ -189,7 +189,7 @@ public class EntityChecks {
 			}
 			
 			if (door != null) {
-				if (door.getStatusBlock() == 1){
+				if (door.getStatusBlock() == 1) {
 					if (_entity.getObject() != null) {
 						if(_entity.getObject().getIdAssociated() != null) {
 							if (_entity.getObject().getIdAssociated().equals(door.getId())) {
@@ -278,9 +278,9 @@ public class EntityChecks {
 	public static Object checkIsOverObject(Entity _entity, StagesLevels _stage) {
 		if (_stage.getObjects().size() > 0) {
 			for (Object object : _stage.getObjects()) {
-				if (_entity.getXMap() == object.getxMap()
-						&& _entity.getYMap() == object.getyMap()
-						&& !object.equals(_entity.getObject()))
+				if (	_entity.getXMap() == ((Object) object).getXMap()
+					&& _entity.getYMap() == object.getYMap()
+					&& !object.equals(_entity.getObject()))
 
 					return object;
 			}

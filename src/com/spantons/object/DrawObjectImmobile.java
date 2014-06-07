@@ -16,9 +16,6 @@ public class DrawObjectImmobile implements IDrawable {
 	/****************************************************************************************/
 	@Override
 	public void draw(Graphics2D g) {
-		if (object.showObject == false)
-			return;
-		
 		g.drawImage(
 			object.animation.getCurrentImageFrame(), 
 			object.x - object.spriteWidth / 2,
