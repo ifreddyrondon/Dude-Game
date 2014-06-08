@@ -21,9 +21,9 @@ public class UpdateCurrentEntity implements IUpdateable {
 	@Override
 	public void update() {
 		entity.updateAnimation.update();
-		entity.decreasePerversity();
+		decreasePerversity();
 		entity.characterClose = EntityUtils.checkIsCloseToAnotherEntity(entity, entity.stage);
-		entity.checkIsRecoveringFromAttack();
+		EntityUtils.checkIsRecoveringFromAttack(entity);
 		
 		if (entity.attack) {
 			if (entity.object == null)
@@ -45,10 +45,10 @@ public class UpdateCurrentEntity implements IUpdateable {
 					if (EntityUtils.checkCharactersCollision(entity, entity.stage)) {
 						if(EntityUtils.checkDoors(entity, entity.stage)){
 							magicWalk();
-							entity.entitysToDraw[entity.xMap][entity.yMap] = null;
+							entity.tileMap.setEntityToDraw(entity.xMap, entity.yMap,  null);
 							entity.xMap = entity.getMapPositionOfCharacter().x;
 							entity.yMap = entity.getMapPositionOfCharacter().y;
-							entity.entitysToDraw[entity.xMap][entity.yMap] = entity;
+							entity.tileMap.setEntityToDraw(entity.xMap, entity.yMap,  entity);
 							entity.oldPositionInMap = entity.nextPositionInMap;
 						}
 					}
@@ -102,6 +102,24 @@ public class UpdateCurrentEntity implements IUpdateable {
 			entity.setPosition(entity.tileMap.RESOLUTION_WIDTH_FIX / 2,
 					entity.tileMap.RESOLUTION_HEIGHT_FIX / 2);
 			entity.tileMap.setPosition(entity.nextMapPosition.x, entity.nextMapPosition.y);
+		}
+	}
+	
+	/****************************************************************************************/
+	private void decreasePerversity() {
+		if (entity.flinchingDecreasePerversity) {
+			long elapsedTime = (System.nanoTime() - entity.flinchingDecreaseTimePerversity) / 1000000;
+			if (elapsedTime > entity.flinchingDecreaseDeltaTimePerversity)
+				entity.flinchingDecreasePerversity = false;
+
+		} else {
+			if (entity.perversity <= 0)
+				entity.perversity = 0;
+			else
+				entity.perversity = entity.perversity - 1;
+
+			entity.flinchingDecreasePerversity = true;
+			entity.flinchingDecreaseTimePerversity = System.nanoTime();
 		}
 	}
 	

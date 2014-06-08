@@ -10,8 +10,11 @@ import javax.swing.Timer;
 import com.spantons.dialogue.DialogueManager;
 import com.spantons.entity.Entity;
 import com.spantons.entity.Hud;
+import com.spantons.gameStagesLevels.DrawLevel;
+import com.spantons.gameStagesLevels.SelectCurrentCharacterLevel;
 import com.spantons.gameState.interfaces.IStage;
 import com.spantons.magicNumbers.FontPath;
+import com.spantons.object.HandleObjects;
 import com.spantons.object.Object;
 import com.spantons.objects.Door;
 import com.spantons.singleton.FontCache;
@@ -31,6 +34,9 @@ public abstract class StagesLevels implements IStage {
 	protected ArrayList<Object> objects;
 	protected HashMap<String, Door> doors;
 	protected Entity currentCharacter;
+	protected HandleObjects handleObject;
+	protected DrawLevel drawLevel;
+	protected SelectCurrentCharacterLevel nextCharacter;
 	
 	protected DialogueManager dialogues;
 	protected boolean secondaryMenu;

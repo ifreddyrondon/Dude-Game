@@ -266,6 +266,21 @@ public class TileMap implements IDrawable, IUpdateable{
 	}
 	
 	/****************************************************************************************/
+	public void setEntityToDraw(int x, int y, Entity _e){
+		entitysToDraw[x][y] = _e;
+	}
+	
+	/****************************************************************************************/
+	public void setEntityDeadToDraw(int x, int y, Entity _e){
+		entitysDeadToDraw[x][y] = _e;
+	}
+	
+	/****************************************************************************************/
+	public void setObjectToDraw(int x, int y, Object _o){
+		objectsToDraw[x][y] = _o;
+	}
+	
+	/****************************************************************************************/
 	public void turnLights(){
 		lights = !lights;
 	}
@@ -441,15 +456,6 @@ public class TileMap implements IDrawable, IUpdateable{
 	}
 	public int getYMax() {
 		return yMax;
-	}
-	public Entity[][] getEntitysToDraw() {
-		return entitysToDraw;
-	}
-	public Entity[][] getEntitysDeadToDraw() {
-		return entitysDeadToDraw;
-	}
-	public Object[][] getObjectsToDraw() {
-		return objectsToDraw;
 	}
 	public int getWallPosition(int a, int b) {
 		return walls[a][b];

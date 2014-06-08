@@ -35,7 +35,7 @@ public class Jason extends Entity {
 		maxHealth = 4;
 		perversity = 0;
 		maxPerversity = 100;
-		damage = 1.5f;
+		damage = 1.3f;
 		damageBackup = damage;
 		flinchingIncreaseDeltaTimePerversity = 1000;
 		flinchingDecreaseDeltaTimePerversity = 1000;

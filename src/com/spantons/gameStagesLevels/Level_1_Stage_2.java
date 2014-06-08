@@ -20,6 +20,7 @@ import com.spantons.gameStages.GameStagesManager;
 import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
+import com.spantons.object.HandleObjects;
 import com.spantons.object.Object;
 import com.spantons.objects.Alcohol;
 import com.spantons.objects.Beers;
@@ -36,9 +37,6 @@ import com.spantons.utilities.RandomItemArrayList;
 
 public class Level_1_Stage_2 extends StagesLevels{
 
-	private DrawLevel drawLevel;
-	private SelectCurrentCharacterLevel nextCharacter;
-	
 	private Timer lightsDeploy;
 	private Timer lightsOn;
 	private int timeLightsOn = 8000;
@@ -172,6 +170,7 @@ public class Level_1_Stage_2 extends StagesLevels{
 		drawLevel = new DrawLevel(tileMap, hud, dialogues);
 		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
 		drawLevel.setCountdown(countdown);
+		handleObject = new HandleObjects();
 	}
 
 	/****************************************************************************************/
@@ -320,7 +319,7 @@ public class Level_1_Stage_2 extends StagesLevels{
 		if (k == KeyEvent.VK_SPACE)
 			currentCharacter.setAttack(true);
 		if (k == KeyEvent.VK_ENTER)
-			currentCharacter.takeOrLeaveObject();
+			handleObject.takeOrLeaveObject(currentCharacter);
 		if (k == KeyEvent.VK_O)
 			EntityUtils.checkIfDoorOpenWithKey(currentCharacter, this);
 		if(k == KeyEvent.VK_ESCAPE)

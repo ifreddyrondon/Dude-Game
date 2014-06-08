@@ -25,6 +25,7 @@ import com.spantons.gameStages.GameStagesManager;
 import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
+import com.spantons.object.HandleObjects;
 import com.spantons.object.Object;
 import com.spantons.objects.Alcohol;
 import com.spantons.objects.Beers;
@@ -42,8 +43,6 @@ public class Level_1_Stage_1 extends StagesLevels {
 
 	private CheckTransparentWallsLvl1Stage1 checkTransparentWalls;
 	private TransformTransparentWallsLv1Stage1 transformTransparentWalls;
-	private DrawLevel drawLevel;
-	private SelectCurrentCharacterLevel nextCharacter;
 	 
 	private Timer lightsDeploy;
 
@@ -85,8 +84,6 @@ public class Level_1_Stage_1 extends StagesLevels {
 //		characters.add(new Preso(tileMap, this, 13, 17, 0.10));
 //		characters.add(new Preso(tileMap, this, 13, 21, 0.10));
 		
-		
-		EntityUtils.killCharacter(new Jason(tileMap, this, 23, 18, 0.10));
 		jasons.add(new Jason(tileMap, this, 17, 12, 0.10));
 		jasons.add(new Jason(tileMap, this, 26, 23, 0.10));
 		
@@ -180,6 +177,7 @@ public class Level_1_Stage_1 extends StagesLevels {
 		drawLevel = new DrawLevel(tileMap, hud, dialogues);
 		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
 		drawLevel.setCountdown(countdown);
+		handleObject = new HandleObjects();
 	}
 	
 	/****************************************************************************************/
@@ -305,7 +303,7 @@ public class Level_1_Stage_1 extends StagesLevels {
 		if (k == KeyEvent.VK_SPACE)
 			currentCharacter.setAttack(true);
 		if (k == KeyEvent.VK_ENTER)
-			currentCharacter.takeOrLeaveObject();
+			handleObject.takeOrLeaveObject(currentCharacter);
 		if (k == KeyEvent.VK_O)
 			EntityUtils.checkIfDoorOpenWithKey(currentCharacter, this);
 		if(k == KeyEvent.VK_ESCAPE)

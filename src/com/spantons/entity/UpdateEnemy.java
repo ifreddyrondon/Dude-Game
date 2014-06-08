@@ -17,7 +17,7 @@ public class UpdateEnemy implements IUpdateable {
 	public UpdateEnemy(Entity _entity) {
 		entity = _entity;
 		nextDirectionEnemy = TileWalk.randomMov();
-		entity.movFace(nextDirectionEnemy);
+		EntityUtils.movFace(entity, nextDirectionEnemy);
 		attack = new EntityAttack(entity);
 	}
 	
@@ -26,7 +26,7 @@ public class UpdateEnemy implements IUpdateable {
 	public void update() {
 		EntityUtils.checkIsVisible(entity, entity.tileMap);
 		if (entity.visible) {
-			entity.checkIsRecoveringFromAttack();
+			EntityUtils.checkIsRecoveringFromAttack(entity);
 			entity.updateAnimation.update();
 		}
 		entity.characterClose = checkIsCloseToAnotherCharacter();
@@ -52,15 +52,15 @@ public class UpdateEnemy implements IUpdateable {
 							entity.nextPositionInMap, 1);
 
 			if (EntityUtils.checkTileCollision(entity, entity.tileMap)) {
-				entity.entitysToDraw[entity.xMap][entity.yMap] = null;
+				entity.tileMap.setEntityToDraw(entity.xMap, entity.yMap,  null);
 				entity.xMap = entity.nextPositionInMap.x;
 				entity.yMap = entity.nextPositionInMap.y;
-				entity.entitysToDraw[entity.xMap][entity.yMap] = entity;
+				entity.tileMap.setEntityToDraw(entity.xMap, entity.yMap,  entity);
 			} else {
 				nextDirectionEnemy = TileWalk.randomMov();
 				entity.nextPositionInMap = entity.oldPositionInMap;
 			}
-			entity.movFace(nextDirectionEnemy);
+			EntityUtils.movFace(entity, nextDirectionEnemy);
 			flinchingEnemyMov = true;
 			flinchingTimeEnemyMov = System.nanoTime();
 		}

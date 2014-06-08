@@ -3,14 +3,11 @@ package com.spantons.entity;
 import java.awt.Point;
 
 import com.spantons.dialogue.Dialogue;
-import com.spantons.entity.character.Jason;
 import com.spantons.gameStages.StagesLevels;
 import com.spantons.gameStagesLevels.Level_1_Stage_1;
 import com.spantons.magicNumbers.ImagePath;
-import com.spantons.magicNumbers.SoundPath;
 import com.spantons.object.Object;
 import com.spantons.objects.Door;
-import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.TileWalk;
 
@@ -288,25 +285,49 @@ public class EntityUtils {
 		}
 		return null;
 	}
-
+	
 	/****************************************************************************************/
-	public static void killCharacter(Entity _entity) {
-		SoundCache.getInstance().getSound(SoundPath.SFX_DYING).play();
-		_entity.dead = true;
-		
-		if (_entity.object != null)
-			_entity.object.setCarrier(null);
-
-		_entity.entitysToDraw[_entity.xMap][_entity.yMap] = null;
-		_entity.entitysDeadToDraw[_entity.xMap][_entity.yMap] = _entity;
-		_entity.recoveringFromAttack = false;
-		_entity.stage.getDead().add(_entity);
-		_entity.updateAnimation.update();
-		
-		if (_entity.getClass().equals(Jason.class))
-			_entity.stage.getJasons().remove(_entity);
-		else
-			_entity.stage.getCharacters().remove(_entity);
+	public static void checkIsRecoveringFromAttack(Entity _entity) {
+		if (_entity.recoveringFromAttack) {
+			long elapsedTime = (System.nanoTime() - _entity.flinchingTimeRecoveringFromAttack) / 1000000;
+			if (elapsedTime > 1000)
+				_entity.recoveringFromAttack = false;
+		}
 	}
+	
+	/****************************************************************************************/
+	public static void movFace(Entity _entity, String _direction) {
+		if (_direction.equals("N")) 
+			_entity.animation.setFrames(_entity.sprites.get(Entity.WALKING_BACK));
+		
+		else if (_direction.equals("S")) 
+			_entity.animation.setFrames(_entity.sprites.get(Entity.WALKING_FRONT));
+		
+		else if (_direction.equals("W")) {
+			_entity.facingRight = false;
+			_entity.animation.setFrames(_entity.sprites.get(Entity.WALKING_SIDE));
+			
+		} else if (_direction.equals("E")){
+			_entity.facingRight = true;
+			_entity.animation.setFrames(_entity.sprites.get(Entity.WALKING_SIDE));
+			
+		} else if (_direction.equals("NW")){
+			_entity.facingRight = false;
+			_entity.animation.setFrames(_entity.sprites.get(Entity.WALKING_PERSPECTIVE_BACK));
+			
+		} else if (_direction.equals("NE")){
+			_entity.facingRight = true;
+			_entity.animation.setFrames(_entity.sprites.get(Entity.WALKING_PERSPECTIVE_BACK));
+			
+		} else if (_direction.equals("SW")){
+			_entity.facingRight = false;
+			_entity.animation.setFrames(_entity.sprites.get(Entity.WALKING_PERSPECTIVE_FRONT));
+		
+		} else if (_direction.equals("SE")){
+			_entity.facingRight = true;
+			_entity.animation.setFrames(_entity.sprites.get(Entity.WALKING_PERSPECTIVE_FRONT));
+		}
+	}
+
 	
 }

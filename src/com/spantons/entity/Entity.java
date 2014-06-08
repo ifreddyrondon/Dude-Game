@@ -2,13 +2,16 @@ package com.spantons.entity;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import com.spantons.gameStages.StagesLevels;
+import com.spantons.object.Object;
 import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.PositionUtil;
 import com.spantons.utilities.TileWalk;
 
-public abstract class Entity extends EntityLogic {
+public abstract class Entity {
 
 	protected int x;
 	protected int y;
@@ -26,12 +29,59 @@ public abstract class Entity extends EntityLogic {
 	protected static final int IDLE = 3;
 	protected static final int DEAD = 5;
 	
+	protected StagesLevels stage;
+	
+	protected TileMap tileMap;
+	protected int xMap;
+	protected int yMap;
+	
+	protected BufferedImage face;
+	protected int spriteWidth;
+	protected int spriteHeight;
+	protected double scale;
+	protected Animation animation;
+	protected int currentAnimation;
+	protected boolean facingRight;
+	protected ArrayList<BufferedImage[]> sprites;
+	
+	protected boolean movLeft;
+	protected boolean movRight;
+	protected boolean movUp;
+	protected boolean movDown;
+
+	protected double health;
+	protected double maxHealth;
+	protected boolean dead;
+	protected String description;
+	protected int perversity;
+	protected int maxPerversity;
+	protected double damage;
+	protected double damageBackup;
+	protected int moveSpeed;
+	protected boolean busy;
+	
+	protected boolean attack;
+	protected boolean recoveringFromAttack;
+	protected long flinchingTimeRecoveringFromAttack;
+	
+	protected int flinchingIncreaseDeltaTimePerversity;
+	protected long flinchingIncreaseTimePerversity;
+	protected boolean flinchingIncreasePerversity;
+	protected int flinchingDecreaseDeltaTimePerversity;
+	protected long flinchingDecreaseTimePerversity;
+	protected boolean flinchingDecreasePerversity;
+	protected int deltaForReduceFlinchingIncreaseDeltaTimePerversity;
+	
+	protected Entity characterClose;
+	protected String characterCloseDirection;
+	protected Object object;
+	
 	protected DrawEntity draw;
 	protected UpdateAnimationEntity updateAnimation;
 	protected UpdateCurrentEntity updateCurrent;
 	protected UpdateIdleEntity updateIdle;
 	protected UpdateDeadEntity updateDead;
-	
+
 	public abstract void draw(Graphics2D g);
 	public abstract void update();
 	
@@ -44,11 +94,8 @@ public abstract class Entity extends EntityLogic {
 			yMap = _yMap;
 			setMapPosition(xMap, yMap);
 			getNextPosition();
-			oldPositionInMap = nextPositionInMap; 
-			entitysToDraw = tileMap.getEntitysToDraw();
-			entitysDeadToDraw = tileMap.getEntitysDeadToDraw();
-			objectsToDraw = tileMap.getObjectsToDraw();
-			entitysToDraw[xMap][yMap] = this;
+			oldPositionInMap = nextPositionInMap;
+			tileMap.setEntityToDraw(xMap, yMap, this);
 			flinchingIncreasePerversity = true;
 			object = null;
 			busy = false;
@@ -66,10 +113,7 @@ public abstract class Entity extends EntityLogic {
 			setMapPosition(xMap, yMap);
 			getNextPosition();
 			oldPositionInMap = nextPositionInMap; 
-			entitysToDraw = tileMap.getEntitysToDraw();
-			entitysDeadToDraw = tileMap.getEntitysDeadToDraw();
-			objectsToDraw = tileMap.getObjectsToDraw();
-			entitysToDraw[xMap][yMap] = this;
+			tileMap.setEntityToDraw(xMap, yMap, this);
 			flinchingIncreasePerversity = true;
 			damage = damageBackup;
 			object = null;
@@ -270,5 +314,19 @@ public abstract class Entity extends EntityLogic {
 		this.moveSpeed = moveSpeed;
 	}
 
+	public Object getObject(){
+		return object;
+	}
+	
+	public void setObject(Object o){
+		object = o;
+	}
+	
+	public StagesLevels getStage(){
+		return stage;
+	}
 
+	public TileMap getTileMap(){
+		return tileMap;
+	}
 }

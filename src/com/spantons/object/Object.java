@@ -29,7 +29,6 @@ public abstract class Object implements IDrawable, IUpdateable {
 	protected int spriteWidth;
 	protected int spriteHeight;
 	protected double scale;
-	private Object[][] objectsToDraw;
 	protected ArrayList<BufferedImage[]> sprites;
 	
 	protected Animation animation;
@@ -47,8 +46,7 @@ public abstract class Object implements IDrawable, IUpdateable {
 		tileMap = _tileMap;
 		xMap = _xMap;
 		yMap = _yMap;
-		objectsToDraw = tileMap.getObjectsToDraw();
-		objectsToDraw[xMap][yMap] = this;
+		tileMap.setObjectToDraw(xMap, yMap, this);
 	}
 	
 	/****************************************************************************************/

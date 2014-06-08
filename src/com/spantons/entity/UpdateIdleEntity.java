@@ -1,6 +1,7 @@
 package com.spantons.entity;
 
 import com.spantons.Interfaces.IUpdateable;
+import com.spantons.entity.character.Jason;
 
 public class UpdateIdleEntity implements IUpdateable {
 	
@@ -14,11 +15,36 @@ public class UpdateIdleEntity implements IUpdateable {
 	/****************************************************************************************/	
 	@Override
 	public void update() {
-		entity.increasePerversity();
+		increasePerversity();
 		EntityUtils.checkIsVisible(entity, entity.tileMap);
 		if (entity.visible) 
-			entity.checkIsRecoveringFromAttack();
+			EntityUtils.checkIsRecoveringFromAttack(entity);
 		entity.setMapPosition(entity.xMap, entity.yMap);
+	}
+	
+	/****************************************************************************************/
+	private void increasePerversity() {
+		if (entity.flinchingIncreasePerversity) {
+			long elapsedTime = (System.nanoTime() - entity.flinchingIncreaseTimePerversity) / 1000000;
+			if (elapsedTime > entity.flinchingIncreaseDeltaTimePerversity)
+				entity.flinchingIncreasePerversity = false;
+
+		} else {
+			if (entity.perversity >= entity.maxPerversity) {
+				entity.perversity = entity.maxPerversity;
+				jasonTransform();
+			} else
+				entity.perversity = entity.perversity + 1;
+
+			entity.flinchingIncreasePerversity = true;
+			entity.flinchingIncreaseTimePerversity = System.nanoTime();
+		}
+	}
+	
+	/****************************************************************************************/
+	private void jasonTransform() {
+		entity.stage.getCharacters().remove(entity);
+		entity.stage.getJasons().add(new Jason(entity.tileMap, entity.stage, entity.xMap, entity.yMap, 0.10));
 	}
 
 }

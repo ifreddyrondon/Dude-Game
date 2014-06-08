@@ -16,6 +16,7 @@ import com.spantons.entity.Hud;
 import com.spantons.entity.character.Jason;
 import com.spantons.gameStages.GameStagesManager;
 import com.spantons.gameStages.StagesLevels;
+import com.spantons.object.HandleObjects;
 import com.spantons.object.Object;
 import com.spantons.objects.Door;
 import com.spantons.singleton.SoundCache;
@@ -23,10 +24,6 @@ import com.spantons.tileMap.TileMap;
 
 public class Level_1_Stage_3 extends StagesLevels {
 
-	private DrawLevel drawLevel;
-	private SelectCurrentCharacterLevel nextCharacter;
-
-	/****************************************************************************************/
 	public Level_1_Stage_3(GameStagesManager _gsm) {
 		gsm = _gsm;
 		hud = new Hud(this);
@@ -75,6 +72,7 @@ public class Level_1_Stage_3 extends StagesLevels {
 		drawLevel = new DrawLevel(tileMap, hud, dialogues);
 		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
 		drawLevel.setCountdown(countdown);
+		handleObject = new HandleObjects();
 	}
 	
 	/****************************************************************************************/
@@ -131,7 +129,7 @@ public class Level_1_Stage_3 extends StagesLevels {
 		if (k == KeyEvent.VK_SPACE)
 			currentCharacter.setAttack(true);
 		if (k == KeyEvent.VK_ENTER)
-			currentCharacter.takeOrLeaveObject();
+			handleObject.takeOrLeaveObject(currentCharacter);
 		if (k == KeyEvent.VK_O)
 			EntityUtils.checkIfDoorOpenWithKey(currentCharacter, this);
 		if (k == KeyEvent.VK_ESCAPE)
