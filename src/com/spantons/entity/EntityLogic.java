@@ -151,31 +151,6 @@ public class EntityLogic {
 	}
 		
 	/****************************************************************************************/
-	protected void attack() {
-		
-		if (characterClose != null) {
-			if (characterClose.recoveringFromAttack)
-				return;
-			
-			movFace(characterCloseDirection);
-			characterClose.health = characterClose.health - damage;
-			
-			if (characterClose.health <= 0) {
-				characterClose.dead = true;
-				characterClose.health = 0;
-				EntityUtils.killCharacter(characterClose);
-				return;
-			}
-			
-			if (this == stage.getCurrentCharacter())
-				flinchingIncreaseDeltaTimePerversity -= deltaForReduceFlinchingIncreaseDeltaTimePerversity;
-
-			characterClose.recoveringFromAttack = true;
-			characterClose.flinchingTimeRecoveringFromAttack = System.nanoTime();
-		}
-	}
-	
-	/****************************************************************************************/
 	protected void movFace(String _direction) {
 		if (_direction.equals("N")) 
 			animation.setFrames(sprites.get(Entity.WALKING_BACK));

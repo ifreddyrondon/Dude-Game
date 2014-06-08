@@ -11,12 +11,14 @@ public class UpdateEnemy implements IUpdateable {
 	private boolean flinchingEnemyMov;
 	private long flinchingTimeEnemyMov;
 	private String nextDirectionEnemy;
+	private EntityAttack attack;
 	
 	/****************************************************************************************/
 	public UpdateEnemy(Entity _entity) {
 		entity = _entity;
 		nextDirectionEnemy = TileWalk.randomMov();
 		entity.movFace(nextDirectionEnemy);
+		attack = new EntityAttack(entity);
 	}
 	
 	/****************************************************************************************/
@@ -29,7 +31,7 @@ public class UpdateEnemy implements IUpdateable {
 		}
 		entity.characterClose = checkIsCloseToAnotherCharacter();
 		if (entity.characterClose != null) 
-			entity.attack();
+			attack.attack();
 		else
 			movEnemy();
 

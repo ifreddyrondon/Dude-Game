@@ -9,10 +9,12 @@ public class UpdateCurrentEntity implements IUpdateable {
 	private Entity entity;
 	private boolean flinching;
 	private long flinchingTime;
+	private EntityAttack attack;
 	
 	/****************************************************************************************/
 	public UpdateCurrentEntity(Entity _entity) {
 		entity = _entity;
+		attack = new EntityAttack(entity);
 	}
 	
 	/****************************************************************************************/
@@ -28,7 +30,7 @@ public class UpdateCurrentEntity implements IUpdateable {
 				SoundCache.getInstance().getSound(SoundPath.SFX_PUNCH).play();
 			else
 				SoundCache.getInstance().getSound(SoundPath.SFX_PUNCH_WITH_OBJECT).play();
-			entity.attack();
+			attack.attack();
 		} 
 
 		if (flinching) {
