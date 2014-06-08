@@ -3,15 +3,18 @@ package com.spantons.entity;
 import java.awt.Point;
 
 import com.spantons.dialogue.Dialogue;
+import com.spantons.entity.character.Jason;
 import com.spantons.gameStages.StagesLevels;
 import com.spantons.gameStagesLevels.Level_1_Stage_1;
 import com.spantons.magicNumbers.ImagePath;
+import com.spantons.magicNumbers.SoundPath;
 import com.spantons.object.Object;
 import com.spantons.objects.Door;
+import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.TileWalk;
 
-public class EntityChecks {
+public class EntityUtils {
 
 	/****************************************************************************************/
 	public static Entity checkIsCloseToAnotherEntity(Entity _entity,
@@ -30,31 +33,30 @@ public class EntityChecks {
 
 		if (_stage.getCharacters().size() > 0) {
 			for (Entity character : _stage.getCharacters()) {
-				currentCharacterPosition = character
-						.getMapPositionOfCharacter();
+				currentCharacterPosition = character.getMapPositionOfCharacter();
 				if (currentCharacterPosition.equals(north)) {
-					_entity.setCharacterCloseDirection("N");
+					_entity.characterCloseDirection = "N";
 					return character;
 				} else if (currentCharacterPosition.equals(south)) {
-					_entity.setCharacterCloseDirection("S");
+					_entity.characterCloseDirection = "S";
 					return character;
 				} else if (currentCharacterPosition.equals(west)) {
-					_entity.setCharacterCloseDirection("W");
+					_entity.characterCloseDirection = "W";
 					return character;
 				} else if (currentCharacterPosition.equals(east)) {
-					_entity.setCharacterCloseDirection("E");
+					_entity.characterCloseDirection = "E";
 					return character;
 				} else if (currentCharacterPosition.equals(northWest)) {
-					_entity.setCharacterCloseDirection("NW");
+					_entity.characterCloseDirection = "NW";
 					return character;
 				} else if (currentCharacterPosition.equals(northEast)) {
-					_entity.setCharacterCloseDirection("NE");
+					_entity.characterCloseDirection = "NE";
 					return character;
 				} else if (currentCharacterPosition.equals(southWest)) {
-					_entity.setCharacterCloseDirection("SW");
+					_entity.characterCloseDirection = "SW";
 					return character;
 				} else if (currentCharacterPosition.equals(southEast)) {
-					_entity.setCharacterCloseDirection("SE");
+					_entity.characterCloseDirection = "SE";
 					return character;
 				}
 			}
@@ -62,31 +64,30 @@ public class EntityChecks {
 
 		if (_stage.getJasons().size() > 0) {
 			for (Entity jason : _stage.getJasons()) {
-				currentCharacterPosition = jason
-						.getMapPositionOfCharacter();
+				currentCharacterPosition = jason.getMapPositionOfCharacter();
 				if (currentCharacterPosition.equals(north)) {
-					_entity.setCharacterCloseDirection("N");
+					_entity.characterCloseDirection = "N";
 					return jason;
 				} else if (currentCharacterPosition.equals(south)) {
-					_entity.setCharacterCloseDirection("S");
+					_entity.characterCloseDirection = "S";
 					return jason;
 				} else if (currentCharacterPosition.equals(west)) {
-					_entity.setCharacterCloseDirection("W");
+					_entity.characterCloseDirection = "W";
 					return jason;
 				} else if (currentCharacterPosition.equals(east)) {
-					_entity.setCharacterCloseDirection("E");
+					_entity.characterCloseDirection = "E";
 					return jason;
 				} else if (currentCharacterPosition.equals(northWest)) {
-					_entity.setCharacterCloseDirection("NW");
+					_entity.characterCloseDirection = "NW";
 					return jason;
 				} else if (currentCharacterPosition.equals(northEast)) {
-					_entity.setCharacterCloseDirection("NE");
+					_entity.characterCloseDirection = "NE";
 					return jason;
 				} else if (currentCharacterPosition.equals(southWest)) {
-					_entity.setCharacterCloseDirection("SW");
+					_entity.characterCloseDirection = "SW";
 					return jason;
 				} else if (currentCharacterPosition.equals(southEast)) {
-					_entity.setCharacterCloseDirection("SE");
+					_entity.characterCloseDirection = "SE";
 					return jason;
 				}
 			}
@@ -190,9 +191,9 @@ public class EntityChecks {
 			
 			if (door != null) {
 				if (door.getStatusBlock() == 1) {
-					if (_entity.getObject() != null) {
-						if(_entity.getObject().getIdAssociated() != null) {
-							if (_entity.getObject().getIdAssociated().equals(door.getId())) {
+					if (_entity.object != null) {
+						if(_entity.object.getIdAssociated() != null) {
+							if (_entity.object.getIdAssociated().equals(door.getId())) {
 								door.setStatusBlock(Door.UNLOCK);
 								door.setStatusOpen(Door.OPEN);
 							} else 
@@ -280,7 +281,7 @@ public class EntityChecks {
 			for (Object object : _stage.getObjects()) {
 				if (	_entity.getXMap() == ((Object) object).getXMap()
 					&& _entity.getYMap() == object.getYMap()
-					&& !object.equals(_entity.getObject()))
+					&& !object.equals(_entity.object))
 
 					return object;
 			}
@@ -289,4 +290,23 @@ public class EntityChecks {
 	}
 
 	/****************************************************************************************/
+	public static void killCharacter(Entity _entity) {
+		SoundCache.getInstance().getSound(SoundPath.SFX_DYING).play();
+		_entity.dead = true;
+		
+		if (_entity.object != null)
+			_entity.object.setCarrier(null);
+
+		_entity.entitysToDraw[_entity.xMap][_entity.yMap] = null;
+		_entity.entitysDeadToDraw[_entity.xMap][_entity.yMap] = _entity;
+		_entity.recoveringFromAttack = false;
+		_entity.stage.getDead().add(_entity);
+		_entity.updateAnimation.update();
+		
+		if (_entity.getClass().equals(Jason.class))
+			_entity.stage.getJasons().remove(_entity);
+		else
+			_entity.stage.getCharacters().remove(_entity);
+	}
+	
 }

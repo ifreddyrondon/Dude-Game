@@ -1,30 +1,32 @@
 package com.spantons.entity.character;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import org.imgscalr.Scalr;
 
 import com.spantons.entity.Animation;
+import com.spantons.entity.DrawEntity;
 import com.spantons.entity.Entity;
-import com.spantons.entity.EntityChecks;
+import com.spantons.entity.UpdateAnimationEntity;
+import com.spantons.entity.UpdateDeadEntity;
+import com.spantons.entity.UpdateEnemy;
 import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.singleton.ImageCache;
 import com.spantons.tileMap.TileMap;
-import com.spantons.utilities.TileWalk;
 
-public class Jason extends Entity{
-
-	private String nextDirectionJason;
+public class Jason extends Entity {
+	
+	private UpdateEnemy update;
 
 	/****************************************************************************************/
 	public Jason(TileMap _tm, StagesLevels _stage, int _xMap, int _yMap,
 			double _scale) {
 
 		super(_tm, _stage, _xMap, _yMap);
+		
 		scale = _scale;
 
 		visible = true;
@@ -39,14 +41,15 @@ public class Jason extends Entity{
 		flinchingDecreaseDeltaTimePerversity = 1000;
 		deltaForReduceFlinchingIncreaseDeltaTimePerversity = 0;
 		dead = false;
-		setMoveSpeed(120);
+		moveSpeed = 120;
 		facingRight = true;
-		nextDirectionJason = TileWalk.randomMov();
 
 		loadSprite();
-
 		animation = new Animation();
-		movFace(nextDirectionJason);
+		draw = new DrawEntity(this);
+		update = new UpdateEnemy(this);
+		updateAnimation = new UpdateAnimationEntity(this);
+		updateDead = new UpdateDeadEntity(this);
 	}
 
 	/****************************************************************************************/
@@ -107,126 +110,15 @@ public class Jason extends Entity{
 	
 	/****************************************************************************************/
 	public void update() {
-		EntityChecks.checkIsVisible(this, tileMap);
-		if (visible) {
-			checkCharacterIsDead();
-			checkIsRecoveringFromAttack();
-			updateAnimation();
-		}
-		characterClose = checkIsCloseToAnotherCharacter();
-		if (characterClose != null) 
-			attack();
+		if (dead) 
+			updateDead.update();
 		else
-			movJason();
-
-		setMapPosition(nextPositionInMap.x, nextPositionInMap.y);
+			update.update();
 	}
-
-	/****************************************************************************************/
-	private void movJason() {
-		if (flinchingJasonMov) {
-			long elapsedTime = (System.nanoTime() - flinchingTimeJasonMov) / 1000000;
-			if (elapsedTime > getMoveSpeed())
-				flinchingJasonMov = false;
-		} else {
-			oldPositionInMap = nextPositionInMap;
-			nextPositionInMap = TileWalk.walkTo(nextDirectionJason,
-					nextPositionInMap, 1);
-
-			if (EntityChecks.checkTileCollision(this, tileMap)) {
-				entitysToDraw[xMap][yMap] = null;
-				xMap = nextPositionInMap.x;
-				yMap = nextPositionInMap.y;
-				entitysToDraw[xMap][yMap] = this;
-			} else {
-				nextDirectionJason = TileWalk.randomMov();
-				nextPositionInMap = oldPositionInMap;
-			}
-			movFace(nextDirectionJason);
-			flinchingJasonMov = true;
-			flinchingTimeJasonMov = System.nanoTime();
-		}
-	}
-
-	/****************************************************************************************/
-	private Entity checkIsCloseToAnotherCharacter() {
-
-		Point position = new Point(xMap, yMap);
-		Point north = TileWalk.walkTo("N", position, 1);
-		Point south = TileWalk.walkTo("S", position, 1);
-		Point west = TileWalk.walkTo("W", position, 1);
-		Point east = TileWalk.walkTo("E", position, 1);
-		Point northWest = TileWalk.walkTo("NW",position, 1);
-		Point northEast = TileWalk.walkTo("NE",position, 1);
-		Point southWest = TileWalk.walkTo("SW",position, 1);
-		Point southEast = TileWalk.walkTo("SE",position, 1);
-		Point currentCharacterPosition = null;
-		
-		for (Entity character : stage.getCharacters()) {
-			currentCharacterPosition = character.getMapPositionOfCharacter();
-
-			if (currentCharacterPosition.equals(north)) {
-				characterCloseDirection = "N";
-				return character;
-			} else if (currentCharacterPosition.equals(south)) {
-				characterCloseDirection = "S";
-				return character;
-			} else if (currentCharacterPosition.equals(west)) {
-				characterCloseDirection = "W";
-				return character;
-			} else if (currentCharacterPosition.equals(east)) {
-				characterCloseDirection = "E";
-				return character;
-			} else if (currentCharacterPosition.equals(northWest)) {
-				characterCloseDirection = "NW";
-				return character;
-			} else if (currentCharacterPosition.equals(northEast)) {
-				characterCloseDirection = "NE";
-				return character;
-			} else if (currentCharacterPosition.equals(southWest)) {
-				characterCloseDirection = "SW";
-				return character;
-			} else if (currentCharacterPosition.equals(southEast)) {
-				characterCloseDirection = "SE";
-				return character;
-			}
-		}
-		
-		currentCharacterPosition = 
-				stage.getCurrentCharacter().getMapPositionOfCharacter();
-		
-		if (currentCharacterPosition.equals(north)) {
-			characterCloseDirection = "N";
-			return stage.getCurrentCharacter();
-		} else if (currentCharacterPosition.equals(south)) {
-			characterCloseDirection = "S";
-			return stage.getCurrentCharacter();
-		} else if (currentCharacterPosition.equals(west)) {
-			characterCloseDirection = "W";
-			return stage.getCurrentCharacter();
-		} else if (currentCharacterPosition.equals(east)) {
-			characterCloseDirection = "E";
-			return stage.getCurrentCharacter();
-		} else if (currentCharacterPosition.equals(northWest)) {
-			characterCloseDirection = "NW";
-			return stage.getCurrentCharacter();
-		} else if (currentCharacterPosition.equals(northEast)) {
-			characterCloseDirection = "NE";
-			return stage.getCurrentCharacter();
-		} else if (currentCharacterPosition.equals(southWest)) {
-			characterCloseDirection = "SW";
-			return stage.getCurrentCharacter();
-		} else if (currentCharacterPosition.equals(southEast)) {
-			characterCloseDirection = "SE";
-			return stage.getCurrentCharacter();
-		}
-
-		return null;
-	}
-
+	
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
-		super.draw(g);
+		draw.draw(g);
 	}
 
 }

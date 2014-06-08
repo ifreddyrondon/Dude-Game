@@ -71,10 +71,9 @@ public class TriggerPoint extends Object {
 	/****************************************************************************************/
 	public void update() {
 		updateObject.update();
-
-		if (stage.getCurrentCharacter().getMapPositionOfCharacter().x == xMap
-				&& stage.getCurrentCharacter()
-						.getMapPositionOfCharacter().y == yMap) {
+		
+		if (	stage.getCurrentCharacter().getMapPositionOfCharacter().x == xMap
+			&& stage.getCurrentCharacter().getMapPositionOfCharacter().y == yMap) {
 
 			characterInTrigger = stage.getCurrentCharacter();
 			characterInTrigger.setBusy(true);

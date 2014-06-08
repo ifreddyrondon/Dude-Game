@@ -5,9 +5,7 @@ import java.util.ArrayList;
 
 import com.spantons.entity.character.Jason;
 import com.spantons.gameStages.StagesLevels;
-import com.spantons.magicNumbers.SoundPath;
 import com.spantons.object.Object;
-import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
 
 public class EntityLogic {
@@ -27,13 +25,6 @@ public class EntityLogic {
 	protected int lastAnimation;
 	protected boolean facingRight;
 	protected ArrayList<BufferedImage[]> sprites;
-	protected static final int WALKING_FRONT = 0;
-	protected static final int WALKING_BACK = 1;
-	protected static final int WALKING_SIDE = 2;
-	protected static final int WALKING_PERSPECTIVE_FRONT = 3;
-	protected static final int WALKING_PERSPECTIVE_BACK = 4;
-	protected static final int IDLE = 3;
-	protected static final int DEAD = 5;
 	
 	protected boolean movLeft;
 	protected boolean movRight;
@@ -50,7 +41,7 @@ public class EntityLogic {
 	protected int maxPerversity;
 	protected double damage;
 	protected double damageBackup;
-	private int moveSpeed;
+	protected int moveSpeed;
 	protected boolean busy;
 	
 	protected boolean attack;
@@ -72,63 +63,6 @@ public class EntityLogic {
 	protected Entity[][] entitysDeadToDraw;
 	protected Object[][] objectsToDraw;
 		
-	/****************************************************************************************/
-	protected void updateAnimation() {
-		if (dead) {
-			if (currentAnimation != DEAD) {
-				currentAnimation = DEAD;
-				animation.setFrames(sprites.get(DEAD));
-				animation.setDelayTime(150);
-			}
-		} else {
-			if ((movLeft && movDown) || (movRight && movDown)) {
-				if (currentAnimation != WALKING_PERSPECTIVE_FRONT) {
-					currentAnimation = WALKING_PERSPECTIVE_FRONT;
-					animation.setFrames(sprites
-							.get(WALKING_PERSPECTIVE_FRONT));
-					animation.setDelayTime(150);
-				}
-			} else if ((movLeft && movUp) || (movRight && movUp)) {
-				if (currentAnimation != WALKING_PERSPECTIVE_BACK) {
-					currentAnimation = WALKING_PERSPECTIVE_BACK;
-					animation.setFrames(sprites
-							.get(WALKING_PERSPECTIVE_BACK));
-					animation.setDelayTime(150);
-				}
-			} else if (movDown) {
-				if (currentAnimation != WALKING_FRONT) {
-					currentAnimation = WALKING_FRONT;
-					animation.setFrames(sprites.get(WALKING_FRONT));
-					animation.setDelayTime(100);
-				}
-			} else if (movUp) {
-				if (currentAnimation != WALKING_BACK) {
-					currentAnimation = WALKING_BACK;
-					animation.setFrames(sprites.get(WALKING_BACK));
-					animation.setDelayTime(40);
-				}
-			} else if (movLeft || movRight) {
-				if (currentAnimation != WALKING_SIDE) {
-					currentAnimation = WALKING_SIDE;
-					animation.setFrames(sprites.get(WALKING_SIDE));
-					animation.setDelayTime(150);
-				}
-			} else {
-				if (currentAnimation != IDLE) {
-					currentAnimation = IDLE;
-					animation.setFrames(sprites.get(IDLE));
-					animation.setDelayTime(1000);
-				}
-			}
-			if (movRight)
-				facingRight = true;
-			if (movLeft)
-				facingRight = false;
-
-			animation.update();
-		}
-	}
-	
 	/****************************************************************************************/
 	protected void increasePerversity() {
 		if (flinchingIncreasePerversity) {
@@ -202,7 +136,7 @@ public class EntityLogic {
 	/****************************************************************************************/
 	public void takeOrLeaveObject() {
 		if (object != null) {
-			Object newObject = EntityChecks.checkIsOverObject((Entity) this, stage);
+			Object newObject = EntityUtils.checkIsOverObject((Entity) this, stage);
 			if (newObject != null) {
 				unloadObject();
 				loadObject(newObject, true);
@@ -210,7 +144,7 @@ public class EntityLogic {
 			} else 
 				unloadObject();
 		} else {
-			Object newObject = EntityChecks.checkIsOverObject((Entity) this, stage);
+			Object newObject = EntityUtils.checkIsOverObject((Entity) this, stage);
 			if (newObject != null) 
 				loadObject(newObject, false);
 		}
@@ -224,11 +158,12 @@ public class EntityLogic {
 				return;
 			
 			movFace(characterCloseDirection);
-			characterClose.health = characterClose.getHealth() - damage;
+			characterClose.health = characterClose.health - damage;
 			
-			if (characterClose.getHealth() <= 0) {
-				characterClose.setDead(true);
-				characterClose.setHealth(0);
+			if (characterClose.health <= 0) {
+				characterClose.dead = true;
+				characterClose.health = 0;
+				EntityUtils.killCharacter(characterClose);
 				return;
 			}
 			
@@ -243,36 +178,37 @@ public class EntityLogic {
 	/****************************************************************************************/
 	protected void movFace(String _direction) {
 		if (_direction.equals("N")) 
-			animation.setFrames(sprites.get(WALKING_BACK));
+			animation.setFrames(sprites.get(Entity.WALKING_BACK));
 		
 		else if (_direction.equals("S")) 
-			animation.setFrames(sprites.get(WALKING_FRONT));
+			animation.setFrames(sprites.get(Entity.WALKING_FRONT));
 		
 		else if (_direction.equals("W")) {
 			facingRight = false;
-			animation.setFrames(sprites.get(WALKING_SIDE));
+			animation.setFrames(sprites.get(Entity.WALKING_SIDE));
 			
 		} else if (_direction.equals("E")){
 			facingRight = true;
-			animation.setFrames(sprites.get(WALKING_SIDE));
+			animation.setFrames(sprites.get(Entity.WALKING_SIDE));
 			
 		} else if (_direction.equals("NW")){
 			facingRight = false;
-			animation.setFrames(sprites.get(WALKING_PERSPECTIVE_BACK));
+			animation.setFrames(sprites.get(Entity.WALKING_PERSPECTIVE_BACK));
 			
 		} else if (_direction.equals("NE")){
 			facingRight = true;
-			animation.setFrames(sprites.get(WALKING_PERSPECTIVE_BACK));
+			animation.setFrames(sprites.get(Entity.WALKING_PERSPECTIVE_BACK));
 			
 		} else if (_direction.equals("SW")){
 			facingRight = false;
-			animation.setFrames(sprites.get(WALKING_PERSPECTIVE_FRONT));
+			animation.setFrames(sprites.get(Entity.WALKING_PERSPECTIVE_FRONT));
 		
 		} else if (_direction.equals("SE")){
 			facingRight = true;
-			animation.setFrames(sprites.get(WALKING_PERSPECTIVE_FRONT));
+			animation.setFrames(sprites.get(Entity.WALKING_PERSPECTIVE_FRONT));
 		}
 	}
+	
 	/****************************************************************************************/
 	protected void checkIsRecoveringFromAttack() {
 		if (recoveringFromAttack) {
@@ -281,31 +217,5 @@ public class EntityLogic {
 				recoveringFromAttack = false;
 		}
 	}
-	/****************************************************************************************/
-	public void checkCharacterIsDead() {
-		if (dead) {
-			SoundCache.getInstance().getSound(SoundPath.SFX_DYING).play();
-			if (object != null)
-				object.setCarrier(null);
-
-			entitysToDraw[xMap][yMap] = null;
-			entitysDeadToDraw[xMap][yMap] = (Entity) this;
-			recoveringFromAttack = false;
-			stage.getDead().add((Entity) this);
-			
-			if (description == "Jason")
-				stage.getJasons().remove(this);
-			else if (description != "Jason")
-				stage.getCharacters().remove(this);
-		}
-	}
-	/****************************************************************************************/
-
-	public int getMoveSpeed() {
-		return moveSpeed;
-	}
-
-	public void setMoveSpeed(int moveSpeed) {
-		this.moveSpeed = moveSpeed;
-	}
+	
 }

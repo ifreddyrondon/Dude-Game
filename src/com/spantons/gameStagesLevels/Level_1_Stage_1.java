@@ -13,7 +13,7 @@ import javax.swing.Timer;
 import com.spantons.dialogue.Dialogue;
 import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
-import com.spantons.entity.EntityChecks;
+import com.spantons.entity.EntityUtils;
 import com.spantons.entity.Hud;
 import com.spantons.entity.character.DanaScullyXFiles;
 import com.spantons.entity.character.GordonFreeman;
@@ -85,10 +85,8 @@ public class Level_1_Stage_1 extends StagesLevels {
 //		characters.add(new Preso(tileMap, this, 13, 17, 0.10));
 //		characters.add(new Preso(tileMap, this, 13, 21, 0.10));
 		
-		Jason jason = new Jason(tileMap, this, 23, 18, 0.10);
-		jason.update();
-		jason.setDead(true);
-		jasons.add(jason);
+		
+		EntityUtils.killCharacter(new Jason(tileMap, this, 23, 18, 0.10));
 		jasons.add(new Jason(tileMap, this, 17, 12, 0.10));
 		jasons.add(new Jason(tileMap, this, 26, 23, 0.10));
 		
@@ -206,7 +204,7 @@ public class Level_1_Stage_1 extends StagesLevels {
 		
 		if (characters.size() > 0) {
 			for (Entity character : characters)
-				character.updateOtherCharacters();
+				character.update();
 		}
 		
 		if (jasons.size() > 0) {
@@ -249,7 +247,7 @@ public class Level_1_Stage_1 extends StagesLevels {
 		
 		if (dead.size() > 0) {
 			for (Entity _dead : dead)
-				_dead.updateDead();
+				_dead.update();
 		}
 	}
 	
@@ -309,7 +307,7 @@ public class Level_1_Stage_1 extends StagesLevels {
 		if (k == KeyEvent.VK_ENTER)
 			currentCharacter.takeOrLeaveObject();
 		if (k == KeyEvent.VK_O)
-			EntityChecks.checkIfDoorOpenWithKey(currentCharacter, this);
+			EntityUtils.checkIfDoorOpenWithKey(currentCharacter, this);
 		if(k == KeyEvent.VK_ESCAPE)
 			secondaryMenu = !secondaryMenu;
 		if(k == KeyEvent.VK_R && secondaryMenu)

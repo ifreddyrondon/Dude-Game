@@ -4,27 +4,37 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 import com.spantons.gameStages.StagesLevels;
-import com.spantons.magicNumbers.SoundPath;
-import com.spantons.object.Object;
-import com.spantons.singleton.SoundCache;
 import com.spantons.tileMap.TileMap;
+import com.spantons.utilities.PositionUtil;
 import com.spantons.utilities.TileWalk;
 
-public class Entity extends EntityLogic {
+public abstract class Entity extends EntityLogic {
 
 	protected int x;
 	protected int y;
 	protected Point nextPositionInMap;
 	protected Point oldPositionInMap;
 	private Point nextPositionInAbsolute;
-	private Point nextMapPosition;
+	protected Point nextMapPosition;
 	protected boolean visible;
 
-	protected boolean flinching;
-	protected long flinchingTime;
-	protected boolean flinchingJasonMov;
-	protected long flinchingTimeJasonMov;
-
+	protected static final int WALKING_FRONT = 0;
+	protected static final int WALKING_BACK = 1;
+	protected static final int WALKING_SIDE = 2;
+	protected static final int WALKING_PERSPECTIVE_FRONT = 3;
+	protected static final int WALKING_PERSPECTIVE_BACK = 4;
+	protected static final int IDLE = 3;
+	protected static final int DEAD = 5;
+	
+	protected DrawEntity draw;
+	protected UpdateAnimationEntity updateAnimation;
+	protected UpdateCurrentEntity updateCurrent;
+	protected UpdateIdleEntity updateIdle;
+	protected UpdateDeadEntity updateDead;
+	
+	public abstract void draw(Graphics2D g);
+	public abstract void update();
+	
 	/****************************************************************************************/
 	public Entity(TileMap _tm, StagesLevels _stage, int _xMap, int _yMap) {
 		if (_tm != null) {
@@ -75,25 +85,10 @@ public class Entity extends EntityLogic {
 	}
 
 	/****************************************************************************************/
-	public Point getMapPosition(int _x, int _y) {
-		_x = _x + tileMap.getX();
-		_y = _y + tileMap.getY();
-		return tileMap.absoluteToMap(_x, _y);
-	}
-
-	/****************************************************************************************/
 	public void setMapPosition(int _x, int _y) {
 		Point absolutePosition = tileMap.mapToAbsolute(_x, _y);
 		setPosition(absolutePosition.x - tileMap.getX(), absolutePosition.y
 				- tileMap.getY());
-	}
-
-	/****************************************************************************************/
-	public Point getAbsolutePosition(int _x, int _y) {
-		Point absolutePosition = tileMap.mapToAbsolute(_x, _y);
-		absolutePosition.x = absolutePosition.x - tileMap.getX();
-		absolutePosition.y = absolutePosition.y - tileMap.getY();
-		return absolutePosition;
 	}
 
 	/****************************************************************************************/
@@ -126,141 +121,14 @@ public class Entity extends EntityLogic {
 				nextPositionInMap = TileWalk.walkTo("E",nextPositionInMap, 1);
 		}
 
-		nextPositionInAbsolute = getAbsolutePosition(nextPositionInMap.x,
-				nextPositionInMap.y);
+		nextPositionInAbsolute = PositionUtil.getAbsolutePosition(nextPositionInMap.x,
+				nextPositionInMap.y, tileMap);
 
 		nextMapPosition = new Point(
 				tileMap.getX()
 						+ (nextPositionInAbsolute.x - tileMap.RESOLUTION_WIDTH_FIX / 2),
 				tileMap.getY()
 						+ (nextPositionInAbsolute.y - tileMap.RESOLUTION_HEIGHT_FIX / 2));
-	}
-
-	/****************************************************************************************/
-	public void update() {
-	
-		updateAnimation();
-		decreasePerversity();
-		characterClose = EntityChecks.checkIsCloseToAnotherEntity(this, stage);
-		checkIsRecoveringFromAttack();
-		
-		if (attack) {
-			if (object == null)
-				SoundCache.getInstance().getSound(SoundPath.SFX_PUNCH).play();
-			else
-				SoundCache.getInstance().getSound(SoundPath.SFX_PUNCH_WITH_OBJECT).play();
-			attack();
-		} 
-			
-
-		if (flinching) {
-			long elapsedTime = (System.nanoTime() - flinchingTime) / 1000000;
-			if (elapsedTime > getMoveSpeed())
-				flinching = false;
-
-		} else {
-			getNextPosition();
-			if (nextPositionInMap != oldPositionInMap) {
-				if (EntityChecks.checkTileCollision(this, tileMap)) {
-					if (EntityChecks.checkCharactersCollision(this, stage)) {
-						if(EntityChecks.checkDoors(this, stage)){
-							magicWalk();
-							entitysToDraw[xMap][yMap] = null;
-							xMap = getMapPositionOfCharacter().x;
-							yMap = getMapPositionOfCharacter().y;
-							entitysToDraw[xMap][yMap] = this;
-							oldPositionInMap = nextPositionInMap;
-						}
-					}
-				}
-			}
-			
-			flinching = true;
-			flinchingTime = System.nanoTime();
-		}
-	}
-	
-	/****************************************************************************************/
-	public void updateOtherCharacters() {
-		EntityChecks.checkIsVisible(this, tileMap);
-		if (visible) {
-			checkCharacterIsDead();
-			checkIsRecoveringFromAttack();
-			updateAnimation();
-		}
-		setMapPosition(xMap, yMap);
-		increasePerversity();
-	}
-
-	/****************************************************************************************/
-	public void updateDead() {
-		setMapPosition(xMap, yMap);
-	}
-
-	/****************************************************************************************/
-	private void magicWalk() {
-
-		if (	tileMap.getX() <= tileMap.getXMin()
-			|| tileMap.getX() >= tileMap.getXMax()
-			|| tileMap.getY() <= tileMap.getYMin()
-			|| tileMap.getY() >= tileMap.getYMax()) {
-
-			if ((tileMap.getX() == tileMap.getXMin() && x > tileMap.RESOLUTION_WIDTH_FIX / 2)
-					|| (tileMap.getX() == tileMap.getXMax() && x < tileMap.RESOLUTION_WIDTH_FIX / 2)
-					|| (tileMap.getY() == tileMap.getYMin() && y > tileMap.RESOLUTION_HEIGHT_FIX / 2)
-					|| (tileMap.getY() == tileMap.getYMax() && y < tileMap.RESOLUTION_HEIGHT_FIX / 2)) {
-				setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2,
-						tileMap.RESOLUTION_HEIGHT_FIX / 2);
-				tileMap.setPosition(nextMapPosition.x,
-						nextMapPosition.y);
-			} else {
-				if (x < tileMap.tileSize.x
-						|| x > tileMap.RESOLUTION_WIDTH_FIX
-								- tileMap.tileSize.x) {
-
-					setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2, y);
-					tileMap.setPosition(nextMapPosition.x,
-							nextMapPosition.y);
-				} else if (y < tileMap.tileSize.y
-						|| y > tileMap.RESOLUTION_HEIGHT_FIX
-								- tileMap.tileSize.y * 2) {
-
-					setPosition(x, tileMap.RESOLUTION_HEIGHT_FIX / 2);
-					tileMap.setPosition(nextMapPosition.x,
-							nextMapPosition.y);
-				} else
-					setMapPosition(nextPositionInMap.x,
-							nextPositionInMap.y);
-			}
-		} 
-		else {
-			setPosition(tileMap.RESOLUTION_WIDTH_FIX / 2,
-					tileMap.RESOLUTION_HEIGHT_FIX / 2);
-			tileMap.setPosition(nextMapPosition.x, nextMapPosition.y);
-		}
-	}
-
-	/****************************************************************************************/
-	public void draw(Graphics2D g) {
-		if (visible) {
-			if (recoveringFromAttack) {
-				long elapsedTime = (System.nanoTime() - flinchingTimeRecoveringFromAttack) / 1000000;
-				if (elapsedTime / 100 % 2 == 0)
-					return;
-			}
-			if (facingRight)
-				g.drawImage(animation.getCurrentImageFrame(), x
-						- spriteWidth / 2, y - spriteHeight, null);
-
-			else
-				g.drawImage(animation.getCurrentImageFrame(), x
-						+ spriteWidth - spriteWidth / 2, y
-						- spriteHeight, -spriteWidth, spriteHeight,
-						null);
-
-			if (object != null)
-				object.draw(g);
-		}
 	}
 
 	/****************************************************************************************/
@@ -326,10 +194,6 @@ public class Entity extends EntityLogic {
 		movDown = b;
 	}
 
-	public void setMovJumping(boolean b) {
-		movJumping = b;
-	}
-
 	public int getSpriteWidth() {
 		return spriteWidth;
 	}
@@ -352,22 +216,6 @@ public class Entity extends EntityLogic {
 
 	public boolean isDead() {
 		return dead;
-	}
-
-	public void setDead(boolean dead) {
-		this.dead = dead;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public int getPerversity() {
-		return perversity;
-	}
-
-	public int getMaxPerversity() {
-		return maxPerversity;
 	}
 
 	public void setFlinchingIncreaseDeltaTimePerversity(int i) {
@@ -413,21 +261,14 @@ public class Entity extends EntityLogic {
 	public void setBusy(boolean a){
 		busy = a;
 	}
-	
-	public void setCharacterCloseDirection(String a){
-		characterCloseDirection = a;
+
+	public int getMoveSpeed() {
+		return moveSpeed;
 	}
 
-	public  Object getObject(){
-		return object;
+	public void setMoveSpeed(int moveSpeed) {
+		this.moveSpeed = moveSpeed;
 	}
-	
-	public void setTileMap(TileMap _tileMap){
-		tileMap = _tileMap;
-	}
-	
-	public void setStage(StagesLevels _stage){
-		stage = _stage;
-	}
+
 
 }

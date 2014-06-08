@@ -7,7 +7,12 @@ import java.util.ArrayList;
 import org.imgscalr.Scalr;
 
 import com.spantons.entity.Animation;
+import com.spantons.entity.DrawEntity;
 import com.spantons.entity.Entity;
+import com.spantons.entity.UpdateAnimationEntity;
+import com.spantons.entity.UpdateCurrentEntity;
+import com.spantons.entity.UpdateDeadEntity;
+import com.spantons.entity.UpdateIdleEntity;
 import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.singleton.ImageCache;
@@ -20,6 +25,7 @@ public class DanaScullyXFiles extends Entity {
 			double _scale) {
 
 		super(_tm, _stage, _xMap, _yMap);
+		
 		scale = _scale;
 
 		visible = true;
@@ -34,7 +40,7 @@ public class DanaScullyXFiles extends Entity {
 		flinchingDecreaseDeltaTimePerversity = 1000;
 		deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;
 		dead = false;
-		setMoveSpeed(110);
+		moveSpeed = 110;
 		facingRight = true;
 
 		loadSprite();
@@ -43,6 +49,12 @@ public class DanaScullyXFiles extends Entity {
 		currentAnimation = IDLE;
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelayTime(1000);
+		
+		draw = new DrawEntity(this);
+		updateAnimation = new UpdateAnimationEntity(this);
+		updateCurrent = new UpdateCurrentEntity(this);
+		updateIdle = new UpdateIdleEntity(this);
+		updateDead = new UpdateDeadEntity(this);
 	}
 	
 	/****************************************************************************************/
@@ -105,11 +117,16 @@ public class DanaScullyXFiles extends Entity {
 
 	/****************************************************************************************/
 	public void update() {
-		super.update();
+		if (dead) 
+			updateDead.update();
+		else if (this.equals(stage.getCurrentCharacter())) 
+			updateCurrent.update();
+		else 
+			updateIdle.update();
 	}
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
-		super.draw(g);
+		draw.draw(g);
 	}
 
 }

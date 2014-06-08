@@ -13,7 +13,7 @@ import javax.swing.Timer;
 import com.spantons.dialogue.Dialogue;
 import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
-import com.spantons.entity.EntityChecks;
+import com.spantons.entity.EntityUtils;
 import com.spantons.entity.Hud;
 import com.spantons.entity.character.Jason;
 import com.spantons.gameStages.GameStagesManager;
@@ -206,7 +206,7 @@ public class Level_1_Stage_2 extends StagesLevels{
 		
 		if (characters.size() > 0) {
 			for (Entity character : characters)
-				character.updateOtherCharacters();
+				character.update();
 		}
 		
 		if (jasons.size() > 0) {
@@ -263,7 +263,7 @@ public class Level_1_Stage_2 extends StagesLevels{
 		
 		if (dead.size() > 0) {
 			for (Entity _dead : dead)
-				_dead.updateDead();
+				_dead.update();
 		}
 	}
 
@@ -322,7 +322,7 @@ public class Level_1_Stage_2 extends StagesLevels{
 		if (k == KeyEvent.VK_ENTER)
 			currentCharacter.takeOrLeaveObject();
 		if (k == KeyEvent.VK_O)
-			EntityChecks.checkIfDoorOpenWithKey(currentCharacter, this);
+			EntityUtils.checkIfDoorOpenWithKey(currentCharacter, this);
 		if(k == KeyEvent.VK_ESCAPE)
 			secondaryMenu = !secondaryMenu;
 		if(k == KeyEvent.VK_R && secondaryMenu)

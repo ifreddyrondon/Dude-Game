@@ -40,7 +40,7 @@ public class Hud {
 		
 		g.setColor(fontColor);
 		g.setFont(descriptionFont);
-		g.drawString(stage.getCurrentCharacter().getDescription(), 15, 50);
+		g.drawString(stage.getCurrentCharacter().description, 15, 50);
 		
 		g.drawImage(stage.getCurrentCharacter().face,18, 63, null);
 		
@@ -57,8 +57,8 @@ public class Hud {
 				+ "/" + String.format("%.1f", stage.getCurrentCharacter().getMaxHealth()), 80, 68);
 		
 		g.setColor(Color.WHITE);
-		g.drawString("Maldad: "+ stage.getCurrentCharacter().getPerversity() 
-				+ "/" + stage.getCurrentCharacter().getMaxPerversity(), 80, 87);
+		g.drawString("Maldad: "+ stage.getCurrentCharacter().perversity 
+				+ "/" + stage.getCurrentCharacter().maxPerversity, 80, 87);
 		g.drawString("Golpe: "+ String.format("%.1f", stage.getCurrentCharacter().getDamage()), 80, 106);
 		
 		g.setFont(countdownFont);
