@@ -1,6 +1,5 @@
 package com.spantons.entity;
 
-import com.spantons.entity.character.Jason;
 import com.spantons.magicNumbers.SoundPath;
 import com.spantons.singleton.SoundCache;
 
@@ -52,7 +51,7 @@ public class EntityAttack implements IEntityAttack {
 		_entity.stage.getDead().add(_entity);
 		_entity.updateAnimation.update();
 		
-		if (_entity.getClass().equals(Jason.class))
+		if (_entity.getClass().equals(Enemy.class))
 			_entity.stage.getJasons().remove(_entity);
 		else
 			_entity.stage.getCharacters().remove(_entity);

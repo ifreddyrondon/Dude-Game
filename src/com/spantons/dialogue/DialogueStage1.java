@@ -11,7 +11,7 @@ import java.util.PriorityQueue;
 
 import javax.swing.Timer;
 
-import com.spantons.entity.character.Jason;
+import com.spantons.entity.Enemy;
 import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.StringDialogue;
@@ -150,7 +150,7 @@ public class DialogueStage1 extends DialogueManager {
 		/******/
 		if (exclamation) {
 			if (stage.getCurrentCharacter().getCharacterClose()
-					.getClass().equals(Jason.class)) {
+					.getClass().equals(Enemy.class)) {
 				
 				timerExclamation.setDelay(200);
 				g.drawImage(

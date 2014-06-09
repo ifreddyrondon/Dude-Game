@@ -17,22 +17,6 @@ public interface ImagePath {
 	public static final String DIALOGUE_SPEECH_BALLON_MEDIUM = "/dialog/speech_balloon_medium.png";
 	public static final String DIALOGUE_SPEECH_BALLON_NORMAL = "/dialog/speech_balloon_normal.png";
 	
-	public static final String SPRITE_CHARACTER_DANA_SCULLY = "/characteres_sprites/DanaScullyXFiles.png";
-	public static final String SPRITE_CHARACTER_GORDON_FREEMAN = "/characteres_sprites/GordonFreeman.png";
-	public static final String SPRITE_CHARACTER_JASON = "/characteres_sprites/Jason.png";
-	public static final String SPRITE_CHARACTER_LEON_THE_PROFESSIONAL = "/characteres_sprites/Leon.png";
-	public static final String SPRITE_CHARACTER_LIZ_SHERMAN = "/characteres_sprites/LizSherman.png";
-	public static final String SPRITE_CHARACTER_PRESO = "/characteres_sprites/Preso.png";
-	public static final String SPRITE_CHARACTER_STEVE_JOBS = "/characteres_sprites/SteveJobs.png";
-	
-	public static final String HUD_CHARACTER_DANA_SCULLY = "/hud/DanaScullyXFiles.png";
-	public static final String HUD_CHARACTER_GORDON_FREEMAN = "/hud/GordonFreeman.png";
-	public static final String HUD_CHARACTER_JASON = "/hud/Jason.png";
-	public static final String HUD_CHARACTER_LEON_THE_PROFESSIONAL = "/hud/Leon.png";
-	public static final String HUD_CHARACTER_LIZ_SHERMAN = "/hud/LizSherman.png";
-	public static final String HUD_CHARACTER_PRESO = "/hud/Preso.png";
-	public static final String HUD_CHARACTER_STEVE_JOBS = "/hud/SteveJobs.png";
-	
 	public static final String OBJECT_ALCOHOL = "/objects_sprites/Alcohol.png";
 	public static final String OBJECT_BEERS = "/objects_sprites/Beers.png";
 	public static final String OBJECT_CROWBAR = "/objects_sprites/Crowbar.png";

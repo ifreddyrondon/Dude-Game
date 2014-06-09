@@ -13,9 +13,11 @@ import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
 import com.spantons.entity.EntityUtils;
 import com.spantons.entity.Hud;
-import com.spantons.entity.character.Jason;
+import com.spantons.entity.ParseXMLEntity;
 import com.spantons.gameStages.GameStagesManager;
 import com.spantons.gameStages.StagesLevels;
+import com.spantons.magicNumbers.SoundPath;
+import com.spantons.magicNumbers.XMLPath;
 import com.spantons.object.HandleObjects;
 import com.spantons.object.Object;
 import com.spantons.objects.Door;
@@ -33,25 +35,27 @@ public class Level_1_Stage_3 extends StagesLevels {
 		countdown = 90;
 
 		characters = new ArrayList<Entity>();
-		jasons = new ArrayList<Entity>();
+		enemies = new ArrayList<Entity>();
 		dead = new ArrayList<Entity>();
 		objects = new ArrayList<Object>();
 		doors = new HashMap<String, Door>();
 
 		currentCharacter = gsm.getCurrentCharacter();
-		currentCharacter.respawn(tileMap, this, 5, 22);
+		currentCharacter.respawn(this, 5, 22);
 		
 		characters = gsm.getCharacters();
 		int i = 21;
 		for (Entity entity : characters) {
-			entity.respawn(tileMap, this, 5, i);
+			entity.respawn(this, 5, i);
 			i--;
 		}
 		
-		jasons.add(new Jason(tileMap, this, 15, 5, 0.10));
-		jasons.add(new Jason(tileMap, this, 20, 19, 0.10));
-		jasons.add(new Jason(tileMap, this, 32, 24, 0.10));
-		jasons.add(new Jason(tileMap, this, 37, 11, 0.10));
+		enemies.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, 15, 5));
+		enemies.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, 20, 19));
+		enemies.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, 32, 24));
+		enemies.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, 37, 11));
+		
+		SoundCache.getInstance().getSound(SoundPath.MUSIC_HORROR_AMBIANCE).loop();
 		
 		dialogues = new DialogueStage1(this);
 		
@@ -95,8 +99,8 @@ public class Level_1_Stage_3 extends StagesLevels {
 				character.update();
 		}
 		
-		if (jasons.size() > 0) {
-			for (Entity jason : jasons) 
+		if (enemies.size() > 0) {
+			for (Entity jason : enemies) 
 				jason.update();
 		}
 	}

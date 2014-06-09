@@ -1,7 +1,7 @@
 package com.spantons.entity;
 
 import com.spantons.Interfaces.IUpdateable;
-import com.spantons.entity.character.Jason;
+import com.spantons.magicNumbers.XMLPath;
 
 public class UpdateIdleEntity implements IUpdateable {
 	
@@ -44,7 +44,7 @@ public class UpdateIdleEntity implements IUpdateable {
 	/****************************************************************************************/
 	private void jasonTransform() {
 		entity.stage.getCharacters().remove(entity);
-		entity.stage.getJasons().add(new Jason(entity.tileMap, entity.stage, entity.xMap, entity.yMap, 0.10));
+		entity.stage.getJasons().add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, entity.stage, entity.xMap, entity.yMap));
 	}
 
 }

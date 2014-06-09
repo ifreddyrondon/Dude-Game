@@ -15,16 +15,12 @@ import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
 import com.spantons.entity.EntityUtils;
 import com.spantons.entity.Hud;
-import com.spantons.entity.character.DanaScullyXFiles;
-import com.spantons.entity.character.GordonFreeman;
-import com.spantons.entity.character.Jason;
-import com.spantons.entity.character.LeonTheProfessional;
-import com.spantons.entity.character.LizSherman;
-import com.spantons.entity.character.Preso;
+import com.spantons.entity.ParseXMLEntity;
 import com.spantons.gameStages.GameStagesManager;
 import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
+import com.spantons.magicNumbers.XMLPath;
 import com.spantons.object.HandleObjects;
 import com.spantons.object.Object;
 import com.spantons.objects.Alcohol;
@@ -69,23 +65,20 @@ public class Level_1_Stage_1 extends StagesLevels {
 		countdownStartDialogues = 2000;
 		
 		characters = new ArrayList<Entity>();
-		jasons = new ArrayList<Entity>();
+		enemies = new ArrayList<Entity>();
 		dead = new ArrayList<Entity>();
 		objects = new ArrayList<Object>();
 		doors = new HashMap<String, Door>();
 		
-		currentCharacter = new LeonTheProfessional(tileMap, this, 16, 19, 0.10);
+		currentCharacter = ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_LEON_THE_PROFESSIONAL, this, 16, 19);
 
-		characters.add(new GordonFreeman(tileMap, this, 9, 22, 0.10));
-		characters.add(new LizSherman(tileMap, this, 13, 17, 0.10));
-		characters.add(new DanaScullyXFiles(tileMap, this, 13, 22, 0.10));
-		characters.add(new Preso(tileMap, this, 7, 17, 0.10));
-//		characters.add(new Preso(tileMap, this, 8, 20, 0.10));
-//		characters.add(new Preso(tileMap, this, 13, 17, 0.10));
-//		characters.add(new Preso(tileMap, this, 13, 21, 0.10));
+		characters.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_GORDON_FREEMAN, this, 9, 22));
+		characters.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_LIZ_SHERMAN, this, 13, 17));
+		characters.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_DANA_SCULLY, this, 13, 22));
+		characters.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_PRESO, this, 7, 17));
 		
-		jasons.add(new Jason(tileMap, this, 17, 12, 0.10));
-		jasons.add(new Jason(tileMap, this, 26, 23, 0.10));
+		enemies.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, 17, 12));
+		enemies.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, 26, 23));
 		
 		doors.put("panicroom", new Door(
 				tileMap, 19,18, 
@@ -205,8 +198,8 @@ public class Level_1_Stage_1 extends StagesLevels {
 				character.update();
 		}
 		
-		if (jasons.size() > 0) {
-			for (Entity jason : jasons) 
+		if (enemies.size() > 0) {
+			for (Entity jason : enemies) 
 				jason.update();
 		}
 		
@@ -274,10 +267,10 @@ public class Level_1_Stage_1 extends StagesLevels {
 		
 		ArrayList<Entity> aux = new ArrayList<Entity>();
 		
-		for (Entity jason : jasons) 
-			aux.add(new Jason(tileMap, this, jason.getXMap(), jason.getYMap(), 0.10));
+		for (Entity jason : enemies) 
+			aux.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, jason.getXMap(), jason.getYMap()));
 		
-		jasons.addAll(aux);
+		enemies.addAll(aux);
 	}
 	
 	/****************************************************************************************/

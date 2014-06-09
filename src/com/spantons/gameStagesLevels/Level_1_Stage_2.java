@@ -15,11 +15,12 @@ import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
 import com.spantons.entity.EntityUtils;
 import com.spantons.entity.Hud;
-import com.spantons.entity.character.Jason;
+import com.spantons.entity.ParseXMLEntity;
 import com.spantons.gameStages.GameStagesManager;
 import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
+import com.spantons.magicNumbers.XMLPath;
 import com.spantons.object.HandleObjects;
 import com.spantons.object.Object;
 import com.spantons.objects.Alcohol;
@@ -55,13 +56,13 @@ public class Level_1_Stage_2 extends StagesLevels{
 		countdown = 100;
 		countdownStartDialogues = 1300;
 		
-		jasons = new ArrayList<Entity>();
+		enemies = new ArrayList<Entity>();
 		dead = new ArrayList<Entity>();
 		objects = new ArrayList<Object>();
 		doors = new HashMap<String, Door>();
 		
 		currentCharacter = gsm.getCurrentCharacter();
-		currentCharacter.respawn(tileMap, this, 28, 34);
+		currentCharacter.respawn(this, 28, 34);
 		
 		characters = gsm.getCharacters();
 		if (characters.size() > 0){
@@ -70,12 +71,12 @@ public class Level_1_Stage_2 extends StagesLevels{
 			);
 			int i = 26;
 			for (Entity entity : characters) {
-				entity.respawn(tileMap, this, i, 34);
+				entity.respawn(this, i, 34);
 				i = i - 2;
 			}
 		}
 		
-		jasons.add(new Jason(tileMap, this, 18, 24, 0.10));
+		enemies.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, 18, 24));
 		
 		doors.put("hall", new Door(
 				tileMap, 33,38, 
@@ -208,8 +209,8 @@ public class Level_1_Stage_2 extends StagesLevels{
 				character.update();
 		}
 		
-		if (jasons.size() > 0) {
-			for (Entity jason : jasons) 
+		if (enemies.size() > 0) {
+			for (Entity jason : enemies) 
 				jason.update();
 		}
 		
@@ -291,10 +292,10 @@ public class Level_1_Stage_2 extends StagesLevels{
 		
 		ArrayList<Entity> aux = new ArrayList<Entity>();
 		
-		for (Entity jason : jasons) 
-			aux.add(new Jason(tileMap, this, jason.getXMap(), jason.getYMap(), 0.10));
+		for (Entity jason : enemies) 
+			aux.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, jason.getXMap(), jason.getYMap()));
 		
-		jasons.addAll(aux);
+		enemies.addAll(aux);
 	}
 	
 	/****************************************************************************************/

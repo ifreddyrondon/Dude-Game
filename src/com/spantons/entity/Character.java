@@ -1,4 +1,4 @@
-package com.spantons.entity.character;
+package com.spantons.entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -6,64 +6,30 @@ import java.util.ArrayList;
 
 import org.imgscalr.Scalr;
 
-import com.spantons.entity.Animation;
-import com.spantons.entity.DrawEntity;
-import com.spantons.entity.Entity;
-import com.spantons.entity.UpdateAnimationEntity;
-import com.spantons.entity.UpdateCurrentEntity;
-import com.spantons.entity.UpdateDeadEntity;
-import com.spantons.entity.UpdateIdleEntity;
 import com.spantons.gameStages.StagesLevels;
-import com.spantons.magicNumbers.ImagePath;
 import com.spantons.singleton.ImageCache;
-import com.spantons.tileMap.TileMap;
 
-public class Preso extends Entity {
+public class Character extends Entity {
 
 	/****************************************************************************************/
-	public Preso(TileMap _tm, StagesLevels _stage, int _xMap, int _yMap,
-			double _scale) {
+	public Character(StagesLevels _stage, int _xMap, int _yMap) {
 
-		super(_tm, _stage, _xMap, _yMap);
-	
-		scale = _scale;
+		super(_stage, _xMap, _yMap);
 
-		visible = true;
-		description = "Preso";
-		health = 5;
-		maxHealth = 5;
-		perversity = 0;
-		maxPerversity = 100;
-		damage = 1.1f;
-		damageBackup = damage;
-		flinchingIncreaseDeltaTimePerversity = 800;
-		flinchingDecreaseDeltaTimePerversity = 1000;
-		deltaForReduceFlinchingIncreaseDeltaTimePerversity = 50;
-		dead = false;
-		moveSpeed = 90;
-		facingRight = true;
-
-		loadSprite();
-
-		animation = new Animation();
-		currentAnimation = IDLE;
-		animation.setFrames(sprites.get(IDLE));
-		animation.setDelayTime(1000);
-		
 		draw = new DrawEntity(this);
 		updateAnimation = new UpdateAnimationEntity(this);
 		updateCurrent = new UpdateCurrentEntity(this);
 		updateIdle = new UpdateIdleEntity(this);
 		updateDead = new UpdateDeadEntity(this);
 	}
-
+	
 	/****************************************************************************************/
-	private void loadSprite() {
+	public void loadSprite(String _pathFace, String pathSprite) {
 		try {
+			face = ImageCache.getInstance().getImage(_pathFace);
 
-			face = ImageCache.getInstance().getImage(ImagePath.HUD_CHARACTER_PRESO);
-
-			BufferedImage spriteSheet = ImageCache.getInstance().getImage(ImagePath.SPRITE_CHARACTER_PRESO);
+			BufferedImage spriteSheet = 
+					ImageCache.getInstance().getImage(pathSprite);
 
 			spriteWidth = ((int) (spriteSheet.getWidth() / 3 * scale));
 			spriteHeight = ((int) (spriteSheet.getHeight() / 2 * scale));
@@ -109,6 +75,11 @@ public class Preso extends Entity {
 					spriteHeight, spriteWidth, spriteHeight);
 			sprites.add(bi);
 
+			animation = new Animation();
+			currentAnimation = IDLE;
+			animation.setFrames(sprites.get(IDLE));
+			animation.setDelayTime(1000);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -123,7 +94,6 @@ public class Preso extends Entity {
 		else 
 			updateIdle.update();
 	}
-
 	/****************************************************************************************/
 	public void draw(Graphics2D g) {
 		draw.draw(g);

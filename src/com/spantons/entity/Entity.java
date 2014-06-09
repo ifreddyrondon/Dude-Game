@@ -84,12 +84,13 @@ public abstract class Entity {
 
 	public abstract void draw(Graphics2D g);
 	public abstract void update();
+	public abstract void loadSprite(String _pathFace, String pathSprite);
 	
 	/****************************************************************************************/
-	public Entity(TileMap _tm, StagesLevels _stage, int _xMap, int _yMap) {
-		if (_tm != null) {
-			tileMap = _tm;
+	public Entity(StagesLevels _stage, int _xMap, int _yMap) {
+		if (_stage.getTileMap() != null) {
 			stage = _stage;
+			tileMap = _stage.getTileMap();
 			xMap = _xMap;
 			yMap = _yMap;
 			setMapPosition(xMap, yMap);
@@ -104,10 +105,10 @@ public abstract class Entity {
 	}
 
 	/****************************************************************************************/
-	public void respawn(TileMap _tm, StagesLevels _stage, int _xMap, int _yMap){
-		if (_tm != null) {
-			tileMap = _tm;
+	public void respawn(StagesLevels _stage, int _xMap, int _yMap){
+		if (_stage.getTileMap() != null) {
 			stage = _stage;
+			tileMap = _stage.getTileMap();
 			xMap = _xMap;
 			yMap = _yMap;
 			setMapPosition(xMap, yMap);

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Character>
+	<Type>character</Type>
+    <Description>Dana Scully X-Files</Description>
+    <Health>5</Health>
+    <MaxHealth>5</MaxHealth>
+    <Perversity>0</Perversity>
+    <MaxPerversity>100</MaxPerversity>
+    <Damage>0.5</Damage>
+    <DamageBackup>0.5</DamageBackup>
+    <FlinchingIncreaseDeltaTimePerversity>1000</FlinchingIncreaseDeltaTimePerversity>
+    <FlinchingDecreaseDeltaTimePerversity>1000</FlinchingDecreaseDeltaTimePerversity>
+    <DeltaForReduceFlinchingIncreaseDeltaTimePerversity>50</DeltaForReduceFlinchingIncreaseDeltaTimePerversity>
+    <MoveSpeed>110</MoveSpeed>
+    <HUD>/hud/DanaScullyXFiles.png</HUD>
+    <Sprite>/characteres_sprites/DanaScullyXFiles.png</Sprite>
+    <Scale>0.10</Scale>
+    <Dead>False</Dead>
+    <FacingRight>True</FacingRight>
+    <Visible>True</Visible>
+</Character>

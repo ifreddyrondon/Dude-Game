@@ -29,7 +29,7 @@ public abstract class StagesLevels implements IStage {
 	protected Timer timer;
 	
 	protected ArrayList<Entity> characters;
-	protected ArrayList<Entity> jasons;
+	protected ArrayList<Entity> enemies;
 	protected ArrayList<Entity> dead;
 	protected ArrayList<Object> objects;
 	protected HashMap<String, Door> doors;
@@ -53,7 +53,7 @@ public abstract class StagesLevels implements IStage {
 		return characters;
 	}
 	public ArrayList<Entity> getJasons() {
-		return jasons;
+		return enemies;
 	}
 	public ArrayList<Entity> getDead() {
 		return dead;
@@ -69,6 +69,9 @@ public abstract class StagesLevels implements IStage {
 	}
 	public DialogueManager getDialogues() {
 		return dialogues;
+	}
+	public TileMap getTileMap() {
+		return tileMap;
 	}
 	
 }
