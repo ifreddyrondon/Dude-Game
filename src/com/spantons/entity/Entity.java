@@ -78,8 +78,6 @@ public abstract class Entity {
 	
 	protected DrawEntity draw;
 	protected UpdateAnimationEntity updateAnimation;
-	protected UpdateCurrentEntity updateCurrent;
-	protected UpdateIdleEntity updateIdle;
 	protected UpdateDeadEntity updateDead;
 
 	public abstract void draw(Graphics2D g);

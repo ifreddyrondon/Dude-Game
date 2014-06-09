@@ -11,6 +11,9 @@ import com.spantons.singleton.ImageCache;
 
 public class Character extends Entity {
 
+	private UpdateIdleEntity updateIdle;
+	private UpdateCurrentEntity updateCurrent;
+	
 	/****************************************************************************************/
 	public Character(StagesLevels _stage, int _xMap, int _yMap) {
 
