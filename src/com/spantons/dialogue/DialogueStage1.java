@@ -12,11 +12,11 @@ import java.util.PriorityQueue;
 import javax.swing.Timer;
 
 import com.spantons.entity.Enemy;
-import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.StringDialogue;
 import com.spantons.main.GamePanel;
 import com.spantons.singleton.ImageCache;
+import com.spantons.stagesLevel.StagesLevels;
 
 class DialogueComparator implements Comparator<Dialogue> {
 

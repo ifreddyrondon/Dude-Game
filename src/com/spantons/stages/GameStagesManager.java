@@ -1,22 +1,17 @@
-package com.spantons.gameStages;
+package com.spantons.stages;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import com.spantons.Interfaces.IDrawable;
-import com.spantons.Interfaces.IKeyable;
-import com.spantons.Interfaces.IUpdateable;
 import com.spantons.entity.Entity;
-import com.spantons.gameStagesLevels.Level_1_Stage_1;
-import com.spantons.gameStagesLevels.Level_1_Stage_2;
-import com.spantons.gameStagesLevels.Level_1_Stage_3;
-import com.spantons.gameStagesMenus.GameOverStage;
-import com.spantons.gameStagesMenus.HelpStage;
-import com.spantons.gameStagesMenus.MenuStage;
-import com.spantons.gameState.interfaces.IStage;
+import com.spantons.magicNumbers.XMLPath;
 import com.spantons.singleton.SoundCache;
+import com.spantons.stagesLevel.Level_1_Stage_1;
+import com.spantons.stagesLevel.Level_1_Stage_2;
+import com.spantons.stagesLevel.Level_1_Stage_3;
+import com.spantons.stagesMenu.ParseXMLStageMenu;
 
-public class GameStagesManager implements IDrawable, IUpdateable, IKeyable {
+public class GameStagesManager {
 
 	private IStage[] gameStages;
 	private int currentStage;
@@ -45,7 +40,7 @@ public class GameStagesManager implements IDrawable, IUpdateable, IKeyable {
 		SoundCache.getInstance().stopAllSound();
 		
 		if (stage == MENU_STAGE)
-			gameStages[MENU_STAGE] = new MenuStage(this);
+			gameStages[MENU_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_MAIN, this);
 		if (stage == LEVEL_1_STAGE_1)
 			gameStages[LEVEL_1_STAGE_1] = new Level_1_Stage_1(this);
 		if (stage == LEVEL_1_STAGE_2)
@@ -53,9 +48,9 @@ public class GameStagesManager implements IDrawable, IUpdateable, IKeyable {
 		if (stage == LEVEL_1_STAGE_3)
 			gameStages[LEVEL_1_STAGE_3] = new Level_1_Stage_3(this);
 		if (stage == GAME_OVER_STAGE)
-			gameStages[GAME_OVER_STAGE] = new GameOverStage(this);
+			gameStages[GAME_OVER_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_GAME_OVER, this);
 		if (stage == HELP_STAGE)
-			gameStages[HELP_STAGE] = new HelpStage(this);
+			gameStages[HELP_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_HELP, this);
 	}
 
 	/****************************************************************************************/

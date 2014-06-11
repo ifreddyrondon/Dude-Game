@@ -1,4 +1,4 @@
-package com.spantons.tileMap;
+package com.spantons.stagesMenu;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

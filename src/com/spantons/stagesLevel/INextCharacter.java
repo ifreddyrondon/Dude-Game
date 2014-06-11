@@ -1,4 +1,4 @@
-package com.spantons.gameState.interfaces;
+package com.spantons.stagesLevel;
 
 import com.spantons.entity.Entity;
 

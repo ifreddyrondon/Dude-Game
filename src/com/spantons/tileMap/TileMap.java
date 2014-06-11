@@ -8,17 +8,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import com.spantons.Interfaces.IDrawable;
-import com.spantons.Interfaces.IUpdateable;
 import com.spantons.entity.Entity;
-import com.spantons.gameStagesLevels.Level_1_Stage_1;
 import com.spantons.main.GamePanel;
 import com.spantons.object.Object;
+import com.spantons.stagesLevel.Level_1_Stage_1;
 import com.spantons.utilities.ArraysUtil;
 import com.spantons.utilities.Multiple;
 import com.spantons.utilities.TileWalk;
 
-public class TileMap implements IDrawable, IUpdateable{
+public class TileMap {
 
 	private int x;
 	private int y;

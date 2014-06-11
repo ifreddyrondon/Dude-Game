@@ -1,4 +1,4 @@
-package com.spantons.gameState.interfaces;
+package com.spantons.stages;
 
 import java.awt.Graphics2D;
 

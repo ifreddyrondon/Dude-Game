@@ -5,8 +5,8 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import com.spantons.gameStages.StagesLevels;
 import com.spantons.object.Object;
+import com.spantons.stagesLevel.StagesLevels;
 import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.PositionUtil;
 import com.spantons.utilities.TileWalk;

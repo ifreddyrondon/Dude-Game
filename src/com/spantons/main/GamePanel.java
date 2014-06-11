@@ -13,7 +13,7 @@ import java.awt.image.MemoryImageSource;
 
 import javax.swing.JPanel;
 
-import com.spantons.gameStages.GameStagesManager;
+import com.spantons.stages.GameStagesManager;
 
 /**
  * @author spantons

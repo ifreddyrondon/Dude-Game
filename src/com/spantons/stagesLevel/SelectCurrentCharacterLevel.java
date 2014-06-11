@@ -1,10 +1,9 @@
-package com.spantons.gameStagesLevels;
+package com.spantons.stagesLevel;
 
 import java.awt.Point;
 import java.util.ArrayList;
 
 import com.spantons.entity.Entity;
-import com.spantons.gameState.interfaces.INextCharacter;
 import com.spantons.tileMap.TileMap;
 
 public class SelectCurrentCharacterLevel implements INextCharacter{

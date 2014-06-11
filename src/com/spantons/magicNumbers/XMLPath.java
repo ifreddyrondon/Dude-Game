@@ -10,4 +10,8 @@ public interface XMLPath {
 	public static final String XML_CHARACTER_PRESO = "res/charactersXML/Preso.xml";
 	public static final String XML_CHARACTER_STEVE_JOBS = "res/charactersXML/SteveJobs.xml";
 	
+	public static final String XML_STAGE_MENU_MAIN = "res/stagesXML/MainMenu.xml";
+	public static final String XML_STAGE_MENU_HELP = "res/stagesXML/HelpMenu.xml";
+	public static final String XML_STAGE_MENU_GAME_OVER = "res/stagesXML/GameOverMenu.xml";
+	
 }

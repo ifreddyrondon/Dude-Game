@@ -1,9 +1,8 @@
-package com.spantons.gameStagesLevels;
+package com.spantons.stagesLevel;
 
 import java.awt.Point;
 
 import com.spantons.entity.Entity;
-import com.spantons.gameState.interfaces.ICheckTransparentWalls;
 
 public class CheckTransparentWallsLvl1Stage1 implements ICheckTransparentWalls{
 

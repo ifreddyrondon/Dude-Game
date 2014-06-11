@@ -1,4 +1,4 @@
-package com.spantons.gameStagesLevels;
+package com.spantons.stagesLevel;
 
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -14,14 +14,13 @@ import com.spantons.entity.Entity;
 import com.spantons.entity.EntityUtils;
 import com.spantons.entity.Hud;
 import com.spantons.entity.ParseXMLEntity;
-import com.spantons.gameStages.GameStagesManager;
-import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.SoundPath;
 import com.spantons.magicNumbers.XMLPath;
 import com.spantons.object.HandleObjects;
 import com.spantons.object.Object;
 import com.spantons.objects.Door;
 import com.spantons.singleton.SoundCache;
+import com.spantons.stages.GameStagesManager;
 import com.spantons.tileMap.TileMap;
 
 public class Level_1_Stage_3 extends StagesLevels {

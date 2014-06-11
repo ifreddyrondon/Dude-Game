@@ -1,4 +1,4 @@
-package com.spantons.gameStages;
+package com.spantons.stagesLevel;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,14 +10,13 @@ import javax.swing.Timer;
 import com.spantons.dialogue.DialogueManager;
 import com.spantons.entity.Entity;
 import com.spantons.entity.Hud;
-import com.spantons.gameStagesLevels.DrawLevel;
-import com.spantons.gameStagesLevels.SelectCurrentCharacterLevel;
-import com.spantons.gameState.interfaces.IStage;
 import com.spantons.magicNumbers.FontPath;
 import com.spantons.object.HandleObjects;
 import com.spantons.object.Object;
 import com.spantons.objects.Door;
 import com.spantons.singleton.FontCache;
+import com.spantons.stages.GameStagesManager;
+import com.spantons.stages.IStage;
 import com.spantons.tileMap.TileMap;
 
 public abstract class StagesLevels implements IStage {

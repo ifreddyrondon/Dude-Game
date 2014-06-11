@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 import org.imgscalr.Scalr;
 
-import com.spantons.gameStages.StagesLevels;
 import com.spantons.singleton.ImageCache;
+import com.spantons.stagesLevel.StagesLevels;
 
 public class Enemy extends Entity {
 	

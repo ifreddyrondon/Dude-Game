@@ -1,15 +1,6 @@
 package com.spantons.magicNumbers;
 
 public interface ImagePath {
-
-	public static final String BACKGROUND_ALL = "/backgrounds/all.png";
-	public static final String BACKGROUND_MENU = "/backgrounds/menubg2.png";
-	public static final String BACKGROUND_GAME_OVER = "/backgrounds/game_over.png";
-	public static final String BACKGROUND_GAME_OVER_2 = "/backgrounds/game_over2.png";
-	public static final String BACKGROUND_ARROW_RED = "/backgrounds/arrowRed.png";
-	public static final String BACKGROUND_BLOODY_HAND = "/backgrounds/bloodyHand.png";
-	public static final String BACKGROUND_TRICYCLE = "/backgrounds/tricycle.png";
-	public static final String BACKGROUND_HELP_CHARACTER = "/backgrounds/helpCharacter.png";
 	
 	public static final String DIALOGUE_EXCLAMATION_ALERT = "/dialog/exclamation_alert.png";
 	public static final String DIALOGUE_EXCLAMATION = "/dialog/exclamation.png";

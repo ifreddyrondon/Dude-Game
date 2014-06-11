@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Stage>
+	<Select>SelectMainMenu</Select>
+	<Font>FontMainMenu</Font>
+	<Background>/backgrounds/menubg2.png</Background>
+	<BackgroundMoveScale>0</BackgroundMoveScale>
+	<BackgroundRepeat>True</BackgroundRepeat>
+    <ImagesIntoScene>
+    	<ImageComposite>
+    		<Path>/backgrounds/bloodyHand.png</Path>
+    		<ResizeLength>0</ResizeLength>
+    		<X>200</X>
+    		<Y>200</Y>
+    	</ImageComposite>
+    	<ImageComposite>
+    		<Path>/backgrounds/all.png</Path>
+    		<ResizeLength>300</ResizeLength>
+    		<X>0</X>
+    		<Y>800</Y>
+    	</ImageComposite>
+    	<ImageComposite>
+    		<Path>/backgrounds/tricycle.png</Path>
+    		<ResizeLength>365</ResizeLength>
+    		<X>900</X>
+    		<Y>105</Y>
+    	</ImageComposite>
+    </ImagesIntoScene>
+    <Title>Dead Room</Title>
+    <Choices>
+    	<Choice>Jugar</Choice>
+    	<Choice>Ayuda</Choice>
+    	<Choice>Salir</Choice>
+    </Choices>
+</Stage>

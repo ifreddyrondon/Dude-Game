@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Stage>
+	<Select>SelectGameOverMenu</Select>
+	<Font>FontGameOverMenu</Font>
+	<Background>/backgrounds/game_over.png</Background>
+	<Background>/backgrounds/game_over2.png</Background>
+	<BackgroundMoveScale>0</BackgroundMoveScale>
+	<BackgroundRepeat>False</BackgroundRepeat>
+	<Choices>
+    	<Choice>Jugar otra vez</Choice>
+    	<Choice>Menu principal</Choice>
+    	<Choice>Salir</Choice>
+    </Choices>
+</Stage>

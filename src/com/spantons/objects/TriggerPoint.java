@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
-import com.spantons.gameStages.StagesLevels;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
 import com.spantons.object.DrawObjectImmobile;
@@ -14,6 +13,7 @@ import com.spantons.object.Object;
 import com.spantons.object.UpdateObjectImmobile;
 import com.spantons.singleton.ImageCache;
 import com.spantons.singleton.SoundCache;
+import com.spantons.stagesLevel.StagesLevels;
 import com.spantons.tileMap.TileMap;
 
 public class TriggerPoint extends Object {

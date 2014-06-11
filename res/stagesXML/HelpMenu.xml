@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Stage>
+	<Select>SelectHelpMenu</Select>
+	<Font>FontHelpMenu</Font>
+	<Background>/backgrounds/menubg2.png</Background>
+	<BackgroundMoveScale>0</BackgroundMoveScale>
+	<BackgroundRepeat>True</BackgroundRepeat>
+    <ImagesIntoScene>
+    	<ImageComposite>
+    		<Path>/backgrounds/helpCharacter.png</Path>
+    		<ResizeLength>0</ResizeLength>
+    		<X>100</X>
+    		<Y>100</Y>
+    	</ImageComposite>
+    	<ImageComposite>
+    		<Path>/backgrounds/arrowRed.png</Path>
+    		<ResizeLength>250</ResizeLength>
+    		<X>400</X>
+    		<Y>140</Y>
+    	</ImageComposite>
+    </ImagesIntoScene>
+    <Title>(ENTER) para regresar</Title>
+</Stage>
