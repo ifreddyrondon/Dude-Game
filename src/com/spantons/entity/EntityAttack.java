@@ -51,7 +51,7 @@ public class EntityAttack implements IEntityAttack {
 		_entity.stage.getDead().add(_entity);
 		_entity.updateAnimation.update();
 		
-		if (_entity.getClass().equals(Enemy.class))
+		if (_entity.update instanceof UpdateEnemy)
 			_entity.stage.getJasons().remove(_entity);
 		else
 			_entity.stage.getCharacters().remove(_entity);

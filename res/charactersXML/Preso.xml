@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Character>
-	<Type>character</Type>
     <Description>Preso</Description>
     <Health>5</Health>
     <MaxHealth>5</MaxHealth>
@@ -18,4 +17,5 @@
     <Dead>False</Dead>
     <FacingRight>True</FacingRight>
     <Visible>True</Visible>
+    <Update>UpdateIdleEntity</Update>
 </Character>

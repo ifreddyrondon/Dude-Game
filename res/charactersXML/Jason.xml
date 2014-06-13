@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Character>
-	<Type>enemy</Type>
     <Description>Jason</Description>
     <Health>4</Health>
     <MaxHealth>4</MaxHealth>
@@ -18,4 +17,5 @@
     <Dead>False</Dead>
     <FacingRight>True</FacingRight>
     <Visible>True</Visible>
+    <Update>UpdateEnemy</Update>
 </Character>

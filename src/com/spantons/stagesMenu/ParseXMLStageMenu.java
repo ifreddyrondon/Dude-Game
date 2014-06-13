@@ -17,10 +17,11 @@ import org.w3c.dom.NodeList;
 
 import com.spantons.stages.GameStagesManager;
 import com.spantons.stages.IFontStage;
+import com.spantons.stages.IStage;
 
 public class ParseXMLStageMenu {
 
-	public static StagesMenu getStageFromXML(String _path, GameStagesManager _gsm){
+	public static IStage getStageFromXML(String _path, GameStagesManager _gsm){
 		try {
 			File file = new File(_path);
 			
@@ -41,7 +42,7 @@ public class ParseXMLStageMenu {
 	
 	/****************************************************************************************/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static StagesMenu createStage(NodeList childNodes, GameStagesManager _gsm) throws DOMException, ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	private static IStage createStage(NodeList childNodes, GameStagesManager _gsm) throws DOMException, ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		 
 		if(childNodes != null && childNodes.getLength() > 0) {
 			for (int i = 0; i < childNodes.getLength(); i++) {

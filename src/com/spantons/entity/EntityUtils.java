@@ -1,11 +1,16 @@
 package com.spantons.entity;
 
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import org.imgscalr.Scalr;
 
 import com.spantons.dialogue.Dialogue;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.object.Object;
 import com.spantons.objects.Door;
+import com.spantons.singleton.ImageCache;
 import com.spantons.stagesLevel.Level_1_Stage_1;
 import com.spantons.stagesLevel.StagesLevels;
 import com.spantons.tileMap.TileMap;
@@ -327,6 +332,82 @@ public class EntityUtils {
 			_entity.facingRight = true;
 			_entity.animation.setFrames(_entity.sprites.get(Entity.WALKING_PERSPECTIVE_FRONT));
 		}
+	}
+
+	/****************************************************************************************/
+	public static Entity loadSprite(Entity _entity, String _pathFace, String pathSprite) {
+		try {
+			_entity.face = ImageCache.getInstance().getImage(_pathFace);
+
+			BufferedImage spriteSheet = ImageCache.getInstance().getImage(pathSprite);
+
+			_entity.spriteWidth = ((int) (spriteSheet.getWidth() / 3 * _entity.scale));
+			_entity.spriteHeight = ((int) (spriteSheet.getHeight() / 2 * _entity.scale));
+
+			spriteSheet = Scalr.resize(spriteSheet,
+					(int) (spriteSheet.getWidth() * _entity.scale));
+
+			_entity.sprites = new ArrayList<BufferedImage[]>();
+
+			// WALKING_FRONT
+			BufferedImage[] bi = new BufferedImage[1];
+			bi[0] = spriteSheet.getSubimage(
+					0, 
+					0,
+					_entity.spriteWidth,
+					_entity.spriteHeight);
+			_entity.sprites.add(bi);
+
+			// WALKING_BACK
+			bi = new BufferedImage[1];
+			bi[0] = spriteSheet.getSubimage(
+					_entity.spriteWidth, 
+					0, 
+					_entity.spriteWidth,
+					_entity.spriteHeight);
+			_entity.sprites.add(bi);
+
+			// WALKING_SIDE
+			bi = new BufferedImage[1];
+			bi[0] = spriteSheet.getSubimage(
+					_entity.spriteWidth * 2,
+					0,
+					_entity.spriteWidth,
+					_entity.spriteHeight);
+			_entity.sprites.add(bi);
+
+			// WALKING_PERSPECTIVE_FRONT
+			bi = new BufferedImage[1];
+			bi[0] = spriteSheet.getSubimage(
+					0,
+					_entity.spriteHeight,
+					_entity.spriteWidth,
+					_entity.spriteHeight);
+			_entity.sprites.add(bi);
+
+			// WALKING_PERSPECTIVE_BACK
+			bi = new BufferedImage[1];
+			bi[0] = spriteSheet.getSubimage(
+					_entity.spriteWidth, 
+					_entity.spriteHeight,
+					_entity.spriteWidth, 
+					_entity.spriteHeight);
+			_entity.sprites.add(bi);
+
+			// DEAD
+			bi = new BufferedImage[1];
+			bi[0] = spriteSheet.getSubimage(
+					_entity.spriteWidth * 2,
+					_entity.spriteHeight, 
+					_entity.spriteWidth, 
+					_entity.spriteHeight);
+			_entity.sprites.add(bi);
+			
+			return _entity;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	

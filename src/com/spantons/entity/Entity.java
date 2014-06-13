@@ -5,13 +5,15 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import com.spantons.Interfaces.IDrawable;
+import com.spantons.Interfaces.IUpdateable;
 import com.spantons.object.Object;
 import com.spantons.stagesLevel.StagesLevels;
 import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.PositionUtil;
 import com.spantons.utilities.TileWalk;
 
-public abstract class Entity {
+public class Entity {
 
 	protected int x;
 	protected int y;
@@ -76,13 +78,11 @@ public abstract class Entity {
 	protected String characterCloseDirection;
 	protected Object object;
 	
-	protected DrawEntity draw;
-	protected UpdateAnimationEntity updateAnimation;
-	protected UpdateDeadEntity updateDead;
-
-	public abstract void draw(Graphics2D g);
-	public abstract void update();
-	public abstract void loadSprite(String _pathFace, String pathSprite);
+	private IDrawable draw;
+	protected IUpdateable updateAnimation;
+	public IUpdateable update;
+	private IUpdateable updateDead;
+	private IUpdateable updateCurrent;
 	
 	/****************************************************************************************/
 	public Entity(StagesLevels _stage, int _xMap, int _yMap) {
@@ -99,6 +99,10 @@ public abstract class Entity {
 			object = null;
 			busy = false;
 			tileMap.setTransparentWalls("");
+			draw = new DrawEntity(this);
+			updateDead = new UpdateDeadEntity(this);
+			updateAnimation = new UpdateAnimationEntity(this);
+			updateCurrent = new UpdateCurrentEntity(this);
 		}
 	}
 
@@ -172,6 +176,21 @@ public abstract class Entity {
 						+ (nextPositionInAbsolute.x - tileMap.RESOLUTION_WIDTH_FIX / 2),
 				tileMap.getY()
 						+ (nextPositionInAbsolute.y - tileMap.RESOLUTION_HEIGHT_FIX / 2));
+	}
+	
+	/****************************************************************************************/
+	public void update() {
+		if (dead) 
+			updateDead.update();
+		else if (this.equals(stage.getCurrentCharacter())) 
+			updateCurrent.update();
+		else 
+			update.update();
+	}
+	
+	/****************************************************************************************/
+	public void draw(Graphics2D g) {
+		draw.draw(g);
 	}
 
 	/****************************************************************************************/

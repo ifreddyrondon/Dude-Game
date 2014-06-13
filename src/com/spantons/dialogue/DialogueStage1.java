@@ -11,7 +11,7 @@ import java.util.PriorityQueue;
 
 import javax.swing.Timer;
 
-import com.spantons.entity.Enemy;
+import com.spantons.entity.UpdateEnemy;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.StringDialogue;
 import com.spantons.main.GamePanel;
@@ -149,8 +149,8 @@ public class DialogueStage1 extends DialogueManager {
 		}
 		/******/
 		if (exclamation) {
-			if (stage.getCurrentCharacter().getCharacterClose()
-					.getClass().equals(Enemy.class)) {
+			if (stage.getCurrentCharacter().getCharacterClose().update 
+					instanceof UpdateEnemy) {
 				
 				timerExclamation.setDelay(200);
 				g.drawImage(
