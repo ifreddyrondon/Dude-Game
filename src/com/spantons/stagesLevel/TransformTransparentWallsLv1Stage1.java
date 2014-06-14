@@ -1,31 +1,26 @@
 package com.spantons.stagesLevel;
 
-import com.spantons.objects.Door;
 import com.spantons.tileMap.TileMap;
 
 public class TransformTransparentWallsLv1Stage1 implements ITransformTransparentWalls{
 
 	private TileMap tileMap;
-	private Door doorOfWall;
 	
 	/****************************************************************************************/
-	public TransformTransparentWallsLv1Stage1(TileMap _tileMap, Door _doorOfWall) {
-		tileMap = _tileMap;
-		doorOfWall = _doorOfWall;
+	public TransformTransparentWallsLv1Stage1(TileMap _tileMap) {
+		tileMap = _tileMap;		
 	}
 	
 	/****************************************************************************************/
 	@Override
 	public void transformToTransparentWalls() {
 		tileMap.setTransparentWalls("bathroom");
-		doorOfWall.setStatusOpen(Door.OPEN);
 	}
 
 	/****************************************************************************************/
 	@Override
 	public void transformToOriginalWalls() {
 		tileMap.setTransparentWalls("");
-		doorOfWall.setStatusOpen(Door.CLOSE);
 	}
 
 }

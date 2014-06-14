@@ -9,18 +9,18 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import com.spantons.main.GamePanel;
-import com.spantons.stagesLevel.StagesLevels;
+import com.spantons.stagesLevel.StagesLevel;
 
 public class Hud {
 
-	private StagesLevels stage;
+	private StagesLevel stage;
 	private Color fontColor;
 	private Font descriptionFont;
 	private Font attributesFont;
 	private Font countdownFont;
 	private BufferedImage backgroundHud;
 
-	public Hud(StagesLevels _stage) {
+	public Hud(StagesLevel _stage) {
 		try {
 			stage = _stage;
 			backgroundHud = ImageIO.read(getClass().getResourceAsStream("/hud/glass.png"));

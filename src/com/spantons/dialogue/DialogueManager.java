@@ -12,12 +12,12 @@ import java.util.Queue;
 import javax.swing.Timer;
 
 import com.spantons.entity.Entity;
-import com.spantons.stagesLevel.StagesLevels;
+import com.spantons.stagesLevel.StagesLevel;
 import com.spantons.utilities.RandomItemArrayList;
 
 public abstract class DialogueManager {
 
-	protected StagesLevels stage;	
+	protected StagesLevel stage;	
 	protected Queue<Dialogue> dialogues;
 	protected Dialogue currentDialogue;
 	protected HashMap<String, String[]> strings;
@@ -62,6 +62,13 @@ public abstract class DialogueManager {
 	/****************************************************************************************/
 	public void addDialogue(Dialogue _dialogue){
 		dialogues.add(_dialogue);
+	}
+	
+	/****************************************************************************************/
+	public void addDialogue(ArrayList<Dialogue> _dialogues){
+		for (Dialogue dialogue : _dialogues) {
+			dialogues.add(dialogue);
+		}
 	}
 	
 	/****************************************************************************************/

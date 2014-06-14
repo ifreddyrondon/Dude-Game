@@ -11,8 +11,7 @@ import com.spantons.magicNumbers.ImagePath;
 import com.spantons.object.Object;
 import com.spantons.objects.Door;
 import com.spantons.singleton.ImageCache;
-import com.spantons.stagesLevel.Level_1_Stage_1;
-import com.spantons.stagesLevel.StagesLevels;
+import com.spantons.stagesLevel.StagesLevel;
 import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.TileWalk;
 
@@ -20,7 +19,7 @@ public class EntityUtils {
 
 	/****************************************************************************************/
 	public static Entity checkIsCloseToAnotherEntity(Entity _entity,
-			StagesLevels _stage) {
+			StagesLevel _stage) {
 
 		Point position = _entity.getMapPositionOfCharacter();
 		Point north = TileWalk.walkTo("N", position, 1);
@@ -100,7 +99,7 @@ public class EntityUtils {
 
 	/****************************************************************************************/
 	public static boolean checkCharactersCollision(Entity _entity,
-			StagesLevels _stage) {
+			StagesLevel _stage) {
 
 		if (_stage.getCharacters().size() > 0) {
 			for (Entity character : _stage.getCharacters()) {
@@ -147,15 +146,13 @@ public class EntityUtils {
 	}
 
 	/****************************************************************************************/
-	public static boolean checkDoors(Entity _entity, StagesLevels _stage) {
+	public static boolean checkDoors(Entity _entity, StagesLevel _stage) {
 		if (_stage.getDoors().size() > 0) {
-			for (String key : _stage.getDoors().keySet()) {
+			for(Door door : _stage.getDoors()) {
 				if (_entity.getNextPositionInMap().equals(
-						_stage.getDoors().get(key)
-								.getPositionInMap())) {
-					if (_stage.getDoors().get(key).getStatusBlock() == Door.LOCK) {
+						door.getPositionInMap())) {
+					if (!door.isOpen()) 
 						return false;
-					}
 				}
 			}
 		}
@@ -163,7 +160,7 @@ public class EntityUtils {
 	}
 
 	/****************************************************************************************/
-	public static void checkIfDoorOpenWithKey(Entity _entity, StagesLevels _stage) {
+	public static void openDoor(Entity _entity, StagesLevel _stage) {
 		
 		Point position = _entity.getMapPositionOfCharacter();
 		Point north = TileWalk.walkTo("N", position, 1);
@@ -177,9 +174,8 @@ public class EntityUtils {
 		Door door = null;
 
 		if (_stage.getDoors().size() > 0) {
-			for (String key : _stage.getDoors().keySet()) {
-				Point doorPosition = 
-					_stage.getDoors().get(key).getPositionInMap();
+			for (Door doorAux : _stage.getDoors()) {
+				Point doorPosition = doorAux.getPositionInMap();
 				if (doorPosition.equals(north)
 						|| doorPosition.equals(south)
 						|| doorPosition.equals(west)
@@ -188,74 +184,18 @@ public class EntityUtils {
 						|| doorPosition.equals(northEast)
 						|| doorPosition.equals(southWest)
 						|| doorPosition.equals(southEast))
-					door = _stage.getDoors().get(key);
+					door = doorAux;
 			}
 			
-			if (door != null) {
-				if (door.getStatusBlock() == 1) {
-					if (_entity.object != null) {
-						if(_entity.object.getIdAssociated() != null) {
-							if (_entity.object.getIdAssociated().equals(door.getId())) {
-								door.setStatusBlock(Door.UNLOCK);
-								door.setStatusOpen(Door.OPEN);
-							} else 
-								_stage.getDialogues().addDialogue(
-										new Dialogue(
-												"Este objeto no puede \nabrir esta puerta",
-												Level_1_Stage_1.fontDialogues, 
-												Level_1_Stage_1.colorDialogues, 
-												1500, 
-												ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
-												Dialogue.CURRENT,
-												Dialogue.MEDIUM_PRIORITY
-										)
-								);
-						} else {
-							_stage.getDialogues().addDialogue(
-									new Dialogue(
-											"Este objeto no sirve \npara abrir puertas",
-											Level_1_Stage_1.fontDialogues, 
-											Level_1_Stage_1.colorDialogues, 
-											1500, 
-											ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
-											Dialogue.CURRENT,
-											Dialogue.MEDIUM_PRIORITY
-									)
-							);
-							door.setTryToOpen(true);
-						}
-					} else {
-						_stage.getDialogues().addDialogue(
-								new Dialogue(
-										"Debes conseguir algo \npara abrir la puerta",
-										Level_1_Stage_1.fontDialogues, 
-										Level_1_Stage_1.colorDialogues, 
-										1500, 
-										ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
-										Dialogue.CURRENT,
-										Dialogue.MEDIUM_PRIORITY
-								)
-						);
-						door.setTryToOpen(true);
-					}
-				} else 
-					_stage.getDialogues().addDialogue(
-							new Dialogue(
-									"Puerta abierta",
-									Level_1_Stage_1.fontDialogues, 
-									Level_1_Stage_1.colorDialogues, 
-									1500, 
-									ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
-									Dialogue.CURRENT,
-									Dialogue.MEDIUM_PRIORITY
-							)
-					);
-			} else 
+			if (door != null) 
+				door.openDoor(_entity);
+			
+			else 
 				_stage.getDialogues().addDialogue(
 						new Dialogue(
 								"Debes estar cerca de \nla puerta",
-								Level_1_Stage_1.fontDialogues, 
-								Level_1_Stage_1.colorDialogues, 
+								StagesLevel.fontDialogues, 
+								StagesLevel.colorDialogues, 
 								1500, 
 								ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
 								Dialogue.CURRENT,
@@ -278,7 +218,7 @@ public class EntityUtils {
 	}
 
 	/****************************************************************************************/
-	public static Object checkIsOverObject(Entity _entity, StagesLevels _stage) {
+	public static Object checkIsOverObject(Entity _entity, StagesLevel _stage) {
 		if (_stage.getObjects().size() > 0) {
 			for (Object object : _stage.getObjects()) {
 				if (	_entity.getXMap() == ((Object) object).getXMap()

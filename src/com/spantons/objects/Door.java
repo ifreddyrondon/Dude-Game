@@ -1,63 +1,51 @@
 package com.spantons.objects;
 
-import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import com.spantons.dialogue.Dialogue;
 import com.spantons.entity.Animation;
+import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.object.DrawObjectImmobile;
 import com.spantons.object.Object;
 import com.spantons.object.UpdateObjectImmobile;
 import com.spantons.singleton.ImageCache;
-import com.spantons.tileMap.TileMap;
+import com.spantons.stagesLevel.StagesLevel;
 
 public class Door extends Object {
 
-	public static final int ANIMATION_CLOSE_A = 0;
-	public static final int ANIMATION_OPEN_A = 1;
-	public static final int ANIMATION_CLOSE_B = 2;
-	public static final int ANIMATION_OPEN_B = 3;
+	public static int ANIMATION_CLOSE_A = 0;
+	public static int ANIMATION_OPEN_A = 1;
+	public static int ANIMATION_CLOSE_B = 2;
+	public static int ANIMATION_OPEN_B = 3;
 	
-	public static final int LOCK = 1;
-	public static final int UNLOCK = 2;
-	private int statusBlock;
+	enum DialoguesStatus {OPEN_DOOR, NEED_KEY, ERROR_KEY, STORY};
 	
-	public static final int OPEN = 1;
-	public static final int CLOSE = 2;
-	private int statusOpen;
-	private boolean tryToOpen = false;
-	private boolean doorToNextLvl;
+	private boolean open;
+	private boolean unlock;
 	
-	private String id;
+	private StagesLevel stage;
+	private Object key;
 	
 	private ArrayList<BufferedImage[]> sprites;
-	
-	private UpdateObjectImmobile updateObject;
-	private DrawObjectImmobile drawObject;
 
 	/****************************************************************************************/
-	public Door(
-			TileMap _tileMap, 
+	public Door(StagesLevel _stage, 
 			int _xMap, 
 			int _yMap, 
 			int _animation, 
-			int _statusOpen, 
-			int _statusBlock,
-			String _id,
-			boolean _doorToNextLvl) {
+			boolean _open, 
+			boolean _unlock) {
 		
-		super(_tileMap, _xMap, _yMap);
+		super(_stage.getTileMap(), _xMap, _yMap);
+		stage = _stage;
+		
+		open = _open;
+		unlock = _unlock;
 
-		description = "Puerta";
-		id = _id;
-		statusOpen = _statusOpen;
-		statusBlock = _statusBlock;
-		doorToNextLvl = _doorToNextLvl;
-		
-		updateObject = new UpdateObjectImmobile(tileMap, this);
-		drawObject = new DrawObjectImmobile(this);
+		update = new UpdateObjectImmobile(stage.getTileMap(), this);
+		draw = new DrawObjectImmobile(this);
 		
 		loadSprite();
 
@@ -105,11 +93,39 @@ public class Door extends Object {
 			e.printStackTrace();
 		}
 	}
+	
+	/****************************************************************************************/
+	public void openDoor(Entity _entity) {
+		if (open) {
+			open = false;
+			return;
+		}
+		
+		if (unlock) 
+			open = true;
+		
+		else {
+			if (_entity.getObject() == null) 
+				addDoorDialogue(DialoguesStatus.NEED_KEY);
+			
+			else {
+				if (_entity.getObject().equals(key)) 
+					open = true;
+				else {
+					if (key == null) 
+						addDoorDialogue(DialoguesStatus.ERROR_KEY);
+					else
+						addDoorDialogue(DialoguesStatus.STORY);
+				}
+					
+			}
+		}
+	}
 
 	/****************************************************************************************/
 	public void update() {
 
-		if (statusOpen == OPEN) {
+		if (open) {
 			if (currentAnimation == ANIMATION_CLOSE_A) {
 				currentAnimation = ANIMATION_OPEN_A;
 				animation.setFrames(sprites.get(ANIMATION_OPEN_A));
@@ -119,7 +135,7 @@ public class Door extends Object {
 				animation.setFrames(sprites.get(ANIMATION_OPEN_B));
 			}
 		}
-		else if (statusOpen == CLOSE) {
+		else {
 			if (currentAnimation == ANIMATION_OPEN_A) {
 				currentAnimation = ANIMATION_CLOSE_A;
 				animation.setFrames(sprites.get(ANIMATION_CLOSE_A));
@@ -129,62 +145,103 @@ public class Door extends Object {
 				animation.setFrames(sprites.get(ANIMATION_CLOSE_B));
 			}
 		}
-
-		updateObject.update();
-	}
-
-	/****************************************************************************************/
-	public void draw(Graphics2D g) {
-		drawObject.draw(g);
-	}
-	
-	/****************************************************************************************/
-	public Point getPositionInMap() {
-		return new Point(xMap, yMap);
-	}
-	
-	public int getStatusBlock() {
-		return statusBlock;
-	}
-
-	public void setStatusBlock(int statusBlock) {
-		this.statusBlock = statusBlock;
-	}
-
-	public int getStatusOpen() {
-		return statusOpen;
-	}
-
-	public void setStatusOpen(int statusOpen) {
-		this.statusOpen = statusOpen;
-	}
-	
-	public String getId(){
-		return id;
-	}
-
-	public boolean isTryToOpen() {
-		return tryToOpen;
-	}
-
-	public void setTryToOpen(boolean tryToOpen) {
-		this.tryToOpen = tryToOpen;
-	}
-
-	public boolean isDoorToNextLvl() {
-		return doorToNextLvl;
-	}
-
-	@Override
-	public void actionLoad() {
-		// TODO Auto-generated method stub
 		
+		boolean openDoors = true;
+		boolean trigger = false;
+		for (Object object : stage.getObjects()) {
+			if (object.getDescription().equals("Punto de activacion")) {
+				if (!object.isActivated()) {
+					openDoors = false;
+					break;
+				}
+				trigger = true;
+			}
+		}
+		if (openDoors && key != null && trigger) 
+			open = true;
+		else if(key != null && trigger)
+			open = false;
+			
+		update.update();
 	}
-
-	@Override
-	public void actionUnload() {
-		// TODO Auto-generated method stub
+	
+	/****************************************************************************************/
+	private void addDoorDialogue(DialoguesStatus _dialoguesStatus){
 		
+		switch (_dialoguesStatus) {
+		case OPEN_DOOR:
+			stage.getDialogues().addDialogue(
+					new Dialogue(
+							"Puerta abierta",
+							StagesLevel.fontDialogues, 
+							StagesLevel.colorDialogues, 
+							1500, 
+							ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
+							Dialogue.CURRENT,
+							Dialogue.MEDIUM_PRIORITY
+					)
+			);
+			break;
+			
+		case NEED_KEY:
+			stage.getDialogues().addDialogue(
+					new Dialogue(
+							"Debes conseguir algo \npara abrir la puerta",
+							StagesLevel.fontDialogues, 
+							StagesLevel.colorDialogues, 
+							1500, 
+							ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
+							Dialogue.CURRENT,
+							Dialogue.MEDIUM_PRIORITY
+					)
+			);
+			break;
+			
+		case ERROR_KEY:
+			stage.getDialogues().addDialogue(
+					new Dialogue(
+							"Este objeto no sirve \npara esta puerta",
+							StagesLevel.fontDialogues, 
+							StagesLevel.colorDialogues, 
+							1500, 
+							ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
+							Dialogue.CURRENT,
+							Dialogue.MEDIUM_PRIORITY
+					)
+			);
+			break;
+			
+		case STORY:
+			for (String txt : stage.getStringDialogues().get("STORY")) {
+				stage.getDialogues().addDialogue(
+						new Dialogue(txt,
+								StagesLevel.fontDialogues, 
+								StagesLevel.colorDialogues, 
+								1500, 
+								ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
+								Dialogue.CURRENT,
+								Dialogue.MEDIUM_PRIORITY
+						)
+				);
+			}
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+	/****************************************************************************************/
+	public boolean isOpen(){
+		return open;
+	}
+	
+	public void setOpen(boolean a){
+		open = a;
+	}
+	
+	public void setKey(Object o){
+		key = o;
 	}
 	
 }

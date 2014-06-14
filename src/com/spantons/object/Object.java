@@ -1,10 +1,12 @@
 package com.spantons.object;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import com.spantons.Interfaces.IDrawable;
+import com.spantons.Interfaces.ILoadSprite;
 import com.spantons.Interfaces.IUpdateable;
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
@@ -14,13 +16,12 @@ public abstract class Object implements IDrawable, IUpdateable {
 	
 	public static int NON_CONSUMABLE = 0;
 	public static int CONSUMABLE = 1;
+	protected int type;
 	protected int timeToConsumable;
 	
 	protected Entity carrier;
-	protected TileMap tileMap;
 	protected String description;
-	protected int type;
-	protected String idAssociated;
+	protected boolean activated;
 	
 	protected int xMap;
 	protected int yMap;
@@ -36,17 +37,36 @@ public abstract class Object implements IDrawable, IUpdateable {
 	protected int offSetXLoading;
 	protected int offSetYLoading;
 	
-	public abstract void actionLoad();
-	public abstract void actionUnload();
-	public abstract void update();
-	public abstract void draw(Graphics2D g);
+	protected IUpdateable update;
+	protected IDrawable draw;
+	protected IObjectAttribute attribute;
+	protected ILoadSprite loadSprite;
 	
 	/****************************************************************************************/
 	public Object(TileMap _tileMap, int _xMap, int _yMap) {
-		tileMap = _tileMap;
 		xMap = _xMap;
 		yMap = _yMap;
-		tileMap.setObjectToDraw(xMap, yMap, this);
+		_tileMap.setObjectToDraw(xMap, yMap, this);
+	}
+	
+	/****************************************************************************************/
+	public void update() {
+		update.update();
+	}
+	
+	/****************************************************************************************/
+	public void draw(Graphics2D g) {
+		draw.draw(g);
+	}
+
+	/****************************************************************************************/
+	public void actionLoad() {
+		attribute.loadAttribute(carrier);
+	}
+
+	/****************************************************************************************/
+	public void actionUnload() {
+		attribute.unloadAttribute(carrier);
 	}
 	
 	/****************************************************************************************/
@@ -54,29 +74,27 @@ public abstract class Object implements IDrawable, IUpdateable {
 		carrier = _entity;
 	}
 	
-	/****************************************************************************************/
 	public int getXMap() {
 		return xMap;
 	}
 	
-	/****************************************************************************************/
 	public int getYMap() {
 		return yMap;
 	}
 	
-	/****************************************************************************************/
 	public String getDescription() {
 		return description;
 	}
 	
-	/****************************************************************************************/
 	public int getType() {
 		return type;
 	}
 	
-	/****************************************************************************************/
-	public String getIdAssociated(){
-		return idAssociated;
+	public Point getPositionInMap() {
+		return new Point(xMap, yMap);
 	}
 	
+	public boolean isActivated(){
+		return activated;
+	}
 }

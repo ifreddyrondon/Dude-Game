@@ -14,11 +14,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.spantons.Interfaces.IUpdateable;
-import com.spantons.stagesLevel.StagesLevels;
+import com.spantons.stagesLevel.StagesLevel;
 
 public class ParseXMLEntity {
 
-	public static Entity getEntityFromXML(String _path, StagesLevels _stage, int _xMap, int _yMap){
+	public static Entity getEntityFromXML(String _path, StagesLevel _stage, int _xMap, int _yMap){
 		try {
 			File file = new File(_path);
 			
@@ -47,7 +47,7 @@ public class ParseXMLEntity {
 	 * @throws InstantiationException 
 	 * @throws IllegalArgumentException **************************************************************************************/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static Entity createEntity(NodeList childNodes, StagesLevels _stage, int _xMap, int _yMap) throws DOMException, ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	private static Entity createEntity(NodeList childNodes, StagesLevel _stage, int _xMap, int _yMap) throws DOMException, ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		 
 		if(childNodes != null && childNodes.getLength() > 0) {
 			for (int i = 0; i < childNodes.getLength(); i++) {

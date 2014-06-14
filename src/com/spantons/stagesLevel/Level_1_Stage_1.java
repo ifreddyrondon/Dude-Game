@@ -1,25 +1,19 @@
 package com.spantons.stagesLevel;
 
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.swing.Timer;
 
 import com.spantons.dialogue.Dialogue;
 import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
-import com.spantons.entity.EntityUtils;
-import com.spantons.entity.Hud;
 import com.spantons.entity.ParseXMLEntity;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
 import com.spantons.magicNumbers.XMLPath;
-import com.spantons.object.HandleObjects;
 import com.spantons.object.Object;
 import com.spantons.objects.Alcohol;
 import com.spantons.objects.Beers;
@@ -34,11 +28,8 @@ import com.spantons.singleton.SoundCache;
 import com.spantons.stages.GameStagesManager;
 import com.spantons.tileMap.TileMap;
 
-public class Level_1_Stage_1 extends StagesLevels {
-
-	private CheckTransparentWallsLvl1Stage1 checkTransparentWalls;
-	private TransformTransparentWallsLv1Stage1 transformTransparentWalls;
-	 
+public class Level_1_Stage_1 extends StagesLevel {
+ 
 	private Timer lightsDeploy;
 
 	public static int TRANSPARENT = 65;
@@ -53,13 +44,10 @@ public class Level_1_Stage_1 extends StagesLevels {
 		new Point(23, 14),new Point(23, 15)};
 	
 	/****************************************************************************************/
-	public Level_1_Stage_1(GameStagesManager _gsm) {
-		gsm = _gsm;
+	public Level_1_Stage_1(GameStagesManager _gsm) {	
+		super(_gsm);
 		
-		hud = new Hud(this);
-		secondaryMenu = false;
 		tileMap = new TileMap("/maps/map_1_1.txt");
-		tileMap.setPosition(0, 0);
 		countdown = 120;
 		countdownStartDialogues = 2000;
 		
@@ -67,7 +55,8 @@ public class Level_1_Stage_1 extends StagesLevels {
 		enemies = new ArrayList<Entity>();
 		dead = new ArrayList<Entity>();
 		objects = new ArrayList<Object>();
-		doors = new HashMap<String, Door>();
+		doors = new ArrayList<Door>();
+		exitPoint = new Point(21,5);
 		
 		currentCharacter = ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_LEON_THE_PROFESSIONAL, this, 16, 19);
 
@@ -79,35 +68,22 @@ public class Level_1_Stage_1 extends StagesLevels {
 		enemies.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, 17, 12));
 		enemies.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, 26, 23));
 		
-		doors.put("panicroom", new Door(
-				tileMap, 19,18, 
-				Door.ANIMATION_OPEN_A, 
-				Door.OPEN, 
-				Door.UNLOCK,"panicroom",
-				false));
+		Object crowbar = new Crowbar(tileMap, 10, 12, 0.23);
+		Door exit = new Door(this, 21,5, Door.ANIMATION_CLOSE_A, false, false);
+		exit.setKey(crowbar);
 		
-		doors.put("exit", new Door(
-				tileMap, 21,5, 
-				Door.ANIMATION_CLOSE_A, 
-				Door.CLOSE, 
-				Door.LOCK,"exit",
-				true));
+		doors.add(
+			new Door(this, 19,18, Door.ANIMATION_OPEN_A, true, true));
 		
-		doors.put("bathroom", new Door(
-				tileMap, 21,16, 
-				Door.ANIMATION_OPEN_B, 
-				Door.OPEN, 
-				Door.UNLOCK,"bathroom",
-				false));
+		doors.add(exit);
 		
-		doors.put("main", new Door(
-				tileMap, 33,27, 
-				Door.ANIMATION_CLOSE_B, 
-				Door.CLOSE, 
-				Door.LOCK,"main",
-				false));
+		doors.add(
+			new Door(this, 21,16, Door.ANIMATION_OPEN_B, true, true));
 		
-		objects.add(new Crowbar(tileMap, 10, 12, 0.23, "exit"));
+		doors.add(
+			new Door(this, 33,27, Door.ANIMATION_CLOSE_B, false, false));
+		
+		objects.add(crowbar);
 		objects.add(new Hammer(tileMap, 12, 13, 0.15));
 		objects.add(new Hammer(tileMap, 14, 18, 0.15));
 		objects.add(new Hammer(tileMap, 25, 32, 0.15));
@@ -126,15 +102,21 @@ public class Level_1_Stage_1 extends StagesLevels {
 		objects.add(new Pizza(tileMap, 32, 8));
 		objects.add(new Food(tileMap, 11,11));
 		
-		SoundCache.getInstance().getSound(SoundPath.MUSIC_HORROR_AMBIANCE).loop();
-		
 		dialogues = new DialogueStage1(this);
+		
+		stringDialogues.get("AWAKENING").add("Hey qué hago aquí");
+		stringDialogues.get("AWAKENING").add("Quienes son ustedes");
+		stringDialogues.get("AWAKENING").add("Qué sucede");
+		stringDialogues.get("AWAKENING").add("???");
+		
+		stringDialogues.get("STORY").add("Parece que hay algo \ndetrás que no deja abrirla");
+		stringDialogues.get("STORY").add("Necesitamos una palanca!!");
 		
 		startDialogues =  new Timer(countdownStartDialogues, new ActionListener() { 
 			@Override 
 			public void actionPerformed(ActionEvent ae) { 
-				for (String txt : getDialogues().getStrings().get("THOUGHTS_AWAKENING_1")) {
-					getDialogues().addDialogue(
+				for (String txt : stringDialogues.get("AWAKENING")) {
+					dialogues.addDialogue(
 						new Dialogue(
 							txt,fontDialogues, colorDialogues, 2500, 
 							ImagePath.DIALOGUE_SPEECH_BALLON_NORMAL,
@@ -165,16 +147,20 @@ public class Level_1_Stage_1 extends StagesLevels {
 		Point[] disable = {new Point(21, 16)};
 		
 		checkTransparentWalls = new CheckTransparentWallsLvl1Stage1(enable, disable);
-		transformTransparentWalls = new TransformTransparentWallsLv1Stage1(tileMap, doors.get("bathroom"));
+		transformTransparentWalls = new TransformTransparentWallsLv1Stage1(tileMap);
 		drawLevel = new DrawLevel(tileMap, hud, dialogues);
 		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
 		drawLevel.setCountdown(countdown);
-		handleObject = new HandleObjects();
+		goals =  new GoalsLevel_1_Stage_1(this);
+		
 	}
 	
 	/****************************************************************************************/
 	@Override
 	public void update() {
+		
+		if (goals != null) 
+			goals.checkGoals();
 		
 		if (characters.isEmpty() && currentCharacter.isDead()) 
 			gsm.setStage(GameStagesManager.GAME_OVER_STAGE);
@@ -184,10 +170,12 @@ public class Level_1_Stage_1 extends StagesLevels {
 		
 		currentCharacter.update();
 		
-		if (checkTransparentWalls.checkTransparent(currentCharacter)) 
-			transformTransparentWalls.transformToTransparentWalls();
-		else
-			transformTransparentWalls.transformToOriginalWalls();
+		if (checkTransparentWalls != null) {
+			if (checkTransparentWalls.checkTransparent(currentCharacter)) 
+				transformTransparentWalls.transformToTransparentWalls();
+			else
+				transformTransparentWalls.transformToOriginalWalls();
+		}
 		
 		if (dialogues != null) 
 			dialogues.update();
@@ -208,43 +196,14 @@ public class Level_1_Stage_1 extends StagesLevels {
 		}
 		
 		if (doors.size() > 0) {
-		      for(String key : doors.keySet()) {
-		      	doors.get(key).update();
-		      	
-		      	if (	doors.get(key).isDoorToNextLvl() 
-		      		&& doors.get(key).isTryToOpen()) {
-					
-		      		for (String txt : getDialogues().getStrings().get("STORY_DOOR")) {
-						getDialogues().addDialogue(
-							new Dialogue(
-								txt,fontDialogues, colorDialogues, 1600, 
-								ImagePath.DIALOGUE_SPEECH_BALLON_HIGH,
-								Dialogue.CURRENT, Dialogue.HIGH_PRIORITY
-						));
-					}
-		      		doors.get(key).setTryToOpen(false);
-				
-		      	} else if (	doors.get(key).isDoorToNextLvl() 
-		      				&& doors.get(key).getStatusOpen() == Door.OPEN) {
-		      		
-		      		SoundCache.getInstance().stopAllSound();
-		      		gsm.setCurrentCharacter(currentCharacter);
-		      		gsm.setCharacters(characters);
-		      		gsm.setStage(GameStagesManager.LEVEL_1_STAGE_2);
-		      	}
-		      }
+		      for(Door door : doors) 
+		      	door.update();
 		}
 		
 		if (dead.size() > 0) {
 			for (Entity _dead : dead)
 				_dead.update();
 		}
-	}
-	
-	/****************************************************************************************/
-	@Override
-	public void draw(Graphics2D g) {
-		drawLevel.draw(g);
 	}
 	
 	/****************************************************************************************/
@@ -272,59 +231,5 @@ public class Level_1_Stage_1 extends StagesLevels {
 		enemies.addAll(aux);
 	}
 	
-	/****************************************************************************************/
-	@Override
-	public void keyPressed(int k) {
 		
-		if (k == KeyEvent.VK_LEFT)
-			currentCharacter.setMovLeft(true);
-		if (k == KeyEvent.VK_RIGHT)
-			currentCharacter.setMovRight(true);
-		if (k == KeyEvent.VK_UP)
-			currentCharacter.setMovUp(true);
-		if (k == KeyEvent.VK_DOWN)
-			currentCharacter.setMovDown(true);
-		if (k == KeyEvent.VK_TAB) {
-			Entity oldCurrentCharacter = currentCharacter;
-			currentCharacter = nextCharacter.selectNextCharacter();
-			if (currentCharacter == null) {
-				currentCharacter = oldCurrentCharacter;
-				dialogues.alone();
-			}
-		}
-		if (k == KeyEvent.VK_SPACE)
-			currentCharacter.setAttack(true);
-		if (k == KeyEvent.VK_ENTER)
-			handleObject.takeOrLeaveObject(currentCharacter);
-		if (k == KeyEvent.VK_O)
-			EntityUtils.checkIfDoorOpenWithKey(currentCharacter, this);
-		if(k == KeyEvent.VK_ESCAPE)
-			secondaryMenu = !secondaryMenu;
-		if(k == KeyEvent.VK_R && secondaryMenu)
-			secondaryMenu = false;
-		if(k == KeyEvent.VK_Q && secondaryMenu){
-			SoundCache.getInstance().closeAllSound();
-			System.exit(0);
-		}
-		if(k == KeyEvent.VK_M && secondaryMenu){
-			SoundCache.getInstance().stopAllSound();
-			gsm.setStage(GameStagesManager.MENU_STAGE);
-		}
-	}
-	
-	/****************************************************************************************/
-	@Override
-	public void keyReleased(int k) {
-		if (k == KeyEvent.VK_LEFT)
-			currentCharacter.setMovLeft(false);
-		if (k == KeyEvent.VK_RIGHT)
-			currentCharacter.setMovRight(false);
-		if (k == KeyEvent.VK_UP)
-			currentCharacter.setMovUp(false);
-		if (k == KeyEvent.VK_DOWN)
-			currentCharacter.setMovDown(false);
-		if (k == KeyEvent.VK_SPACE)
-			currentCharacter.setAttack(false);	
-	}
-	
 }

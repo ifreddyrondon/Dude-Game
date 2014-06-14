@@ -13,10 +13,9 @@ import javax.swing.Timer;
 
 import com.spantons.entity.UpdateEnemy;
 import com.spantons.magicNumbers.ImagePath;
-import com.spantons.magicNumbers.StringDialogue;
 import com.spantons.main.GamePanel;
 import com.spantons.singleton.ImageCache;
-import com.spantons.stagesLevel.StagesLevels;
+import com.spantons.stagesLevel.StagesLevel;
 
 class DialogueComparator implements Comparator<Dialogue> {
 
@@ -44,12 +43,11 @@ public class DialogueStage1 extends DialogueManager {
 	private Comparator<Dialogue> comparator;
 	
 	/****************************************************************************************/
-	public DialogueStage1(StagesLevels _stage) {
+	public DialogueStage1(StagesLevel _stage) {
 		stage = _stage;
 		comparator = new DialogueComparator();
 		dialogues = new PriorityQueue<Dialogue>(10, comparator);
 		strings = new HashMap<String, String[]>();
-		loadStrings();
 		
 		secondaryMenuFont = new Font("Century Gothic", Font.PLAIN, 35);
 		aloneFont = new Font("Century Gothic", Font.PLAIN, 50);
@@ -58,18 +56,6 @@ public class DialogueStage1 extends DialogueManager {
 		characterHeight = stage.getCurrentCharacter().getSpriteHeight();
 
 		defineTimers();
-	}
-	
-	/****************************************************************************************/
-	private void loadStrings() {
-		
-		getStrings().put("THOUGHTS_RAMDON", StringDialogue.THOUGHTS_RAMDON);
-		getStrings().put("THOUGHTS_WANTOUT", StringDialogue.THOUGHTS_WANTOUT);
-		getStrings().put("THOUGHTS_AWAKENING_1", StringDialogue.THOUGHTS_AWAKENING_1);
-		getStrings().put("STORY_DOOR", StringDialogue.STORY_DOOR_MAIN_ROOM);
-		getStrings().put("STORY_ROOM_1", StringDialogue.STORY_ROOM_1);
-		getStrings().put("STORY_MAIN_ROOM", StringDialogue.STORY_MAIN_ROOM);
-		getStrings().put("STORY_DOOR_ROOM_1", StringDialogue.STORY_DOOR_ROOM_1);
 	}
 
 	/****************************************************************************************/

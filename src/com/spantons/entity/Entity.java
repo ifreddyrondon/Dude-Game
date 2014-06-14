@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import com.spantons.Interfaces.IDrawable;
 import com.spantons.Interfaces.IUpdateable;
 import com.spantons.object.Object;
-import com.spantons.stagesLevel.StagesLevels;
+import com.spantons.stagesLevel.StagesLevel;
 import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.PositionUtil;
 import com.spantons.utilities.TileWalk;
@@ -31,7 +31,7 @@ public class Entity {
 	protected static final int IDLE = 3;
 	protected static final int DEAD = 5;
 	
-	protected StagesLevels stage;
+	protected StagesLevel stage;
 	
 	protected TileMap tileMap;
 	protected int xMap;
@@ -85,7 +85,7 @@ public class Entity {
 	private IUpdateable updateCurrent;
 	
 	/****************************************************************************************/
-	public Entity(StagesLevels _stage, int _xMap, int _yMap) {
+	public Entity(StagesLevel _stage, int _xMap, int _yMap) {
 		if (_stage.getTileMap() != null) {
 			stage = _stage;
 			tileMap = _stage.getTileMap();
@@ -97,8 +97,8 @@ public class Entity {
 			tileMap.setEntityToDraw(xMap, yMap, this);
 			flinchingIncreasePerversity = true;
 			object = null;
-			busy = false;
 			tileMap.setTransparentWalls("");
+			busy = false;
 			draw = new DrawEntity(this);
 			updateDead = new UpdateDeadEntity(this);
 			updateAnimation = new UpdateAnimationEntity(this);
@@ -107,7 +107,7 @@ public class Entity {
 	}
 
 	/****************************************************************************************/
-	public void respawn(StagesLevels _stage, int _xMap, int _yMap){
+	public void respawn(StagesLevel _stage, int _xMap, int _yMap){
 		if (_stage.getTileMap() != null) {
 			stage = _stage;
 			tileMap = _stage.getTileMap();
@@ -120,8 +120,8 @@ public class Entity {
 			flinchingIncreasePerversity = true;
 			damage = damageBackup;
 			object = null;
-			busy = false;
 			tileMap.setTransparentWalls("");
+			busy = false;
 		}
 	}
 	/****************************************************************************************/
@@ -316,14 +316,6 @@ public class Entity {
 		return facingRight;
 	}
 	
-	public boolean isBusy(){
-		return busy;
-	}
-	
-	public void setBusy(boolean a){
-		busy = a;
-	}
-
 	public int getMoveSpeed() {
 		return moveSpeed;
 	}
@@ -340,11 +332,20 @@ public class Entity {
 		object = o;
 	}
 	
-	public StagesLevels getStage(){
+	public StagesLevel getStage(){
 		return stage;
 	}
 
 	public TileMap getTileMap(){
 		return tileMap;
 	}
+	
+	public boolean isBusy(){
+		return busy;
+	}
+	
+	public void setBusy(boolean a){
+		busy = a;
+	}
+
 }

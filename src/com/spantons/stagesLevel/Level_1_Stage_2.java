@@ -1,25 +1,19 @@
 package com.spantons.stagesLevel;
 
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.swing.Timer;
 
 import com.spantons.dialogue.Dialogue;
 import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
-import com.spantons.entity.EntityUtils;
-import com.spantons.entity.Hud;
 import com.spantons.entity.ParseXMLEntity;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
 import com.spantons.magicNumbers.XMLPath;
-import com.spantons.object.HandleObjects;
 import com.spantons.object.Object;
 import com.spantons.objects.Alcohol;
 import com.spantons.objects.Beers;
@@ -35,7 +29,7 @@ import com.spantons.stages.GameStagesManager;
 import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.RandomItemArrayList;
 
-public class Level_1_Stage_2 extends StagesLevels{
+public class Level_1_Stage_2 extends StagesLevel{
 
 	private Timer lightsDeploy;
 	private Timer lightsOn;
@@ -43,22 +37,21 @@ public class Level_1_Stage_2 extends StagesLevels{
 	private Timer lightsOff;
 	private int timeLightsOff = 1100;
 	boolean allTriggerPointActivated;
-	Point[] exitPoint = {new Point(28,3),new Point(29,3),new Point(30,3)};
 
 	/****************************************************************************************/
 	public Level_1_Stage_2(GameStagesManager _gsm) {
-		gsm = _gsm;
-		hud = new Hud(this);
-		secondaryMenu = false;
+		super(_gsm);
+		
 		tileMap = new TileMap("/maps/map_1_2.txt");
 		tileMap.setPosition(0, 0);
 		countdown = 100;
 		countdownStartDialogues = 1300;
+		exitPoint = new Point(29,4);
 		
 		enemies = new ArrayList<Entity>();
 		dead = new ArrayList<Entity>();
 		objects = new ArrayList<Object>();
-		doors = new HashMap<String, Door>();
+		doors = new ArrayList<Door>();
 		
 		currentCharacter = gsm.getCurrentCharacter();
 		currentCharacter.respawn(this, 28, 34);
@@ -77,22 +70,16 @@ public class Level_1_Stage_2 extends StagesLevels{
 		
 		enemies.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, 18, 24));
 		
-		doors.put("hall", new Door(
-				tileMap, 33,38, 
-				Door.ANIMATION_CLOSE_A, 
-				Door.CLOSE, 
-				Door.LOCK,"hall",
-				false));
+		doors.add( new Door(
+				this, 33,38, Door.ANIMATION_CLOSE_A, false, false));
 		
-		doors.put("exit", new Door(
-				tileMap, 29,4, 
-				Door.ANIMATION_CLOSE_B, 
-				Door.CLOSE, 
-				Door.LOCK,"exit",
-				true));
+		Door exitDoor = new Door(this, 29,4, Door.ANIMATION_CLOSE_B, false, false);
+		Object trigger1 = new TriggerPoint(this, 11, 23);
+		exitDoor.setKey(trigger1);
+		doors.add(exitDoor);
 		
-		objects.add(new TriggerPoint(tileMap, this, 11, 23));
-		objects.add(new TriggerPoint(tileMap, this, 6, 6));
+		objects.add(trigger1);
+		objects.add(new TriggerPoint(this, 6, 6));
 		objects.add(new Hammer(tileMap, 19, 9, 0.15));
 		objects.add(new Hammer(tileMap, 7, 16, 0.15));
 		objects.add(new Alcohol(tileMap, 27, 18));
@@ -111,15 +98,22 @@ public class Level_1_Stage_2 extends StagesLevels{
 		objects.add(new Pizza(tileMap,22, 28));
 		objects.add(new Food(tileMap, 35,5));
 		
-		SoundCache.getInstance().getSound(SoundPath.MUSIC_HORROR_AMBIANCE).loop();
-		
 		dialogues = new DialogueStage1(this);
+		
+		stringDialogues.get("AWAKENING").add("Falta alguien");
+		stringDialogues.get("AWAKENING").add("Seguro se quedó para \nusar el baño");
+		stringDialogues.get("AWAKENING").add("Qué asqueroso");
+		stringDialogues.get("AWAKENING").add("Tal vez encontró una \nsalida");
+		
+		stringDialogues.get("STORY").add("Que puerta para particular");
+		stringDialogues.get("STORY").add("Creo que se abre con\n botones");
+		stringDialogues.get("STORY").add("Parece que tenemos que \n presionar algo");
 				
 		startDialogues =  new Timer(countdownStartDialogues, new ActionListener() { 
 			@Override 
 			public void actionPerformed(ActionEvent ae) { 
-				for (String txt : getDialogues().getStrings().get("STORY_ROOM_1")) {
-					getDialogues().addDialogue(
+				for (String txt : stringDialogues.get("AWAKENING")) {
+					dialogues.addDialogue(
 						new Dialogue(
 							txt,fontDialogues, colorDialogues, 2500, 
 							ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
@@ -170,34 +164,29 @@ public class Level_1_Stage_2 extends StagesLevels{
 		drawLevel = new DrawLevel(tileMap, hud, dialogues);
 		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
 		drawLevel.setCountdown(countdown);
-		handleObject = new HandleObjects();
+		goals =  new GoalsLevel_1_Stage_2(this);
 	}
 
 	/****************************************************************************************/
 	@Override
 	public void update() {
 		
+		if (goals != null) 
+			goals.checkGoals();
+		
 		if (characters.isEmpty() && currentCharacter.isDead()) 
 			gsm.setStage(GameStagesManager.GAME_OVER_STAGE);
-		
+
 		if (currentCharacter.isDead()) 
 			currentCharacter = nextCharacter.selectNextCharacter();
 		
 		currentCharacter.update();
 		
-		for (Point exit : exitPoint) {
-			if (currentCharacter.getMapPositionOfCharacter().equals(exit)) {
-				SoundCache.getInstance().stopAllSound();
-	      		gsm.setCurrentCharacter(currentCharacter);
-	      		ArrayList<Entity> charactersNotBusy = new ArrayList<Entity>();
-	      		for (Entity entity : characters) {
-					if (!entity.isBusy()) 
-						charactersNotBusy.add(entity);
-				}
-	      		gsm.setCharacters(charactersNotBusy);
-	      		currentCharacter.setAllMov(false);
-	      		gsm.setStage(GameStagesManager.LEVEL_1_STAGE_3);
-			}
+		if (checkTransparentWalls != null) {
+			if (checkTransparentWalls.checkTransparent(currentCharacter)) 
+				transformTransparentWalls.transformToTransparentWalls();
+			else
+				transformTransparentWalls.transformToOriginalWalls();
 		}
 		
 		if (dialogues != null) 
@@ -214,62 +203,19 @@ public class Level_1_Stage_2 extends StagesLevels{
 		}
 		
 		if (objects.size() > 0) {
-			allTriggerPointActivated = true;
-			for (Object object : objects) {
+			for (Object object : objects) 
 				object.update();
-				
-				if (	object.getDescription().equals("Punto de activacion") 
-					&& allTriggerPointActivated) {
-					TriggerPoint aux = (TriggerPoint) object;
-					if (!aux.isActivated()) 
-						allTriggerPointActivated = false;
-				}
-			}
 		}
 		
 		if (doors.size() > 0) {
-		      for(String key : doors.keySet()) {
-		      	doors.get(key).update();
-		      	
-		      	if (doors.get(key).isDoorToNextLvl()) {
-		      	
-		      		if (allTriggerPointActivated) {
-		      			doors.get(key).setStatusBlock(Door.UNLOCK);
-		      			doors.get(key).setStatusOpen(Door.OPEN);
-			      		return;
-			      	
-		      		} else {
-		      			doors.get(key).setStatusBlock(Door.LOCK);
-		      			doors.get(key).setStatusOpen(Door.CLOSE);
-		      		}
-		      		
-		      		if(doors.get(key).isTryToOpen()) {
-		      		
-			      		for (String txt : getDialogues().getStrings().get("STORY_DOOR_ROOM_1")) {
-			      			
-							getDialogues().addDialogue(
-								new Dialogue(
-									txt,fontDialogues, colorDialogues, 1800, 
-									ImagePath.DIALOGUE_SPEECH_BALLON_HIGH,
-									Dialogue.CURRENT, Dialogue.HIGH_PRIORITY
-							));
-						}
-			      		doors.get(key).setTryToOpen(false);
-					}
-		      	}	
-		      }
+		      for(Door door : doors) 
+		      	door.update();
 		}
 		
 		if (dead.size() > 0) {
 			for (Entity _dead : dead)
 				_dead.update();
 		}
-	}
-
-	/****************************************************************************************/
-	@Override
-	public void draw(Graphics2D g) {
-		drawLevel.draw(g);
 	}
 
 	/****************************************************************************************/
@@ -295,60 +241,6 @@ public class Level_1_Stage_2 extends StagesLevels{
 			aux.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, jason.getXMap(), jason.getYMap()));
 		
 		enemies.addAll(aux);
-	}
-	
-	/****************************************************************************************/
-	@Override
-	public void keyPressed(int k) {
-		if (k == KeyEvent.VK_LEFT)
-			currentCharacter.setMovLeft(true);
-		if (k == KeyEvent.VK_RIGHT)
-			currentCharacter.setMovRight(true);
-		if (k == KeyEvent.VK_UP)
-			currentCharacter.setMovUp(true);
-		if (k == KeyEvent.VK_DOWN)
-			currentCharacter.setMovDown(true);
-		if (k == KeyEvent.VK_TAB) {
-			Entity oldCurrentCharacter = currentCharacter;
-			currentCharacter = nextCharacter.selectNextCharacter();
-			if (currentCharacter == null) {
-				currentCharacter = oldCurrentCharacter;
-				dialogues.alone();
-			}
-		}
-		if (k == KeyEvent.VK_SPACE)
-			currentCharacter.setAttack(true);
-		if (k == KeyEvent.VK_ENTER)
-			handleObject.takeOrLeaveObject(currentCharacter);
-		if (k == KeyEvent.VK_O)
-			EntityUtils.checkIfDoorOpenWithKey(currentCharacter, this);
-		if(k == KeyEvent.VK_ESCAPE)
-			secondaryMenu = !secondaryMenu;
-		if(k == KeyEvent.VK_R && secondaryMenu)
-			secondaryMenu = false;
-		if(k == KeyEvent.VK_Q && secondaryMenu){
-			SoundCache.getInstance().closeAllSound();
-			System.exit(0);
-		}
-		if(k == KeyEvent.VK_M && secondaryMenu){
-			SoundCache.getInstance().stopAllSound();
-			gsm.setStage(GameStagesManager.MENU_STAGE);
-		}
-	}
-
-	/****************************************************************************************/
-	@Override
-	public void keyReleased(int k) {
-		if (k == KeyEvent.VK_LEFT)
-			currentCharacter.setMovLeft(false);
-		if (k == KeyEvent.VK_RIGHT)
-			currentCharacter.setMovRight(false);
-		if (k == KeyEvent.VK_UP)
-			currentCharacter.setMovUp(false);
-		if (k == KeyEvent.VK_DOWN)
-			currentCharacter.setMovDown(false);
-		if (k == KeyEvent.VK_SPACE)
-			currentCharacter.setAttack(false);
 	}
 	
 }
