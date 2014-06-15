@@ -1,19 +1,20 @@
-package com.spantons.objects;
+package com.spantons.stagesLevel;
 
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import com.spantons.Interfaces.IDrawable;
 import com.spantons.dialogue.Dialogue;
 import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.ImagePath;
-import com.spantons.object.DrawObjectImmobile;
 import com.spantons.object.Object;
-import com.spantons.object.UpdateObjectImmobile;
 import com.spantons.singleton.ImageCache;
-import com.spantons.stagesLevel.StagesLevel;
+import com.spantons.utilities.PositionUtil;
 
-public class Door extends Object {
+public class Door implements IDrawable {
 
 	public static int ANIMATION_CLOSE_A = 0;
 	public static int ANIMATION_OPEN_A = 1;
@@ -22,6 +23,14 @@ public class Door extends Object {
 	
 	enum DialoguesStatus {OPEN_DOOR, NEED_KEY, ERROR_KEY, STORY};
 	
+	private int xMap;
+	private int yMap;
+	private int x;
+	private int y;
+	private int spriteWidth;
+	private int spriteHeight;
+	private Animation animation;
+	private int currentAnimation;
 	private boolean open;
 	private boolean unlock;
 	
@@ -38,14 +47,14 @@ public class Door extends Object {
 			boolean _open, 
 			boolean _unlock) {
 		
-		super(_stage.getTileMap(), _xMap, _yMap);
+		xMap = _xMap;
+		yMap = _yMap;
+		_stage.getTileMap().setObjectToDraw(xMap, yMap, this);
+		
 		stage = _stage;
 		
 		open = _open;
 		unlock = _unlock;
-
-		update = new UpdateObjectImmobile(stage.getTileMap(), this);
-		draw = new DrawObjectImmobile(this);
 		
 		loadSprite();
 
@@ -150,10 +159,8 @@ public class Door extends Object {
 		boolean trigger = false;
 		for (Object object : stage.getObjects()) {
 			if (object.getDescription().equals("Punto de activacion")) {
-				if (!object.isActivated()) {
+				if (!object.isActivated()) 
 					openDoors = false;
-					break;
-				}
 				trigger = true;
 			}
 		}
@@ -162,7 +169,20 @@ public class Door extends Object {
 		else if(key != null && trigger)
 			open = false;
 			
-		update.update();
+		Point absolutePosition = PositionUtil.calculatePositionToDraw(stage.getTileMap(), xMap, yMap);
+		x = absolutePosition.x;
+		y = absolutePosition.y;
+	}
+	
+	/****************************************************************************************/
+	@Override
+	public void draw(Graphics2D g) {
+		g.drawImage(
+				animation.getCurrentImageFrame(), 
+				x - spriteWidth / 2,
+				y - spriteHeight, 
+				null);
+		
 	}
 	
 	/****************************************************************************************/
@@ -244,4 +264,8 @@ public class Door extends Object {
 		key = o;
 	}
 	
+	public Point getPositionInMap() {
+		return new Point(xMap, yMap);
+	}
+
 }

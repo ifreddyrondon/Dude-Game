@@ -1,7 +1,6 @@
 package com.spantons.object;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -12,7 +11,7 @@ import com.spantons.entity.Animation;
 import com.spantons.entity.Entity;
 import com.spantons.tileMap.TileMap;
 
-public abstract class Object implements IDrawable, IUpdateable {
+public class Object implements IDrawable {
 	
 	public static int NON_CONSUMABLE = 0;
 	public static int CONSUMABLE = 1;
@@ -88,10 +87,6 @@ public abstract class Object implements IDrawable, IUpdateable {
 	
 	public int getType() {
 		return type;
-	}
-	
-	public Point getPositionInMap() {
-		return new Point(xMap, yMap);
 	}
 	
 	public boolean isActivated(){

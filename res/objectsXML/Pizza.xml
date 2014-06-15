@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Object>
+    <Description>Pizza</Description>
+    <Scale>1</Scale>
+    <Type>CONSUMABLE</Type>
+    <TimeToConsumable>0</TimeToConsumable> 
+    <Update>UpdateObjectImmobile</Update>
+    <Draw>DrawObjectImmobile</Draw>
+    <Attribute>ObjectAttributeGetHealth</Attribute>
+    <AttributeValue>0.8</AttributeValue>
+    <Sprite>/objects_sprites/Pizza.png</Sprite>
+    <LoadSprite>LoadSpriteObjectSingleAnimation</LoadSprite>
+</Object>

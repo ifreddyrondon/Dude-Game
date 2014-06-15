@@ -19,7 +19,6 @@ import com.spantons.magicNumbers.SoundPath;
 import com.spantons.object.HandleObjects;
 import com.spantons.object.IHandleObjects;
 import com.spantons.object.Object;
-import com.spantons.objects.Door;
 import com.spantons.singleton.FontCache;
 import com.spantons.singleton.SoundCache;
 import com.spantons.stages.GameStagesManager;
@@ -69,6 +68,56 @@ public abstract class StagesLevel implements IStage {
 		stringDialogues.put("STORY", new ArrayList<String>());
 		
 		SoundCache.getInstance().getSound(SoundPath.MUSIC_HORROR_AMBIANCE).loop();
+	}
+	
+	/****************************************************************************************/
+	public void update() {
+		
+		if (goals != null) 
+			goals.checkGoals();
+		
+		if (characters.isEmpty() && currentCharacter.isDead()) 
+			gsm.setStage(GameStagesManager.GAME_OVER_STAGE);
+
+		if (currentCharacter.isDead()) 
+			currentCharacter = nextCharacter.selectNextCharacter();
+		
+		currentCharacter.update();
+		
+		if (checkTransparentWalls != null) {
+			if (checkTransparentWalls.checkTransparent(currentCharacter)) 
+				transformTransparentWalls.transformToTransparentWalls();
+			else
+				transformTransparentWalls.transformToOriginalWalls();
+		}
+		
+		if (dialogues != null) 
+			dialogues.update();
+		
+		if (characters.size() > 0) {
+			for (Entity character : characters)
+				character.update();
+		}
+		
+		if (enemies.size() > 0) {
+			for (Entity jason : enemies) 
+				jason.update();
+		}
+		
+		if (objects.size() > 0) {
+			for (Object object : objects) 
+				object.update();
+		}
+		
+		if (doors.size() > 0) {
+		      for(Door door : doors) 
+		      	door.update();
+		}
+		
+		if (dead.size() > 0) {
+			for (Entity _dead : dead)
+				_dead.update();
+		}
 	}
 	
 	/****************************************************************************************/

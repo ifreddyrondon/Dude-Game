@@ -11,7 +11,6 @@ import com.spantons.entity.Entity;
 import com.spantons.entity.ParseXMLEntity;
 import com.spantons.magicNumbers.XMLPath;
 import com.spantons.object.Object;
-import com.spantons.objects.Door;
 import com.spantons.stages.GameStagesManager;
 import com.spantons.tileMap.TileMap;
 
@@ -67,30 +66,4 @@ public class Level_1_Stage_3 extends StagesLevel {
 		
 	}
 	
-	/****************************************************************************************/
-	@Override
-	public void update() {
-		
-		if (characters.isEmpty() && currentCharacter.isDead()) 
-			gsm.setStage(GameStagesManager.GAME_OVER_STAGE);
-		
-		if (currentCharacter.isDead()) 
-			currentCharacter = nextCharacter.selectNextCharacter();
-		
-		currentCharacter.update();
-		
-		if (dialogues != null) 
-			dialogues.update();
-		
-		if (characters.size() > 0) {
-			for (Entity character : characters)
-				character.update();
-		}
-		
-		if (enemies.size() > 0) {
-			for (Entity jason : enemies) 
-				jason.update();
-		}
-	}
-
 }

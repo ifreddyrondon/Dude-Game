@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Object>
+    <Description>Palanca</Description>
+    <Scale>0.23</Scale>
+    <OffSetXLoading>12</OffSetXLoading>
+    <OffSetYLoading>12</OffSetYLoading>
+    <Type>NON_CONSUMABLE</Type> 
+    <Update>UpdateObjectWeapon</Update>
+    <Draw>DrawObjectMobile</Draw>
+    <Attribute>ObjectAttributeGetMoreDamage</Attribute>
+    <AttributeValue>0.4</AttributeValue>
+    <Sprite>/objects_sprites/Crowbar.png</Sprite>
+    <LoadSprite>LoadSpriteObjectWeapon</LoadSprite>
+</Object>

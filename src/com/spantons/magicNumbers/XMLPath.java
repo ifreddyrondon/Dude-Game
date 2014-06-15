@@ -14,4 +14,13 @@ public interface XMLPath {
 	public static final String XML_STAGE_MENU_HELP = "res/stagesXML/HelpMenu.xml";
 	public static final String XML_STAGE_MENU_GAME_OVER = "res/stagesXML/GameOverMenu.xml";
 	
+	public static final String XML_OBJECT_ALCOHOL = "res/objectsXML/Alcohol.xml";
+	public static final String XML_OBJECT_BEERS = "res/objectsXML/Beers.xml";
+	public static final String XML_OBJECT_PIPE = "res/objectsXML/Pipe.xml";
+	public static final String XML_OBJECT_PIECE_OF_PIZZA = "res/objectsXML/PieceOfPizza.xml";
+	public static final String XML_OBJECT_PIZZA = "res/objectsXML/Pizza.xml";
+	public static final String XML_OBJECT_FOOD = "res/objectsXML/Food.xml";
+	public static final String XML_OBJECT_HAMMER = "res/objectsXML/Hammer.xml";
+	public static final String XML_OBJECT_CROWBAR = "res/objectsXML/Crowbar.xml";
+	public static final String XML_OBJECT_TRIGGER_POINT = "res/objectsXML/TriggerPoint.xml";
 }

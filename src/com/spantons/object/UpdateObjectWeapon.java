@@ -1,7 +1,7 @@
 package com.spantons.object;
 
 import com.spantons.Interfaces.IUpdateable;
-import com.spantons.tileMap.TileMap;
+import com.spantons.stagesLevel.StagesLevel;
 
 public class UpdateObjectWeapon implements IUpdateable {
 
@@ -13,9 +13,9 @@ public class UpdateObjectWeapon implements IUpdateable {
 	private UpdateObjectMobile updateMobile;
 	
 	/****************************************************************************************/
-	public UpdateObjectWeapon(TileMap _tileMap, Object _object) {
+	public UpdateObjectWeapon(StagesLevel _stage, Object _object) {
 		object = _object;
-		updateMobile = new UpdateObjectMobile(_tileMap, object);
+		updateMobile = new UpdateObjectMobile(_stage, object);
 	}
 	
 	/****************************************************************************************/

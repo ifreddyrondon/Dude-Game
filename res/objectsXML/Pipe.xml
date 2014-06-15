@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Object>
+    <Description>Pipa</Description>
+    <Scale>1</Scale>
+    <Type>CONSUMABLE</Type>
+    <TimeToConsumable>30000</TimeToConsumable> 
+    <Update>UpdateObjectImmobile</Update>
+    <Draw>DrawObjectImmobile</Draw>
+    <Attribute>ObjectAttributeGetHigh</Attribute>
+    <AttributeValue>-60</AttributeValue>
+    <Sprite>/objects_sprites/Pipe.png</Sprite>
+    <LoadSprite>LoadSpriteObjectSingleAnimation</LoadSprite>
+</Object>

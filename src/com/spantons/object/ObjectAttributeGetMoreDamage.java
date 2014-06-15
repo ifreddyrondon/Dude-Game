@@ -5,10 +5,13 @@ import com.spantons.entity.Entity;
 public class ObjectAttributeGetMoreDamage implements IObjectAttribute {
 
 	private double damage;
+	@SuppressWarnings("unused")
+	private Object object;
 	
 	/****************************************************************************************/
-	public ObjectAttributeGetMoreDamage(double _damage) {
+	public ObjectAttributeGetMoreDamage(double _damage, Object _object) {
 		damage = _damage;
+		object = _object;
 	}
 
 	/****************************************************************************************/

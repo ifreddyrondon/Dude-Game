@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Object>
+    <Description>Cerveza</Description>
+    <Scale>1</Scale>
+    <Type>CONSUMABLE</Type>
+    <TimeToConsumable>30000</TimeToConsumable> 
+    <Update>UpdateObjectImmobile</Update>
+    <Draw>DrawObjectImmobile</Draw>
+    <Attribute>ObjectAttributeGetDrunk</Attribute>
+    <AttributeValue>-0.5</AttributeValue>
+    <Sprite>/objects_sprites/Beers.png</Sprite>
+    <LoadSprite>LoadSpriteObjectSingleAnimation</LoadSprite>
+</Object>

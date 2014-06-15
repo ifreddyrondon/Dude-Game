@@ -3,17 +3,17 @@ package com.spantons.object;
 import java.awt.Point;
 
 import com.spantons.Interfaces.IUpdateable;
-import com.spantons.tileMap.TileMap;
+import com.spantons.stagesLevel.StagesLevel;
 import com.spantons.utilities.PositionUtil;
 
 public class UpdateObjectMobile implements IUpdateable{
 
-	private TileMap tileMap;
+	private StagesLevel stage;
 	private Object object;
 	
 	/****************************************************************************************/
-	public UpdateObjectMobile(TileMap _tileMap, Object _object) {
-		tileMap = _tileMap;
+	public UpdateObjectMobile(StagesLevel _stage, Object _object) {
+		stage = _stage;
 		object = _object;
 	}
 	
@@ -26,7 +26,7 @@ public class UpdateObjectMobile implements IUpdateable{
 			object.yMap = aux.y;
 		}	
 		
-		Point absolutePosition = PositionUtil.calculatePositionToDraw(tileMap, object.xMap, object.yMap);
+		Point absolutePosition = PositionUtil.calculatePositionToDraw(stage.getTileMap(), object.xMap, object.yMap);
 		object.x = absolutePosition.x;
 		object.y = absolutePosition.y;
 	}

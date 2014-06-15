@@ -7,10 +7,13 @@ import com.spantons.singleton.SoundCache;
 public class ObjectAttributeGetHealth implements IObjectAttribute {
 
 	private double health;
+	@SuppressWarnings("unused")
+	private Object object;
 	
 	/****************************************************************************************/
-	public ObjectAttributeGetHealth(double _health) {
+	public ObjectAttributeGetHealth(double _health, Object _object) {
 		health = _health;
+		object = _object;
 	}
 	
 	/****************************************************************************************/

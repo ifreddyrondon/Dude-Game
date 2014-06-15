@@ -15,15 +15,7 @@ import com.spantons.magicNumbers.ImagePath;
 import com.spantons.magicNumbers.SoundPath;
 import com.spantons.magicNumbers.XMLPath;
 import com.spantons.object.Object;
-import com.spantons.objects.Alcohol;
-import com.spantons.objects.Beers;
-import com.spantons.objects.Crowbar;
-import com.spantons.objects.Door;
-import com.spantons.objects.Food;
-import com.spantons.objects.Hammer;
-import com.spantons.objects.PieceOfPizza;
-import com.spantons.objects.Pipe;
-import com.spantons.objects.Pizza;
+import com.spantons.object.ParseXMLObject;
 import com.spantons.singleton.SoundCache;
 import com.spantons.stages.GameStagesManager;
 import com.spantons.tileMap.TileMap;
@@ -68,7 +60,7 @@ public class Level_1_Stage_1 extends StagesLevel {
 		enemies.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, 17, 12));
 		enemies.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, 26, 23));
 		
-		Object crowbar = new Crowbar(tileMap, 10, 12, 0.23);
+		Object crowbar = ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_CROWBAR, this, 10, 12);
 		Door exit = new Door(this, 21,5, Door.ANIMATION_CLOSE_A, false, false);
 		exit.setKey(crowbar);
 		
@@ -84,23 +76,23 @@ public class Level_1_Stage_1 extends StagesLevel {
 			new Door(this, 33,27, Door.ANIMATION_CLOSE_B, false, false));
 		
 		objects.add(crowbar);
-		objects.add(new Hammer(tileMap, 12, 13, 0.15));
-		objects.add(new Hammer(tileMap, 14, 18, 0.15));
-		objects.add(new Hammer(tileMap, 25, 32, 0.15));
-		objects.add(new Alcohol(tileMap, 27, 16));
-		objects.add(new Alcohol(tileMap, 17, 11));
-		objects.add(new Alcohol(tileMap, 20, 28));
-		objects.add(new Beers(tileMap, 28, 10));
-		objects.add(new Beers(tileMap, 21, 17));
-		objects.add(new Beers(tileMap, 25, 17));
-		objects.add(new Pipe(tileMap, 25,21));
-		objects.add(new Pipe(tileMap, 17,27));
-		objects.add(new Pipe(tileMap, 27,13));
-		objects.add(new PieceOfPizza(tileMap, 21,18));
-		objects.add(new PieceOfPizza(tileMap, 10,29));
-		objects.add(new Pizza(tileMap, 28, 13));
-		objects.add(new Pizza(tileMap, 32, 8));
-		objects.add(new Food(tileMap, 11,11));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_HAMMER, this, 12, 13));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_HAMMER, this, 14, 18));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_HAMMER, this, 25, 32));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_ALCOHOL, this, 27, 16));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_ALCOHOL, this, 17, 11));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_ALCOHOL, this, 20, 28));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_BEERS, this, 28, 10));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_BEERS, this, 21, 17));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_BEERS, this, 25, 17));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_PIPE, this, 25, 21));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_PIPE, this, 17, 27));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_PIPE, this, 27, 13));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_PIECE_OF_PIZZA, this, 21, 18));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_PIECE_OF_PIZZA, this, 10, 29));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_PIZZA, this, 28, 13));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_PIZZA, this, 32, 8));
+		objects.add(ParseXMLObject.getObjectFromXML(XMLPath.XML_OBJECT_FOOD, this, 11,11));
 		
 		dialogues = new DialogueStage1(this);
 		
@@ -154,58 +146,7 @@ public class Level_1_Stage_1 extends StagesLevel {
 		goals =  new GoalsLevel_1_Stage_1(this);
 		
 	}
-	
-	/****************************************************************************************/
-	@Override
-	public void update() {
 		
-		if (goals != null) 
-			goals.checkGoals();
-		
-		if (characters.isEmpty() && currentCharacter.isDead()) 
-			gsm.setStage(GameStagesManager.GAME_OVER_STAGE);
-
-		if (currentCharacter.isDead()) 
-			currentCharacter = nextCharacter.selectNextCharacter();
-		
-		currentCharacter.update();
-		
-		if (checkTransparentWalls != null) {
-			if (checkTransparentWalls.checkTransparent(currentCharacter)) 
-				transformTransparentWalls.transformToTransparentWalls();
-			else
-				transformTransparentWalls.transformToOriginalWalls();
-		}
-		
-		if (dialogues != null) 
-			dialogues.update();
-		
-		if (characters.size() > 0) {
-			for (Entity character : characters)
-				character.update();
-		}
-		
-		if (enemies.size() > 0) {
-			for (Entity jason : enemies) 
-				jason.update();
-		}
-		
-		if (objects.size() > 0) {
-			for (Object object : objects) 
-				object.update();
-		}
-		
-		if (doors.size() > 0) {
-		      for(Door door : doors) 
-		      	door.update();
-		}
-		
-		if (dead.size() > 0) {
-			for (Entity _dead : dead)
-				_dead.update();
-		}
-	}
-	
 	/****************************************************************************************/
 	private void deployJason(){
 		tileMap.turnLights();

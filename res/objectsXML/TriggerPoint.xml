@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Object>
+    <Description>Punto de activacion</Description> 
+    <Update>UpdateObjectTriggerPoint</Update>
+    <Draw>DrawObjectImmobile</Draw>
+    <Sprite>/objects_sprites/triggerPoint.png</Sprite>
+    <LoadSprite>LoadSpriteObjectSingleAnimation</LoadSprite>
+</Object>

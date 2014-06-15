@@ -1,6 +1,7 @@
 package com.spantons.object;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -12,11 +13,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.spantons.tileMap.TileMap;
+import com.spantons.Interfaces.IDrawable;
+import com.spantons.Interfaces.ILoadSprite;
+import com.spantons.Interfaces.IUpdateable;
+import com.spantons.stagesLevel.StagesLevel;
 
 public class ParseXMLObject {
 
-	public static Object getObjectFromXML(String _path, TileMap _tileMap, int _xMap, int _yMap){
+	public static Object getObjectFromXML(String _path, StagesLevel _stage, int _xMap, int _yMap){
 		try {
 			File file = new File(_path);
 			
@@ -26,7 +30,7 @@ public class ParseXMLObject {
 			document.getDocumentElement().normalize();
 		 
 			if (document.hasChildNodes()) 
-				return createObject(document.getChildNodes(),_tileMap,_xMap,_yMap);
+				return createObject(document.getChildNodes(),_stage,_xMap,_yMap);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -45,7 +49,7 @@ public class ParseXMLObject {
 	 * @throws InstantiationException 
 	 * @throws IllegalArgumentException **************************************************************************************/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static Object createObject(NodeList childNodes, TileMap _tileMap, int _xMap, int _yMap) throws DOMException, ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	private static Object createObject(NodeList childNodes, StagesLevel _stage, int _xMap, int _yMap) throws DOMException, ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		 
 		if(childNodes != null && childNodes.getLength() > 0) {
 			for (int i = 0; i < childNodes.getLength(); i++) {
@@ -55,38 +59,79 @@ public class ParseXMLObject {
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 		 
 					Element eElement = (Element) nNode;
-					//Object aux = new
-						
-//					aux.description = eElement.getElementsByTagName("Description").item(0).getTextContent();
-//					aux.health = Double.parseDouble(eElement.getElementsByTagName("Health").item(0).getTextContent());
-//					aux.maxHealth = Double.parseDouble(eElement.getElementsByTagName("MaxHealth").item(0).getTextContent());
-//					aux.perversity = Integer.parseInt(eElement.getElementsByTagName("Perversity").item(0).getTextContent());
-//					aux.maxPerversity = Integer.parseInt(eElement.getElementsByTagName("MaxPerversity").item(0).getTextContent());
-//					aux.damage = Double.parseDouble(eElement.getElementsByTagName("Damage").item(0).getTextContent());
-//					aux.damageBackup = Double.parseDouble(eElement.getElementsByTagName("DamageBackup").item(0).getTextContent());
-//					aux.flinchingIncreaseDeltaTimePerversity = Integer.parseInt(eElement.getElementsByTagName("FlinchingIncreaseDeltaTimePerversity").item(0).getTextContent());
-//					aux.flinchingDecreaseDeltaTimePerversity = Integer.parseInt(eElement.getElementsByTagName("FlinchingDecreaseDeltaTimePerversity").item(0).getTextContent());
-//					aux.deltaForReduceFlinchingIncreaseDeltaTimePerversity = Integer.parseInt(eElement.getElementsByTagName("DeltaForReduceFlinchingIncreaseDeltaTimePerversity").item(0).getTextContent());
-//					aux.moveSpeed = Integer.parseInt(eElement.getElementsByTagName("MoveSpeed").item(0).getTextContent());
-//					aux.scale = Double.parseDouble(eElement.getElementsByTagName("Scale").item(0).getTextContent());
-//					aux.dead = Boolean.parseBoolean(eElement.getElementsByTagName("Dead").item(0).getTextContent());
-//					aux.facingRight = Boolean.parseBoolean(eElement.getElementsByTagName("FacingRight").item(0).getTextContent());
-//					aux.visible = Boolean.parseBoolean(eElement.getElementsByTagName("Visible").item(0).getTextContent());
-//					aux = EntityUtils.loadSprite(aux, eElement.getElementsByTagName("HUD").item(0).getTextContent(), eElement.getElementsByTagName("Sprite").item(0).getTextContent());
-//					aux.animation = new Animation();
-//					aux.currentAnimation = Entity.IDLE;
-//					aux.animation.setFrames(aux.sprites.get(Entity.IDLE));
-//					aux.animation.setDelayTime(1000);
-//					
-//					Class updateClass = Class.forName(
-//							"com.spantons.entity." + eElement.getElementsByTagName("Update").item(0).getTextContent());
-//					Class[] types = {Entity.class};
-//					Constructor constructor = updateClass.getConstructor(types);
-//					Object[] parameters = {aux};
-//					Object instance = constructor.newInstance(parameters);
-//					aux.update = (IUpdateable) instance;
+					Object aux = new Object(_stage.getTileMap(), _xMap, _yMap);
 					
-//					return aux;
+					if(eElement.getElementsByTagName("Description").item(0) != null) 
+						aux.description = eElement.getElementsByTagName("Description").item(0).getTextContent();
+					
+					if(eElement.getElementsByTagName("Scale").item(0) != null) 
+						aux.scale = Double.parseDouble(eElement.getElementsByTagName("Scale").item(0).getTextContent());
+					
+					if(eElement.getElementsByTagName("OffSetXLoading").item(0) != null) 
+						aux.offSetXLoading = Integer.parseInt(eElement.getElementsByTagName("OffSetXLoading").item(0).getTextContent());
+					
+					if(eElement.getElementsByTagName("OffSetYLoading").item(0) != null) 
+						aux.offSetYLoading = Integer.parseInt(eElement.getElementsByTagName("OffSetYLoading").item(0).getTextContent());
+					
+					if(eElement.getElementsByTagName("Type").item(0) != null) {
+						String type = eElement.getElementsByTagName("Type").item(0).getTextContent();
+						if (type.equals("CONSUMABLE")) {
+							aux.type = Object.CONSUMABLE;
+							if(eElement.getElementsByTagName("TimeToConsumable").item(0) != null)
+								aux.timeToConsumable = Integer.parseInt(eElement.getElementsByTagName("TimeToConsumable").item(0).getTextContent());
+						}
+						else if (type.equals("NON_CONSUMABLE")) 
+							aux.type = Object.NON_CONSUMABLE;
+					}
+						
+					if(eElement.getElementsByTagName("Update").item(0) != null) {
+						Class updateClass = Class.forName(
+								"com.spantons.object." + eElement.getElementsByTagName("Update").item(0).getTextContent());
+						Class[] types = {StagesLevel.class, Object.class};
+						Constructor constructor = updateClass.getConstructor(types);
+						java.lang.Object[] parameters = {_stage, aux};
+						java.lang.Object instance = constructor.newInstance(parameters);
+						aux.update = (IUpdateable) instance;
+					}
+
+					if(eElement.getElementsByTagName("Draw").item(0) != null) {
+						Class updateClass = Class.forName(
+								"com.spantons.object." + eElement.getElementsByTagName("Draw").item(0).getTextContent());
+						Class[] types = {Object.class};
+						Constructor constructor = updateClass.getConstructor(types);
+						java.lang.Object[] parameters = {aux};
+						java.lang.Object instance = constructor.newInstance(parameters);
+						aux.draw = (IDrawable) instance;
+					}
+					
+					if(eElement.getElementsByTagName("AttributeValue").item(0) != null) {
+						double attributeValue = Double.parseDouble(eElement.getElementsByTagName("AttributeValue").item(0).getTextContent());
+						if(eElement.getElementsByTagName("Attribute").item(0) != null) {
+							Class updateClass = Class.forName(
+									"com.spantons.object." + eElement.getElementsByTagName("Attribute").item(0).getTextContent());
+							Class[] types = {double.class,Object.class};
+							Constructor constructor = updateClass.getConstructor(types);
+							java.lang.Object[] parameters = {attributeValue,aux};
+							java.lang.Object instance = constructor.newInstance(parameters);
+							aux.attribute = (IObjectAttribute) instance;
+						}
+					}
+					
+					if(eElement.getElementsByTagName("Sprite").item(0) != null) {
+						String sprite = eElement.getElementsByTagName("Sprite").item(0).getTextContent();
+						if(eElement.getElementsByTagName("LoadSprite").item(0) != null) {
+							Class updateClass = Class.forName(
+									"com.spantons.object." + eElement.getElementsByTagName("LoadSprite").item(0).getTextContent());
+							Class[] types = {Object.class};
+							Constructor constructor = updateClass.getConstructor(types);
+							java.lang.Object[] parameters = {aux};
+							java.lang.Object instance = constructor.newInstance(parameters);
+							aux.loadSprite = (ILoadSprite) instance;
+							aux.loadSprite.loadSprite(sprite);
+						}
+					}
+					
+					return aux;
 				}
 			}
 		}

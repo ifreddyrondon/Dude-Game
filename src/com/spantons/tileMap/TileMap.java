@@ -8,9 +8,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import com.spantons.Interfaces.IDrawable;
 import com.spantons.entity.Entity;
 import com.spantons.main.GamePanel;
-import com.spantons.object.Object;
 import com.spantons.stagesLevel.Level_1_Stage_1;
 import com.spantons.utilities.ArraysUtil;
 import com.spantons.utilities.Multiple;
@@ -56,7 +56,7 @@ public class TileMap {
 	private Tile[] tiles;
 	private Entity[][] entitysDeadToDraw;
 	private Entity[][] entitysToDraw;
-	private Object[][] objectsToDraw;
+	private IDrawable[][] objectsToDraw;
 	
 	private boolean lights = true;
 
@@ -137,7 +137,7 @@ public class TileMap {
 			
 			entitysToDraw = new Entity[numRowsMap][numColMap];
 			entitysDeadToDraw = new Entity[numRowsMap][numColMap];
-			objectsToDraw = new Object[numRowsMap][numColMap];
+			objectsToDraw = new IDrawable[numRowsMap][numColMap];
 
 			br.readLine();
 			br.readLine();
@@ -274,7 +274,7 @@ public class TileMap {
 	}
 	
 	/****************************************************************************************/
-	public void setObjectToDraw(int x, int y, Object _o){
+	public void setObjectToDraw(int x, int y, IDrawable _o){
 		objectsToDraw[x][y] = _o;
 	}
 	
@@ -416,7 +416,7 @@ public class TileMap {
 						(coorAbsolute.y - this.y) - 192, null);
 			}
 			
-			Object object = objectsToDraw[currentTile.x][currentTile.y];
+			IDrawable object = objectsToDraw[currentTile.x][currentTile.y];
 			Entity entity = entitysToDraw[currentTile.x][currentTile.y];
 			Entity entityDead = entitysDeadToDraw[currentTile.x][currentTile.y];
 			

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Object>
+    <Description>Martillo</Description>
+    <Scale>0.15</Scale>
+    <OffSetXLoading>12</OffSetXLoading>
+    <OffSetYLoading>12</OffSetYLoading>
+    <Type>NON_CONSUMABLE</Type> 
+    <Update>UpdateObjectWeapon</Update>
+    <Draw>DrawObjectMobile</Draw>
+    <Attribute>ObjectAttributeGetMoreDamage</Attribute>
+    <AttributeValue>0.6</AttributeValue>
+    <Sprite>/objects_sprites/Hammer.png</Sprite>
+    <LoadSprite>LoadSpriteObjectWeapon</LoadSprite>
+</Object>

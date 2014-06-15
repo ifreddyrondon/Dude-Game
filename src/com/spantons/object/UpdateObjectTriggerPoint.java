@@ -18,7 +18,7 @@ public class UpdateObjectTriggerPoint implements IUpdateable {
 	public UpdateObjectTriggerPoint(StagesLevel _stage, Object _object) {
 		stage = _stage;
 		object = _object;
-		updateImmobile = new UpdateObjectImmobile(_stage.getTileMap(), _object);
+		updateImmobile = new UpdateObjectImmobile(_stage, _object);
 		soundPlay = false;
 	}
 	
