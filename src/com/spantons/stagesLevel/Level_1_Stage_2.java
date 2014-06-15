@@ -1,34 +1,19 @@
 package com.spantons.stagesLevel;
 
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.Timer;
-
-import com.spantons.dialogue.Dialogue;
 import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
 import com.spantons.entity.ParseXMLEntity;
-import com.spantons.magicNumbers.ImagePath;
-import com.spantons.magicNumbers.SoundPath;
 import com.spantons.magicNumbers.XMLPath;
 import com.spantons.object.Object;
 import com.spantons.object.ParseXMLObject;
-import com.spantons.singleton.SoundCache;
 import com.spantons.stages.GameStagesManager;
 import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.RandomItemArrayList;
 
 public class Level_1_Stage_2 extends StagesLevel{
-
-	private Timer lightsDeploy;
-	private Timer lightsOn;
-	private int timeLightsOn = 8000;
-	private Timer lightsOff;
-	private int timeLightsOff = 1100;
-	boolean allTriggerPointActivated;
 
 	/****************************************************************************************/
 	public Level_1_Stage_2(GameStagesManager _gsm) {
@@ -37,7 +22,9 @@ public class Level_1_Stage_2 extends StagesLevel{
 		tileMap = new TileMap("/maps/map_1_2.txt");
 		tileMap.setPosition(0, 0);
 		countdown = 100;
-		countdownStartDialogues = 1300;
+		timerAwakeningDialogues = StagesLevelUtils.setTimerAwakeningDialogues(1300, this);
+		timerLightsOn = StagesLevelUtils.setTimerLightsOn(8000, this);
+		timerLightsOff = StagesLevelUtils.setTimerLightsOff(1100, this);
 		exitPoint = new Point(29,4);
 		
 		enemies = new ArrayList<Entity>();
@@ -100,89 +87,14 @@ public class Level_1_Stage_2 extends StagesLevel{
 		stringDialogues.get("STORY").add("Que puerta para particular");
 		stringDialogues.get("STORY").add("Creo que se abre con\n botones");
 		stringDialogues.get("STORY").add("Parece que tenemos que \n presionar algo");
-				
-		startDialogues =  new Timer(countdownStartDialogues, new ActionListener() { 
-			@Override 
-			public void actionPerformed(ActionEvent ae) { 
-				for (String txt : stringDialogues.get("AWAKENING")) {
-					dialogues.addDialogue(
-						new Dialogue(
-							txt,fontDialogues, colorDialogues, 2500, 
-							ImagePath.DIALOGUE_SPEECH_BALLON_MEDIUM,
-							Dialogue.RANDOM, Dialogue.MEDIUM_PRIORITY
-					));
-				}
-				startDialogues.stop();
-			} 
-		}); 
-		startDialogues.start();
 		
-		// Temporizador
-		timer = new Timer(1000, new ActionListener() { 
-			@Override 
-			public void actionPerformed(ActionEvent ae) { 
-				countdown--; 
-				drawLevel.setCountdown(countdown);
-				if (countdown == 0) {
-					timer.stop();
-					deployJason();
-				}
-					
-			} 
-		}); 
-		timer.start();
-		
-		lightsOn = new Timer(timeLightsOn, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				tileMap.turnLights();
-				lightsOn.stop();
-				lightsOff.start();
-				SoundCache.getInstance().getSound(SoundPath.SFX_ELECTRIC_CURRENT).play();
-			}
-		});
-		
-		lightsOff = new Timer(timeLightsOff, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				tileMap.turnLights();
-				lightsOn.start();
-				lightsOff.stop();
-			}
-		});
-		
-		lightsOn.start();
-		
+		update = new IUpdateStagesLevel(this);
 		drawLevel = new DrawLevel(tileMap, hud, dialogues);
 		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
 		drawLevel.setCountdown(countdown);
 		goals =  new GoalsLevel_1_Stage_2(this);
-	}
-
-
-	/****************************************************************************************/
-	private void deployJason(){
-		tileMap.turnLights();
-		lightsDeploy = new Timer(1200, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				tileMap.turnLights();
-				lightsDeploy.stop();
-			}
-		});
-		lightsDeploy.start();
-		
-		SoundCache.getInstance().getSound(SoundPath.SFX_ZOMBIE_COME_HERE).play();
-		currentCharacter.setFlinchingIncreaseDeltaTimePerversity(250);
-		for (Entity character : characters) 
-			character.setFlinchingIncreaseDeltaTimePerversity(250);
-		
-		ArrayList<Entity> aux = new ArrayList<Entity>();
-		
-		for (Entity jason : enemies) 
-			aux.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, jason.getXMap(), jason.getYMap()));
-		
-		enemies.addAll(aux);
+		timeOut = new ReleaseEnemiesLevels(this);
+		startLevel();
 	}
 	
 }

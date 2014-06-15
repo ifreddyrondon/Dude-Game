@@ -1,28 +1,18 @@
 package com.spantons.stagesLevel;
 
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.Timer;
-
-import com.spantons.dialogue.Dialogue;
 import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
 import com.spantons.entity.ParseXMLEntity;
-import com.spantons.magicNumbers.ImagePath;
-import com.spantons.magicNumbers.SoundPath;
 import com.spantons.magicNumbers.XMLPath;
 import com.spantons.object.Object;
 import com.spantons.object.ParseXMLObject;
-import com.spantons.singleton.SoundCache;
 import com.spantons.stages.GameStagesManager;
 import com.spantons.tileMap.TileMap;
 
 public class Level_1_Stage_1 extends StagesLevel {
- 
-	private Timer lightsDeploy;
 
 	public static int TRANSPARENT = 65;
 	public static Point[] A = {
@@ -41,7 +31,7 @@ public class Level_1_Stage_1 extends StagesLevel {
 		
 		tileMap = new TileMap("/maps/map_1_1.txt");
 		countdown = 120;
-		countdownStartDialogues = 2000;
+		timerAwakeningDialogues = StagesLevelUtils.setTimerAwakeningDialogues(2000, this);
 		
 		characters = new ArrayList<Entity>();
 		enemies = new ArrayList<Entity>();
@@ -104,73 +94,19 @@ public class Level_1_Stage_1 extends StagesLevel {
 		stringDialogues.get("STORY").add("Parece que hay algo \ndetrás que no deja abrirla");
 		stringDialogues.get("STORY").add("Necesitamos una palanca!!");
 		
-		startDialogues =  new Timer(countdownStartDialogues, new ActionListener() { 
-			@Override 
-			public void actionPerformed(ActionEvent ae) { 
-				for (String txt : stringDialogues.get("AWAKENING")) {
-					dialogues.addDialogue(
-						new Dialogue(
-							txt,fontDialogues, colorDialogues, 2500, 
-							ImagePath.DIALOGUE_SPEECH_BALLON_NORMAL,
-							Dialogue.RANDOM, Dialogue.NORMAL_PRIORITY
-					));
-				}
-				startDialogues.stop();
-			} 
-		}); 
-		startDialogues.start();
-		
-		// Temporizador
-		timer = new Timer(1000, new ActionListener() { 
-			@Override 
-			public void actionPerformed(ActionEvent ae) { 
-				countdown--; 
-				drawLevel.setCountdown(countdown);
-				if (countdown == 0) {
-					timer.stop();
-					deployJason();
-				}
-			} 
-		}); 
-		timer.start();
-		
-		
 		Point[] enable = {new Point(20, 15),new Point(21, 15),new Point(22, 15)};
 		Point[] disable = {new Point(21, 16)};
 		
+		update = new IUpdateStagesLevel(this);
 		checkTransparentWalls = new CheckTransparentWallsLvl1Stage1(enable, disable);
 		transformTransparentWalls = new TransformTransparentWallsLv1Stage1(tileMap);
 		drawLevel = new DrawLevel(tileMap, hud, dialogues);
 		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
 		drawLevel.setCountdown(countdown);
 		goals =  new GoalsLevel_1_Stage_1(this);
-		
+		timeOut = new ReleaseEnemiesLevels(this);
+		startLevel();
 	}
-		
-	/****************************************************************************************/
-	private void deployJason(){
-		tileMap.turnLights();
-		lightsDeploy = new Timer(1200, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				tileMap.turnLights();
-				lightsDeploy.stop();
-			}
-		});
-		lightsDeploy.start();
-		
-		SoundCache.getInstance().getSound(SoundPath.SFX_ZOMBIE_COME_HERE).play();
-		currentCharacter.setFlinchingIncreaseDeltaTimePerversity(250);
-		for (Entity character : characters) 
-			character.setFlinchingIncreaseDeltaTimePerversity(250);
-		
-		ArrayList<Entity> aux = new ArrayList<Entity>();
-		
-		for (Entity jason : enemies) 
-			aux.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, this, jason.getXMap(), jason.getYMap()));
-		
-		enemies.addAll(aux);
-	}
-	
+			
 		
 }

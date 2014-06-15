@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,14 +49,18 @@ public abstract class StagesLevel implements IStage {
 	protected ILevelGoals goals;
 	protected ICheckTransparentWalls checkTransparentWalls;
 	protected ITransformTransparentWalls transformTransparentWalls;
+	protected IUpdateStagesLevel update;
+	protected ITimeOut timeOut;
 	
 	protected HashMap<String, ArrayList<String>> stringDialogues;
 	protected DialogueManager dialogues;
 	protected boolean secondaryMenu;
 	public static Font fontDialogues = FontCache.getInstance().getFont(FontPath.FONT_DARK_IS_THE_NIGTH).deriveFont(Font.PLAIN, 20);
 	public static Color colorDialogues = Color.BLACK;
-	protected int countdownStartDialogues;
-	protected Timer startDialogues;
+	protected Timer timerAwakeningDialogues;
+	
+	protected Timer timerLightsOn;
+	protected Timer timerLightsOff;
 	
 	/****************************************************************************************/
 	public StagesLevel(GameStagesManager _gsm) {
@@ -67,57 +73,36 @@ public abstract class StagesLevel implements IStage {
 		stringDialogues.put("RAMDON", new ArrayList<String>());
 		stringDialogues.put("STORY", new ArrayList<String>());
 		
+		timer = new Timer(1000, new ActionListener() { 
+			@Override 
+			public void actionPerformed(ActionEvent ae) { 
+				countdown--; 
+				drawLevel.setCountdown(countdown);
+				if (countdown == 0) {
+					timer.stop();
+					timeOut.timeOut();
+				}
+			} 
+		}); 
+	}
+	
+	/****************************************************************************************/
+	protected void startLevel() {
+		if (timer != null) 
+			timer.start();
+		
+		if (timerAwakeningDialogues != null)
+			timerAwakeningDialogues.start();
+		
+		if (timerLightsOn != null && timerLightsOff != null) 
+			timerLightsOn.start();
+		
 		SoundCache.getInstance().getSound(SoundPath.MUSIC_HORROR_AMBIANCE).loop();
 	}
 	
 	/****************************************************************************************/
 	public void update() {
-		
-		if (goals != null) 
-			goals.checkGoals();
-		
-		if (characters.isEmpty() && currentCharacter.isDead()) 
-			gsm.setStage(GameStagesManager.GAME_OVER_STAGE);
-
-		if (currentCharacter.isDead()) 
-			currentCharacter = nextCharacter.selectNextCharacter();
-		
-		currentCharacter.update();
-		
-		if (checkTransparentWalls != null) {
-			if (checkTransparentWalls.checkTransparent(currentCharacter)) 
-				transformTransparentWalls.transformToTransparentWalls();
-			else
-				transformTransparentWalls.transformToOriginalWalls();
-		}
-		
-		if (dialogues != null) 
-			dialogues.update();
-		
-		if (characters.size() > 0) {
-			for (Entity character : characters)
-				character.update();
-		}
-		
-		if (enemies.size() > 0) {
-			for (Entity jason : enemies) 
-				jason.update();
-		}
-		
-		if (objects.size() > 0) {
-			for (Object object : objects) 
-				object.update();
-		}
-		
-		if (doors.size() > 0) {
-		      for(Door door : doors) 
-		      	door.update();
-		}
-		
-		if (dead.size() > 0) {
-			for (Entity _dead : dead)
-				_dead.update();
-		}
+		update.update();
 	}
 	
 	/****************************************************************************************/
@@ -179,6 +164,11 @@ public abstract class StagesLevel implements IStage {
 			currentCharacter.setAttack(false);	
 	}
 
+	/****************************************************************************************/
+	protected void starttTmerAwakeningDialogues() {
+		
+	}
+	
 	/****************************************************************************************/
 	public Entity getCurrentCharacter() {
 		return currentCharacter;

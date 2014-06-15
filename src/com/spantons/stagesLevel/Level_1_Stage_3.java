@@ -1,10 +1,6 @@
 package com.spantons.stagesLevel;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-import javax.swing.Timer;
 
 import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
@@ -45,25 +41,13 @@ public class Level_1_Stage_3 extends StagesLevel {
 		
 		
 		dialogues = new DialogueStage1(this);
-		
-		// Temporizador
-		timer = new Timer(1000, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-				countdown--;
-				drawLevel.setCountdown(countdown);
-				if (countdown == 0) {
-					timer.stop();
-
-				}
-			}
-		});
-		timer.start();
-		
+				
+		update = new IUpdateStagesLevel(this);
 		drawLevel = new DrawLevel(tileMap, hud, dialogues);
 		nextCharacter = new SelectCurrentCharacterLevel(characters, currentCharacter, tileMap);
 		drawLevel.setCountdown(countdown);
-		
+		timeOut = new ReleaseEnemiesLevels(this);
+		startLevel();
 	}
 	
 }
