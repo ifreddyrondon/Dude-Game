@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Stage>
+	<TileMap>/maps/map_1_3.txt</TileMap>	
+	<Countdown>90</Countdown>
+	<CurrentCharacter>
+		<Path>GET</Path>
+		<Point>6,28</Point>
+	</CurrentCharacter>
+	<Enemies>
+		<Enemy>
+			<Path>res/charactersXML/Jason.xml</Path>
+			<Point>15,5</Point>
+		</Enemy>
+		<Enemy>
+			<Path>res/charactersXML/Jason.xml</Path>
+			<Point>20,19</Point>
+		</Enemy>
+		<Enemy>
+			<Path>res/charactersXML/Jason.xml</Path>
+			<Point>32,24</Point>
+		</Enemy>
+		<Enemy>
+			<Path>res/charactersXML/Jason.xml</Path>
+			<Point>37,11</Point>
+		</Enemy>
+	</Enemies>
+	<Update>UpdateStagesLevel</Update>
+	<DrawLevel>DrawLevel</DrawLevel>
+	<NextCharacter>SelectCurrentCharacterLevel</NextCharacter>
+	<TimeOut>ReleaseEnemiesLevels</TimeOut>
+</Stage>

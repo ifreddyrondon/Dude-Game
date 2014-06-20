@@ -15,6 +15,7 @@ public class Multiple {
 			return (number / multipleOf) * multipleOf;		
 	}
 
+	/****************************************************************************************/
 	public static Point findPointCloserTo(Point point, Point pointMultiple) {
 
 		int x = findNumberCloserTo(point.x, pointMultiple.x);

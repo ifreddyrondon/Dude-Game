@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.XMLPath;
 import com.spantons.singleton.SoundCache;
-import com.spantons.stagesLevel.Level_1_Stage_1;
-import com.spantons.stagesLevel.Level_1_Stage_2;
-import com.spantons.stagesLevel.Level_1_Stage_3;
+import com.spantons.stagesLevel.ParseXMLStageLevel;
 import com.spantons.stagesMenu.ParseXMLStageMenu;
 
 public class GameStagesManager {
@@ -42,11 +40,11 @@ public class GameStagesManager {
 		if (stage == MENU_STAGE)
 			gameStages[MENU_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_MAIN, this);
 		if (stage == LEVEL_1_STAGE_1)
-			gameStages[LEVEL_1_STAGE_1] = new Level_1_Stage_1(this);
+			gameStages[LEVEL_1_STAGE_1] = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_1, this);
 		if (stage == LEVEL_1_STAGE_2)
-			gameStages[LEVEL_1_STAGE_2] = new Level_1_Stage_2(this);
+			gameStages[LEVEL_1_STAGE_2] = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_2, this);
 		if (stage == LEVEL_1_STAGE_3)
-			gameStages[LEVEL_1_STAGE_3] = new Level_1_Stage_3(this);
+			gameStages[LEVEL_1_STAGE_3] = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_3, this);
 		if (stage == GAME_OVER_STAGE)
 			gameStages[GAME_OVER_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_GAME_OVER, this);
 		if (stage == HELP_STAGE)

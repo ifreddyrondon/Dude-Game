@@ -12,6 +12,8 @@ import java.util.HashMap;
 
 import javax.swing.Timer;
 
+import com.spantons.Interfaces.IDrawable;
+import com.spantons.Interfaces.IUpdateable;
 import com.spantons.dialogue.DialogueManager;
 import com.spantons.entity.Entity;
 import com.spantons.entity.EntityUtils;
@@ -26,8 +28,9 @@ import com.spantons.singleton.SoundCache;
 import com.spantons.stages.GameStagesManager;
 import com.spantons.stages.IStage;
 import com.spantons.tileMap.TileMap;
+import com.spantons.utilities.ToHours;
 
-public abstract class StagesLevel implements IStage {
+public class StagesLevel implements IStage {
 
 	protected TileMap tileMap;
 	protected GameStagesManager gsm;
@@ -44,12 +47,12 @@ public abstract class StagesLevel implements IStage {
 	protected Entity currentCharacter;
 	
 	protected IHandleObjects handleObject;
-	protected DrawLevel drawLevel;
-	protected SelectCurrentCharacterLevel nextCharacter;
+	protected IDrawable drawLevel;
+	protected INextCharacter nextCharacter;
 	protected ILevelGoals goals;
 	protected ICheckTransparentWalls checkTransparentWalls;
 	protected ITransformTransparentWalls transformTransparentWalls;
-	protected IUpdateStagesLevel update;
+	protected IUpdateable update;
 	protected ITimeOut timeOut;
 	
 	protected HashMap<String, ArrayList<String>> stringDialogues;
@@ -67,6 +70,13 @@ public abstract class StagesLevel implements IStage {
 		gsm = _gsm;
 		hud = new Hud(this);
 		secondaryMenu = false;
+		
+		characters = new ArrayList<Entity>();
+		enemies = new ArrayList<Entity>();
+		dead = new ArrayList<Entity>();
+		objects = new ArrayList<Object>();
+		doors = new ArrayList<Door>();
+		
 		handleObject = new HandleObjects();
 		stringDialogues = new HashMap<String, ArrayList<String>>();
 		stringDialogues.put("AWAKENING", new ArrayList<String>());
@@ -77,7 +87,7 @@ public abstract class StagesLevel implements IStage {
 			@Override 
 			public void actionPerformed(ActionEvent ae) { 
 				countdown--; 
-				drawLevel.setCountdown(countdown);
+				hud.update(ToHours.SecondsToHours(countdown));
 				if (countdown == 0) {
 					timer.stop();
 					timeOut.timeOut();
@@ -96,6 +106,8 @@ public abstract class StagesLevel implements IStage {
 		
 		if (timerLightsOn != null && timerLightsOff != null) 
 			timerLightsOn.start();
+		
+		hud.update(ToHours.SecondsToHours(countdown));
 		
 		SoundCache.getInstance().getSound(SoundPath.MUSIC_HORROR_AMBIANCE).loop();
 	}
@@ -164,11 +176,6 @@ public abstract class StagesLevel implements IStage {
 			currentCharacter.setAttack(false);	
 	}
 
-	/****************************************************************************************/
-	protected void starttTmerAwakeningDialogues() {
-		
-	}
-	
 	/****************************************************************************************/
 	public Entity getCurrentCharacter() {
 		return currentCharacter;

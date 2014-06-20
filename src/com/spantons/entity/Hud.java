@@ -19,7 +19,9 @@ public class Hud {
 	private Font attributesFont;
 	private Font countdownFont;
 	private BufferedImage backgroundHud;
+	private String countdown;
 
+	/****************************************************************************************/
 	public Hud(StagesLevel _stage) {
 		try {
 			stage = _stage;
@@ -34,7 +36,13 @@ public class Hud {
 		}
 	}
 	
-	public void Draw(Graphics2D g, String countdown) {
+	/****************************************************************************************/
+	public void update(String _countdown) {
+		countdown = _countdown;
+	}
+	
+	/****************************************************************************************/
+	public void draw(Graphics2D g) {
 		
 		g.drawImage(backgroundHud, 7, 30, null);
 		

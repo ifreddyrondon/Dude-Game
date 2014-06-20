@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
@@ -16,6 +17,7 @@ import com.spantons.magicNumbers.ImagePath;
 import com.spantons.main.GamePanel;
 import com.spantons.singleton.ImageCache;
 import com.spantons.stagesLevel.StagesLevel;
+import com.spantons.utilities.ArraysUtil;
 
 class DialogueComparator implements Comparator<Dialogue> {
 
@@ -122,12 +124,12 @@ public class DialogueStage1 extends DialogueManager {
 			g.setColor(currentDialogue.getColor());
 			g.setFont(currentDialogue.getFont());
 			
-			String[] split = currentDialogue.getTxt().split("\n");
+			ArrayList<String> split = ArraysUtil.getParts(currentDialogue.getTxt(), 20); 
 			int y = characterSpeaking.getY() - 190;
 			int h = g.getFontMetrics().getHeight();
 			
-			for (int i = 0; i < split.length; i++) {
-				g.drawString(split[i],
+			for (int i = 0; i < split.size(); i++) {
+				g.drawString(split.get(i),
 						characterSpeaking.getX() - 30,
 						y + (h*i)
 				);

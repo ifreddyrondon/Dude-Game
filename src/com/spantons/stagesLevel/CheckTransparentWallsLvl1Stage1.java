@@ -1,17 +1,18 @@
 package com.spantons.stagesLevel;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 import com.spantons.entity.Entity;
 
 public class CheckTransparentWallsLvl1Stage1 implements ICheckTransparentWalls{
 
-	private Point[] pointsToEnableTransparentWalls;
-	private Point[] pointsToDisableTransparentWalls;
+	private ArrayList<Point> pointsToEnableTransparentWalls;
+	private ArrayList<Point> pointsToDisableTransparentWalls;
 	private boolean flag;
 	
 	/****************************************************************************************/
-	public CheckTransparentWallsLvl1Stage1(Point[] _enable, Point[] _disable) {
+	public CheckTransparentWallsLvl1Stage1(ArrayList<Point> _enable, ArrayList<Point> _disable) {
 		pointsToEnableTransparentWalls = _enable;
 		pointsToDisableTransparentWalls = _disable;
 	}

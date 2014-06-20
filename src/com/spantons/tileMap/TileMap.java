@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import com.spantons.Interfaces.IDrawable;
 import com.spantons.entity.Entity;
 import com.spantons.main.GamePanel;
-import com.spantons.stagesLevel.Level_1_Stage_1;
 import com.spantons.utilities.ArraysUtil;
 import com.spantons.utilities.Multiple;
 import com.spantons.utilities.TileWalk;
@@ -59,6 +58,9 @@ public class TileMap {
 	private IDrawable[][] objectsToDraw;
 	
 	private boolean lights = true;
+	
+	private int numberTransparentTile;
+	private ArrayList<Point> wallsToTransformIntoTransparent;
 
 	/****************************************************************************************/
 	public TileMap(String _src) {
@@ -384,8 +386,10 @@ public class TileMap {
 				
 				if (!transparentWalls.equals("")) {
 					if (transparentWalls.equals("bathroom")) {
-						for (Point a : Level_1_Stage_1.A) 
-							walls[a.x][a.y] = Level_1_Stage_1.TRANSPARENT;
+						if (wallsToTransformIntoTransparent != null && numberTransparentTile != 0) {
+							for (Point point : wallsToTransformIntoTransparent) 
+								walls[point.x][point.y] = numberTransparentTile;
+						}
 					}
 				}
 				else {
@@ -467,5 +471,10 @@ public class TileMap {
 	public void setTransparentWalls(String transparentWalls) {
 		this.transparentWalls = transparentWalls;
 	}
-	
+	public void setNumberTransparentTile(int a){
+		numberTransparentTile = a;
+	}
+	public void setWallsToTransformIntoTransparent(ArrayList<Point> a){
+		wallsToTransformIntoTransparent = a;
+	}
 }

@@ -206,7 +206,7 @@ public class Door implements IDrawable {
 		case NEED_KEY:
 			stage.getDialogues().addDialogue(
 					new Dialogue(
-							"Debes conseguir algo \npara abrir la puerta",
+							"Debes conseguir algo para abrir la puerta",
 							StagesLevel.fontDialogues, 
 							StagesLevel.colorDialogues, 
 							1500, 
@@ -220,7 +220,7 @@ public class Door implements IDrawable {
 		case ERROR_KEY:
 			stage.getDialogues().addDialogue(
 					new Dialogue(
-							"Este objeto no sirve \npara esta puerta",
+							"Este objeto no sirve para esta puerta",
 							StagesLevel.fontDialogues, 
 							StagesLevel.colorDialogues, 
 							1500, 

@@ -5,12 +5,12 @@ import com.spantons.entity.Entity;
 import com.spantons.object.Object;
 import com.spantons.stages.GameStagesManager;
 
-public class IUpdateStagesLevel implements IUpdateable {
+public class UpdateStagesLevel implements IUpdateable {
 
 	private StagesLevel stage;
 	
 	/****************************************************************************************/
-	public IUpdateStagesLevel(StagesLevel _stage) {
+	public UpdateStagesLevel(StagesLevel _stage) {
 		stage = _stage;
 	}
 
