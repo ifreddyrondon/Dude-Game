@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Stage>
+	<TileMap>/maps/map_1_4.txt</TileMap>	
+	<Countdown>45</Countdown>
+	<CurrentCharacter>
+		<Path>res/charactersXML/LeonTheProfessional.xml</Path>
+		<Point>29,16</Point>
+	</CurrentCharacter>
+	<Enemies>
+		<Enemy>
+			<Path>res/charactersXML/Jason.xml</Path>
+			<Point>16,25</Point>
+		</Enemy>
+		<Enemy>
+			<Path>res/charactersXML/Jason.xml</Path>
+			<Point>16,11</Point>
+		</Enemy>
+	</Enemies>
+	<Doors>
+		<Door>
+			<Point>33,14</Point>
+			<Animation>ANIMATION_CLOSE_A</Animation>
+			<Open>False</Open>
+			<Unlock>False</Unlock>
+		</Door>
+	</Doors>
+	<Update>UpdateStagesLevel</Update>
+	<DrawLevel>DrawLevel</DrawLevel>
+	<NextCharacter>SelectCurrentCharacterLevel</NextCharacter>
+	<TimeOut>ReleaseEnemiesLevels</TimeOut>
+</Stage>

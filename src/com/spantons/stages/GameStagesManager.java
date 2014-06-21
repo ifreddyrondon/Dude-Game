@@ -17,13 +17,14 @@ public class GameStagesManager {
 	private ArrayList<Entity> characters;
 	private Entity currentCharacter;
 
-	public static final int NUM_STAGES = 6;
+	public static final int NUM_STAGES = 7;
 	public static final int MENU_STAGE = 0;
 	public static final int LEVEL_1_STAGE_1 = 1;
 	public static final int LEVEL_1_STAGE_2 = 2;
 	public static final int LEVEL_1_STAGE_3 = 3;
-	public static final int GAME_OVER_STAGE = 4;
-	public static final int HELP_STAGE = 5;
+	public static final int LEVEL_1_STAGE_4 = 4;
+	public static final int GAME_OVER_STAGE = 5;
+	public static final int HELP_STAGE = 6;
 
 	/****************************************************************************************/
 	public GameStagesManager() {
@@ -45,6 +46,8 @@ public class GameStagesManager {
 			gameStages[LEVEL_1_STAGE_2] = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_2, this);
 		if (stage == LEVEL_1_STAGE_3)
 			gameStages[LEVEL_1_STAGE_3] = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_3, this);
+		if (stage == LEVEL_1_STAGE_4)
+			gameStages[LEVEL_1_STAGE_4] = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_4, this);
 		if (stage == GAME_OVER_STAGE)
 			gameStages[GAME_OVER_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_GAME_OVER, this);
 		if (stage == HELP_STAGE)

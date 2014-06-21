@@ -354,13 +354,16 @@ public class ParseXMLStageLevel {
 					}
 					
 					if (eElement.getElementsByTagName("Goals").item(0) != null) {
-						Class classObject = Class.forName(
-								"com.spantons.stagesLevel." + eElement.getElementsByTagName("Goals").item(0).getTextContent());
-						Class[] types = {StagesLevel.class};
-						Constructor constructor = classObject.getConstructor(types);
-						java.lang.Object[] parameters = {aux};
-						java.lang.Object instance = constructor.newInstance(parameters);
-						aux.goals = (ILevelGoals) instance;
+						if (eElement.getElementsByTagName("NextLevel").item(0) != null) {
+							int nextLevel = Integer.parseInt(eElement.getElementsByTagName("NextLevel").item(0).getTextContent());
+							Class classObject = Class.forName(
+									"com.spantons.stagesLevel." + eElement.getElementsByTagName("Goals").item(0).getTextContent());
+							Class[] types = {StagesLevel.class, int.class};
+							Constructor constructor = classObject.getConstructor(types);
+							java.lang.Object[] parameters = {aux, nextLevel};
+							java.lang.Object instance = constructor.newInstance(parameters);
+							aux.goals = (ILevelGoals) instance;
+						}
 					}
 					
 					if (eElement.getElementsByTagName("TimeOut").item(0) != null) {

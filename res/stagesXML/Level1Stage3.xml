@@ -2,6 +2,7 @@
 <Stage>
 	<TileMap>/maps/map_1_3.txt</TileMap>	
 	<Countdown>90</Countdown>
+	<ExitPoint>38,39</ExitPoint>
 	<CurrentCharacter>
 		<Path>GET</Path>
 		<Point>6,28</Point>
@@ -77,5 +78,7 @@
 	<Update>UpdateStagesLevel</Update>
 	<DrawLevel>DrawLevel</DrawLevel>
 	<NextCharacter>SelectCurrentCharacterLevel</NextCharacter>
+	<Goals>GoalsLevelWithAllCharacters</Goals>
+	<NextLevel>4</NextLevel>
 	<TimeOut>ReleaseEnemiesLevels</TimeOut>
 </Stage>

@@ -177,7 +177,8 @@
 	<TransformTransparentWalls>TransformTransparentWallsLv1Stage1</TransformTransparentWalls>
 	<DrawLevel>DrawLevel</DrawLevel>
 	<NextCharacter>SelectCurrentCharacterLevel</NextCharacter>
-	<Goals>GoalsLevel_1_Stage_1</Goals>
+	<Goals>GoalsLevelWithAllCharacters</Goals>
+	<NextLevel>2</NextLevel>
 	<TimeOut>ReleaseEnemiesLevels</TimeOut>
 	<CheckTransparentWalls>
 		<Class>CheckTransparentWallsLvl1Stage1</Class>

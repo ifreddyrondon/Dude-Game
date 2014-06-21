@@ -122,7 +122,8 @@
 	<Update>UpdateStagesLevel</Update>
 	<DrawLevel>DrawLevel</DrawLevel>
 	<NextCharacter>SelectCurrentCharacterLevel</NextCharacter>
-	<Goals>GoalsLevel_1_Stage_2</Goals>
+	<Goals>GoalsLevelCharactersNotBusy</Goals>
+	<NextLevel>3</NextLevel>
 	<TimeOut>ReleaseEnemiesLevels</TimeOut>
 	<TimeToLightsOn>8000</TimeToLightsOn>
 	<TimeToLightsOff>1000</TimeToLightsOff>

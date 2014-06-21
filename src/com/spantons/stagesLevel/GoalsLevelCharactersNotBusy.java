@@ -4,15 +4,16 @@ import java.util.ArrayList;
 
 import com.spantons.entity.Entity;
 import com.spantons.singleton.SoundCache;
-import com.spantons.stages.GameStagesManager;
 
-public class GoalsLevel_1_Stage_2 implements ILevelGoals {
+public class GoalsLevelCharactersNotBusy implements ILevelGoals {
 
 	private StagesLevel stage;
-
+	private int nextLevel;
+	
 	/****************************************************************************************/
-	public GoalsLevel_1_Stage_2(StagesLevel _stage) {
+	public GoalsLevelCharactersNotBusy(StagesLevel _stage, int _nextLevel) {
 		stage = _stage;
+		nextLevel = _nextLevel;
 	}
 
 	/****************************************************************************************/
@@ -29,7 +30,7 @@ public class GoalsLevel_1_Stage_2 implements ILevelGoals {
 			}
       		stage.gsm.setCharacters(charactersNotBusy);
       		stage.currentCharacter.setAllMov(false);
-      		stage.gsm.setStage(GameStagesManager.LEVEL_1_STAGE_3);
+      		stage.gsm.setStage(nextLevel);
 		}
 	}
 	
