@@ -24,6 +24,56 @@
 			<Point>37,11</Point>
 		</Enemy>
 	</Enemies>
+	<Doors>
+		<Door>
+			<Point>4,21</Point>
+			<Animation>ANIMATION_CLOSE_A</Animation>
+			<Open>False</Open>
+			<Unlock>False</Unlock>
+		</Door>
+		<Door>
+			<Point>4,36</Point>
+			<Animation>ANIMATION_CLOSE_A</Animation>
+			<Open>False</Open>
+			<Unlock>False</Unlock>
+		</Door>
+		<Door>
+			<Point>4,7</Point>
+			<Animation>ANIMATION_CLOSE_A</Animation>
+			<Open>False</Open>
+			<Unlock>False</Unlock>
+		</Door>
+		<Door>
+			<Point>16,4</Point>
+			<Animation>ANIMATION_CLOSE_B</Animation>
+			<Open>False</Open>
+			<Unlock>False</Unlock>
+		</Door>
+		<Door>
+			<Point>16,4</Point>
+			<Animation>ANIMATION_CLOSE_B</Animation>
+			<Open>False</Open>
+			<Unlock>False</Unlock>
+		</Door>
+		<Door>
+			<Point>27,4</Point>
+			<Animation>ANIMATION_CLOSE_B</Animation>
+			<Open>False</Open>
+			<Unlock>False</Unlock>
+		</Door>
+		<Door>
+			<Point>9,39</Point>
+			<Animation>ANIMATION_CLOSE_B</Animation>
+			<Open>False</Open>
+			<Unlock>False</Unlock>
+		</Door>
+		<Door>
+			<Point>38,39</Point>
+			<Animation>ANIMATION_CLOSE_B</Animation>
+			<Open>False</Open>
+			<Unlock>True</Unlock>
+		</Door>
+	</Doors>
 	<Update>UpdateStagesLevel</Update>
 	<DrawLevel>DrawLevel</DrawLevel>
 	<NextCharacter>SelectCurrentCharacterLevel</NextCharacter>
