@@ -1,7 +1,5 @@
 package com.spantons.entity;
 
-import com.spantons.magicNumbers.SoundPath;
-import com.spantons.singleton.SoundCache;
 
 public class EntityAttack implements IEntityAttack {
 
@@ -25,7 +23,7 @@ public class EntityAttack implements IEntityAttack {
 			if (entity.characterClose.health <= 0) {
 				entity.characterClose.dead = true;
 				entity.characterClose.health = 0;
-				killCharacter(entity.characterClose);
+				EntityUtils.killCharacter(entity.characterClose);
 				return;
 			}
 			
@@ -37,24 +35,4 @@ public class EntityAttack implements IEntityAttack {
 		}
 	}
 	
-	/****************************************************************************************/
-	public void killCharacter(Entity _entity) {
-		SoundCache.getInstance().getSound(SoundPath.SFX_DYING).play();
-		_entity.dead = true;
-		
-		if (_entity.object != null)
-			_entity.object.setCarrier(null);
-
-		_entity.getTileMap().setEntityToDraw(_entity.xMap, _entity.yMap, null);
-		_entity.getTileMap().setEntityDeadToDraw(_entity.xMap, _entity.yMap, _entity);
-		_entity.recoveringFromAttack = false;
-		_entity.stage.getDead().add(_entity);
-		_entity.updateAnimation.update();
-		
-		if (_entity.update instanceof UpdateEnemy)
-			_entity.stage.getJasons().remove(_entity);
-		else
-			_entity.stage.getCharacters().remove(_entity);
-	}
-
 }

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Stage>
 	<TileMap>/maps/map_1_4.txt</TileMap>	
-	<Countdown>10</Countdown>
+	<Countdown>15</Countdown>
 	<CurrentCharacter>
 		<Path>res/charactersXML/LeonTheProfessional.xml</Path>
 		<Point>32,18</Point>
 	</CurrentCharacter>
+	<Characters>
+		<Character>
+			<Path>res/charactersXML/GordonFreeman.xml</Path>
+			<Point>12,22</Point>
+		</Character>
+	</Characters>
 	<Enemies>
 		<Enemy>
 			<Path>res/charactersXML/Jason.xml</Path>
@@ -55,6 +61,7 @@
 			<String>Explosivos???</String>
 			<String>Que significa la X en la pared??</String>
 			<String>???</String>
+			<String>Parece un refugio</String>
 		</AWAKENING>
 	</StringDialogues>	
 	<TimeToAwakeDialogues>1400</TimeToAwakeDialogues>

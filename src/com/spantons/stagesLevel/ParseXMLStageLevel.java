@@ -376,6 +376,25 @@ public class ParseXMLStageLevel {
 						aux.timeOut = (ITimeOut) instance;
 					}
 					
+					if(eElement.getElementsByTagName("SaveZone").item(0) != null){
+						Node saveZoneNode = eElement.getElementsByTagName("SaveZone").item(0);
+						if (saveZoneNode.getNodeType() == Node.ELEMENT_NODE) {
+							Element saveZoneElement = (Element) saveZoneNode;
+							NodeList saveZonePointList = saveZoneElement.getElementsByTagName("Point");
+							if (saveZonePointList.getLength() > 0) {
+								aux.saveZone = new ArrayList<Point>();
+								for (int i1 = 0; i1 < saveZonePointList.getLength(); i1++) {
+									Node pointNode = saveZonePointList.item(i1);
+									if (pointNode.getNodeType() == Node.ELEMENT_NODE) {
+										Element pointElement = (Element) pointNode;
+										String pointString[] = pointElement.getTextContent().split(",");
+										aux.saveZone.add(new Point(Integer.parseInt(pointString[0]),Integer.parseInt(pointString[1])));
+									}
+								}
+							}
+						}
+					}
+					
 					if(eElement.getElementsByTagName("CheckTransparentWalls").item(0) != null) {
 						Node checkTransparentWallsNode = eElement.getElementsByTagName("CheckTransparentWalls").item(0);
 						if (checkTransparentWallsNode.getNodeType() == Node.ELEMENT_NODE) {

@@ -8,8 +8,10 @@ import org.imgscalr.Scalr;
 
 import com.spantons.dialogue.Dialogue;
 import com.spantons.magicNumbers.ImagePath;
+import com.spantons.magicNumbers.SoundPath;
 import com.spantons.object.Object;
 import com.spantons.singleton.ImageCache;
+import com.spantons.singleton.SoundCache;
 import com.spantons.stagesLevel.Door;
 import com.spantons.stagesLevel.StagesLevel;
 import com.spantons.tileMap.TileMap;
@@ -238,6 +240,26 @@ public class EntityUtils {
 			if (elapsedTime > 1000)
 				_entity.recoveringFromAttack = false;
 		}
+	}
+	
+	/****************************************************************************************/
+	public static void killCharacter(Entity _entity) {
+		SoundCache.getInstance().getSound(SoundPath.SFX_DYING).play();
+		_entity.dead = true;
+		
+		if (_entity.object != null)
+			_entity.object.setCarrier(null);
+
+		_entity.getTileMap().setEntityToDraw(_entity.xMap, _entity.yMap, null);
+		_entity.getTileMap().setEntityDeadToDraw(_entity.xMap, _entity.yMap, _entity);
+		_entity.recoveringFromAttack = false;
+		_entity.stage.getDead().add(_entity);
+		_entity.updateAnimation.update();
+		
+		if (_entity.update instanceof UpdateEnemy)
+			_entity.stage.getJasons().remove(_entity);
+		else
+			_entity.stage.getCharacters().remove(_entity);
 	}
 	
 	/****************************************************************************************/

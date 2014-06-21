@@ -300,6 +300,10 @@ public class Entity {
 		return damage;
 	}
 	
+	public String getDescription() {
+		return description;
+	}
+	
 	public void setDamage(double a) {
 		damage = a;
 	}
