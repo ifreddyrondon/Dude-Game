@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Object>
+    <Description>Tnt</Description>
+    <Scale>0.1</Scale>
+    <OffSetXLoading>32</OffSetXLoading>
+    <OffSetYLoading>12</OffSetYLoading>
+    <Type>NON_CONSUMABLE</Type> 
+    <Update>UpdateObjectWeapon</Update>
+    <Draw>DrawObjectMobile</Draw>
+    <Sprite>/objects_sprites/tnt.png</Sprite>
+    <LoadSprite>LoadSpriteObjectSingleAnimation</LoadSprite>
+</Object>

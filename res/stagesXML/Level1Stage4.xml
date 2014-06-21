@@ -1,31 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Stage>
 	<TileMap>/maps/map_1_4.txt</TileMap>	
-	<Countdown>45</Countdown>
+	<Countdown>10</Countdown>
 	<CurrentCharacter>
 		<Path>res/charactersXML/LeonTheProfessional.xml</Path>
-		<Point>29,16</Point>
+		<Point>32,18</Point>
 	</CurrentCharacter>
 	<Enemies>
 		<Enemy>
 			<Path>res/charactersXML/Jason.xml</Path>
-			<Point>16,25</Point>
+			<Point>15,32</Point>
 		</Enemy>
 		<Enemy>
 			<Path>res/charactersXML/Jason.xml</Path>
-			<Point>16,11</Point>
+			<Point>19,7</Point>
 		</Enemy>
 	</Enemies>
 	<Doors>
 		<Door>
-			<Point>33,14</Point>
+			<Point>36,18</Point>
 			<Animation>ANIMATION_CLOSE_A</Animation>
 			<Open>False</Open>
 			<Unlock>False</Unlock>
 		</Door>
 	</Doors>
+	<Objects>
+		<Object>
+			<Path>res/objectsXML/Hammer.xml</Path>
+			<Point>21,9</Point>
+		</Object>
+		<Object>
+			<Path>res/objectsXML/Tnt.xml</Path>
+			<Point>25,7</Point>
+		</Object>
+		<Object>
+			<Path>res/objectsXML/Pizza.xml</Path>
+			<Point>22,29</Point>
+		</Object>
+		<Object>
+			<Path>res/objectsXML/Food.xml</Path>
+			<Point>12,20</Point>
+		</Object>
+		<Object>
+			<Path>res/objectsXML/PieceOfPizza.xml</Path>
+			<Point>27,22</Point>
+		</Object>
+		<Object>
+			<Path>res/objectsXML/PieceOfPizza.xml</Path>
+			<Point>31,8</Point>
+		</Object>
+	</Objects>
+	<StringDialogues>
+		<AWAKENING>
+			<String>Explosivos???</String>
+			<String>Que significa la X en la pared??</String>
+			<String>???</String>
+		</AWAKENING>
+	</StringDialogues>	
+	<TimeToAwakeDialogues>1400</TimeToAwakeDialogues>
 	<Update>UpdateStagesLevel</Update>
 	<DrawLevel>DrawLevel</DrawLevel>
 	<NextCharacter>SelectCurrentCharacterLevel</NextCharacter>
-	<TimeOut>ReleaseEnemiesLevels</TimeOut>
+	<TimeOut>TntExplosion</TimeOut>
+	<SaveZone>
+		<Point>26,17</Point>
+		<Point>26,18</Point>
+		<Point>27,17</Point>
+		<Point>27,18</Point>
+	</SaveZone>
 </Stage>

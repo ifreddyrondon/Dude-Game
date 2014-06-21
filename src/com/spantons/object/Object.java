@@ -60,12 +60,14 @@ public class Object implements IDrawable {
 
 	/****************************************************************************************/
 	public void actionLoad() {
-		attribute.loadAttribute(carrier);
+		if (attribute != null) 
+			attribute.loadAttribute(carrier);
 	}
 
 	/****************************************************************************************/
 	public void actionUnload() {
-		attribute.unloadAttribute(carrier);
+		if (attribute != null) 
+			attribute.unloadAttribute(carrier);	
 	}
 	
 	/****************************************************************************************/
