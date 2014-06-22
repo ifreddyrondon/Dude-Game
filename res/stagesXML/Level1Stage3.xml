@@ -75,6 +75,13 @@
 			<Unlock>True</Unlock>
 		</Door>
 	</Doors>
+	<StringDialogues>
+		<AWAKENING>
+			<String>Hay muchas puertas!!!</String>
+			<String>Cual sera la correcta??</String>
+		</AWAKENING>
+	</StringDialogues>	
+	<TimeToAwakeDialogues>2000</TimeToAwakeDialogues>
 	<Update>UpdateStagesLevel</Update>
 	<DrawLevel>DrawLevel</DrawLevel>
 	<NextCharacter>SelectCurrentCharacterLevel</NextCharacter>

@@ -117,15 +117,15 @@ public class TntExplosion implements ITimeOut {
 						stage.tileMap.setWallToDraw(9,14,3);
 						stage.tileMap.setWallToDraw(9,21,4);
 					}
-					
+				}
+				if (object.getCarrier() == null) {
 					object.setCarrier(null);
 					stage.getTileMap().setObjectToDraw(object.getXMap(), object.getYMap(), null);
-				}
+				}	
 			}
-			
-			
-			
 		}
+		
+		
 		
 	}
 

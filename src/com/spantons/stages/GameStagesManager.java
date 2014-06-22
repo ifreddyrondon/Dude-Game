@@ -29,7 +29,7 @@ public class GameStagesManager {
 	/****************************************************************************************/
 	public GameStagesManager() {
 		gameStages = new IStage[NUM_STAGES];
-		currentStage = MENU_STAGE;
+		currentStage = LEVEL_1_STAGE_4;
 		loadStage(currentStage);
 	}
 

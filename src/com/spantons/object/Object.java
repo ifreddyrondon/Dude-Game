@@ -75,6 +75,10 @@ public class Object implements IDrawable {
 		carrier = _entity;
 	}
 	
+	public Entity getCarrier() {
+		return carrier;
+	}
+	
 	public int getXMap() {
 		return xMap;
 	}
