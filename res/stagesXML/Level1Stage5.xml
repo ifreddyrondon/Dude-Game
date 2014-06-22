@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Stage>
 	<TileMap>/maps/map_1_5.txt</TileMap>	
-	<Countdown>180</Countdown>
+	<Countdown>150</Countdown>
 	<CurrentCharacter>
 		<Path>res/charactersXML/LeonTheProfessional.xml</Path>
 		<Point>5,25</Point>
@@ -34,6 +34,10 @@
 	</Doors>
 	<Objects>
 		<Object>
+			<Path>res/objectsXML/Sword.xml</Path>
+			<Point>21,19</Point>
+		</Object>
+		<Object>
 			<Path>res/objectsXML/Pizza.xml</Path>
 			<Point>15,11</Point>
 		</Object>
@@ -62,5 +66,5 @@
 	<Goals>GoalsLevelWithAllCharacters</Goals>
 	<NextLevel>4</NextLevel>
 	<TimeOut>ReleaseEnemiesLevels</TimeOut>
-	<Music>/music/horrorAmbiance.mp3</Music>
+	<Music>/music/SuspenseHorror.mp3</Music>
 </Stage>

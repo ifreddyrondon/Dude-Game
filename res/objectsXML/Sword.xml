@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Object>
+    <Description>Espada</Description>
+    <Scale>0.10</Scale>
+    <OffSetXLoading>48</OffSetXLoading>
+    <OffSetYLoading>12</OffSetYLoading>
+    <Type>NON_CONSUMABLE</Type> 
+    <Update>UpdateObjectWeapon</Update>
+    <Draw>DrawObjectMobile</Draw>
+    <Attribute>ObjectAttributeGetMoreDamage</Attribute>
+    <AttributeValue>1.8</AttributeValue>
+    <Sprite>/objects_sprites/Sword.png</Sprite>
+    <LoadSprite>LoadSpriteObjectWeapon</LoadSprite>
+</Object>

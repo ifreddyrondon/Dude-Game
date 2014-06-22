@@ -13,7 +13,7 @@
     <MoveSpeed>250</MoveSpeed>
     <HUD>/hud/Jason.png</HUD>
     <Sprite>/characteres_sprites/Jason.png</Sprite>
-    <Scale>0.25</Scale>
+    <Scale>0.18</Scale>
     <Dead>False</Dead>
     <FacingRight>True</FacingRight>
     <Visible>True</Visible>
