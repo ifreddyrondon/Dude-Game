@@ -9,7 +9,9 @@ import javax.swing.Timer;
 
 import com.spantons.entity.Entity;
 import com.spantons.entity.EntityUtils;
+import com.spantons.entity.ParseXMLEntity;
 import com.spantons.magicNumbers.SoundPath;
+import com.spantons.magicNumbers.XMLPath;
 import com.spantons.object.Object;
 import com.spantons.singleton.SoundCache;
 
@@ -110,6 +112,9 @@ public class TntExplosion implements ITimeOut {
 								stage.wallsToTransform.get(stage.wallsToTransform.size() - 1).x,
 								stage.wallsToTransform.get(stage.wallsToTransform.size() - 1).y,
 								4);
+					} else {
+						for (int i = 0; i < 20; i++) 
+							stage.enemies.add(ParseXMLEntity.getEntityFromXML(XMLPath.XML_CHARACTER_JASON, stage, 18, 18));
 					}
 				}
 				if (object.getCarrier() == null) {
