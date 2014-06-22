@@ -27,6 +27,7 @@ public class TntExplosion implements ITimeOut {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void timeOut() {
+		SoundCache.getInstance().getSound("/music/TickTock.mp3").stop();
 		SoundCache.getInstance().getSound(SoundPath.SFX_TNT_EXPLOSION).play();
 		stage.tileMap.turnLights();
 		lightsDeploy = new Timer(2200, new ActionListener() {

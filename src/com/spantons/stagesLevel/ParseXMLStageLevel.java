@@ -24,6 +24,7 @@ import com.spantons.entity.Hud;
 import com.spantons.entity.ParseXMLEntity;
 import com.spantons.object.Object;
 import com.spantons.object.ParseXMLObject;
+import com.spantons.singleton.SoundCache;
 import com.spantons.stages.GameStagesManager;
 import com.spantons.stages.IStage;
 import com.spantons.tileMap.TileMap;
@@ -455,6 +456,10 @@ public class ParseXMLStageLevel {
 								aux);
 					
 					aux.startLevel();
+					
+					if(eElement.getElementsByTagName("Music").item(0) != null)
+						SoundCache.getInstance().getSound(eElement.getElementsByTagName("Music").item(0).getTextContent()).loop();
+					
 					return aux;
 				}
 			}

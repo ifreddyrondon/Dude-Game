@@ -188,4 +188,5 @@
 		<PointDisable>21,16</PointDisable>
 	</CheckTransparentWalls>
 	<TimeToAwakeDialogues>2000</TimeToAwakeDialogues>
+	<Music>/music/horrorAmbiance.mp3</Music>
 </Stage>

@@ -19,7 +19,6 @@ import com.spantons.entity.Entity;
 import com.spantons.entity.EntityUtils;
 import com.spantons.entity.Hud;
 import com.spantons.magicNumbers.FontPath;
-import com.spantons.magicNumbers.SoundPath;
 import com.spantons.object.HandleObjects;
 import com.spantons.object.IHandleObjects;
 import com.spantons.object.Object;
@@ -109,8 +108,6 @@ public class StagesLevel implements IStage {
 			timerLightsOn.start();
 		
 		hud.update(ToHours.SecondsToHours(countdown));
-		
-		SoundCache.getInstance().getSound(SoundPath.MUSIC_HORROR_AMBIANCE).loop();
 	}
 	
 	/****************************************************************************************/

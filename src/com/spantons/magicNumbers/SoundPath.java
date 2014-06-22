@@ -2,7 +2,6 @@ package com.spantons.magicNumbers;
 
 public interface SoundPath {
 
-	public static final String MUSIC_HORROR_AMBIANCE = "/music/horrorAmbiance.mp3";
 	public static final String MUSIC_HORROR_MOVIE_AMBIANCE = "/music/horrorMovieAmbiance.mp3";
 	
 	public static final String SFX_BURP = "/sfx/burp.mp3";

@@ -81,4 +81,5 @@
 	<Goals>GoalsLevelWithAllCharacters</Goals>
 	<NextLevel>4</NextLevel>
 	<TimeOut>ReleaseEnemiesLevels</TimeOut>
+	<Music>/music/horrorAmbiance.mp3</Music>
 </Stage>
