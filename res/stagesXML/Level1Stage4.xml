@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Stage>
-	<TileMap>/maps/map_1_4.txt</TileMap>	
+	<TileMap>/maps/map_1_4.txt</TileMap>
+	<ExitPoint>9,14</ExitPoint>
+	<ExitPoint>9,15</ExitPoint>
+	<ExitPoint>9,16</ExitPoint>
+	<ExitPoint>9,17</ExitPoint>
+	<ExitPoint>9,18</ExitPoint>
+	<ExitPoint>9,19</ExitPoint>
+	<ExitPoint>9,20</ExitPoint>	
+	<ExitPoint>9,21</ExitPoint>
 	<WallsToTransform>
 		<WallPoint>9,14</WallPoint>
 		<WallPoint>9,15</WallPoint>
@@ -79,6 +87,8 @@
 	<Update>UpdateStagesLevel</Update>
 	<DrawLevel>DrawLevel</DrawLevel>
 	<NextCharacter>SelectCurrentCharacterLevel</NextCharacter>
+	<Goals>GoalsLevelWithAllCharacters</Goals>
+	<NextLevel>5</NextLevel>
 	<TimeOut>TntExplosion</TimeOut>
 	<SaveZone>
 		<Point>26,17</Point>

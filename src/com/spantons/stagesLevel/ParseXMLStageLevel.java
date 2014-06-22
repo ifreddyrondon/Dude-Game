@@ -90,8 +90,18 @@ public class ParseXMLStageLevel {
 						aux.countdown = Integer.parseInt(eElement.getElementsByTagName("Countdown").item(0).getTextContent());
 					
 					if(eElement.getElementsByTagName("ExitPoint").item(0) != null) {
-						String pointString[] = eElement.getElementsByTagName("ExitPoint").item(0).getTextContent().split(",");
-						aux.exitPoint = new Point(Integer.parseInt(pointString[0]),Integer.parseInt(pointString[1]));
+						NodeList exitPointList = eElement.getElementsByTagName("ExitPoint");
+						if (exitPointList.getLength() > 0) {
+							aux.exitPoints = new ArrayList<Point>();
+							for (int i1 = 0; i1 < exitPointList.getLength(); i1++) {
+								Node exitPointNode = exitPointList.item(i1);
+								if (exitPointNode.getNodeType() == Node.ELEMENT_NODE) {
+									Element exitPointElement = (Element) exitPointNode;
+									String pointString[] = exitPointElement.getTextContent().split(",");
+									aux.exitPoints.add(new Point(Integer.parseInt(pointString[0]),Integer.parseInt(pointString[1])));
+								}
+							}
+						}
 					}
 						
 					if(eElement.getElementsByTagName("CurrentCharacter").item(0) != null) {

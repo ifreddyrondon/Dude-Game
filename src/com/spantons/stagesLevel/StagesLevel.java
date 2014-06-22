@@ -42,7 +42,7 @@ public class StagesLevel implements IStage {
 	protected ArrayList<Entity> dead;
 	protected ArrayList<Object> objects;
 	protected ArrayList<Door> doors;
-	protected Point exitPoint;
+	protected ArrayList<Point> exitPoints;
 	protected ArrayList<Point> saveZone;
 	protected ArrayList<Point> wallsToTransform;
 	protected Entity currentCharacter;
