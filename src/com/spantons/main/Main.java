@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 public class Main {
 
 	public static void main(String[] args) {
-		// Contenedor del juego
 		JFrame window = new JFrame();
 		window.setContentPane(new GamePanel());
 		

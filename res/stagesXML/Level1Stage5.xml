@@ -63,8 +63,8 @@
 	<Update>UpdateStagesLevel</Update>
 	<DrawLevel>DrawLevel</DrawLevel>
 	<NextCharacter>SelectCurrentCharacterLevel</NextCharacter>
-	<Goals>GoalsLevelWithAllCharacters</Goals>
-	<NextLevel>4</NextLevel>
+	<Goals>GoalLevelWin</Goals>
+	<NextLevel>8</NextLevel>
 	<TimeOut>ReleaseEnemiesLevels</TimeOut>
 	<Music>/music/SuspenseHorror.mp3</Music>
 </Stage>

@@ -31,7 +31,16 @@ public class Background implements IDrawable, IUpdateable{
 			 image = ImageCache.getInstance().getImage(_imageSource);
 			 			 
 			if (!_repeat){
-				image = Scalr.resize(image, GamePanel.RESOLUTION_HEIGHT);
+				
+				if (image.getWidth() > image.getHeight()) {
+					if (image.getWidth() >= GamePanel.RESOLUTION_WIDTH) 
+						image = Scalr.resize(image, GamePanel.RESOLUTION_WIDTH);
+					else
+						image = Scalr.resize(image, GamePanel.RESOLUTION_HEIGHT);
+				}
+				else if (image.getHeight() > image.getWidth())
+					image = Scalr.resize(image, GamePanel.RESOLUTION_HEIGHT);
+				
 				x = (GamePanel.RESOLUTION_WIDTH - image.getWidth()) / 2;
 				y = (GamePanel.RESOLUTION_HEIGHT - image.getHeight()) / 2;	    
 			}

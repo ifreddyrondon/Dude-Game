@@ -8,7 +8,7 @@
     <Update>UpdateObjectWeapon</Update>
     <Draw>DrawObjectMobile</Draw>
     <Attribute>ObjectAttributeGetMoreDamage</Attribute>
-    <AttributeValue>1.8</AttributeValue>
+    <AttributeValue>1.5</AttributeValue>
     <Sprite>/objects_sprites/Sword.png</Sprite>
     <LoadSprite>LoadSpriteObjectWeapon</LoadSprite>
 </Object>
