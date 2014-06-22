@@ -3,6 +3,7 @@ package com.spantons.tileMap;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -266,6 +267,11 @@ public class TileMap {
 	}
 	
 	/****************************************************************************************/
+	public void setWallToDraw(int x, int y, int _e){
+		walls[x][y] = _e;
+	}
+		
+	/****************************************************************************************/
 	public void setEntityToDraw(int x, int y, Entity _e){
 		entitysToDraw[x][y] = _e;
 	}
@@ -278,6 +284,23 @@ public class TileMap {
 	/****************************************************************************************/
 	public void setObjectToDraw(int x, int y, IDrawable _o){
 		objectsToDraw[x][y] = _o;
+	}
+	
+	/****************************************************************************************/
+	public void resetWalls(){
+		for (int i = 0; i < numRowsMap; i++) {
+			for (int j = 0; j < numColMap; j++) {
+				walls[i][j] = wallsRestore[i][j];
+			}
+		}
+	}
+	
+	/****************************************************************************************/
+	public void transformToTransparentWalls(){
+		if (wallsToTransformIntoTransparent != null && numberTransparentTile != 0) {
+			for (Point point : wallsToTransformIntoTransparent) 
+				walls[point.x][point.y] = numberTransparentTile;
+		}
 	}
 	
 	/****************************************************************************************/
@@ -384,26 +407,15 @@ public class TileMap {
 			
 			if (walls[currentTile.x][currentTile.y] != 0) {
 				
-				if (!transparentWalls.equals("")) {
-					if (transparentWalls.equals("bathroom")) {
-						if (wallsToTransformIntoTransparent != null && numberTransparentTile != 0) {
-							for (Point point : wallsToTransformIntoTransparent) 
-								walls[point.x][point.y] = numberTransparentTile;
-						}
-					}
-				}
-				else {
-					for (int i = 0; i < numRowsMap; i++) {
-						for (int j = 0; j < numColMap; j++) {
-							walls[i][j] = wallsRestore[i][j];
-						}
-					}
-				}
+				BufferedImage image = 
+						tiles[walls[currentTile.x][currentTile.y] - 1].getImage();
 				
-				g.drawImage(tiles[walls[currentTile.x][currentTile.y] - 1]
-						.getImage(), 
-						(coorAbsolute.x - this.x) - tileSize.x / 2,
-						(coorAbsolute.y - this.y) - 192, null);
+				if (image != null) {
+					g.drawImage(
+							image, 
+							(coorAbsolute.x - this.x) - tileSize.x / 2,
+							(coorAbsolute.y - this.y) - 192, null);
+				}
 			}
 			
 			if (objects[currentTile.x][currentTile.y] != 0) {

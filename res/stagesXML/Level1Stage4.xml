@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Stage>
 	<TileMap>/maps/map_1_4.txt</TileMap>	
-	<Countdown>5</Countdown>
+	<Countdown>20</Countdown>
 	<CurrentCharacter>
 		<Path>res/charactersXML/LeonTheProfessional.xml</Path>
 		<Point>32,18</Point>

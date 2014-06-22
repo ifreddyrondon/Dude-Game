@@ -39,13 +39,6 @@ public class TntExplosion implements ITimeOut {
 		});
 		lightsDeploy.start();
 		
-		for (Object object : stage.objects) {
-			if (object.getDescription().equals("Tnt")) {
-				object.setCarrier(null);
-				stage.getTileMap().setObjectToDraw(object.getXMap(), object.getYMap(), null);
-			}
-		}
-		
 		if (stage.saveZone != null) {
 			boolean alive = false;
 			ArrayList<Entity> aux = null;
@@ -91,6 +84,48 @@ public class TntExplosion implements ITimeOut {
 				EntityUtils.killCharacter(stage.currentCharacter);
 		}
 		
+		if (!stage.characters.isEmpty() || !stage.currentCharacter.isDead()) {
+			for (Object object : stage.objects) {
+				if (object.getDescription().equals("Tnt")) {
+					boolean deleteWall = false;
+					ArrayList<Point> placeToPutTnt = new ArrayList<Point>();
+					placeToPutTnt.add(new Point(10,15));
+					placeToPutTnt.add(new Point(10,16));
+					placeToPutTnt.add(new Point(10,17));
+					placeToPutTnt.add(new Point(10,18));
+					placeToPutTnt.add(new Point(10,19));
+					placeToPutTnt.add(new Point(10,20));
+					Point objectPosition = new Point(object.getXMap(), object.getYMap());
+					for (Point point : placeToPutTnt) {
+						if (objectPosition.equals(point)) 
+							deleteWall = true;
+					}
+					
+					if (deleteWall) {
+						ArrayList<Point> walls = new ArrayList<Point>();
+						walls.add(new Point(9,14));
+						walls.add(new Point(9,15));
+						walls.add(new Point(9,16));
+						walls.add(new Point(9,17));
+						walls.add(new Point(9,18));
+						walls.add(new Point(9,19));
+						walls.add(new Point(9,20));
+						walls.add(new Point(9,21));
+						for (Point point : walls) 
+							stage.tileMap.setWallToDraw(point.x, point.y, 0);
+						
+						stage.tileMap.setWallToDraw(9,14,3);
+						stage.tileMap.setWallToDraw(9,21,4);
+					}
+					
+					object.setCarrier(null);
+					stage.getTileMap().setObjectToDraw(object.getXMap(), object.getYMap(), null);
+				}
+			}
+			
+			
+			
+		}
 		
 	}
 

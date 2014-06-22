@@ -14,13 +14,13 @@ public class TransformTransparentWallsLv1Stage1 implements ITransformTransparent
 	/****************************************************************************************/
 	@Override
 	public void transformToTransparentWalls() {
-		tileMap.setTransparentWalls("bathroom");
+		tileMap.transformToTransparentWalls();
 	}
 
 	/****************************************************************************************/
 	@Override
 	public void transformToOriginalWalls() {
-		tileMap.setTransparentWalls("");
+		tileMap.resetWalls();
 	}
 
 }
