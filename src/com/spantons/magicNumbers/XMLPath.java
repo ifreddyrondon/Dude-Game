@@ -12,4 +12,5 @@ public interface XMLPath {
 	public static final String XML_STAGE_LEVEL_1_STAGE_2 = "res/stagesXML/Level1Stage2.xml";
 	public static final String XML_STAGE_LEVEL_1_STAGE_3 = "res/stagesXML/Level1Stage3.xml";
 	public static final String XML_STAGE_LEVEL_1_STAGE_4 = "res/stagesXML/Level1Stage4.xml";
+	public static final String XML_STAGE_LEVEL_1_STAGE_5 = "res/stagesXML/Level1Stage5.xml";
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Character>
+    <Description>Big Jason</Description>
+    <Health>10</Health>
+    <MaxHealth>10</MaxHealth>
+    <Perversity>0</Perversity>
+    <MaxPerversity>100</MaxPerversity>
+    <Damage>1.0</Damage>
+    <DamageBackup>1.0</DamageBackup>
+    <FlinchingIncreaseDeltaTimePerversity>1000</FlinchingIncreaseDeltaTimePerversity>
+    <FlinchingDecreaseDeltaTimePerversity>1000</FlinchingDecreaseDeltaTimePerversity>
+    <DeltaForReduceFlinchingIncreaseDeltaTimePerversity>50</DeltaForReduceFlinchingIncreaseDeltaTimePerversity>
+    <MoveSpeed>250</MoveSpeed>
+    <HUD>/hud/Jason.png</HUD>
+    <Sprite>/characteres_sprites/Jason.png</Sprite>
+    <Scale>0.25</Scale>
+    <Dead>False</Dead>
+    <FacingRight>True</FacingRight>
+    <Visible>True</Visible>
+    <Update>UpdateEnemy</Update>
+</Character>
