@@ -56,7 +56,9 @@
 	</Objects>
 	<StringDialogues>
 		<AWAKENING>
-			<String>Hay muchas puertas!!!</String>
+			<String>¿Quién hizo esto?</String>
+			<String>Voy a morir!!</String>
+			<String>Maldición ¿Quién fue?</String>
 		</AWAKENING>
 	</StringDialogues>	
 	<TimeToAwakeDialogues>3000</TimeToAwakeDialogues>
