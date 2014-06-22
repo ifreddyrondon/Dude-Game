@@ -2,7 +2,7 @@
 <Stage>
 	<TileMap>/maps/map_1_1.txt</TileMap>
 	<NumberTransparentTile>65</NumberTransparentTile>
-	<WallsToTransformIntoTransparent>
+	<WallsToTransform>
 		<WallPoint>10,16</WallPoint>
 		<WallPoint>11,16</WallPoint>
 		<WallPoint>12,16</WallPoint>
@@ -26,7 +26,7 @@
 		<WallPoint>23,13</WallPoint>
 		<WallPoint>23,14</WallPoint>
 		<WallPoint>23,15</WallPoint>
-	</WallsToTransformIntoTransparent>	
+	</WallsToTransform>	
 	<Countdown>120</Countdown>
 	<ExitPoint>21,5</ExitPoint>
 	<CurrentCharacter>

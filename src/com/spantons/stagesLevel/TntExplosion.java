@@ -102,20 +102,14 @@ public class TntExplosion implements ITimeOut {
 					}
 					
 					if (deleteWall) {
-						ArrayList<Point> walls = new ArrayList<Point>();
-						walls.add(new Point(9,14));
-						walls.add(new Point(9,15));
-						walls.add(new Point(9,16));
-						walls.add(new Point(9,17));
-						walls.add(new Point(9,18));
-						walls.add(new Point(9,19));
-						walls.add(new Point(9,20));
-						walls.add(new Point(9,21));
-						for (Point point : walls) 
+						for (Point point : stage.wallsToTransform) 
 							stage.tileMap.setWallToDraw(point.x, point.y, 0);
 						
-						stage.tileMap.setWallToDraw(9,14,3);
-						stage.tileMap.setWallToDraw(9,21,4);
+						stage.tileMap.setWallToDraw(stage.wallsToTransform.get(0).x,stage.wallsToTransform.get(0).y,3);
+						stage.tileMap.setWallToDraw(
+								stage.wallsToTransform.get(stage.wallsToTransform.size() - 1).x,
+								stage.wallsToTransform.get(stage.wallsToTransform.size() - 1).y,
+								4);
 					}
 				}
 				if (object.getCarrier() == null) {

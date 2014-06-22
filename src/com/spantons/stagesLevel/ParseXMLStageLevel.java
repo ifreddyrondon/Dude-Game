@@ -69,19 +69,19 @@ public class ParseXMLStageLevel {
 						aux.tileMap = new TileMap(eElement.getElementsByTagName("TileMap").item(0).getTextContent());
 						if(eElement.getElementsByTagName("NumberTransparentTile").item(0) != null)
 							aux.tileMap.setNumberTransparentTile(Integer.parseInt(eElement.getElementsByTagName("NumberTransparentTile").item(0).getTextContent()));
-						if(eElement.getElementsByTagName("WallPoint").item(0) != null){
-							NodeList wallList = eElement.getElementsByTagName("WallPoint");
-							if (wallList.getLength() > 0) {
-								ArrayList<Point> walls = new ArrayList<Point>();
-								for (int i1 = 0; i1 < wallList.getLength(); i1++) {
-									Node wallNode = wallList.item(i1);
-									if (wallNode.getNodeType() == Node.ELEMENT_NODE) {
-										Element wallElement = (Element) wallNode;
-										String pointString[] = wallElement.getTextContent().split(",");
-										walls.add(new Point(Integer.parseInt(pointString[0]),Integer.parseInt(pointString[1])));
-									}
+					}
+					
+					if(eElement.getElementsByTagName("WallPoint").item(0) != null){
+						NodeList wallList = eElement.getElementsByTagName("WallPoint");
+						if (wallList.getLength() > 0) {
+							aux.wallsToTransform = new ArrayList<Point>();
+							for (int i1 = 0; i1 < wallList.getLength(); i1++) {
+								Node wallNode = wallList.item(i1);
+								if (wallNode.getNodeType() == Node.ELEMENT_NODE) {
+									Element wallElement = (Element) wallNode;
+									String pointString[] = wallElement.getTextContent().split(",");
+									aux.wallsToTransform.add(new Point(Integer.parseInt(pointString[0]),Integer.parseInt(pointString[1])));
 								}
-								aux.tileMap.setWallsToTransformIntoTransparent(walls);
 							}
 						}
 					}
@@ -327,9 +327,9 @@ public class ParseXMLStageLevel {
 					if (eElement.getElementsByTagName("TransformTransparentWalls").item(0) != null) {
 						Class classObject = Class.forName(
 								"com.spantons.stagesLevel." + eElement.getElementsByTagName("TransformTransparentWalls").item(0).getTextContent());
-						Class[] types = {TileMap.class};
+						Class[] types = {StagesLevel.class};
 						Constructor constructor = classObject.getConstructor(types);
-						java.lang.Object[] parameters = {aux.tileMap};
+						java.lang.Object[] parameters = {aux};
 						java.lang.Object instance = constructor.newInstance(parameters);
 						aux.transformTransparentWalls = (ITransformTransparentWalls) instance;
 					}

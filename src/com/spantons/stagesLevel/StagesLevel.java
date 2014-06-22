@@ -44,6 +44,7 @@ public class StagesLevel implements IStage {
 	protected ArrayList<Door> doors;
 	protected Point exitPoint;
 	protected ArrayList<Point> saveZone;
+	protected ArrayList<Point> wallsToTransform;
 	protected Entity currentCharacter;
 	
 	protected IHandleObjects handleObject;

@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Stage>
 	<TileMap>/maps/map_1_4.txt</TileMap>	
-	<Countdown>10</Countdown>
+	<WallsToTransform>
+		<WallPoint>9,14</WallPoint>
+		<WallPoint>9,15</WallPoint>
+		<WallPoint>9,16</WallPoint>
+		<WallPoint>9,17</WallPoint>
+		<WallPoint>9,18</WallPoint>
+		<WallPoint>9,19</WallPoint>
+		<WallPoint>9,20</WallPoint>
+		<WallPoint>9,21</WallPoint>
+	</WallsToTransform>
+	<Countdown>15</Countdown>
 	<CurrentCharacter>
 		<Path>res/charactersXML/LeonTheProfessional.xml</Path>
 		<Point>32,18</Point>
