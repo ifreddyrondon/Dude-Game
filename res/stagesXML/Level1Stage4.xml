@@ -19,17 +19,11 @@
 		<WallPoint>9,20</WallPoint>
 		<WallPoint>9,21</WallPoint>
 	</WallsToTransform>
-	<Countdown>15</Countdown>
+	<Countdown>40</Countdown>
 	<CurrentCharacter>
-		<Path>res/charactersXML/LeonTheProfessional.xml</Path>
+		<Path>GET</Path>
 		<Point>32,18</Point>
 	</CurrentCharacter>
-	<Characters>
-		<Character>
-			<Path>res/charactersXML/GordonFreeman.xml</Path>
-			<Point>12,22</Point>
-		</Character>
-	</Characters>
 	<Enemies>
 		<Enemy>
 			<Path>res/charactersXML/Jason.xml</Path>

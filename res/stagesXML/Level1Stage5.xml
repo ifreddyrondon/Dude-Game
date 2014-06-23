@@ -3,7 +3,7 @@
 	<TileMap>/maps/map_1_5.txt</TileMap>	
 	<Countdown>150</Countdown>
 	<CurrentCharacter>
-		<Path>res/charactersXML/LeonTheProfessional.xml</Path>
+		<Path>GET</Path>
 		<Point>5,25</Point>
 	</CurrentCharacter>
 	<DeadCharacter>

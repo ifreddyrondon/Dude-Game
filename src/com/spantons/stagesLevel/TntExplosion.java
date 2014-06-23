@@ -97,6 +97,18 @@ public class TntExplosion implements ITimeOut {
 					placeToPutTnt.add(new Point(10,18));
 					placeToPutTnt.add(new Point(10,19));
 					placeToPutTnt.add(new Point(10,20));
+					placeToPutTnt.add(new Point(11,15));
+					placeToPutTnt.add(new Point(11,16));
+					placeToPutTnt.add(new Point(11,17));
+					placeToPutTnt.add(new Point(11,18));
+					placeToPutTnt.add(new Point(11,19));
+					placeToPutTnt.add(new Point(11,20));
+					placeToPutTnt.add(new Point(12,15));
+					placeToPutTnt.add(new Point(12,16));
+					placeToPutTnt.add(new Point(12,17));
+					placeToPutTnt.add(new Point(12,18));
+					placeToPutTnt.add(new Point(12,19));
+					placeToPutTnt.add(new Point(12,20));
 					Point objectPosition = new Point(object.getXMap(), object.getYMap());
 					for (Point point : placeToPutTnt) {
 						if (objectPosition.equals(point)) 

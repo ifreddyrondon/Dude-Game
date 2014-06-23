@@ -130,15 +130,16 @@ public class ParseXMLStageLevel {
 										x = x - 1;
 									}
 								}
-								if (currentCharacterElement.getElementsByTagName("DeadCharacter").item(0) != null) {
+								if (eElement.getElementsByTagName("DeadCharacter").item(0) != null) {
 									Node deadCharacterNode = eElement.getElementsByTagName("DeadCharacter").item(0);
 									if (deadCharacterNode.getNodeType() == Node.ELEMENT_NODE) {
 										Element deadCharacterElement = (Element) deadCharacterNode;
 										String pointDeadCharacter[] = deadCharacterElement.getElementsByTagName("Point").item(0).getTextContent().split(",");
 										Entity entityDead = _gsm.getDeadCharacter();
+										aux.characters.add(entityDead);
+										System.out.println(entityDead);
 										entityDead.respawn(aux, Integer.parseInt(pointDeadCharacter[0]), Integer.parseInt(pointDeadCharacter[1]));
 										EntityUtils.killCharacter(entityDead);
-										aux.dead.add(entityDead);
 									}
 								}
 							}
