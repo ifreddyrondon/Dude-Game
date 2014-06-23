@@ -51,7 +51,9 @@ public class UpdateEnemy implements IUpdateable {
 							nextDirectionEnemy,
 							entity.nextPositionInMap, 1);
 
-			if (EntityUtils.checkTileCollision(entity, entity.tileMap)) {
+			if (EntityUtils.checkTileCollision(entity, entity.tileMap) 
+					&& EntityUtils.checkDoors(entity, entity.stage)) {
+				
 				entity.tileMap.setEntityToDraw(entity.xMap, entity.yMap,  null);
 				entity.xMap = entity.nextPositionInMap.x;
 				entity.yMap = entity.nextPositionInMap.y;
