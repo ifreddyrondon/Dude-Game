@@ -6,6 +6,9 @@
 		<Path>res/charactersXML/LeonTheProfessional.xml</Path>
 		<Point>5,25</Point>
 	</CurrentCharacter>
+	<DeadCharacter>
+		<Point>9,23</Point>
+	</DeadCharacter>
 	<Enemies>
 		<Enemy>
 			<Path>res/charactersXML/BigJason.xml</Path>

@@ -20,6 +20,7 @@ import com.spantons.Interfaces.IUpdateable;
 import com.spantons.dialogue.DialogueManager;
 import com.spantons.dialogue.DialogueStage1;
 import com.spantons.entity.Entity;
+import com.spantons.entity.EntityUtils;
 import com.spantons.entity.Hud;
 import com.spantons.entity.ParseXMLEntity;
 import com.spantons.object.Object;
@@ -115,15 +116,29 @@ public class ParseXMLStageLevel {
 								aux.characters = _gsm.getCharacters();
 								if (aux.characters.size() > 0){
 									if(currentCharacterElement.getElementsByTagName("DeleteRandomCharacter").item(0) != null) {
-										if (Boolean.parseBoolean(currentCharacterElement.getElementsByTagName("DeleteRandomCharacter").item(0).getTextContent())) 
-											aux.characters.remove(
-													RandomItemArrayList.getRandomItemFromArrayList(aux.characters));
+										if (Boolean.parseBoolean(currentCharacterElement.getElementsByTagName("DeleteRandomCharacter").item(0).getTextContent())) {
+											Entity deadEntity = (Entity) RandomItemArrayList.getRandomItemFromArrayList(aux.characters);
+											_gsm.setDeadCharacter(deadEntity);
+											aux.characters.remove(deadEntity);
+										}
+											
 									}
 									int x = aux.getCurrentCharacter().getXMap() - 1;
 									int y = aux.getCurrentCharacter().getYMap();
 									for (Entity entity : aux.characters) {
 										entity.respawn(aux, x, y);
 										x = x - 1;
+									}
+								}
+								if (currentCharacterElement.getElementsByTagName("DeadCharacter").item(0) != null) {
+									Node deadCharacterNode = eElement.getElementsByTagName("DeadCharacter").item(0);
+									if (deadCharacterNode.getNodeType() == Node.ELEMENT_NODE) {
+										Element deadCharacterElement = (Element) deadCharacterNode;
+										String pointDeadCharacter[] = deadCharacterElement.getElementsByTagName("Point").item(0).getTextContent().split(",");
+										Entity entityDead = _gsm.getDeadCharacter();
+										entityDead.respawn(aux, Integer.parseInt(pointDeadCharacter[0]), Integer.parseInt(pointDeadCharacter[1]));
+										EntityUtils.killCharacter(entityDead);
+										aux.dead.add(entityDead);
 									}
 								}
 							}

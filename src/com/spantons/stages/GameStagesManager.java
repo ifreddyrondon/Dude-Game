@@ -15,6 +15,7 @@ public class GameStagesManager {
 	private int currentStage;
 	
 	private ArrayList<Entity> characters;
+	private Entity deadCharacter;
 	private Entity currentCharacter;
 
 	public static final int NUM_STAGES = 9;
@@ -128,5 +129,13 @@ public class GameStagesManager {
 
 	public void setCurrentCharacter(Entity currentCharacter) {
 		this.currentCharacter = currentCharacter;
+	}
+
+	public Entity getDeadCharacter() {
+		return deadCharacter;
+	}
+
+	public void setDeadCharacter(Entity deadCharacter) {
+		this.deadCharacter = deadCharacter;
 	}
 }

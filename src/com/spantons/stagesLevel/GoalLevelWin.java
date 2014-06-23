@@ -1,6 +1,5 @@
 package com.spantons.stagesLevel;
 
-import com.spantons.singleton.SoundCache;
 
 public class GoalLevelWin implements ILevelGoals {
 	
@@ -16,12 +15,8 @@ public class GoalLevelWin implements ILevelGoals {
 	/****************************************************************************************/
 	@Override
 	public void checkGoals() {
-		if (stage.enemies.size() < 1) {
-			SoundCache.getInstance().stopAllSound();
-			stage.currentCharacter.setAllMov(false);
-      		stage.currentCharacter.setAllMov(false);
-      		stage.gsm.setStage(nextLevel);
-		}
+		if (stage.enemies.size() < 1) 
+			StagesLevelUtils.finishLevel(stage, StagesLevelUtils.END_LEVEL_WIN, nextLevel);
 	}
 	
 }
