@@ -3,6 +3,9 @@
 	<TileMap>/maps/map_1_2.txt</TileMap>	
 	<Countdown>100</Countdown>
 	<ExitPoint>29,4</ExitPoint>
+	<ExitPoint>28,3</ExitPoint>
+	<ExitPoint>29,3</ExitPoint>
+	<ExitPoint>30,3</ExitPoint>
 	<CurrentCharacter>
 		<Path>GET</Path>
 		<Point>28,34</Point>
