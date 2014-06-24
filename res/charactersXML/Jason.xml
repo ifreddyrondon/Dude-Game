@@ -6,7 +6,7 @@
     <Perversity>0</Perversity>
     <MaxPerversity>100</MaxPerversity>
     <Damage>1.1</Damage>
-    <DamageBackup>1.1</DamageBackup>
+    <DamageBackup>1.0</DamageBackup>
     <FlinchingIncreaseDeltaTimePerversity>1000</FlinchingIncreaseDeltaTimePerversity>
     <FlinchingDecreaseDeltaTimePerversity>1000</FlinchingDecreaseDeltaTimePerversity>
     <DeltaForReduceFlinchingIncreaseDeltaTimePerversity>50</DeltaForReduceFlinchingIncreaseDeltaTimePerversity>

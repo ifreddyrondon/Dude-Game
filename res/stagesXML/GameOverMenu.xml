@@ -6,6 +6,7 @@
 	<Background>/backgrounds/game_over2.png</Background>
 	<BackgroundMoveScale>0</BackgroundMoveScale>
 	<BackgroundRepeat>False</BackgroundRepeat>
+	<BackgroundColor>BLACK</BackgroundColor>
 	<Choices>
     	<Choice>Jugar otra vez</Choice>
     	<Choice>Menu principal</Choice>

@@ -1,7 +1,9 @@
 package com.spantons.stagesMenu;
 
+import java.awt.Color;
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -40,9 +42,10 @@ public class ParseXMLStageMenu {
 		return null;
 	}
 	
-	/****************************************************************************************/
+	/**
+	 * @throws NoSuchFieldException **************************************************************************************/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static IStage createStage(NodeList childNodes, GameStagesManager _gsm) throws DOMException, ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	private static IStage createStage(NodeList childNodes, GameStagesManager _gsm) throws DOMException, ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchFieldException {
 		 
 		if(childNodes != null && childNodes.getLength() > 0) {
 			for (int i = 0; i < childNodes.getLength(); i++) {
@@ -72,12 +75,16 @@ public class ParseXMLStageMenu {
 					
 					if(eElement.getElementsByTagName("Background").item(0) != null){
 						NodeList backgrounds = eElement.getElementsByTagName("Background");
-						if (backgrounds.getLength() < 2) 
+						Field field = Color.class.getField(eElement.getElementsByTagName("BackgroundColor").item(0).getTextContent());
+						Color c = (Color)field.get(null);
+						if (backgrounds.getLength() < 2) {
 							aux.bg = new Background(
 									eElement.getElementsByTagName("Background").item(0).getTextContent(),
 									Double.parseDouble(eElement.getElementsByTagName("BackgroundMoveScale").item(0).getTextContent()), 
-									Boolean.parseBoolean(eElement.getElementsByTagName("BackgroundRepeat").item(0).getTextContent()));
-						else {
+									Boolean.parseBoolean(eElement.getElementsByTagName("BackgroundRepeat").item(0).getTextContent()),
+									c);
+						
+						} else {
 							ArrayList<String> listBackgroundsPath = new ArrayList<String>();
 							for (int l = 0; l < backgrounds.getLength(); l++) {
 								Node imageNode = backgrounds.item(l);
@@ -87,7 +94,8 @@ public class ParseXMLStageMenu {
 							Random randomGenerator = new Random();
 							aux.bg = new Background(listBackgroundsPath.get(randomGenerator.nextInt(listBackgroundsPath.size())),
 									Double.parseDouble(eElement.getElementsByTagName("BackgroundMoveScale").item(0).getTextContent()), 
-									Boolean.parseBoolean(eElement.getElementsByTagName("BackgroundRepeat").item(0).getTextContent()));
+									Boolean.parseBoolean(eElement.getElementsByTagName("BackgroundRepeat").item(0).getTextContent()),
+									c);
 						}
 					}
 					

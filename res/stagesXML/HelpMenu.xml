@@ -5,6 +5,7 @@
 	<Background>/backgrounds/menubg2.png</Background>
 	<BackgroundMoveScale>0</BackgroundMoveScale>
 	<BackgroundRepeat>True</BackgroundRepeat>
+	<BackgroundColor>BLACK</BackgroundColor>
     <ImagesIntoScene>
     	<ImageComposite>
     		<Path>/backgrounds/helpCharacter.png</Path>

@@ -16,6 +16,7 @@ public class Background implements IDrawable, IUpdateable{
 	private BufferedImage image;
 	private boolean repeat;
 	private double movementScale;
+	private Color bgColor;
 
 	private double x;
 	private double y;
@@ -23,24 +24,22 @@ public class Background implements IDrawable, IUpdateable{
 	private double dy;
 
 	/****************************************************************************************/
-	public Background(String _imageSource, double _movementScale, boolean _repeat) {
+	public Background(String _imageSource, double _movementScale, boolean _repeat, Color _bgColor) {
 		try {
 			repeat = _repeat;
 			movementScale = _movementScale;
+			bgColor = _bgColor;
 			
 			 image = ImageCache.getInstance().getImage(_imageSource);
 			 			 
 			if (!_repeat){
 				
-				if (image.getWidth() > image.getHeight()) {
-					if (image.getWidth() >= GamePanel.RESOLUTION_WIDTH) 
-						image = Scalr.resize(image, GamePanel.RESOLUTION_WIDTH);
-					else
-						image = Scalr.resize(image, GamePanel.RESOLUTION_HEIGHT);
-				}
-				else if (image.getHeight() > image.getWidth())
-					image = Scalr.resize(image, GamePanel.RESOLUTION_HEIGHT);
+				if (image.getWidth() > GamePanel.RESOLUTION_WIDTH) 
+					image = Scalr.resize(image, GamePanel.RESOLUTION_HEIGHT); 
 				
+				else if (image.getHeight() > GamePanel.RESOLUTION_HEIGHT) 
+					image = Scalr.resize(image, GamePanel.RESOLUTION_WIDTH);
+
 				x = (GamePanel.RESOLUTION_WIDTH - image.getWidth()) / 2;
 				y = (GamePanel.RESOLUTION_HEIGHT - image.getHeight()) / 2;	    
 			}
@@ -80,7 +79,7 @@ public class Background implements IDrawable, IUpdateable{
 			}
 			
 		} else {
-			g.setColor(Color.BLACK);
+			g.setColor(bgColor);
 			g.fillRect(0, 0, GamePanel.RESOLUTION_WIDTH,
 				GamePanel.RESOLUTION_HEIGHT);
 			g.drawImage(image, (int) x, (int) y, null);
