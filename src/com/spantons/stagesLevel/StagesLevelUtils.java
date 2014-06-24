@@ -85,7 +85,12 @@ public class StagesLevelUtils {
 			_stage.gsm.setCharacters(_stage.characters);
 		} 
 		
+		if (_stage.timer != null) 
+			_stage.timer.stop();
 		
+		if (_stage.timerAwakeningDialogues != null) 
+			_stage.timerAwakeningDialogues.stop();
+			
 		if (_stage.timerLightsOff != null || _stage.timerLightsOn != null) {
 			_stage.timerLightsOn.stop();
 			_stage.timerLightsOff.stop();

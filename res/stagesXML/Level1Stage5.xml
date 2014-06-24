@@ -56,6 +56,10 @@
 			<Path>res/objectsXML/Food.xml</Path>
 			<Point>18,7</Point>
 		</Object>
+		<Object>
+			<Path>res/objectsXML/Food.xml</Path>
+			<Point>31,31</Point>
+		</Object>
 	</Objects>
 	<StringDialogues>
 		<AWAKENING>
