@@ -20,8 +20,21 @@ public class UpdateStagesLevel implements IUpdateable {
 		if (stage.goals != null) 
 			stage.goals.checkGoals();
 		
-		if (stage.characters.isEmpty() && stage.currentCharacter.isDead()) 
+		if (stage.characters.isEmpty() && stage.currentCharacter.isDead()) {
+			if (stage.timer != null) 
+				stage.timer.stop();
+			
+			if (stage.timerAwakeningDialogues != null) 
+				stage.timerAwakeningDialogues.stop();
+				
+			if (stage.timerLightsOff != null || stage.timerLightsOn != null) {
+				stage.timerLightsOn.stop();
+				stage.timerLightsOff.stop();
+			}
+			
+			stage.currentCharacter.setAllMov(false);
 			stage.gsm.setStage(GameStagesManager.GAME_OVER_STAGE);
+		}
 
 		if (stage.currentCharacter.isDead()) 
 			stage.currentCharacter = stage.nextCharacter.selectNextCharacter();
