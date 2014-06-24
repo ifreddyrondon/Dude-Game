@@ -13,8 +13,10 @@ import java.util.PriorityQueue;
 import javax.swing.Timer;
 
 import com.spantons.entity.UpdateEnemy;
+import com.spantons.magicNumbers.FontPath;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.main.GamePanel;
+import com.spantons.singleton.FontCache;
 import com.spantons.singleton.ImageCache;
 import com.spantons.stagesLevel.StagesLevel;
 import com.spantons.utilities.ArraysUtil;
@@ -51,7 +53,7 @@ public class DialogueStage1 extends DialogueManager {
 		dialogues = new PriorityQueue<Dialogue>(10, comparator);
 		strings = new HashMap<String, String[]>();
 		
-		secondaryMenuFont = new Font("Century Gothic", Font.PLAIN, 35);
+		secondaryMenuFont = FontCache.getInstance().getFont(FontPath.FONT_ZOMBIEN_MORNING).deriveFont(Font.PLAIN, 30);
 		aloneFont = new Font("Century Gothic", Font.PLAIN, 50);
 
 		characterWidth = stage.getCurrentCharacter().getSpriteWidth();

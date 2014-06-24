@@ -16,13 +16,13 @@ import com.spantons.stages.IFontStage;
 public class FontWaitMenu implements IFontStage {
 
 	private StagesMenu stage;
-	private String warningString = "Ayuda a que sobrevivan los personajes\n te reto a que salgas de esta habitación, seguramente no \npodrás evitar que los Jason acaben uno a uno con todos ellos.\n ¿Ves los objetos que hay en el suelo? Cuidado porque tal vez no todos te ayuden. Suerte…";
+	private String warningString = "Ayuda a que sobrevivan los personajes\n Te reto a que salgas de esta Habitacion, seguramente no \npodras evitar que los Jason acaben uno a uno con todos ellos.\n ¿Ves Los objetos que Hay en el suelo? Cuidado porque tal vez no todos te ayuden. Suerte…";
 	private Font warningFont;
 	private Color warningColor;
 	private String[] descripcion = { 
-			"Mover el personaje", "Abrir puerta con la tecla", 
-			"Atacar con la tecla ","Recoge objetos con la tecla" };
-	private String[] tecla = { "↑ ↓ ← →","O","BARRA ESPACIADORA","ENTER" };
+			"Mover el personaje ","Cambiar de personaje con la tecla ", "Abrir puerta con la tecla ", 
+			"Atacar con la tecla ","Recoge objetos con la tecla " };
+	private String[] tecla = { "↑ ↓ ← →","TAB","O","BARRA ESPACIADORA","ENTER" };
 	
 	private Timer timerLoader;
 	private boolean loader;
@@ -44,7 +44,7 @@ public class FontWaitMenu implements IFontStage {
 		stage.titleColor = Color.BLACK;
 		warningFont = FontCache.getInstance().getFont(FontPath.FONT_SIXTY).deriveFont(Font.PLAIN, 30);
 		warningColor = Color.BLACK;
-		stage.choicesFont = FontCache.getInstance().getFont(FontPath.FONT_ZOMBIEN_MORNING).deriveFont(Font.PLAIN, 25);
+		stage.choicesFont = FontCache.getInstance().getFont(FontPath.FONT_ZOMBIEN_MORNING).deriveFont(Font.PLAIN, 22);
 		stage.choicesColor = Color.BLACK;
 		stage.footerFont = new Font("Arial", 8, 12);
 		fontLoadState = FontCache.getInstance().getFont(FontPath.FONT_HORRENDO).deriveFont(Font.PLAIN, 40);
@@ -91,7 +91,7 @@ public class FontWaitMenu implements IFontStage {
 		g.setFont(warningFont);
 		String[] splitWarningString = warningString.split("\n");
 		
-		y = y + 50;
+		y = y + 30;
 		
 		for (int i = 0; i < splitWarningString.length; i++) {
 			stage.fm = g.getFontMetrics();
@@ -106,7 +106,7 @@ public class FontWaitMenu implements IFontStage {
 		y = y + 70;
 		for (int i = 0; i < descripcion.length; i++) {
 			stage.fm = g.getFontMetrics();
-			String aux = descripcion[i] + " | " + tecla[i];
+			String aux = descripcion[i] + tecla[i];
 			stage.r = stage.fm.getStringBounds(aux, g);
 			x = (GamePanel.RESOLUTION_WIDTH - (int) stage.r.getWidth()) / 2
 				+ stage.fm.getDescent();
@@ -119,7 +119,7 @@ public class FontWaitMenu implements IFontStage {
 			stage.fm = g.getFontMetrics();
 			stage.r = stage.fm.getStringBounds(loadStateString, g);
 			x = (GamePanel.RESOLUTION_WIDTH - (int) stage.r.getWidth()) / 2;
-			y = y + 180;
+			y = y + 200;
 			g.drawString(loadStateString, x, y);
 		}
 		
