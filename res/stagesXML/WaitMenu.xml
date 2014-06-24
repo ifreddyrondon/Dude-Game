@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Stage>
+	<Select>SelectHelpMenu</Select>
+	<Font>FontWaitMenu</Font>
+	<Background>/backgrounds/menubg.jpg</Background>
+	<BackgroundMoveScale>0</BackgroundMoveScale>
+	<BackgroundRepeat>True</BackgroundRepeat>
+	<BackgroundColor>WHITE</BackgroundColor>
+    <ImagesIntoScene>
+    	<ImageComposite>
+    		<Path>/backgrounds/waitCharacter.png</Path>
+    		<ResizeLength>0</ResizeLength>
+    		<X>100</X>
+    		<Y>100</Y>
+    	</ImageComposite>
+    	<ImageComposite>
+    		<Path>/backgrounds/jokercards.png</Path>
+    		<ResizeLength>0</ResizeLength>
+    		<X>1000</X>
+    		<Y>100</Y>
+    	</ImageComposite>
+    </ImagesIntoScene>
+    <Title>Mejor no despertar</Title>
+</Stage>

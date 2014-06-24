@@ -3,6 +3,8 @@ package com.spantons.stages;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import javax.swing.SwingWorker;
+
 import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.XMLPath;
 import com.spantons.singleton.SoundCache;
@@ -18,7 +20,7 @@ public class GameStagesManager {
 	private Entity deadCharacter;
 	private Entity currentCharacter;
 
-	public static final int NUM_STAGES = 9;
+	public static final int NUM_STAGES = 10;
 	public static final int MENU_STAGE = 0;
 	public static final int LEVEL_1_STAGE_1 = 1;
 	public static final int LEVEL_1_STAGE_2 = 2;
@@ -28,39 +30,65 @@ public class GameStagesManager {
 	public static final int GAME_OVER_STAGE = 6;
 	public static final int HELP_STAGE = 7;
 	public static final int WIN_STAGE = 8;
+	public static final int WAIT_STAGE = 9;
 
 	/****************************************************************************************/
 	public GameStagesManager() {
 		gameStages = new IStage[NUM_STAGES];
-		currentStage = MENU_STAGE;
+		currentStage = WAIT_STAGE;
 		loadStage(currentStage);
 	}
 
 	/****************************************************************************************/
-	private void loadStage(int stage) {
-		
+	private void loadStage(final int stage) {
 		SoundCache.getInstance().stopAllSound();
-		
 		if (stage == MENU_STAGE)
 			gameStages[MENU_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_MAIN, this);
-		if (stage == LEVEL_1_STAGE_1)
-			gameStages[LEVEL_1_STAGE_1] = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_1, this);
-		if (stage == LEVEL_1_STAGE_2)
-			gameStages[LEVEL_1_STAGE_2] = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_2, this);
-		if (stage == LEVEL_1_STAGE_3)
-			gameStages[LEVEL_1_STAGE_3] = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_3, this);
-		if (stage == LEVEL_1_STAGE_4)
-			gameStages[LEVEL_1_STAGE_4] = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_4, this);
-		if (stage == LEVEL_1_STAGE_5)
-			gameStages[LEVEL_1_STAGE_5] = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_5, this);
-		if (stage == GAME_OVER_STAGE)
+		else if (stage == GAME_OVER_STAGE)
 			gameStages[GAME_OVER_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_GAME_OVER, this);
-		if (stage == HELP_STAGE)
+		else if (stage == HELP_STAGE)
 			gameStages[HELP_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_HELP, this);
-		if (stage == WIN_STAGE)
+		else if (stage == WIN_STAGE)
 			gameStages[WIN_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_WIN, this);
+		else if (stage == WAIT_STAGE)
+			gameStages[WAIT_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_WAIT, this);
+		
+		else {
+			currentStage = WAIT_STAGE;
+			gameStages[WAIT_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_WAIT, this);
+			final GameStagesManager self = this;
+			SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+				IStage newStage = null;
+				
+				@Override
+				protected Void doInBackground() throws Exception {
+					if (stage == LEVEL_1_STAGE_1) 
+						newStage = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_1, self);
+					if (stage == LEVEL_1_STAGE_2)
+						newStage = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_2, self);
+					if (stage == LEVEL_1_STAGE_3)
+						newStage = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_3, self);
+					if (stage == LEVEL_1_STAGE_4)
+						newStage = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_4, self);
+					if (stage == LEVEL_1_STAGE_5)
+						newStage = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_5, self);
+					return null;
+				}
+				
+				@Override
+				   protected void done() {
+//					SoundCache.getInstance().stopAllSound();
+					gameStages[stage] = null;
+					currentStage = stage;
+					gameStages[stage] = newStage;
+				      System.out.println("done");
+				   } 
+			};
+			worker.execute();
+		}
+		
 	}
-
+	
 	/****************************************************************************************/
 	private void unloadStage(int stage) {
 		gameStages[stage] = null;

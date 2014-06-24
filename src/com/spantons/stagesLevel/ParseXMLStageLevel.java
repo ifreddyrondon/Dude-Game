@@ -137,8 +137,8 @@ public class ParseXMLStageLevel {
 										String pointDeadCharacter[] = deadCharacterElement.getElementsByTagName("Point").item(0).getTextContent().split(",");
 										Entity entityDead = _gsm.getDeadCharacter();
 										aux.characters.add(entityDead);
-										System.out.println(entityDead);
 										entityDead.respawn(aux, Integer.parseInt(pointDeadCharacter[0]), Integer.parseInt(pointDeadCharacter[1]));
+										entityDead.setHealth(0);
 										EntityUtils.killCharacter(entityDead);
 									}
 								}
