@@ -25,6 +25,13 @@ public class FontGameOverMenu implements IFontStage {
 		currentChoiceColor = new Color(227, 23, 23);
 		stage.footerFont = new Font("Arial", 8, 12);
 	}
+	
+	/****************************************************************************************/
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	/****************************************************************************************/
 	@Override

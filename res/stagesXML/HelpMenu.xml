@@ -2,7 +2,7 @@
 <Stage>
 	<Select>SelectHelpMenu</Select>
 	<Font>FontHelpMenu</Font>
-	<Background>/backgrounds/menubg2.png</Background>
+	<Background>/backgrounds/menubg.jpg</Background>
 	<BackgroundMoveScale>0</BackgroundMoveScale>
 	<BackgroundRepeat>True</BackgroundRepeat>
 	<BackgroundColor>BLACK</BackgroundColor>

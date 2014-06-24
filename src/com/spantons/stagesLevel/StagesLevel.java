@@ -66,6 +66,8 @@ public class StagesLevel implements IStage {
 	protected Timer timerLightsOn;
 	protected Timer timerLightsOff;
 	
+	protected String musicPath;
+	
 	/****************************************************************************************/
 	public StagesLevel(GameStagesManager _gsm) {
 		gsm = _gsm;
@@ -98,7 +100,7 @@ public class StagesLevel implements IStage {
 	}
 	
 	/****************************************************************************************/
-	protected void startLevel() {
+	public void startLevel() {
 		if (timer != null) 
 			timer.start();
 		
@@ -109,6 +111,7 @@ public class StagesLevel implements IStage {
 			timerLightsOn.start();
 		
 		hud.update(ToHours.SecondsToHours(countdown));
+		SoundCache.getInstance().getSound(musicPath).loop();
 	}
 	
 	/****************************************************************************************/
@@ -120,6 +123,13 @@ public class StagesLevel implements IStage {
 	@Override
 	public void draw(Graphics2D g) {
 		drawLevel.draw(g);
+	}
+	
+	/****************************************************************************************/
+	@Override
+	public void change() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/****************************************************************************************/
@@ -206,5 +216,5 @@ public class StagesLevel implements IStage {
 	public TileMap getTileMap() {
 		return tileMap;
 	}
-	
+
 }

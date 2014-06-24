@@ -9,12 +9,15 @@ import com.spantons.entity.Entity;
 import com.spantons.magicNumbers.XMLPath;
 import com.spantons.singleton.SoundCache;
 import com.spantons.stagesLevel.ParseXMLStageLevel;
+import com.spantons.stagesLevel.StagesLevel;
 import com.spantons.stagesMenu.ParseXMLStageMenu;
 
 public class GameStagesManager {
 
 	private IStage[] gameStages;
 	private int currentStage;
+	private StagesLevel loadedStage;
+	private int numLoadedStage;
 	
 	private ArrayList<Entity> characters;
 	private Entity deadCharacter;
@@ -35,7 +38,7 @@ public class GameStagesManager {
 	/****************************************************************************************/
 	public GameStagesManager() {
 		gameStages = new IStage[NUM_STAGES];
-		currentStage = WAIT_STAGE;
+		currentStage = MENU_STAGE;
 		loadStage(currentStage);
 	}
 
@@ -58,35 +61,40 @@ public class GameStagesManager {
 			gameStages[WAIT_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_WAIT, this);
 			final GameStagesManager self = this;
 			SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-				IStage newStage = null;
 				
 				@Override
 				protected Void doInBackground() throws Exception {
+					numLoadedStage = stage;
 					if (stage == LEVEL_1_STAGE_1) 
-						newStage = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_1, self);
+						loadedStage = (StagesLevel) ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_1, self);
 					if (stage == LEVEL_1_STAGE_2)
-						newStage = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_2, self);
+						loadedStage = (StagesLevel) ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_2, self);
 					if (stage == LEVEL_1_STAGE_3)
-						newStage = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_3, self);
+						loadedStage = (StagesLevel) ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_3, self);
 					if (stage == LEVEL_1_STAGE_4)
-						newStage = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_4, self);
+						loadedStage = (StagesLevel) ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_4, self);
 					if (stage == LEVEL_1_STAGE_5)
-						newStage = ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_5, self);
+						loadedStage = (StagesLevel) ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_5, self);
 					return null;
 				}
 				
 				@Override
 				   protected void done() {
-//					SoundCache.getInstance().stopAllSound();
-					gameStages[stage] = null;
-					currentStage = stage;
-					gameStages[stage] = newStage;
-				      System.out.println("done");
+					gameStages[WAIT_STAGE].change();
 				   } 
 			};
 			worker.execute();
 		}
 		
+	}
+	
+	/****************************************************************************************/
+	public void loadLoadedStage() {
+		SoundCache.getInstance().stopAllSound();
+		gameStages[WAIT_STAGE] = null;
+		currentStage = numLoadedStage;
+		gameStages[numLoadedStage] = loadedStage;
+		loadedStage.startLevel();
 	}
 	
 	/****************************************************************************************/

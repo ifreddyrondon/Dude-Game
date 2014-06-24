@@ -36,6 +36,8 @@ public class StagesMenu implements IStage {
 	protected FontMetrics fm;
 	protected Rectangle2D r;
 	
+	protected boolean change = false;
+	
 	protected String footer = "Copyright © 2013 Wasting Time For Game C.A Todos los derechos reservados.";
 	
 	/****************************************************************************************/
@@ -48,6 +50,7 @@ public class StagesMenu implements IStage {
 	/****************************************************************************************/
 	@Override
 	public void update() {
+		font.update();
 		bg.update();
 	}
 	
@@ -59,6 +62,12 @@ public class StagesMenu implements IStage {
 		if (images != null) 
 			images.draw(g);	
 		font.draw(g);
+	}
+	
+	/****************************************************************************************/
+	@Override
+	public void change() {
+		change = true;
 	}
 	
 	/****************************************************************************************/
@@ -85,5 +94,5 @@ public class StagesMenu implements IStage {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 }

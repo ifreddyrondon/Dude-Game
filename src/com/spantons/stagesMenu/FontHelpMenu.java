@@ -40,6 +40,13 @@ public class FontHelpMenu implements IFontStage {
 
 	/****************************************************************************************/
 	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/****************************************************************************************/
+	@Override
 	public void draw(Graphics2D g) {
 		g.setColor(warningColor);
 		g.setFont(warningFont);
@@ -69,7 +76,7 @@ public class FontHelpMenu implements IFontStage {
 		g.drawString(stage.title, x, 650);
 
 		g.setFont(stage.footerFont);
-		g.setColor(Color.LIGHT_GRAY);
+		g.setColor(Color.BLACK);
 		g.drawString(stage.footer, GamePanel.RESOLUTION_WIDTH - 438,
 				GamePanel.RESOLUTION_HEIGHT - 20);
 	}

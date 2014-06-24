@@ -26,7 +26,14 @@ public class FontMainMenu implements IFontStage{
 		stage.choicesFont = FontCache.getInstance().getFont(FontPath.FONT_HORRENDO).deriveFont(Font.PLAIN, 30);
 		stage.footerFont = new Font("Arial", 8, 12);
 	}
-
+	
+	/****************************************************************************************/
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	/****************************************************************************************/
 	@Override
 	public void draw(Graphics2D g) {
@@ -57,7 +64,7 @@ public class FontMainMenu implements IFontStage{
 		}
 		
 		g.setFont(stage.footerFont);
-		g.setColor(Color.LIGHT_GRAY);
+		g.setColor(Color.BLACK);
 		g.drawString(stage.footer, 
 				GamePanel.RESOLUTION_WIDTH - 438, 
 				GamePanel.RESOLUTION_HEIGHT - 20);
