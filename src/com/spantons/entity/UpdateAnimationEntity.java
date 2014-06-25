@@ -21,41 +21,72 @@ public class UpdateAnimationEntity implements IUpdateable {
 				entity.animation.setDelayTime(150);
 			}
 		} else {
-			if ((entity.movLeft && entity.movDown) || (entity.movRight && entity.movDown)) {
+			if (entity.movLeft && entity.movUp) {
+				if (entity.currentAnimation != Entity.WALKING_BACK) {
+					entity.currentAnimation = Entity.WALKING_BACK;
+					entity.animation.setFrames(entity.sprites.get(Entity.WALKING_BACK));
+					entity.animation.setDelayTime(150);
+				}
+			
+			} else if (entity.movRight && entity.movUp) {
+				if (entity.currentAnimation != Entity.WALKING_SIDE) {
+					entity.currentAnimation = Entity.WALKING_SIDE;
+					entity.animation.setFrames(entity.sprites.get(Entity.WALKING_SIDE));
+					entity.animation.setDelayTime(150);
+					entity.facingRight = true;
+				}
+			
+			} else if (entity.movLeft && entity.movDown) {
+				if (entity.currentAnimation != Entity.WALKING_SIDE) {
+					entity.currentAnimation = Entity.WALKING_SIDE;
+					entity.animation.setFrames(entity.sprites.get(Entity.WALKING_SIDE));
+					entity.animation.setDelayTime(150);
+					entity.facingRight = false;
+				}
+			
+			} else if (entity.movRight && entity.movDown) {
+				if (entity.currentAnimation != Entity.WALKING_FRONT) {
+					entity.currentAnimation = Entity.WALKING_FRONT;
+					entity.animation.setFrames(entity.sprites.get(Entity.WALKING_FRONT));
+					entity.animation.setDelayTime(150);
+				}
+			
+			} else if (entity.movUp) {
+				entity.facingRight = true;
+				if (entity.currentAnimation != Entity.WALKING_PERSPECTIVE_BACK) {
+					entity.currentAnimation = Entity.WALKING_PERSPECTIVE_BACK;
+					entity.animation.setFrames(entity.sprites
+							.get(Entity.WALKING_PERSPECTIVE_BACK));
+					entity.animation.setDelayTime(40);
+				}
+				
+			} else if (entity.movDown) {
+				entity.facingRight = false;
 				if (entity.currentAnimation != Entity.WALKING_PERSPECTIVE_FRONT) {
 					entity.currentAnimation = Entity.WALKING_PERSPECTIVE_FRONT;
 					entity.animation.setFrames(entity.sprites
 							.get(Entity.WALKING_PERSPECTIVE_FRONT));
-					entity.animation.setDelayTime(150);
+					entity.animation.setDelayTime(100);
 				}
-			} else if ((entity.movLeft && entity.movUp) || (entity.movRight && entity.movUp)) {
+			
+			} else if (entity.movLeft) {
+				entity.facingRight = false;
 				if (entity.currentAnimation != Entity.WALKING_PERSPECTIVE_BACK) {
 					entity.currentAnimation = Entity.WALKING_PERSPECTIVE_BACK;
 					entity.animation.setFrames(entity.sprites
 							.get(Entity.WALKING_PERSPECTIVE_BACK));
 					entity.animation.setDelayTime(150);
 				}
-			} else if (entity.movDown) {
-				if (entity.currentAnimation != Entity.WALKING_FRONT) {
-					entity.currentAnimation = Entity.WALKING_FRONT;
+				
+			} else if (entity.movRight) {
+				entity.facingRight = true;
+				if (entity.currentAnimation != Entity.WALKING_PERSPECTIVE_FRONT) {
+					entity.currentAnimation = Entity.WALKING_PERSPECTIVE_FRONT;
 					entity.animation.setFrames(entity.sprites
-							.get(Entity.WALKING_FRONT));
-					entity.animation.setDelayTime(100);
-				}
-			} else if (entity.movUp) {
-				if (entity.currentAnimation != Entity.WALKING_BACK) {
-					entity.currentAnimation = Entity.WALKING_BACK;
-					entity.animation.setFrames(entity.sprites
-							.get(Entity.WALKING_BACK));
-					entity.animation.setDelayTime(40);
-				}
-			} else if (entity.movLeft || entity.movRight) {
-				if (entity.currentAnimation != Entity.WALKING_SIDE) {
-					entity.currentAnimation = Entity.WALKING_SIDE;
-					entity.animation.setFrames(entity.sprites
-							.get(Entity.WALKING_SIDE));
+							.get(Entity.WALKING_PERSPECTIVE_FRONT));
 					entity.animation.setDelayTime(150);
 				}
+				
 			} else {
 				if (entity.currentAnimation != Entity.IDLE) {
 					entity.currentAnimation = Entity.IDLE;
@@ -65,11 +96,6 @@ public class UpdateAnimationEntity implements IUpdateable {
 				}
 			}
 			
-			if (entity.movRight)
-				entity.facingRight = true;
-			if (entity.movLeft)
-				entity.facingRight = false;
-
 			entity.animation.update();
 		}
 	}

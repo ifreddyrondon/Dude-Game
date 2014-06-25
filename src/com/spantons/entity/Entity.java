@@ -143,29 +143,29 @@ public class Entity {
 		nextPositionInMap = getMapPositionOfCharacter();
 
 		if (movUp && movLeft)
-			nextPositionInMap = TileWalk.walkTo("NW", nextPositionInMap,1);
+			nextPositionInMap = TileWalk.walkTo("N", nextPositionInMap,1);
 
 		else if (movUp && movRight)
-			nextPositionInMap = TileWalk.walkTo("NE", nextPositionInMap,1);
+			nextPositionInMap = TileWalk.walkTo("E", nextPositionInMap,1);
 
 		else if (movDown && movLeft)
-			nextPositionInMap = TileWalk.walkTo("SW", nextPositionInMap,1);
+			nextPositionInMap = TileWalk.walkTo("W", nextPositionInMap,1);
 
 		else if (movDown && movRight)
-			nextPositionInMap = TileWalk.walkTo("SE", nextPositionInMap,1);
+			nextPositionInMap = TileWalk.walkTo("S", nextPositionInMap,1);
 
 		else {
 			if (movUp)
-				nextPositionInMap = TileWalk.walkTo("N",nextPositionInMap, 1);
+				nextPositionInMap = TileWalk.walkTo("NE",nextPositionInMap, 1);
 
 			else if (movDown)
-				nextPositionInMap = TileWalk.walkTo("S",nextPositionInMap, 1);
+				nextPositionInMap = TileWalk.walkTo("SW",nextPositionInMap, 1);
 
 			else if (movLeft)
-				nextPositionInMap = TileWalk.walkTo("W",nextPositionInMap, 1);
+				nextPositionInMap = TileWalk.walkTo("NW",nextPositionInMap, 1);
 
 			else if (movRight)
-				nextPositionInMap = TileWalk.walkTo("E",nextPositionInMap, 1);
+				nextPositionInMap = TileWalk.walkTo("SE",nextPositionInMap, 1);
 		}
 
 		nextPositionInAbsolute = PositionUtil.getAbsolutePosition(nextPositionInMap.x,
