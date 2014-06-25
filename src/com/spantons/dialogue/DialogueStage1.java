@@ -5,11 +5,14 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
+import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
 import com.spantons.entity.UpdateEnemy;
@@ -44,15 +47,18 @@ public class DialogueStage1 extends DialogueManager {
 	private boolean endedDialogue = true;
 	private Timer timerDialogue;
 	
+	private BufferedImage backgroundSecundaryMenu;
+	
 	private Comparator<Dialogue> comparator;
 	
 	/****************************************************************************************/
-	public DialogueStage1(StagesLevel _stage) {
+	public DialogueStage1(StagesLevel _stage) throws IOException {
 		stage = _stage;
 		comparator = new DialogueComparator();
 		dialogues = new PriorityQueue<Dialogue>(10, comparator);
 		strings = new HashMap<String, String[]>();
 		
+		backgroundSecundaryMenu = ImageIO.read(getClass().getResourceAsStream("/dialog/glassMenu.png"));
 		secondaryMenuFont = FontCache.getInstance().getFont(FontPath.FONT_ZOMBIEN_MORNING).deriveFont(Font.PLAIN, 30);
 		aloneFont = new Font("Century Gothic", Font.PLAIN, 50);
 
@@ -167,6 +173,9 @@ public class DialogueStage1 extends DialogueManager {
 		}
 		/******/
 		if (stage.isSecondaryMenu()) {
+			g.drawImage(backgroundSecundaryMenu, 
+					GamePanel.RESOLUTION_WIDTH / 2 + 35, 
+					-100 + GamePanel.RESOLUTION_HEIGHT / 2, null);
 			g.setColor(Color.WHITE);
 			g.setFont(secondaryMenuFont);
 			g.drawString("Resume (R)",

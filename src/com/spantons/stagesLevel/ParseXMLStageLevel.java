@@ -2,6 +2,7 @@ package com.spantons.stagesLevel;
 
 import java.awt.Point;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -51,9 +52,10 @@ public class ParseXMLStageLevel {
 		return null;
 	}
 	
-	/****************************************************************************************/
+	/**
+	 * @throws IOException **************************************************************************************/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static IStage createStage(NodeList childNodes, GameStagesManager _gsm) throws DOMException, ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	private static IStage createStage(NodeList childNodes, GameStagesManager _gsm) throws DOMException, ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException, IOException {
 		 
 		if(childNodes != null && childNodes.getLength() > 0) {
 			for (int i = 0; i < childNodes.getLength(); i++) {
