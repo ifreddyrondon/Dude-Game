@@ -11,4 +11,6 @@ public interface FontPath {
 	public static final String FONT_PATAQUES_BRUSH = "/fonts/PataquesBrush.ttf";
 	public static final String FONT_DARK_IS_THE_NIGTH = "/fonts/DarkistheNight.ttf";
 	public static final String FONT_ZOMBIEN_MORNING = "/fonts/ZombieMorning.ttf";
+	public static final String FONT_RAGGMOPP = "/fonts/RAGGMOPP.TTF";
+	public static final String FONT_YOUMURDERERBB_REG = "/fonts/youmurdererbb_reg.ttf";
 }

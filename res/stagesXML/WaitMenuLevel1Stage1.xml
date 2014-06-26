@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Stage>
+	<Select>SelectWaitMenu</Select>
+	<Font>FontWaitMenu</Font>
+	<Background>/backgrounds/menubg.jpg</Background>
+	<BackgroundMoveScale>0</BackgroundMoveScale>
+	<BackgroundRepeat>True</BackgroundRepeat>
+	<BackgroundColor>WHITE</BackgroundColor>
+    <ImagesIntoScene>
+    	<ImageComposite>
+    		<Path>/backgrounds/waitCharacter.png</Path>
+    		<ResizeLength>0</ResizeLength>
+    		<X>10</X>
+    		<Y>100</Y>
+    	</ImageComposite>
+    	<ImageComposite>
+    		<Path>/backgrounds/jokercards.png</Path>
+    		<ResizeLength>0</ResizeLength>
+    		<X>1000</X>
+    		<Y>100</Y>
+    	</ImageComposite>
+    </ImagesIntoScene>
+    <Title>Mejor no despertar</Title>
+    <SomeOtherText>Ayuda a que sobrevivan los personajes Te reto a que salgas de esta Habitación, seguramente no podrás evitar que los Jason acaben uno a uno con todos ellos. ¿Ves Los objetos que Hay en el suelo? Cuidado porque tal vez no todos te ayuden. Suerte…</SomeOtherText>
+</Stage>

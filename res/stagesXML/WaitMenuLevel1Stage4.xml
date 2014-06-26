@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Stage>
+	<Select>SelectWaitMenu</Select>
+	<Font>FontWaitMenu</Font>
+	<Background>/backgrounds/menubg.jpg</Background>
+	<BackgroundMoveScale>0</BackgroundMoveScale>
+	<BackgroundRepeat>True</BackgroundRepeat>
+	<BackgroundColor>WHITE</BackgroundColor>
+    <ImagesIntoScene>
+    	<ImageComposite>
+    		<Path>/backgrounds/waitCharacter.png</Path>
+    		<ResizeLength>0</ResizeLength>
+    		<X>30</X>
+    		<Y>100</Y>
+    	</ImageComposite>
+    	<ImageComposite>
+    		<Path>/backgrounds/jokercards.png</Path>
+    		<ResizeLength>0</ResizeLength>
+    		<X>1000</X>
+    		<Y>100</Y>
+    	</ImageComposite>
+    </ImagesIntoScene>
+    <Title>Fabricando una salida</Title>
+    <SomeOtherText>Tic tac, tic tac, qué harás? solo hay un sitio donde podrás esconderte pero tendrás que pensar muy bien lo que harás si quieres salir de este pequeño juego jajajajaja</SomeOtherText>
+</Stage>

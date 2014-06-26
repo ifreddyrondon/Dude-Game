@@ -10,7 +10,7 @@
     <FlinchingIncreaseDeltaTimePerversity>1000</FlinchingIncreaseDeltaTimePerversity>
     <FlinchingDecreaseDeltaTimePerversity>1000</FlinchingDecreaseDeltaTimePerversity>
     <DeltaForReduceFlinchingIncreaseDeltaTimePerversity>50</DeltaForReduceFlinchingIncreaseDeltaTimePerversity>
-    <MoveSpeed>250</MoveSpeed>
+    <MoveSpeed>210</MoveSpeed>
     <HUD>/hud/Jason.png</HUD>
     <Sprite>/characteres_sprites/Jason.png</Sprite>
     <Scale>0.18</Scale>

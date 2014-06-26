@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Stage>
+	<Select>SelectWaitMenu</Select>
+	<Font>FontWaitMenu</Font>
+	<Background>/backgrounds/menubg.jpg</Background>
+	<BackgroundMoveScale>0</BackgroundMoveScale>
+	<BackgroundRepeat>True</BackgroundRepeat>
+	<BackgroundColor>WHITE</BackgroundColor>
+    <ImagesIntoScene>
+    	<ImageComposite>
+    		<Path>/backgrounds/waitCharacter.png</Path>
+    		<ResizeLength>0</ResizeLength>
+    		<X>30</X>
+    		<Y>100</Y>
+    	</ImageComposite>
+    	<ImageComposite>
+    		<Path>/backgrounds/jokercards.png</Path>
+    		<ResizeLength>0</ResizeLength>
+    		<X>1000</X>
+    		<Y>100</Y>
+    	</ImageComposite>
+    </ImagesIntoScene>
+    <Title>Cuidado con lo que haces</Title>
+    <SomeOtherText>Maldición!! Pudiste salir, los Jason son mas tontos de lo que pensaba!! Bueno, hasta aquí llegarás. Seguramente no podrás encontrar lo que se necesita para abrir la puerta de esta nueva habitación, cuidado donde pisas!!</SomeOtherText>
+</Stage>

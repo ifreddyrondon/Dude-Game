@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.Timer;
 
@@ -12,11 +13,11 @@ import com.spantons.magicNumbers.FontPath;
 import com.spantons.main.GamePanel;
 import com.spantons.singleton.FontCache;
 import com.spantons.stages.IFontStage;
+import com.spantons.utilities.ArraysUtil;
 
 public class FontWaitMenu implements IFontStage {
 
 	private StagesMenu stage;
-	private String warningString = "Ayuda a que sobrevivan los personajes\n Te reto a que salgas de esta Habitacion, seguramente no \npodras evitar que los Jason acaben uno a uno con todos ellos.\n ¿Ves Los objetos que Hay en el suelo? Cuidado porque tal vez no todos te ayuden. Suerte…";
 	private Font warningFont;
 	private Color warningColor;
 	private String[] descripcion = { 
@@ -30,7 +31,6 @@ public class FontWaitMenu implements IFontStage {
 	private Color colorLoadState;
 	private String loadStateString = "Cargando...";
 	
-	
 	/****************************************************************************************/
 	public FontWaitMenu(StagesMenu _stage) {
 		stage = _stage;
@@ -42,7 +42,7 @@ public class FontWaitMenu implements IFontStage {
 	public void setFont() {
 		stage.titleFont = FontCache.getInstance().getFont(FontPath.FONT_SIXTY).deriveFont(Font.PLAIN, 90);
 		stage.titleColor = Color.BLACK;
-		warningFont = FontCache.getInstance().getFont(FontPath.FONT_SIXTY).deriveFont(Font.PLAIN, 30);
+		warningFont = FontCache.getInstance().getFont(FontPath.FONT_YOUMURDERERBB_REG).deriveFont(Font.PLAIN, 42);
 		warningColor = Color.BLACK;
 		stage.choicesFont = FontCache.getInstance().getFont(FontPath.FONT_ZOMBIEN_MORNING).deriveFont(Font.PLAIN, 22);
 		stage.choicesColor = Color.BLACK;
@@ -89,16 +89,16 @@ public class FontWaitMenu implements IFontStage {
 		
 		g.setColor(warningColor);
 		g.setFont(warningFont);
-		String[] splitWarningString = warningString.split("\n");
+		ArrayList<String> split = ArraysUtil.getParts(stage.someOtherText, 65);
 		
 		y = y + 30;
 		
-		for (int i = 0; i < splitWarningString.length; i++) {
+		for (int i = 0; i < split.size(); i++) {
 			stage.fm = g.getFontMetrics();
-			stage.r = stage.fm.getStringBounds(splitWarningString[i], g);
+			stage.r = stage.fm.getStringBounds(split.get(i), g);
 			x = (GamePanel.RESOLUTION_WIDTH - (int) stage.r.getWidth()) / 2;
 			y = y + 50;
-			g.drawString(splitWarningString[i], x, y);
+			g.drawString(split.get(i), x, y);
 		}
 		
 		g.setColor(stage.choicesColor);

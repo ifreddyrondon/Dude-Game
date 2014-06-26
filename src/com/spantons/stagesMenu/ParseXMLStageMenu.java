@@ -120,6 +120,9 @@ public class ParseXMLStageMenu {
 					if(eElement.getElementsByTagName("Title").item(0) != null)
 						aux.title = eElement.getElementsByTagName("Title").item(0).getTextContent();
 					
+					if(eElement.getElementsByTagName("SomeOtherText").item(0) != null)
+						aux.someOtherText = eElement.getElementsByTagName("SomeOtherText").item(0).getTextContent();
+					
 					aux.choices = new ArrayList<String>();
 					NodeList choices = eElement.getElementsByTagName("Choice");
 					if (choices.getLength() > 0) {

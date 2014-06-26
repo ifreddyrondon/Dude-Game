@@ -10,7 +10,7 @@
     	<ImageComposite>
     		<Path>/backgrounds/waitCharacter.png</Path>
     		<ResizeLength>0</ResizeLength>
-    		<X>100</X>
+    		<X>30</X>
     		<Y>100</Y>
     	</ImageComposite>
     	<ImageComposite>
@@ -20,5 +20,6 @@
     		<Y>100</Y>
     	</ImageComposite>
     </ImagesIntoScene>
-    <Title>Mejor no despertar</Title>
+    <Title>De nuevo en el comienzo</Title>
+    <SomeOtherText>Mis amigos no pudieron detenerte, pero esta vez no podrás con la ultima sorpresa que te tengo deparada MORIRAS!!, te equivocas al pensar que puedes quitarle la llave!!</SomeOtherText>
 </Stage>

@@ -24,6 +24,7 @@ public class StagesMenu implements IStage {
 	protected ImagesIntoScene images;
 	
 	protected String title;
+	protected String someOtherText;
 	protected int currentChoice;
 	protected ArrayList<String> choices;
 	

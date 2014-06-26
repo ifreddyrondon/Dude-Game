@@ -53,35 +53,28 @@ public class GameStagesManager {
 			gameStages[HELP_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_HELP, this);
 		else if (stage == WIN_STAGE)
 			gameStages[WIN_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_WIN, this);
-		else if (stage == WAIT_STAGE)
-			gameStages[WAIT_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_WAIT, this);
 		
 		else {
 			currentStage = WAIT_STAGE;
-			gameStages[WAIT_STAGE] = ParseXMLStageMenu.getStageFromXML(XMLPath.XML_STAGE_MENU_WAIT, this);
+			gameStages[WAIT_STAGE] = ParseXMLStageMenu.getStageFromXML("res/stagesXML/WaitMenuLevel1Stage"+Integer.toString(stage)+".xml", this);
+
+			if (gameStages[WAIT_STAGE] == null) 
+				gameStages[WAIT_STAGE] = ParseXMLStageMenu.getStageFromXML("res/stagesXML/WaitMenuLevel1Stage1.xml", this);
+				
 			final GameStagesManager self = this;
 			SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
 				
 				@Override
 				protected Void doInBackground() throws Exception {
 					numLoadedStage = stage;
-					if (stage == LEVEL_1_STAGE_1) 
-						loadedStage = (StagesLevel) ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_1, self);
-					if (stage == LEVEL_1_STAGE_2)
-						loadedStage = (StagesLevel) ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_2, self);
-					if (stage == LEVEL_1_STAGE_3)
-						loadedStage = (StagesLevel) ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_3, self);
-					if (stage == LEVEL_1_STAGE_4)
-						loadedStage = (StagesLevel) ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_4, self);
-					if (stage == LEVEL_1_STAGE_5)
-						loadedStage = (StagesLevel) ParseXMLStageLevel.getStageFromXML(XMLPath.XML_STAGE_LEVEL_1_STAGE_5, self);
+					loadedStage = (StagesLevel) ParseXMLStageLevel.getStageFromXML("res/stagesXML/Level1Stage"+Integer.toString(stage)+".xml", self);
 					return null;
 				}
 				
 				@Override
-				   protected void done() {
+				protected void done() {
 					gameStages[WAIT_STAGE].change();
-				   } 
+				} 
 			};
 			worker.execute();
 		}

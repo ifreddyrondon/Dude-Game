@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Stage>
+	<Select>SelectWaitMenu</Select>
+	<Font>FontWaitMenu</Font>
+	<Background>/backgrounds/menubg.jpg</Background>
+	<BackgroundMoveScale>0</BackgroundMoveScale>
+	<BackgroundRepeat>True</BackgroundRepeat>
+	<BackgroundColor>WHITE</BackgroundColor>
+    <ImagesIntoScene>
+    	<ImageComposite>
+    		<Path>/backgrounds/waitCharacter.png</Path>
+    		<ResizeLength>0</ResizeLength>
+    		<X>30</X>
+    		<Y>100</Y>
+    	</ImageComposite>
+    	<ImageComposite>
+    		<Path>/backgrounds/jokercards.png</Path>
+    		<ResizeLength>0</ResizeLength>
+    		<X>1000</X>
+    		<Y>100</Y>
+    	</ImageComposite>
+    </ImagesIntoScene>
+    <Title>Camino a la locura</Title>
+    <SomeOtherText>Parece que tienes ciertas habilidades pero ya tus trucos no te servirán. Tus personajes van muriendo poco a poco jajajaja y no puedes evitarlo, ahora quedarás atrapado en este laberinto hasta morir!!</SomeOtherText>
+</Stage>

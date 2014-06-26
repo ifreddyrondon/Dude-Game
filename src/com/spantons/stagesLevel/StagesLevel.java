@@ -59,7 +59,7 @@ public class StagesLevel implements IStage {
 	protected HashMap<String, ArrayList<String>> stringDialogues;
 	protected DialogueManager dialogues;
 	protected boolean secondaryMenu;
-	public static Font fontDialogues = FontCache.getInstance().getFont(FontPath.FONT_DARK_IS_THE_NIGTH).deriveFont(Font.PLAIN, 20);
+	public static Font fontDialogues = FontCache.getInstance().getFont(FontPath.FONT_RAGGMOPP).deriveFont(Font.BOLD, 22);
 	public static Color colorDialogues = Color.BLACK;
 	protected Timer timerAwakeningDialogues;
 	
