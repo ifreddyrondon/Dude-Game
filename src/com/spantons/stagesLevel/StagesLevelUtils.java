@@ -30,7 +30,7 @@ public class StagesLevelUtils {
 								new Dialogue(
 									txt,StagesLevel.fontDialogues, StagesLevel.colorDialogues, 2500, 
 									ImagePath.DIALOGUE_SPEECH_BALLON_NORMAL,
-									Dialogue.RANDOM, Dialogue.NORMAL_PRIORITY
+									Dialogue.CURRENT, Dialogue.NORMAL_PRIORITY
 							));
 					}
 				}
