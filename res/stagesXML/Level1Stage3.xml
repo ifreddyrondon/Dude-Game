@@ -9,19 +9,19 @@
 	</CurrentCharacter>
 	<Enemies>
 		<Enemy>
-			<Path>res/charactersXML/Jason.xml</Path>
+			<Path>/charactersXML/Jason.xml</Path>
 			<Point>15,5</Point>
 		</Enemy>
 		<Enemy>
-			<Path>res/charactersXML/Jason.xml</Path>
+			<Path>/charactersXML/Jason.xml</Path>
 			<Point>20,19</Point>
 		</Enemy>
 		<Enemy>
-			<Path>res/charactersXML/Jason.xml</Path>
+			<Path>/charactersXML/Jason.xml</Path>
 			<Point>32,24</Point>
 		</Enemy>
 		<Enemy>
-			<Path>res/charactersXML/Jason.xml</Path>
+			<Path>/charactersXML/Jason.xml</Path>
 			<Point>37,11</Point>
 		</Enemy>
 	</Enemies>

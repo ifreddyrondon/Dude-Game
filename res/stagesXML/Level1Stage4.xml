@@ -26,11 +26,11 @@
 	</CurrentCharacter>
 	<Enemies>
 		<Enemy>
-			<Path>res/charactersXML/Jason.xml</Path>
+			<Path>/charactersXML/Jason.xml</Path>
 			<Point>15,32</Point>
 		</Enemy>
 		<Enemy>
-			<Path>res/charactersXML/Jason.xml</Path>
+			<Path>/charactersXML/Jason.xml</Path>
 			<Point>19,7</Point>
 		</Enemy>
 	</Enemies>
@@ -44,27 +44,27 @@
 	</Doors>
 	<Objects>
 		<Object>
-			<Path>res/objectsXML/Hammer.xml</Path>
+			<Path>/objectsXML/Hammer.xml</Path>
 			<Point>21,9</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Tnt.xml</Path>
+			<Path>/objectsXML/Tnt.xml</Path>
 			<Point>25,7</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Pizza.xml</Path>
+			<Path>/objectsXML/Pizza.xml</Path>
 			<Point>22,29</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Food.xml</Path>
+			<Path>/objectsXML/Food.xml</Path>
 			<Point>12,20</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/PieceOfPizza.xml</Path>
+			<Path>/objectsXML/PieceOfPizza.xml</Path>
 			<Point>27,22</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/PieceOfPizza.xml</Path>
+			<Path>/objectsXML/PieceOfPizza.xml</Path>
 			<Point>31,8</Point>
 		</Object>
 	</Objects>

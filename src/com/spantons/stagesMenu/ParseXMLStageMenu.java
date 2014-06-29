@@ -1,10 +1,10 @@
 package com.spantons.stagesMenu;
 
 import java.awt.Color;
-import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -25,11 +25,12 @@ public class ParseXMLStageMenu {
 
 	public static IStage getStageFromXML(String _path, GameStagesManager _gsm){
 		try {
-			File file = new File(_path);
+			
+			URL is = ParseXMLStageMenu.class.getResource(_path);
 			
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = dbf.newDocumentBuilder();
-			Document document = builder.parse(file);
+			Document document = builder.parse(is.toString());
 			document.getDocumentElement().normalize();
 		 
 			if (document.hasChildNodes()) 

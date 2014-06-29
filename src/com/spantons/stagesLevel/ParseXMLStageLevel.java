@@ -1,10 +1,10 @@
 package com.spantons.stagesLevel;
 
 import java.awt.Point;
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -28,6 +28,7 @@ import com.spantons.object.Object;
 import com.spantons.object.ParseXMLObject;
 import com.spantons.stages.GameStagesManager;
 import com.spantons.stages.IStage;
+import com.spantons.stagesMenu.ParseXMLStageMenu;
 import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.RandomItemArrayList;
 
@@ -35,11 +36,11 @@ public class ParseXMLStageLevel {
 
 	public static IStage getStageFromXML(String _path, GameStagesManager _gsm){
 		try {
-			File file = new File(_path);
+			URL is = ParseXMLStageMenu.class.getResource(_path);
 			
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = dbf.newDocumentBuilder();
-			Document document = builder.parse(file);
+			Document document = builder.parse(is.toString());
 			document.getDocumentElement().normalize();
 		 
 			if (document.hasChildNodes()) 

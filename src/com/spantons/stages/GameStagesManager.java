@@ -56,10 +56,10 @@ public class GameStagesManager {
 		
 		else {
 			currentStage = WAIT_STAGE;
-			gameStages[WAIT_STAGE] = ParseXMLStageMenu.getStageFromXML("res/stagesXML/WaitMenuLevel1Stage"+Integer.toString(stage)+".xml", this);
+			gameStages[WAIT_STAGE] = ParseXMLStageMenu.getStageFromXML("/stagesXML/WaitMenuLevel1Stage"+Integer.toString(stage)+".xml", this);
 
 			if (gameStages[WAIT_STAGE] == null) 
-				gameStages[WAIT_STAGE] = ParseXMLStageMenu.getStageFromXML("res/stagesXML/WaitMenuLevel1Stage1.xml", this);
+				gameStages[WAIT_STAGE] = ParseXMLStageMenu.getStageFromXML("/stagesXML/WaitMenuLevel1Stage1.xml", this);
 				
 			final GameStagesManager self = this;
 			SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
@@ -67,7 +67,7 @@ public class GameStagesManager {
 				@Override
 				protected Void doInBackground() throws Exception {
 					numLoadedStage = stage;
-					loadedStage = (StagesLevel) ParseXMLStageLevel.getStageFromXML("res/stagesXML/Level1Stage"+Integer.toString(stage)+".xml", self);
+					loadedStage = (StagesLevel) ParseXMLStageLevel.getStageFromXML("/stagesXML/Level1Stage"+Integer.toString(stage)+".xml", self);
 					return null;
 				}
 				

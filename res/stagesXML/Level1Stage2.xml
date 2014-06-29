@@ -13,7 +13,7 @@
 	</CurrentCharacter>
 	<Enemies>
 		<Enemy>
-			<Path>res/charactersXML/Jason.xml</Path>
+			<Path>/charactersXML/Jason.xml</Path>
 			<Point>18,24</Point>
 		</Enemy>
 	</Enemies>
@@ -23,7 +23,7 @@
 		<Open>False</Open>
 		<Unlock>False</Unlock>
 		<ObjectKey>
-			<Path>res/objectsXML/TriggerPoint.xml</Path>
+			<Path>/objectsXML/TriggerPoint.xml</Path>
 			<Point>11,23</Point>
 		</ObjectKey>
 	</DoorsWithKey>
@@ -37,75 +37,75 @@
 	</Doors>
 	<Objects>
 		<Object>
-			<Path>res/objectsXML/TriggerPoint.xml</Path>
+			<Path>/objectsXML/TriggerPoint.xml</Path>
 			<Point>6,6</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Hammer.xml</Path>
+			<Path>/objectsXML/Hammer.xml</Path>
 			<Point>19,9</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Hammer.xml</Path>
+			<Path>/objectsXML/Hammer.xml</Path>
 			<Point>7,16</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Alcohol.xml</Path>
+			<Path>/objectsXML/Alcohol.xml</Path>
 			<Point>27,18</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Alcohol.xml</Path>
+			<Path>/objectsXML/Alcohol.xml</Path>
 			<Point>17,26</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Alcohol.xml</Path>
+			<Path>/objectsXML/Alcohol.xml</Path>
 			<Point>11,33</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Beers.xml</Path>
+			<Path>/objectsXML/Beers.xml</Path>
 			<Point>24,19</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Beers.xml</Path>
+			<Path>/objectsXML/Beers.xml</Path>
 			<Point>31,8</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Beers.xml</Path>
+			<Path>/objectsXML/Beers.xml</Path>
 			<Point>18,13</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Pipe.xml</Path>
+			<Path>/objectsXML/Pipe.xml</Path>
 			<Point>33,8</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Pipe.xml</Path>
+			<Path>/objectsXML/Pipe.xml</Path>
 			<Point>25,16</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Pipe.xml</Path>
+			<Path>/objectsXML/Pipe.xml</Path>
 			<Point>8,10</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/PieceOfPizza.xml</Path>
+			<Path>/objectsXML/PieceOfPizza.xml</Path>
 			<Point>6,35</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/PieceOfPizza.xml</Path>
+			<Path>/objectsXML/PieceOfPizza.xml</Path>
 			<Point>25,22</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/PieceOfPizza.xml</Path>
+			<Path>/objectsXML/PieceOfPizza.xml</Path>
 			<Point>26,6</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Pizza.xml</Path>
+			<Path>/objectsXML/Pizza.xml</Path>
 			<Point>10,31</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Pizza.xml</Path>
+			<Path>/objectsXML/Pizza.xml</Path>
 			<Point>22,28</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Food.xml</Path>
+			<Path>/objectsXML/Food.xml</Path>
 			<Point>35,5</Point>
 		</Object>
 	</Objects>

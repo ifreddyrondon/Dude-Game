@@ -30,34 +30,34 @@
 	<Countdown>120</Countdown>
 	<ExitPoint>21,5</ExitPoint>
 	<CurrentCharacter>
-		<Path>res/charactersXML/LeonTheProfessional.xml</Path>
+		<Path>/charactersXML/LeonTheProfessional.xml</Path>
 		<Point>16,19</Point>
 	</CurrentCharacter>
 	<Characters>
 		<Character>
-			<Path>res/charactersXML/GordonFreeman.xml</Path>
+			<Path>/charactersXML/GordonFreeman.xml</Path>
 			<Point>9,22</Point>
 		</Character>
 		<Character>
-			<Path>res/charactersXML/LizSherman.xml</Path>
+			<Path>/charactersXML/LizSherman.xml</Path>
 			<Point>13,17</Point>
 		</Character>
 		<Character>
-			<Path>res/charactersXML/DanaScullyXFiles.xml</Path>
+			<Path>/charactersXML/DanaScullyXFiles.xml</Path>
 			<Point>13,22</Point>
 		</Character>
 		<Character>
-			<Path>res/charactersXML/Preso.xml</Path>
+			<Path>/charactersXML/Preso.xml</Path>
 			<Point>7,17</Point>
 		</Character>
 	</Characters>
 	<Enemies>
 		<Enemy>
-			<Path>res/charactersXML/Jason.xml</Path>
+			<Path>/charactersXML/Jason.xml</Path>
 			<Point>17,12</Point>
 		</Enemy>
 		<Enemy>
-			<Path>res/charactersXML/Jason.xml</Path>
+			<Path>/charactersXML/Jason.xml</Path>
 			<Point>26,23</Point>
 		</Enemy>
 	</Enemies>
@@ -67,7 +67,7 @@
 		<Open>False</Open>
 		<Unlock>False</Unlock>
 		<ObjectKey>
-			<Path>res/objectsXML/Crowbar.xml</Path>
+			<Path>/objectsXML/Crowbar.xml</Path>
 			<Point>11,30</Point>
 		</ObjectKey>
 	</DoorsWithKey>
@@ -93,71 +93,71 @@
 	</Doors>
 	<Objects>
 		<Object>
-			<Path>res/objectsXML/Hammer.xml</Path>
+			<Path>/objectsXML/Hammer.xml</Path>
 			<Point>12,13</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Hammer.xml</Path>
+			<Path>/objectsXML/Hammer.xml</Path>
 			<Point>14,18</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Hammer.xml</Path>
+			<Path>/objectsXML/Hammer.xml</Path>
 			<Point>25,32</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Alcohol.xml</Path>
+			<Path>/objectsXML/Alcohol.xml</Path>
 			<Point>27,16</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Alcohol.xml</Path>
+			<Path>/objectsXML/Alcohol.xml</Path>
 			<Point>17,11</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Alcohol.xml</Path>
+			<Path>/objectsXML/Alcohol.xml</Path>
 			<Point>20,28</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Beers.xml</Path>
+			<Path>/objectsXML/Beers.xml</Path>
 			<Point>28,10</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Beers.xml</Path>
+			<Path>/objectsXML/Beers.xml</Path>
 			<Point>21,17</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Beers.xml</Path>
+			<Path>/objectsXML/Beers.xml</Path>
 			<Point>25,17</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Pipe.xml</Path>
+			<Path>/objectsXML/Pipe.xml</Path>
 			<Point>25,21</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Pipe.xml</Path>
+			<Path>/objectsXML/Pipe.xml</Path>
 			<Point>17,27</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Pipe.xml</Path>
+			<Path>/objectsXML/Pipe.xml</Path>
 			<Point>27,13</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/PieceOfPizza.xml</Path>
+			<Path>/objectsXML/PieceOfPizza.xml</Path>
 			<Point>21,18</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/PieceOfPizza.xml</Path>
+			<Path>/objectsXML/PieceOfPizza.xml</Path>
 			<Point>20,29</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Pizza.xml</Path>
+			<Path>/objectsXML/Pizza.xml</Path>
 			<Point>28,13</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Pizza.xml</Path>
+			<Path>/objectsXML/Pizza.xml</Path>
 			<Point>32,8</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Food.xml</Path>
+			<Path>/objectsXML/Food.xml</Path>
 			<Point>11,11</Point>
 		</Object>
 	</Objects>

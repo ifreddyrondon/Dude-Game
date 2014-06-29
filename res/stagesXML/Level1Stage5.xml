@@ -11,7 +11,7 @@
 	</DeadCharacter>
 	<Enemies>
 		<Enemy>
-			<Path>res/charactersXML/BigJason.xml</Path>
+			<Path>/charactersXML/BigJason.xml</Path>
 			<Point>15,11</Point>
 		</Enemy>
 	</Enemies>
@@ -37,27 +37,27 @@
 	</Doors>
 	<Objects>
 		<Object>
-			<Path>res/objectsXML/Sword.xml</Path>
+			<Path>/objectsXML/Sword.xml</Path>
 			<Point>21,19</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Pizza.xml</Path>
+			<Path>/objectsXML/Pizza.xml</Path>
 			<Point>15,11</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Pizza.xml</Path>
+			<Path>/objectsXML/Pizza.xml</Path>
 			<Point>10,12</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Food.xml</Path>
+			<Path>/objectsXML/Food.xml</Path>
 			<Point>25,15</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Food.xml</Path>
+			<Path>/objectsXML/Food.xml</Path>
 			<Point>18,7</Point>
 		</Object>
 		<Object>
-			<Path>res/objectsXML/Food.xml</Path>
+			<Path>/objectsXML/Food.xml</Path>
 			<Point>31,31</Point>
 		</Object>
 	</Objects>

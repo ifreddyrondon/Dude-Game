@@ -1,8 +1,8 @@
 package com.spantons.object;
 
-import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,16 +17,17 @@ import com.spantons.Interfaces.IDrawable;
 import com.spantons.Interfaces.ILoadSprite;
 import com.spantons.Interfaces.IUpdateable;
 import com.spantons.stagesLevel.StagesLevel;
+import com.spantons.stagesMenu.ParseXMLStageMenu;
 
 public class ParseXMLObject {
 
 	public static Object getObjectFromXML(String _path, StagesLevel _stage, int _xMap, int _yMap){
 		try {
-			File file = new File(_path);
+			URL is = ParseXMLStageMenu.class.getResource(_path);
 			
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = dbf.newDocumentBuilder();
-			Document document = builder.parse(file);
+			Document document = builder.parse(is.toString());
 			document.getDocumentElement().normalize();
 		 
 			if (document.hasChildNodes()) 
