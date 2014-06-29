@@ -28,7 +28,6 @@ import com.spantons.object.Object;
 import com.spantons.object.ParseXMLObject;
 import com.spantons.stages.GameStagesManager;
 import com.spantons.stages.IStage;
-import com.spantons.stagesMenu.ParseXMLStageMenu;
 import com.spantons.tileMap.TileMap;
 import com.spantons.utilities.RandomItemArrayList;
 
@@ -36,7 +35,7 @@ public class ParseXMLStageLevel {
 
 	public static IStage getStageFromXML(String _path, GameStagesManager _gsm){
 		try {
-			URL is = ParseXMLStageMenu.class.getResource(_path);
+			URL is = ParseXMLStageLevel.class.getResource(_path);
 			
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = dbf.newDocumentBuilder();

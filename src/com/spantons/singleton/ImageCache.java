@@ -46,9 +46,7 @@ public class ImageCache {
 		BufferedImage image = null;
 		
 		try {
-			image = ImageIO
-					.read(getClass()
-							.getResourceAsStream(_key));
+			image = ImageIO.read(getClass().getResourceAsStream(_key));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

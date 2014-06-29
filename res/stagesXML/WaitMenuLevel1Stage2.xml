@@ -14,7 +14,7 @@
     		<Y>100</Y>
     	</ImageComposite>
     	<ImageComposite>
-    		<Path>/backgrounds/jokercards.png</Path>
+    		<Path>/backgrounds/jokerCards.png</Path>
     		<ResizeLength>0</ResizeLength>
     		<X>1000</X>
     		<Y>100</Y>

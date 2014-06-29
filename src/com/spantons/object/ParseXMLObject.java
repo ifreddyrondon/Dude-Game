@@ -17,13 +17,12 @@ import com.spantons.Interfaces.IDrawable;
 import com.spantons.Interfaces.ILoadSprite;
 import com.spantons.Interfaces.IUpdateable;
 import com.spantons.stagesLevel.StagesLevel;
-import com.spantons.stagesMenu.ParseXMLStageMenu;
 
 public class ParseXMLObject {
 
 	public static Object getObjectFromXML(String _path, StagesLevel _stage, int _xMap, int _yMap){
 		try {
-			URL is = ParseXMLStageMenu.class.getResource(_path);
+			URL is = ParseXMLObject.class.getResource(_path);
 			
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = dbf.newDocumentBuilder();

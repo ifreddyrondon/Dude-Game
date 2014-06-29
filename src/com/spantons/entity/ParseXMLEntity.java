@@ -15,13 +15,12 @@ import org.w3c.dom.NodeList;
 
 import com.spantons.Interfaces.IUpdateable;
 import com.spantons.stagesLevel.StagesLevel;
-import com.spantons.stagesMenu.ParseXMLStageMenu;
 
 public class ParseXMLEntity {
 
 	public static Entity getEntityFromXML(String _path, StagesLevel _stage, int _xMap, int _yMap){
 		try {
-			URL is = ParseXMLStageMenu.class.getResource(_path);
+			URL is = ParseXMLEntity.class.getResource(_path);
 			
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = dbf.newDocumentBuilder();
