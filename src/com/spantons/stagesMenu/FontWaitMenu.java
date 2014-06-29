@@ -44,7 +44,7 @@ public class FontWaitMenu implements IFontStage {
 		stage.titleColor = Color.BLACK;
 		warningFont = FontCache.getInstance().getFont(FontPath.FONT_YOUMURDERERBB_REG).deriveFont(Font.PLAIN, 42);
 		warningColor = Color.BLACK;
-		stage.choicesFont = FontCache.getInstance().getFont(FontPath.FONT_ZOMBIEN_MORNING).deriveFont(Font.PLAIN, 22);
+		stage.choicesFont = new Font("Century Gothic", Font.TRUETYPE_FONT, 22);
 		stage.choicesColor = Color.BLACK;
 		stage.footerFont = new Font("Arial", 8, 12);
 		fontLoadState = FontCache.getInstance().getFont(FontPath.FONT_HORRENDO).deriveFont(Font.PLAIN, 40);
