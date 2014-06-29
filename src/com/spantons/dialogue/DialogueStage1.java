@@ -16,10 +16,8 @@ import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
 import com.spantons.entity.UpdateEnemy;
-import com.spantons.magicNumbers.FontPath;
 import com.spantons.magicNumbers.ImagePath;
 import com.spantons.main.GamePanel;
-import com.spantons.singleton.FontCache;
 import com.spantons.singleton.ImageCache;
 import com.spantons.stagesLevel.StagesLevel;
 import com.spantons.utilities.ArraysUtil;
@@ -59,7 +57,7 @@ public class DialogueStage1 extends DialogueManager {
 		strings = new HashMap<String, String[]>();
 		
 		backgroundSecundaryMenu = ImageIO.read(getClass().getResourceAsStream("/dialog/glassMenu.png"));
-		secondaryMenuFont = FontCache.getInstance().getFont(FontPath.FONT_ZOMBIEN_MORNING).deriveFont(Font.PLAIN, 30);
+		secondaryMenuFont = new Font("Century Gothic", Font.BOLD, 28);
 		aloneFont = new Font("Century Gothic", Font.PLAIN, 50);
 
 		characterWidth = stage.getCurrentCharacter().getSpriteWidth();
