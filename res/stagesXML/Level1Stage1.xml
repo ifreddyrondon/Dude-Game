@@ -68,7 +68,7 @@
 		<Unlock>False</Unlock>
 		<ObjectKey>
 			<Path>res/objectsXML/Crowbar.xml</Path>
-			<Point>10,12</Point>
+			<Point>11,30</Point>
 		</ObjectKey>
 	</DoorsWithKey>
 	<Doors>
