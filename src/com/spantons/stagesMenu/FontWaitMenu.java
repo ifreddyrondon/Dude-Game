@@ -89,7 +89,7 @@ public class FontWaitMenu implements IFontStage {
 		
 		g.setColor(warningColor);
 		g.setFont(warningFont);
-		ArrayList<String> split = ArraysUtil.getParts(stage.someOtherText, 65);
+		ArrayList<String> split = ArraysUtil.getPartsOfStringByPartitionSizeWithoutCutPhrase(stage.someOtherText, 65);
 		
 		y = y + 30;
 		

@@ -15,7 +15,7 @@ public class Main {
 		window.setContentPane(new GamePanel());
 		
 		window.setUndecorated(true);
-		device.setFullScreenWindow(window);
+//		device.setFullScreenWindow(window);
 
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(false);

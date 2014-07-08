@@ -130,7 +130,8 @@ public class DialogueStage1 extends DialogueManager {
 			g.setColor(currentDialogue.getColor());
 			g.setFont(currentDialogue.getFont());
 			
-			ArrayList<String> split = ArraysUtil.getParts(currentDialogue.getTxt(), 20); 
+			ArrayList<String> split = ArraysUtil.getPartsOfStringByPartitionSizeWithoutCutPhrase(currentDialogue.getTxt(), 20);
+			
 			int y = characterSpeaking.getY() - 190;
 			int h = g.getFontMetrics().getHeight();
 			
